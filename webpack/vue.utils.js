@@ -52,7 +52,7 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true, implementation: sass }),
+    //sass: generateLoaders('sass', { indentedSyntax: true, implementation: sass }), // Use sass-loader in webpack.common.js
     scss: generateLoaders('sass', { implementation: sass }),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus'),
