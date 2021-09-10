@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Ventirad.
+ * Filters: Brand, HasThermalPaste
  */
 @Entity
 @Table(name = "ventirad")

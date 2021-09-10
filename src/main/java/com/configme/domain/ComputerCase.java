@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A ComputerCase.
+ * Filters: CaseType, Format, Brand
  */
 @Entity
 @Table(name = "computer_case")

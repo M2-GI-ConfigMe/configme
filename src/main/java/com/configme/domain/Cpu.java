@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Cpu.
+ * Filters: Socket, Brand, HasVentirad, HasGpu
  */
 @Entity
 @Table(name = "cpu")

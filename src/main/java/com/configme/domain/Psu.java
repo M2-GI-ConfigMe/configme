@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Psu.
+ * Filters: ModularityType, Brand, Power
  */
 @Entity
 @Table(name = "psu")

@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Ram.
+ * Filters: Frequency, Quantity, Capacity
  */
 @Entity
 @Table(name = "ram")
@@ -21,10 +22,6 @@ public class Ram implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
-    @NotNull
-    @Column(name = "speed", nullable = false)
-    private Integer speed;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -61,19 +58,6 @@ public class Ram implements Serializable {
     public Ram id(Long id) {
         this.id = id;
         return this;
-    }
-
-    public Integer getSpeed() {
-        return this.speed;
-    }
-
-    public Ram speed(Integer speed) {
-        this.speed = speed;
-        return this;
-    }
-
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
     }
 
     public RamType getType() {
@@ -165,7 +149,6 @@ public class Ram implements Serializable {
     public String toString() {
         return "Ram{" +
             "id=" + getId() +
-            ", speed=" + getSpeed() +
             ", type='" + getType() + "'" +
             ", frequency=" + getFrequency() +
             ", unitSize=" + getUnitSize() +

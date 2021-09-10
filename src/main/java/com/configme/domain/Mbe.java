@@ -11,6 +11,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Mbe.
+ * Filters: Socket, RamType, FormatTYpe, Brand
  */
 @Entity
 @Table(name = "mbe")

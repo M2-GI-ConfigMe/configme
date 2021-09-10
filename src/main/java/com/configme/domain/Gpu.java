@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Gpu.
+ * Filters: Memory, Brand
  */
 @Entity
 @Table(name = "gpu")

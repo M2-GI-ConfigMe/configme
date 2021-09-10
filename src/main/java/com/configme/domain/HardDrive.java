@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A HardDrive.
+ * Filters: Brand, Capacity, Type
  */
 @Entity
 @Table(name = "hard_drive")
