@@ -5,7 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
 const vueLoaderConfig = require('./loader.conf');
-
+const { VuetifyLoaderPlugin } = require('vuetify-loader');
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
@@ -54,6 +54,28 @@ module.exports = env =>
       },
       module: {
         rules: [
+          {
+            test: /\.sass$/,
+            use: [
+              'vue-style-loader',
+              'css-loader',
+              {
+                loader: 'sass-loader',
+                // Requires sass-loader@^7.0.0
+                options: {
+                  implementation: require('sass'),
+                  indentedSyntax: true, // optional
+                },
+                // Requires >= sass-loader@^8.0.0
+                options: {
+                  implementation: require('sass'),
+                  sassOptions: {
+                    indentedSyntax: true, // optional
+                  },
+                },
+              },
+            ],
+          },
           {
             test: /\.vue$/,
             loader: 'vue-loader',
@@ -104,6 +126,7 @@ module.exports = env =>
       },
       plugins: [
         new VueLoaderPlugin(),
+        new VuetifyLoaderPlugin(),
         new CopyWebpackPlugin({
           patterns: [
             {
