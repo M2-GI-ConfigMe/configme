@@ -1,11 +1,11 @@
-id;speed;type;frequency;unit_size;quantity;cas
-1;65260;DDR4;25827;3467;8;Savings Joubert Producteur
-2;67071;DDR4;73421;44377;2;Fundamental Fresh Baby
-3;57890;DDR4;23217;6362;4;Sports
-4;31211;DDR3;57634;90680;6;backing
-5;13195;DDR3;82183;87936;7;Angola leading-edge Bretagne
-6;34229;DDR4;34575;95112;7;Tools Account
-7;98637;DDR3;50552;35394;3;haptic
-8;32460;DDR3;53886;73012;8;action-items Steel
-9;58919;DDR5;27160;17990;7;Ingenieur generating embrace
-10;44886;DDR4;48730;56086;4;real-time
+id;type;frequency;unit_size;quantity;cas
+1;DDR4;25827;3467;8;Savings Joubert Producteur
+2;DDR4;73421;44377;2;Fundamental Fresh Baby
+3;DDR4;23217;6362;4;Sports
+4;DDR3;57634;90680;6;backing
+5;DDR3;82183;87936;7;Angola leading-edge Bretagne
+6;DDR4;34575;95112;7;Tools Account
+7;DDR3;50552;35394;3;haptic
+8;DDR3;53886;73012;8;action-items Steel
+9;DDR5;27160;17990;7;Ingenieur generating embrace
+10;DDR4;48730;56086;4;real-time

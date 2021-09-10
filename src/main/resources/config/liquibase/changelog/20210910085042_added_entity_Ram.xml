@@ -14,9 +14,6 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="speed" type="integer">
-                <constraints nullable="false" />
-            </column>
             <column name="type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -52,7 +49,6 @@
                   separator=";"
                   tableName="ram">
             <column name="id" type="numeric"/>
-            <column name="speed" type="numeric"/>
             <column name="type" type="string"/>
             <column name="frequency" type="numeric"/>
             <column name="unit_size" type="numeric"/>

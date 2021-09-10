@@ -122,9 +122,6 @@ public class RamResource {
             .findById(ram.getId())
             .map(
                 existingRam -> {
-                    if (ram.getSpeed() != null) {
-                        existingRam.setSpeed(ram.getSpeed());
-                    }
                     if (ram.getType() != null) {
                         existingRam.setType(ram.getType());
                     }

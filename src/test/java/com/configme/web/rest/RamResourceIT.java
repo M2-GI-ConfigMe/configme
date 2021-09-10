@@ -30,9 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class RamResourceIT {
 
-    private static final Integer DEFAULT_SPEED = 1;
-    private static final Integer UPDATED_SPEED = 2;
-
     private static final RamType DEFAULT_TYPE = RamType.DDR3;
     private static final RamType UPDATED_TYPE = RamType.DDR4;
 
@@ -73,7 +70,6 @@ class RamResourceIT {
      */
     public static Ram createEntity(EntityManager em) {
         Ram ram = new Ram()
-            .speed(DEFAULT_SPEED)
             .type(DEFAULT_TYPE)
             .frequency(DEFAULT_FREQUENCY)
             .unitSize(DEFAULT_UNIT_SIZE)
@@ -90,7 +86,6 @@ class RamResourceIT {
      */
     public static Ram createUpdatedEntity(EntityManager em) {
         Ram ram = new Ram()
-            .speed(UPDATED_SPEED)
             .type(UPDATED_TYPE)
             .frequency(UPDATED_FREQUENCY)
             .unitSize(UPDATED_UNIT_SIZE)
@@ -117,7 +112,6 @@ class RamResourceIT {
         List<Ram> ramList = ramRepository.findAll();
         assertThat(ramList).hasSize(databaseSizeBeforeCreate + 1);
         Ram testRam = ramList.get(ramList.size() - 1);
-        assertThat(testRam.getSpeed()).isEqualTo(DEFAULT_SPEED);
         assertThat(testRam.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testRam.getFrequency()).isEqualTo(DEFAULT_FREQUENCY);
         assertThat(testRam.getUnitSize()).isEqualTo(DEFAULT_UNIT_SIZE);
@@ -141,23 +135,6 @@ class RamResourceIT {
         // Validate the Ram in the database
         List<Ram> ramList = ramRepository.findAll();
         assertThat(ramList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkSpeedIsRequired() throws Exception {
-        int databaseSizeBeforeTest = ramRepository.findAll().size();
-        // set the field null
-        ram.setSpeed(null);
-
-        // Create the Ram, which fails.
-
-        restRamMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(ram)))
-            .andExpect(status().isBadRequest());
-
-        List<Ram> ramList = ramRepository.findAll();
-        assertThat(ramList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -257,7 +234,6 @@ class RamResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ram.getId().intValue())))
-            .andExpect(jsonPath("$.[*].speed").value(hasItem(DEFAULT_SPEED)))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
             .andExpect(jsonPath("$.[*].unitSize").value(hasItem(DEFAULT_UNIT_SIZE)))
@@ -277,7 +253,6 @@ class RamResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ram.getId().intValue()))
-            .andExpect(jsonPath("$.speed").value(DEFAULT_SPEED))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.frequency").value(DEFAULT_FREQUENCY.doubleValue()))
             .andExpect(jsonPath("$.unitSize").value(DEFAULT_UNIT_SIZE))
@@ -304,13 +279,7 @@ class RamResourceIT {
         Ram updatedRam = ramRepository.findById(ram.getId()).get();
         // Disconnect from session so that the updates on updatedRam are not directly saved in db
         em.detach(updatedRam);
-        updatedRam
-            .speed(UPDATED_SPEED)
-            .type(UPDATED_TYPE)
-            .frequency(UPDATED_FREQUENCY)
-            .unitSize(UPDATED_UNIT_SIZE)
-            .quantity(UPDATED_QUANTITY)
-            .cas(UPDATED_CAS);
+        updatedRam.type(UPDATED_TYPE).frequency(UPDATED_FREQUENCY).unitSize(UPDATED_UNIT_SIZE).quantity(UPDATED_QUANTITY).cas(UPDATED_CAS);
 
         restRamMockMvc
             .perform(
@@ -324,7 +293,6 @@ class RamResourceIT {
         List<Ram> ramList = ramRepository.findAll();
         assertThat(ramList).hasSize(databaseSizeBeforeUpdate);
         Ram testRam = ramList.get(ramList.size() - 1);
-        assertThat(testRam.getSpeed()).isEqualTo(UPDATED_SPEED);
         assertThat(testRam.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testRam.getFrequency()).isEqualTo(UPDATED_FREQUENCY);
         assertThat(testRam.getUnitSize()).isEqualTo(UPDATED_UNIT_SIZE);
@@ -412,7 +380,6 @@ class RamResourceIT {
         List<Ram> ramList = ramRepository.findAll();
         assertThat(ramList).hasSize(databaseSizeBeforeUpdate);
         Ram testRam = ramList.get(ramList.size() - 1);
-        assertThat(testRam.getSpeed()).isEqualTo(DEFAULT_SPEED);
         assertThat(testRam.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testRam.getFrequency()).isEqualTo(UPDATED_FREQUENCY);
         assertThat(testRam.getUnitSize()).isEqualTo(DEFAULT_UNIT_SIZE);
@@ -433,7 +400,6 @@ class RamResourceIT {
         partialUpdatedRam.setId(ram.getId());
 
         partialUpdatedRam
-            .speed(UPDATED_SPEED)
             .type(UPDATED_TYPE)
             .frequency(UPDATED_FREQUENCY)
             .unitSize(UPDATED_UNIT_SIZE)
@@ -452,7 +418,6 @@ class RamResourceIT {
         List<Ram> ramList = ramRepository.findAll();
         assertThat(ramList).hasSize(databaseSizeBeforeUpdate);
         Ram testRam = ramList.get(ramList.size() - 1);
-        assertThat(testRam.getSpeed()).isEqualTo(UPDATED_SPEED);
         assertThat(testRam.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testRam.getFrequency()).isEqualTo(UPDATED_FREQUENCY);
         assertThat(testRam.getUnitSize()).isEqualTo(UPDATED_UNIT_SIZE);
