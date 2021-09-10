@@ -1,0 +1,10 @@
+{
+  "configmeApp": {
+    "CaseType": {
+      "null": "",
+      "PETITE": "PETITE",
+      "MOYENNE": "MOYENNE",
+      "GRANDE": "GRANDE"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Psu",
+  "fields": [
+    {
+      "fieldName": "power",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "certification",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modularity",
+      "fieldType": "ModularityType",
+      "fieldValues": "NON_MODULAIRE,SEMI_MODULAIRE,MODULAIRE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nbSata",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "nbPciE",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "outputs",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "psu",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085043"
+}

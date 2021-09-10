@@ -1,0 +1,76 @@
+{
+  "name": "Cpu",
+  "fields": [
+    {
+      "fieldName": "frequency",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "cacheL1",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "cacheL2",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "cacheL3",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "nbHeart",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "nbThread",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "hasVentirad",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "socketType",
+      "fieldType": "SocketType",
+      "fieldValues": "AM4,TR4,LGA_1150,LGA_1151,LGA_2066,LGA_1200",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lithography",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ramFrequencyMax",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consumption",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hasGpu",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "cpu",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085039"
+}

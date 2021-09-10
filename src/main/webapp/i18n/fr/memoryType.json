@@ -1,0 +1,10 @@
+{
+  "configmeApp": {
+    "MemoryType": {
+      "null": "",
+      "HDD": "HDD",
+      "SSD": "SSD",
+      "M2": "M2"
+    }
+  }
+}

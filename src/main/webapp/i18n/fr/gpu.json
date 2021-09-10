@@ -1,0 +1,32 @@
+{
+  "configmeApp": {
+    "gpu": {
+      "home": {
+        "title": "Gpus",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Gpu",
+        "createOrEditLabel": "Créer ou éditer un Gpu",
+        "notFound": "Aucun Gpu trouvé"
+      },
+      "created": "Un nouveau Gpu a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Gpu avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Gpu avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Gpu {{ id }} ?"
+      },
+      "detail": {
+        "title": "Gpu"
+      },
+      "id": "ID",
+      "frequency": "Frequency",
+      "memory": "Memory",
+      "consumption": "Consumption",
+      "clockSpeed": "Clock Speed",
+      "lithography": "Lithography",
+      "output": "Output",
+      "inputPower": "Input Power",
+      "bus": "Bus",
+      "dimension": "Dimension"
+    }
+  }
+}

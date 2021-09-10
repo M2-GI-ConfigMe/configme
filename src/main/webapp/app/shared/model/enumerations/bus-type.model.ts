@@ -1,0 +1,15 @@
+export enum BusType {
+  PCI = 'PCI',
+
+  AGP = 'AGP',
+
+  PCI_EXPRESS_1 = 'PCI_EXPRESS_1',
+
+  PCI_EXPRESS_2 = 'PCI_EXPRESS_2',
+
+  PCI_EXPRESS_3 = 'PCI_EXPRESS_3',
+
+  PCI_EXPRESS_4 = 'PCI_EXPRESS_4',
+
+  PCI_EXPRESS_5 = 'PCI_EXPRESS_5',
+}

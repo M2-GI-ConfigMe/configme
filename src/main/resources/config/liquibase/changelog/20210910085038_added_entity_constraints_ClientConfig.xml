@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity ClientConfig.
+    -->
+    <changeSet id="20210910085038-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="cpu_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__cpu_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cpu"/>
+
+        <addForeignKeyConstraint baseColumnNames="gpu_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__gpu_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="gpu"/>
+
+        <addForeignKeyConstraint baseColumnNames="psu_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__psu_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="psu"/>
+
+        <addForeignKeyConstraint baseColumnNames="ventirad_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__ventirad_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ventirad"/>
+
+        <addForeignKeyConstraint baseColumnNames="mbe_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__mbe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mbe"/>
+
+        <addForeignKeyConstraint baseColumnNames="computer_case_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__computer_case_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="computer_case"/>
+
+        <addForeignKeyConstraint baseColumnNames="dead_memory1_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__dead_memory1_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hard_drive"/>
+
+        <addForeignKeyConstraint baseColumnNames="dead_memory2_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__dead_memory2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hard_drive"/>
+
+        <addForeignKeyConstraint baseColumnNames="ram1_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__ram1_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ram"/>
+
+        <addForeignKeyConstraint baseColumnNames="ram2_id"
+                                 baseTableName="client_config"
+                                 constraintName="fk_client_config__ram2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ram"/>
+    </changeSet>
+</databaseChangeLog>

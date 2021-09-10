@@ -1,0 +1,49 @@
+{
+  "name": "Ram",
+  "fields": [
+    {
+      "fieldName": "speed",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "RamType",
+      "fieldValues": "DDR3,DDR4,DDR5",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "frequency",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "unitSize",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMin": "2",
+      "fieldValidateRulesMax": "8"
+    },
+    {
+      "fieldName": "cas",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "ram",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085042"
+}

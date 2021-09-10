@@ -6,6 +6,11 @@
 /src/test/javascript/coverage/
 
 ######################
+# Project Config
+######################
+/src/main/resources/config/*.yml
+
+######################
 # Node
 ######################
 /node/

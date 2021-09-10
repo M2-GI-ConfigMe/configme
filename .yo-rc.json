@@ -42,6 +42,23 @@
     "devServerPort": 9060,
     "clientPackageManager": "npm",
     "clientThemeVariant": "",
-    "languages": ["fr"]
+    "languages": ["fr"],
+    "entities": [
+      "Address",
+      "Product",
+      "Order",
+      "OrderLine",
+      "ClientConfig",
+      "Cpu",
+      "Gpu",
+      "HardDrive",
+      "Ram",
+      "Psu",
+      "Ventirad",
+      "Dimension",
+      "Mbe",
+      "ComputerCase"
+    ],
+    "lastLiquibaseTimestamp": 1631263847000
   }
 }

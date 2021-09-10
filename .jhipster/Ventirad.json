@@ -1,0 +1,38 @@
+{
+  "name": "Ventirad",
+  "fields": [
+    {
+      "fieldName": "rangeFanSpeed",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "noise",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "hasThermalPaste",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "dimension",
+      "otherEntityRelationshipName": "ventirad",
+      "relationshipName": "dimension",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "ventirad",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085044"
+}

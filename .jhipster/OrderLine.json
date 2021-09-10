@@ -1,0 +1,30 @@
+{
+  "name": "OrderLine",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "clientConfig",
+      "otherEntityRelationshipName": "orderLine",
+      "relationshipValidateRules": "required",
+      "relationshipName": "config"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "order",
+      "otherEntityRelationshipName": "orderLine",
+      "relationshipValidateRules": "required",
+      "relationshipName": "order"
+    }
+  ],
+  "entityTableName": "order_line",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085037"
+}

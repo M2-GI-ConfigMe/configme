@@ -1,0 +1,27 @@
+{
+  "configmeApp": {
+    "hardDrive": {
+      "home": {
+        "title": "HardDrives",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Hard Drive",
+        "createOrEditLabel": "Créer ou éditer un Hard Drive",
+        "notFound": "Aucun Hard Drive trouvé"
+      },
+      "created": "Un nouveau Hard Drive a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Hard Drive avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Hard Drive avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Hard Drive {{ id }} ?"
+      },
+      "detail": {
+        "title": "Hard Drive"
+      },
+      "id": "ID",
+      "capacity": "Capacity",
+      "speedWrite": "Speed Write",
+      "speedRead": "Speed Read",
+      "type": "Type"
+    }
+  }
+}

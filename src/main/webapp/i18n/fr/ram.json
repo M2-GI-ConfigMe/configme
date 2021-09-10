@@ -1,0 +1,29 @@
+{
+  "configmeApp": {
+    "ram": {
+      "home": {
+        "title": "Rams",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Ram",
+        "createOrEditLabel": "Créer ou éditer un Ram",
+        "notFound": "Aucun Ram trouvé"
+      },
+      "created": "Un nouveau Ram a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Ram avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Ram avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Ram {{ id }} ?"
+      },
+      "detail": {
+        "title": "Ram"
+      },
+      "id": "ID",
+      "speed": "Speed",
+      "type": "Type",
+      "frequency": "Frequency",
+      "unitSize": "Unit Size",
+      "quantity": "Quantity",
+      "cas": "Cas"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "configmeApp": {
+    "OrderStatus": {
+      "null": "",
+      "CART": "CART",
+      "PROCESSING": "PROCESSING",
+      "PAYED": "PAYED",
+      "FAILED": "FAILED"
+    }
+  }
+}

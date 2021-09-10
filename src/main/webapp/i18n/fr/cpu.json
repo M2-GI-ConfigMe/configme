@@ -1,0 +1,35 @@
+{
+  "configmeApp": {
+    "cpu": {
+      "home": {
+        "title": "Cpus",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Cpu",
+        "createOrEditLabel": "Créer ou éditer un Cpu",
+        "notFound": "Aucun Cpu trouvé"
+      },
+      "created": "Un nouveau Cpu a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Cpu avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Cpu avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Cpu {{ id }} ?"
+      },
+      "detail": {
+        "title": "Cpu"
+      },
+      "id": "ID",
+      "frequency": "Frequency",
+      "cacheL1": "Cache L 1",
+      "cacheL2": "Cache L 2",
+      "cacheL3": "Cache L 3",
+      "nbHeart": "Nb Heart",
+      "nbThread": "Nb Thread",
+      "hasVentirad": "Has Ventirad",
+      "socketType": "Socket Type",
+      "lithography": "Lithography",
+      "ramFrequencyMax": "Ram Frequency Max",
+      "consumption": "Consumption",
+      "hasGpu": "Has Gpu"
+    }
+  }
+}

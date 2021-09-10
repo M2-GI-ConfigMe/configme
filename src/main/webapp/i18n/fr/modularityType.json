@@ -1,0 +1,10 @@
+{
+  "configmeApp": {
+    "ModularityType": {
+      "null": "",
+      "NON_MODULAIRE": "NON_MODULAIRE",
+      "SEMI_MODULAIRE": "SEMI_MODULAIRE",
+      "MODULAIRE": "MODULAIRE"
+    }
+  }
+}

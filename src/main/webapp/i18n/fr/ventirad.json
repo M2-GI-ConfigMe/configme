@@ -1,0 +1,27 @@
+{
+  "configmeApp": {
+    "ventirad": {
+      "home": {
+        "title": "Ventirads",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Ventirad",
+        "createOrEditLabel": "Créer ou éditer un Ventirad",
+        "notFound": "Aucun Ventirad trouvé"
+      },
+      "created": "Un nouveau Ventirad a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Ventirad avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Ventirad avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Ventirad {{ id }} ?"
+      },
+      "detail": {
+        "title": "Ventirad"
+      },
+      "id": "ID",
+      "rangeFanSpeed": "Range Fan Speed",
+      "noise": "Noise",
+      "hasThermalPaste": "Has Thermal Paste",
+      "dimension": "Dimension"
+    }
+  }
+}

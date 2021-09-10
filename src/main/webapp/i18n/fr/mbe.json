@@ -1,0 +1,34 @@
+{
+  "configmeApp": {
+    "mbe": {
+      "home": {
+        "title": "Mbes",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Mbe",
+        "createOrEditLabel": "Créer ou éditer un Mbe",
+        "notFound": "Aucun Mbe trouvé"
+      },
+      "created": "Un nouveau Mbe a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Mbe avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Mbe avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Mbe {{ id }} ?"
+      },
+      "detail": {
+        "title": "Mbe"
+      },
+      "id": "ID",
+      "socketCpu": "Socket Cpu",
+      "ramType": "Ram Type",
+      "ramFrequencyMax": "Ram Frequency Max",
+      "ramSizeMax": "Ram Size Max",
+      "pciOutputs": "Pci Outputs",
+      "displayOutput": "Display Output",
+      "storageOutput": "Storage Output",
+      "insideIO": "Inside IO",
+      "backPanelOutput": "Back Panel Output",
+      "bios": "Bios",
+      "format": "Format"
+    }
+  }
+}

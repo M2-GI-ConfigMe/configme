@@ -48,6 +48,20 @@ public class CacheConfiguration {
             createCache(cm, com.configme.domain.User.class.getName());
             createCache(cm, com.configme.domain.Authority.class.getName());
             createCache(cm, com.configme.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.configme.domain.Address.class.getName());
+            createCache(cm, com.configme.domain.Product.class.getName());
+            createCache(cm, com.configme.domain.Order.class.getName());
+            createCache(cm, com.configme.domain.OrderLine.class.getName());
+            createCache(cm, com.configme.domain.ClientConfig.class.getName());
+            createCache(cm, com.configme.domain.Cpu.class.getName());
+            createCache(cm, com.configme.domain.Gpu.class.getName());
+            createCache(cm, com.configme.domain.HardDrive.class.getName());
+            createCache(cm, com.configme.domain.Ram.class.getName());
+            createCache(cm, com.configme.domain.Psu.class.getName());
+            createCache(cm, com.configme.domain.Ventirad.class.getName());
+            createCache(cm, com.configme.domain.Dimension.class.getName());
+            createCache(cm, com.configme.domain.Mbe.class.getName());
+            createCache(cm, com.configme.domain.ComputerCase.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

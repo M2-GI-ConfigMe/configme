@@ -1,0 +1,133 @@
+{
+  "name": "ClientConfig",
+  "fields": [
+    {
+      "fieldName": "tags",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isComlete",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "researchKey",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cpuPrice",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "gpuPrice",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "ram1Price",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "ram2Price",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "psuPrice",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "computerCasePrice",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "ventiradPrice",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "hd1Price",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "hd2Price",
+      "fieldType": "Float"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cpu",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "cpu"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "gpu",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "gpu"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "psu",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "psu"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "ventirad",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "ventirad"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "mbe",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "mbe"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "computerCase",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "computerCase"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "hardDrive",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "deadMemory1"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "hardDrive",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "deadMemory2"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "ram",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "ram1"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "ram",
+      "otherEntityRelationshipName": "clientConfig",
+      "relationshipName": "ram2"
+    }
+  ],
+  "entityTableName": "client_config",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085038"
+}

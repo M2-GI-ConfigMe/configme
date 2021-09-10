@@ -1,0 +1,69 @@
+{
+  "name": "Mbe",
+  "fields": [
+    {
+      "fieldName": "socketCpu",
+      "fieldType": "SocketType",
+      "fieldValues": "AM4,TR4,LGA_1150,LGA_1151,LGA_2066,LGA_1200",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ramType",
+      "fieldType": "RamType",
+      "fieldValues": "DDR3,DDR4,DDR5",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ramFrequencyMax",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ramSizeMax",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "pciOutputs",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "displayOutput",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "storageOutput",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "insideIO",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "backPanelOutput",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "bios",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "format",
+      "fieldType": "FormatType",
+      "fieldValues": "ATX,FLEX_ATX,MICRO_ATX,MINI_ATX,EATX,AT",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "mbe",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085046"
+}

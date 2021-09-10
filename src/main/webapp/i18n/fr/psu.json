@@ -1,0 +1,29 @@
+{
+  "configmeApp": {
+    "psu": {
+      "home": {
+        "title": "Psus",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Psu",
+        "createOrEditLabel": "Créer ou éditer un Psu",
+        "notFound": "Aucun Psu trouvé"
+      },
+      "created": "Un nouveau Psu a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Psu avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Psu avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Psu {{ id }} ?"
+      },
+      "detail": {
+        "title": "Psu"
+      },
+      "id": "ID",
+      "power": "Power",
+      "certification": "Certification",
+      "modularity": "Modularity",
+      "nbSata": "Nb Sata",
+      "nbPciE": "Nb Pci E",
+      "outputs": "Outputs"
+    }
+  }
+}

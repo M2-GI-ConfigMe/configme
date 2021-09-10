@@ -29,6 +29,62 @@
             <font-awesome-icon icon="th-list" />
             <span class="no-bold" v-text="$t('global.menu.entities.main')">Entities</span>
           </span>
+          <b-dropdown-item to="/address">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.address')">Address</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/product">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.product')">Product</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/order">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.order')">Order</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/order-line">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.orderLine')">Order Line</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/client-config">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.clientConfig')">Client Config</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/cpu">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.cpu')">Cpu</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/gpu">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.gpu')">Gpu</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/hard-drive">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.hardDrive')">Hard Drive</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/ram">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.ram')">Ram</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/psu">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.psu')">Psu</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/ventirad">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.ventirad')">Ventirad</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/dimension">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.dimension')">Dimension</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/mbe">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.mbe')">Mbe</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/computer-case">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.computerCase')">Computer Case</span>
+          </b-dropdown-item>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </b-nav-item-dropdown>
         <b-nav-item-dropdown

@@ -15,7 +15,27 @@
     <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085034_added_entity_Address.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085035_added_entity_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085036_added_entity_Order.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085037_added_entity_OrderLine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085038_added_entity_ClientConfig.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085039_added_entity_Cpu.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085040_added_entity_Gpu.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085041_added_entity_HardDrive.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085042_added_entity_Ram.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085043_added_entity_Psu.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085044_added_entity_Ventirad.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085045_added_entity_Dimension.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085046_added_entity_Mbe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085047_added_entity_ComputerCase.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20210910085036_added_entity_constraints_Order.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085037_added_entity_constraints_OrderLine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085038_added_entity_constraints_ClientConfig.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085040_added_entity_constraints_Gpu.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085044_added_entity_constraints_Ventirad.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210910085047_added_entity_constraints_ComputerCase.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

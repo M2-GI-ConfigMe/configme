@@ -1,0 +1,34 @@
+{
+  "configmeApp": {
+    "computerCase": {
+      "home": {
+        "title": "ComputerCases",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Computer Case",
+        "createOrEditLabel": "Créer ou éditer un Computer Case",
+        "notFound": "Aucun Computer Case trouvé"
+      },
+      "created": "Un nouveau Computer Case a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Computer Case avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Computer Case avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Computer Case {{ id }} ?"
+      },
+      "detail": {
+        "title": "Computer Case"
+      },
+      "id": "ID",
+      "type": "Type",
+      "formats": "Formats",
+      "sizeMaxGpu": "Size Max Gpu",
+      "sizeMaxVentirad": "Size Max Ventirad",
+      "sizeMaxPsu": "Size Max Psu",
+      "hardDriveSlots": "Hard Drive Slots",
+      "frontPanelOutputs": "Front Panel Outputs",
+      "fanIncluded": "Fan Included",
+      "fanSlotsAvailable": "Fan Slots Available",
+      "watercoolingCompatibility": "Watercooling Compatibility",
+      "dimension": "Dimension"
+    }
+  }
+}

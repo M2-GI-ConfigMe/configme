@@ -1,0 +1,233 @@
+entity Address {
+	zipCode String required
+    city String required
+    streetNumber String required
+    streetName String required
+    complementary String
+    firstName String required
+    lastName String required
+}
+
+entity Product {
+    name String unique required
+    price Float required min(0.5)
+    discount Float min(0) max(1)
+    stock Integer required min(0)
+    img String required
+    desc String
+    brand String required
+    isActive Boolean required
+}
+
+entity Order(DbOrder) {
+    createdAt LocalDate required
+    updatedAt LocalDate required
+    validatedAt LocalDate required
+    status OrderStatus required
+}
+
+entity OrderLine {
+}
+
+enum OrderStatus {
+	CART
+	PROCESSING,
+    PAYED,
+    FAILED
+}
+
+entity ClientConfig  {
+	tags String
+    name String
+    description String
+    isComlete Boolean
+    researchKey String
+    cpuPrice Float
+    gpuPrice Float
+    ram1Price Float
+    ram2Price Float
+    psuPrice Float
+    computerCasePrice Float
+    ventiradPrice Float
+    hd1Price Float
+    hd2Price Float
+}
+
+enum TagType {
+	BUREAUTIQUE,
+    GAMING,
+    CREATION,
+    DEVELOPPEMENT
+}
+
+entity Cpu {
+	frequency Float required
+    cacheL1 Integer
+    cacheL2 Integer
+    cacheL3 Integer
+    nbHeart Integer min(1) required
+    nbThread Integer min(1) required
+    hasVentirad Boolean required
+    socketType SocketType required
+    lithography Integer required
+    ramFrequencyMax Float required
+    consumption Integer required
+    hasGpu Boolean required
+}
+
+entity Gpu {
+	frequency Float required
+    memory Integer required
+    consumption Integer required
+    clockSpeed Integer required
+    lithography Integer required
+    output String required
+    inputPower String required
+    bus BusType required
+}
+
+enum BusType {
+	PCI,
+    AGP,
+    PCI_EXPRESS_1,
+    PCI_EXPRESS_2,
+    PCI_EXPRESS_3,
+    PCI_EXPRESS_4,
+    PCI_EXPRESS_5
+}
+
+entity HardDrive {
+	capacity Integer required
+    speedWrite Float required
+    speedRead Float required
+    type MemoryType required
+}
+
+enum MemoryType {
+	HDD,
+    SSD,
+    M2
+}
+
+entity Ram {
+    speed Integer required
+    type RamType required
+	frequency Float required
+    unitSize Integer required
+    quantity Integer required min(2) max(8)
+    cas String required
+}
+
+enum RamType {
+    DDR3,
+    DDR4,
+    DDR5
+}
+
+entity Psu {
+	power Integer required
+    certification String
+    modularity ModularityType required
+    nbSata Integer required min(1)
+    nbPciE Integer required min(1)
+    outputs String required
+}
+
+enum ModularityType {
+	NON_MODULAIRE,
+    SEMI_MODULAIRE,
+    MODULAIRE
+}
+
+entity Ventirad {
+    rangeFanSpeed String required
+    noise Integer
+    hasThermalPaste Boolean required
+}
+
+entity Dimension {
+	height Integer required
+    width Integer required
+    length Integer required
+}
+
+enum SocketType {
+	AM4,
+    TR4,
+    LGA_1150,
+    LGA_1151,
+    LGA_2066,
+    LGA_1200
+}
+
+enum TagType {
+    BUREAUTIQUE,
+    GAMING,
+    CREATION,
+    DEVELOPPEMENT
+}
+
+entity Mbe {
+	socketCpu SocketType required
+    ramType RamType required
+    ramFrequencyMax Float required
+    ramSizeMax Float required
+    pciOutputs String required
+    displayOutput String
+    storageOutput String
+    insideIO String
+    backPanelOutput String
+    bios String
+    format FormatType required
+}
+
+enum FormatType {
+	ATX,
+    FLEX_ATX,
+    MICRO_ATX,
+    MINI_ATX,
+    EATX,
+    AT
+}
+
+entity ComputerCase {
+	type CaseType required
+	formats String
+    sizeMaxGpu Integer required
+    sizeMaxVentirad Integer required
+    sizeMaxPsu Integer required
+    hardDriveSlots String
+    frontPanelOutputs String
+    fanIncluded String
+    fanSlotsAvailable String
+    watercoolingCompatibility String
+}
+
+enum CaseType {
+	PETITE,
+	MOYENNE,
+    GRANDE
+}
+
+relationship ManyToOne {
+	ClientConfig {cpu} to Cpu
+	ClientConfig {gpu} to Gpu
+	ClientConfig {psu} to Psu
+	ClientConfig {ventirad} to Ventirad
+	ClientConfig {mbe} to Mbe
+	ClientConfig {computerCase} to ComputerCase
+	OrderLine{config required} to ClientConfig
+    OrderLine{order required} to Order
+	ClientConfig {deadMemory1} to HardDrive
+	ClientConfig {deadMemory2} to HardDrive
+	ClientConfig {ram1} to Ram
+	ClientConfig {ram2} to Ram
+}
+
+relationship OneToOne {
+    Gpu{dimension} to Dimension
+    Ventirad{dimension} to Dimension
+    ComputerCase{dimension} to Dimension
+    Order{deliveryAddress} to Address
+}
+

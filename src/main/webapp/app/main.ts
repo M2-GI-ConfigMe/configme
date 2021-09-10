@@ -27,6 +27,20 @@ import TranslationService from '@/locale/translation.service';
 import UserOAuth2Service from '@/entities/user/user.oauth2.service';
 /* tslint:disable */
 
+import AddressService from '@/entities/address/address.service';
+import ProductService from '@/entities/product/product.service';
+import OrderService from '@/entities/order/order.service';
+import OrderLineService from '@/entities/order-line/order-line.service';
+import ClientConfigService from '@/entities/client-config/client-config.service';
+import CpuService from '@/entities/cpu/cpu.service';
+import GpuService from '@/entities/gpu/gpu.service';
+import HardDriveService from '@/entities/hard-drive/hard-drive.service';
+import RamService from '@/entities/ram/ram.service';
+import PsuService from '@/entities/psu/psu.service';
+import VentiradService from '@/entities/ventirad/ventirad.service';
+import DimensionService from '@/entities/dimension/dimension.service';
+import MbeService from '@/entities/mbe/mbe.service';
+import ComputerCaseService from '@/entities/computer-case/computer-case.service';
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
 /* tslint:enable */
@@ -85,6 +99,20 @@ new Vue({
 
     userOAuth2Service: () => new UserOAuth2Service(),
     translationService: () => translationService,
+    addressService: () => new AddressService(),
+    productService: () => new ProductService(),
+    orderService: () => new OrderService(),
+    orderLineService: () => new OrderLineService(),
+    clientConfigService: () => new ClientConfigService(),
+    cpuService: () => new CpuService(),
+    gpuService: () => new GpuService(),
+    hardDriveService: () => new HardDriveService(),
+    ramService: () => new RamService(),
+    psuService: () => new PsuService(),
+    ventiradService: () => new VentiradService(),
+    dimensionService: () => new DimensionService(),
+    mbeService: () => new MbeService(),
+    computerCaseService: () => new ComputerCaseService(),
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
     accountService: () => accountService,
   },

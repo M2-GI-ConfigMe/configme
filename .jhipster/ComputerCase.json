@@ -1,0 +1,69 @@
+{
+  "name": "ComputerCase",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "CaseType",
+      "fieldValues": "PETITE,MOYENNE,GRANDE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "formats",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sizeMaxGpu",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sizeMaxVentirad",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sizeMaxPsu",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hardDriveSlots",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "frontPanelOutputs",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fanIncluded",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fanSlotsAvailable",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "watercoolingCompatibility",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "dimension",
+      "otherEntityRelationshipName": "computerCase",
+      "relationshipName": "dimension",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "computer_case",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085047"
+}

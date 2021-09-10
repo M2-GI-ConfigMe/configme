@@ -1,0 +1,47 @@
+{
+  "configmeApp": {
+    "clientConfig": {
+      "home": {
+        "title": "ClientConfigs",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Client Config",
+        "createOrEditLabel": "Créer ou éditer un Client Config",
+        "notFound": "Aucun Client Config trouvé"
+      },
+      "created": "Un nouveau Client Config a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Client Config avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Client Config avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Client Config {{ id }} ?"
+      },
+      "detail": {
+        "title": "Client Config"
+      },
+      "id": "ID",
+      "tags": "Tags",
+      "name": "Name",
+      "description": "Description",
+      "isComlete": "Is Comlete",
+      "researchKey": "Research Key",
+      "cpuPrice": "Cpu Price",
+      "gpuPrice": "Gpu Price",
+      "ram1Price": "Ram 1 Price",
+      "ram2Price": "Ram 2 Price",
+      "psuPrice": "Psu Price",
+      "computerCasePrice": "Computer Case Price",
+      "ventiradPrice": "Ventirad Price",
+      "hd1Price": "Hd 1 Price",
+      "hd2Price": "Hd 2 Price",
+      "cpu": "Cpu",
+      "gpu": "Gpu",
+      "psu": "Psu",
+      "ventirad": "Ventirad",
+      "mbe": "Mbe",
+      "computerCase": "Computer Case",
+      "deadMemory1": "Dead Memory 1",
+      "deadMemory2": "Dead Memory 2",
+      "ram1": "Ram 1",
+      "ram2": "Ram 2"
+    }
+  }
+}

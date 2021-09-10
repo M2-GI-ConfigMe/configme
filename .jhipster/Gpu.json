@@ -1,0 +1,65 @@
+{
+  "name": "Gpu",
+  "fields": [
+    {
+      "fieldName": "frequency",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "memory",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consumption",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "clockSpeed",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lithography",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "output",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "inputPower",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "bus",
+      "fieldType": "BusType",
+      "fieldValues": "PCI,AGP,PCI_EXPRESS_1,PCI_EXPRESS_2,PCI_EXPRESS_3,PCI_EXPRESS_4,PCI_EXPRESS_5",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "dimension",
+      "otherEntityRelationshipName": "gpu",
+      "relationshipName": "dimension",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "gpu",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210910085040"
+}

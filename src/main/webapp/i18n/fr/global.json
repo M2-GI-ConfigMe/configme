@@ -7,6 +7,20 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entités",
+        "address": "Address",
+        "product": "Product",
+        "order": "Order",
+        "orderLine": "Order Line",
+        "clientConfig": "Client Config",
+        "cpu": "Cpu",
+        "gpu": "Gpu",
+        "hardDrive": "Hard Drive",
+        "ram": "Ram",
+        "psu": "Psu",
+        "ventirad": "Ventirad",
+        "dimension": "Dimension",
+        "mbe": "Mbe",
+        "computerCase": "Computer Case",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
