@@ -1,49 +1,48 @@
 <template>
-  <div>
-    <v-app-bar app>
-      <v-toolbar-title variant="primary" class="font-weight-bold text-info">
-        <router-link to="/" tag="span" style="cursor: pointer">
+  <div class>
+    <v-app-bar app class="px-15">
+      <v-toolbar-title class="font-weight-bold">
+        <router-link to="/" tag="span" style="color: #2196f3; cursor: pointer; font-size: 1.5em">
           {{ appTitle }}
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-xs-only">
-        <v-btn text v-on:click="openLogin()" v-if="!authenticated"> Connexion </v-btn>
-        <v-btn
-          text
-          v-if="authenticated"
-          v-on:click="$router.push('/account/settings')"
-          :color="$route.path == '/account/settings' ? 'info' : ''"
-        >
-          Mon Compte
-        </v-btn>
-        <v-menu offset-y v-if="authenticated && hasAnyAuthority('ROLE_ADMIN')">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" :color="hasItemActive(entitiesItems) ? 'info' : ''"> Entités </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in entitiesItems"
-              :key="index"
-              @click="$router.push(item.path)"
-              :class="item.path === $route.path ? 'info text-white' : ''"
-            >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-toolbar-items>
+      <v-btn color="primary" large elevation="0" v-on:click="openLogin()" v-if="!authenticated"> Connexion </v-btn>
+      <v-btn
+        text
+        v-if="authenticated"
+        v-on:click="$router.push('/account/settings')"
+        :color="$route.path == '/account/settings' ? 'primary' : ''"
+        class="font-weight-bold"
+      >
+        Mon Compte
+      </v-btn>
+      <v-menu offset-y v-if="authenticated && hasAnyAuthority('ROLE_ADMIN')">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn text v-bind="attrs" v-on="on" :color="hasItemActive(entitiesItems) ? 'primary' : ''"> Entités </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in entitiesItems"
+            :key="index"
+            @click="$router.push(item.path)"
+            :class="item.path === $route.path ? 'primary text-white' : ''"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-toolbar-items>
         <v-menu offset-y v-if="authenticated && hasAnyAuthority('ROLE_ADMIN')">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" :color="hasItemActive(adminItems) ? 'info' : ''"> Administration </v-btn>
+            <v-btn text v-bind="attrs" v-on="on" :color="hasItemActive(adminItems) ? 'primary' : ''"> Administration </v-btn>
           </template>
           <v-list>
             <v-list-item
               v-for="(item, index) in adminItems"
               :key="index"
               @click="$router.push(item.path)"
-              :class="item.path === $route.path ? 'info text-white' : ''"
+              :class="item.path === $route.path ? 'primary text-white' : ''"
             >
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
