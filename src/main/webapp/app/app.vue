@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <v-app>
     <ribbon></ribbon>
     <div id="app-header">
-      <jhi-navbar></jhi-navbar>
+      <navbar></navbar>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid mt-10">
       <div class="card jh-card">
         <router-view></router-view>
       </div>
@@ -15,7 +15,7 @@
 
       <jhi-footer></jhi-footer>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts" src="./app.component.ts"></script>

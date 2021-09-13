@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class HardDriveResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/hard-drives")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<HardDrive> createHardDrive(@Valid @RequestBody HardDrive hardDrive) throws URISyntaxException {
         log.debug("REST request to save HardDrive : {}", hardDrive);
         if (hardDrive.getId() != null) {
@@ -71,6 +73,7 @@ public class HardDriveResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/hard-drives/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<HardDrive> updateHardDrive(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HardDrive hardDrive
@@ -106,6 +109,7 @@ public class HardDriveResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/hard-drives/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<HardDrive> partialUpdateHardDrive(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HardDrive hardDrive
@@ -181,6 +185,7 @@ public class HardDriveResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/hard-drives/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteHardDrive(@PathVariable Long id) {
         log.debug("REST request to delete HardDrive : {}", id);
         hardDriveRepository.deleteById(id);

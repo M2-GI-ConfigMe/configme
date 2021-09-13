@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class ComputerCaseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/computer-cases")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ComputerCase> createComputerCase(@Valid @RequestBody ComputerCase computerCase) throws URISyntaxException {
         log.debug("REST request to save ComputerCase : {}", computerCase);
         if (computerCase.getId() != null) {
@@ -71,6 +73,7 @@ public class ComputerCaseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/computer-cases/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ComputerCase> updateComputerCase(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody ComputerCase computerCase
@@ -106,6 +109,7 @@ public class ComputerCaseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/computer-cases/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ComputerCase> partialUpdateComputerCase(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody ComputerCase computerCase
@@ -199,6 +203,7 @@ public class ComputerCaseResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/computer-cases/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteComputerCase(@PathVariable Long id) {
         log.debug("REST request to delete ComputerCase : {}", id);
         computerCaseRepository.deleteById(id);

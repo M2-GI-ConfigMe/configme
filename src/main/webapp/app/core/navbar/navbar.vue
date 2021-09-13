@@ -1,4 +1,59 @@
 <template>
+  <div>
+    <v-app-bar app>
+      <v-toolbar-title variant="primary" class="font-weight-bold text-info">
+        <router-link to="/" tag="span" style="cursor: pointer">
+          {{ appTitle }}
+        </router-link>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-xs-only">
+        <v-btn text v-on:click="openLogin()" v-if="!authenticated"> Connexion </v-btn>
+        <v-btn
+          text
+          v-if="authenticated"
+          v-on:click="$router.push('/account/settings')"
+          :color="$route.path == '/account/settings' ? 'info' : ''"
+        >
+          Mon Compte
+        </v-btn>
+        <v-menu offset-y v-if="authenticated && hasAnyAuthority('ROLE_ADMIN')">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text v-bind="attrs" v-on="on" :color="hasItemActive(entitiesItems) ? 'info' : ''"> Entités </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in entitiesItems"
+              :key="index"
+              @click="$router.push(item.path)"
+              :class="item.path === $route.path ? 'info text-white' : ''"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
+      <v-toolbar-items>
+        <v-menu offset-y v-if="authenticated && hasAnyAuthority('ROLE_ADMIN')">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text v-bind="attrs" v-on="on" :color="hasItemActive(adminItems) ? 'info' : ''"> Administration </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in adminItems"
+              :key="index"
+              @click="$router.push(item.path)"
+              :class="item.path === $route.path ? 'info text-white' : ''"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
+      <v-btn text v-if="authenticated" v-on:click="logout()"> Déconnexion </v-btn>
+    </v-app-bar>
+  </div>
+  <!--
   <b-navbar data-cy="navbar" toggleable="md" type="dark" class="jh-navbar">
     <b-navbar-brand class="logo" b-link to="/">
       <span class="logo-img"></span>
@@ -85,7 +140,7 @@
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.computerCase')">Computer Case</span>
           </b-dropdown-item>
-          <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+          <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here 
         </b-nav-item-dropdown>
         <b-nav-item-dropdown
           right
@@ -182,10 +237,10 @@
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
-  </b-navbar>
+  </b-navbar>-->
 </template>
 
-<script lang="ts" src="./jhi-navbar.component.ts"></script>
+<script lang="ts" src="./navbar.component.ts"></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -204,7 +259,7 @@
 
 .jh-navbar .profile-image {
   margin: -10px 0px;
-  height: 40px;
+  :40px ;
   width: 40px;
   border-radius: 50%;
 }

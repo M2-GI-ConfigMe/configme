@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class GpuResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/gpus")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Gpu> createGpu(@Valid @RequestBody Gpu gpu) throws URISyntaxException {
         log.debug("REST request to save Gpu : {}", gpu);
         if (gpu.getId() != null) {
@@ -71,6 +73,7 @@ public class GpuResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/gpus/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Gpu> updateGpu(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Gpu gpu)
         throws URISyntaxException {
         log.debug("REST request to update Gpu : {}, {}", id, gpu);
@@ -104,6 +107,7 @@ public class GpuResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/gpus/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Gpu> partialUpdateGpu(@PathVariable(value = "id", required = false) final Long id, @NotNull @RequestBody Gpu gpu)
         throws URISyntaxException {
         log.debug("REST request to partial update Gpu partially : {}, {}", id, gpu);
@@ -164,6 +168,7 @@ public class GpuResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of gpus in body.
      */
     @GetMapping("/gpus")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<Gpu> getAllGpus() {
         log.debug("REST request to get all Gpus");
         return gpuRepository.findAll();
@@ -189,6 +194,7 @@ public class GpuResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/gpus/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteGpu(@PathVariable Long id) {
         log.debug("REST request to delete Gpu : {}", id);
         gpuRepository.deleteById(id);
