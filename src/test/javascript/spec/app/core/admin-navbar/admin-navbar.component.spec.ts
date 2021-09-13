@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount, Wrapper } from '@vue/test-utils';
-import JhiNavbar from '@/core/jhi-navbar/jhi-navbar.vue';
-import JhiNavbarClass from '@/core/jhi-navbar/jhi-navbar.component';
+import AdminNavbar from '@/core/admin-navbar/admin-navbar.vue';
+import AdminNavbarClass from '@/core/admin-navbar/admin-navbar.component';
 import * as config from '@/shared/config/config';
 import router from '@/router';
 
@@ -19,15 +19,15 @@ localVue.component('b-navbar-toggle', {});
 localVue.component('b-navbar-brand', {});
 localVue.component('b-navbar-nav', {});
 
-describe('JhiNavbar', () => {
-  let jhiNavbar: JhiNavbarClass;
-  let wrapper: Wrapper<JhiNavbarClass>;
+describe('adminNavbar', () => {
+  let adminNavbar: AdminNavbarClass;
+  let wrapper: Wrapper<AdminNavbarClass>;
   const loginService = { openLogin: jest.fn() };
   const accountService = { hasAnyAuthorityAndCheckAuth: jest.fn().mockImplementation(() => Promise.resolve(true)) };
   const translationService = { refreshTranslation: jest.fn() };
 
   beforeEach(() => {
-    wrapper = shallowMount<JhiNavbarClass>(JhiNavbar, {
+    wrapper = shallowMount<AdminNavbarClass>(AdminNavbar, {
       i18n,
       store,
       router,
@@ -38,59 +38,59 @@ describe('JhiNavbar', () => {
         accountService: () => accountService,
       },
     });
-    jhiNavbar = wrapper.vm;
+    adminNavbar = wrapper.vm;
   });
   it('should refresh translations', () => {
     expect(translationService.refreshTranslation).toHaveBeenCalled();
   });
 
   it('should not have user data set', () => {
-    expect(jhiNavbar.authenticated).toBeFalsy();
-    expect(jhiNavbar.openAPIEnabled).toBeFalsy();
-    expect(jhiNavbar.inProduction).toBeFalsy();
+    expect(adminNavbar.authenticated).toBeFalsy();
+    expect(adminNavbar.openAPIEnabled).toBeFalsy();
+    expect(adminNavbar.inProduction).toBeFalsy();
   });
 
   it('should have user data set after authentication', () => {
     store.commit('authenticated', { login: 'test' });
 
-    expect(jhiNavbar.authenticated).toBeTruthy();
+    expect(adminNavbar.authenticated).toBeTruthy();
   });
 
   it('should have profile info set after info retrieved', () => {
     store.commit('setActiveProfiles', ['prod', 'api-docs']);
 
-    expect(jhiNavbar.openAPIEnabled).toBeTruthy();
-    expect(jhiNavbar.inProduction).toBeTruthy();
+    expect(adminNavbar.openAPIEnabled).toBeTruthy();
+    expect(adminNavbar.inProduction).toBeTruthy();
   });
 
   it('should use login service', () => {
-    jhiNavbar.openLogin();
+    adminNavbar.openLogin();
     expect(loginService.openLogin).toHaveBeenCalled();
   });
 
   it('should use account service', () => {
-    jhiNavbar.hasAnyAuthority('auth');
+    adminNavbar.hasAnyAuthority('auth');
 
     expect(accountService.hasAnyAuthorityAndCheckAuth).toHaveBeenCalled();
   });
 
   it('logout should clear credentials', () => {
     store.commit('authenticated', { login: 'test' });
-    jhiNavbar.logout();
+    adminNavbar.logout();
 
-    expect(jhiNavbar.authenticated).toBeFalsy();
+    expect(adminNavbar.authenticated).toBeFalsy();
   });
 
   it('should determine active route', () => {
     router.push('/toto');
 
-    expect(jhiNavbar.subIsActive('/titi')).toBeFalsy();
-    expect(jhiNavbar.subIsActive('/toto')).toBeTruthy();
-    expect(jhiNavbar.subIsActive(['/toto', 'toto'])).toBeTruthy();
+    expect(adminNavbar.subIsActive('/titi')).toBeFalsy();
+    expect(adminNavbar.subIsActive('/toto')).toBeTruthy();
+    expect(adminNavbar.subIsActive(['/toto', 'toto'])).toBeTruthy();
   });
 
   it('should call translationService when changing language', () => {
-    jhiNavbar.changeLanguage('fr');
+    adminNavbar.changeLanguage('fr');
 
     expect(translationService.refreshTranslation).toHaveBeenCalled();
   });
@@ -98,7 +98,7 @@ describe('JhiNavbar', () => {
   it('should check for correct language', () => {
     store.commit('currentLanguage', 'fr');
 
-    expect(jhiNavbar.isActiveLanguage('en')).toBeFalsy();
-    expect(jhiNavbar.isActiveLanguage('fr')).toBeTruthy();
+    expect(adminNavbar.isActiveLanguage('en')).toBeFalsy();
+    expect(adminNavbar.isActiveLanguage('fr')).toBeTruthy();
   });
 });

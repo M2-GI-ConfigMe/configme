@@ -42,8 +42,6 @@ import MbeService from '@/entities/mbe/mbe.service';
 import ComputerCaseService from '@/entities/computer-case/computer-case.service';
 
 //Vuetify
-// import Vuetify from 'vuetify'
-// import 'vuetify/dist/vuetify.min.css'
 import vuetify from '@/plugins/vuetify';
 
 //Vue.use(Vuetify);

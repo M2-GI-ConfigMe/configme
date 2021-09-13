@@ -9,6 +9,7 @@
 # Project Config
 ######################
 /src/main/resources/config/*.yml
+package-lock.json
 
 ######################
 # Node

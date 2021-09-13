@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class CpuResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/cpus")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Cpu> createCpu(@Valid @RequestBody Cpu cpu) throws URISyntaxException {
         log.debug("REST request to save Cpu : {}", cpu);
         if (cpu.getId() != null) {
@@ -71,6 +73,7 @@ public class CpuResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/cpus/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Cpu> updateCpu(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Cpu cpu)
         throws URISyntaxException {
         log.debug("REST request to update Cpu : {}, {}", id, cpu);
@@ -104,6 +107,7 @@ public class CpuResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/cpus/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Cpu> partialUpdateCpu(@PathVariable(value = "id", required = false) final Long id, @NotNull @RequestBody Cpu cpu)
         throws URISyntaxException {
         log.debug("REST request to partial update Cpu partially : {}, {}", id, cpu);
@@ -201,6 +205,7 @@ public class CpuResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/cpus/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteCpu(@PathVariable Long id) {
         log.debug("REST request to delete Cpu : {}", id);
         cpuRepository.deleteById(id);

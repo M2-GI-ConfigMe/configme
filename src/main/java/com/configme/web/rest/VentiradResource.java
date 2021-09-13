@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class VentiradResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/ventirads")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Ventirad> createVentirad(@Valid @RequestBody Ventirad ventirad) throws URISyntaxException {
         log.debug("REST request to save Ventirad : {}", ventirad);
         if (ventirad.getId() != null) {
@@ -71,6 +73,7 @@ public class VentiradResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/ventirads/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Ventirad> updateVentirad(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Ventirad ventirad
@@ -106,6 +109,7 @@ public class VentiradResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/ventirads/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Ventirad> partialUpdateVentirad(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Ventirad ventirad
@@ -181,6 +185,7 @@ public class VentiradResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/ventirads/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteVentirad(@PathVariable Long id) {
         log.debug("REST request to delete Ventirad : {}", id);
         ventiradRepository.deleteById(id);
