@@ -25,14 +25,13 @@ export default class LoginForm extends Vue {
         const bearerToken = result.headers.authorization;
         if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
           const jwt = bearerToken.slice(7, bearerToken.length);
-          if (false) {
-            //this.rememberMe) {
+          /*if (this.rememberMe) {
             localStorage.setItem('jhi-authenticationToken', jwt);
             sessionStorage.removeItem('jhi-authenticationToken');
-          } else {
-            sessionStorage.setItem('jhi-authenticationToken', jwt);
-            localStorage.removeItem('jhi-authenticationToken');
-          }
+          } else {*/
+          sessionStorage.setItem('jhi-authenticationToken', jwt);
+          localStorage.removeItem('jhi-authenticationToken');
+          //}
         }
         this.authenticationError = false;
         this.$root.$emit('bv::hide::modal', 'login-page');
