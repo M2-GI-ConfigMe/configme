@@ -5,7 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
 const vueLoaderConfig = require('./loader.conf');
-const { VuetifyLoaderPlugin } = require('vuetify-loader');
+//const { VuetifyLoaderPlugin } = require('vuetify-loader');
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
@@ -126,7 +126,7 @@ module.exports = env =>
       },
       plugins: [
         new VueLoaderPlugin(),
-        new VuetifyLoaderPlugin(),
+        //new VuetifyLoaderPlugin(),
         new CopyWebpackPlugin({
           patterns: [
             {
