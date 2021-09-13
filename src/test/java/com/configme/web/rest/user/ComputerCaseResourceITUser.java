@@ -100,6 +100,8 @@ class ComputerCaseResourceITUser {
             .fanSlotsAvailable(DEFAULT_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(DEFAULT_WATERCOOLING_COMPATIBILITY)
             .dimension(DEFAULT_DIMENSION);
+
+        ProductResourceIT.createProductField(computerCase);
         return computerCase;
     }
 
@@ -122,6 +124,8 @@ class ComputerCaseResourceITUser {
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
             .dimension(UPDATED_DIMENSION);
+
+        ProductResourceIT.updateProductField(computerCase);
         return computerCase;
     }
 
@@ -146,13 +150,44 @@ class ComputerCaseResourceITUser {
 
     @Test
     @Transactional
+    void getAllComputerCases() throws Exception {
+        // Initialize the database
+        computerCaseRepository.saveAndFlush(computerCase);
+
+        // Get all the computerCaseList
+        var action = restComputerCaseMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(computerCase.getId().intValue())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].formats").value(hasItem(DEFAULT_FORMATS)))
+            .andExpect(jsonPath("$.[*].sizeMaxGpu").value(hasItem(DEFAULT_SIZE_MAX_GPU)))
+            .andExpect(jsonPath("$.[*].sizeMaxVentirad").value(hasItem(DEFAULT_SIZE_MAX_VENTIRAD)))
+            .andExpect(jsonPath("$.[*].sizeMaxPsu").value(hasItem(DEFAULT_SIZE_MAX_PSU)))
+            .andExpect(jsonPath("$.[*].hardDriveSlots").value(hasItem(DEFAULT_HARD_DRIVE_SLOTS)))
+            .andExpect(jsonPath("$.[*].frontPanelOutputs").value(hasItem(DEFAULT_FRONT_PANEL_OUTPUTS)))
+            .andExpect(jsonPath("$.[*].fanIncluded").value(hasItem(DEFAULT_FAN_INCLUDED)))
+            .andExpect(jsonPath("$.[*].fanSlotsAvailable").value(hasItem(DEFAULT_FAN_SLOTS_AVAILABLE)))
+            .andExpect(jsonPath("$.[*].watercoolingCompatibility").value(hasItem(DEFAULT_WATERCOOLING_COMPATIBILITY)))
+            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
+    }
+
+    @Test
+    @Transactional
     void getComputerCase() throws Exception {
         // Initialize the database
         computerCaseRepository.saveAndFlush(computerCase);
 
         // Get the computerCase
-        restComputerCaseMockMvc
-            .perform(get(ENTITY_API_URL_ID, computerCase.getId()))
+        var action = restComputerCaseMockMvc.perform(get(ENTITY_API_URL_ID, computerCase.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(computerCase.getId().intValue()))
@@ -167,6 +202,8 @@ class ComputerCaseResourceITUser {
             .andExpect(jsonPath("$.fanSlotsAvailable").value(DEFAULT_FAN_SLOTS_AVAILABLE))
             .andExpect(jsonPath("$.watercoolingCompatibility").value(DEFAULT_WATERCOOLING_COMPATIBILITY))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
+
+        ProductResourceIT.getProductAssertProductField(action);
     }
 
     @Test
@@ -200,6 +237,8 @@ class ComputerCaseResourceITUser {
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
             .dimension(UPDATED_DIMENSION);
+
+        ProductResourceIT.updateProductField(updatedComputerCase);
 
         restComputerCaseMockMvc
             .perform(
@@ -235,6 +274,8 @@ class ComputerCaseResourceITUser {
             .fanIncluded(UPDATED_FAN_INCLUDED)
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY);
+
+        ProductResourceIT.partialUpdateField(partialUpdatedComputerCase);
 
         restComputerCaseMockMvc
             .perform(

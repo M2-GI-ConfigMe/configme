@@ -142,6 +142,27 @@ public class VentiradResource {
                     if (ventirad.getDimension() != null) {
                         existingVentirad.setDimension(ventirad.getDimension());
                     }
+                    if (ventirad.getBrand() != null) {
+                        existingVentirad.setBrand(ventirad.getBrand());
+                    }
+                    if (ventirad.getDiscount() != null) {
+                        existingVentirad.setDiscount(ventirad.getDiscount());
+                    }
+                    if (ventirad.getPrice() != null) {
+                        existingVentirad.setPrice(ventirad.getPrice());
+                    }
+                    if (ventirad.getStock() != null) {
+                        existingVentirad.setStock(ventirad.getStock());
+                    }
+                    if (ventirad.getDesc() != null) if (ventirad.getImg() != null) {
+                        existingVentirad.setImg(ventirad.getImg());
+                    }
+                    if (ventirad.getName() != null) {
+                        existingVentirad.setName(ventirad.getName());
+                    }
+                    if (ventirad.getIsActive() != null) {
+                        existingVentirad.setIsActive(ventirad.getIsActive());
+                    }
 
                     return existingVentirad;
                 }

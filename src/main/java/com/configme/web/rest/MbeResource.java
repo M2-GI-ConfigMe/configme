@@ -159,6 +159,30 @@ public class MbeResource {
                     if (mbe.getFormat() != null) {
                         existingMbe.setFormat(mbe.getFormat());
                     }
+                    if (mbe.getBrand() != null) {
+                        existingMbe.setBrand(mbe.getBrand());
+                    }
+                    if (mbe.getDiscount() != null) {
+                        existingMbe.setDiscount(mbe.getDiscount());
+                    }
+                    if (mbe.getPrice() != null) {
+                        existingMbe.setPrice(mbe.getPrice());
+                    }
+                    if (mbe.getStock() != null) {
+                        existingMbe.setStock(mbe.getStock());
+                    }
+                    if (mbe.getDesc() != null) {
+                        existingMbe.setDesc(mbe.getDesc());
+                    }
+                    if (mbe.getImg() != null) {
+                        existingMbe.setImg(mbe.getImg());
+                    }
+                    if (mbe.getName() != null) {
+                        existingMbe.setName(mbe.getName());
+                    }
+                    if (mbe.getIsActive() != null) {
+                        existingMbe.setIsActive(mbe.getIsActive());
+                    }
 
                     return existingMbe;
                 }

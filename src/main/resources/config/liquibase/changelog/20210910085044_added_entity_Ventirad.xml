@@ -32,6 +32,30 @@
             <column name="length" type="integer">
                 <constraints nullable="true"/>
             </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_product__name_ventirad" />
+            </column>
+            <column name="price" type="${floatType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="discount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="stock" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="img" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="jhi_desc" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="brand" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_active" type="boolean">
+                <constraints nullable="false" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

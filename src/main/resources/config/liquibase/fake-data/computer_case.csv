@@ -1,11 +1,11 @@
-id;type;formats;size_max_gpu;size_max_ventirad;size_max_psu;hard_drive_slots;front_panel_outputs;fan_included;fan_slots_available;watercooling_compatibility;height;width;length
-1;MOYENNE;Pre-emptive;28770;79356;57454;invoice Analyste;Jewelery Loan Refined;benchmark hybrid leading-edge;Krone granular;cross-platform deposit;12;13;17
-2;PETITE;Cheese Burkina;56471;53933;1114;Guarani Dinar SDD;JSON;Chips hack Electronics;generation matrix algorithm;Account;12;13;17
-3;MOYENNE;white input;85187;20803;87471;Plastic Baby;action-items Île-de-France;Towels b;repurpose Towels;transmitter Executif card;12;13;17
-4;GRANDE;b responsive Aquitaine;21251;51970;83254;Malte service-desk;reintermediate synthesize multi-byte;Tenge Account pixel;Towels;Avon SDR;12;13;17
-5;MOYENNE;quantify;18448;99804;68027;hack Grass-roots Credit;Avon c;RAM Ball Incredible;indexing c b;e-tailers;12;13;17
-6;GRANDE;Agent haptic Programmable;50874;45792;21436;Home Sleek Rustic;generating;cultivate generating reintermediate;a connecting;indexing Kids Dollar;12;13;17
-7;GRANDE;needs-based du;94195;22286;73687;override up;a Grocery b;Agent GB secured;a;Saint-Jacques platforms Up-sized;12;13;17
-8;GRANDE;indexing Horizontal solid;25676;36019;77340;algorithm green;process syndicate;Comores program Small;protocol needs-based;a Israeli;12;13;17
-9;PETITE;Ergonomic;34258;24148;28243;Marcadet Guinée;parsing;Cotton Bûcherie;Refined Superviseur;communities;12;13;17
-10;GRANDE;cultivate EXE;51271;23516;269;extend Refined Soap;Corse;Reverse-engineered alarm;c;Intelligent AGP;12;13;17
+id;type;formats;size_max_gpu;size_max_ventirad;size_max_psu;hard_drive_slots;front_panel_outputs;fan_included;fan_slots_available;watercooling_compatibility;height;width;length;name;price;discount;stock;img;jhi_desc;brand;is_active
+1;MOYENNE;Pre-emptive;28770;79356;57454;invoice Analyste;Jewelery Loan Refined;benchmark hybrid leading-edge;Krone granular;cross-platform deposit;12;13;17;Steel1;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+2;PETITE;Cheese Burkina;56471;53933;1114;Guarani Dinar SDD;JSON;Chips hack Electronics;generation matrix algorithm;Account;12;13;17;Steel2;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+3;MOYENNE;white input;85187;20803;87471;Plastic Baby;action-items Île-de-France;Towels b;repurpose Towels;transmitter Executif card;12;13;17;Steel3;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+4;GRANDE;b responsive Aquitaine;21251;51970;83254;Malte service-desk;reintermediate synthesize multi-byte;Tenge Account pixel;Towels;Avon SDR;12;13;17;Steel4;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+5;MOYENNE;quantify;18448;99804;68027;hack Grass-roots Credit;Avon c;RAM Ball Incredible;indexing c b;e-tailers;12;13;17;Steel5;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+6;GRANDE;Agent haptic Programmable;50874;45792;21436;Home Sleek Rustic;generating;cultivate generating reintermediate;a connecting;indexing Kids Dollar;12;13;17;Steel6;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+7;GRANDE;needs-based du;94195;22286;73687;override up;a Grocery b;Agent GB secured;a;Saint-Jacques platforms Up-sized;12;13;17;Steel7;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+8;GRANDE;indexing Horizontal solid;25676;36019;77340;algorithm green;process syndicate;Comores program Small;protocol needs-based;a Israeli;12;13;17;Steel8;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+9;PETITE;Ergonomic;34258;24148;28243;Marcadet Guinée;parsing;Cotton Bûcherie;Refined Superviseur;communities;12;13;17;Steel9;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+10;GRANDE;cultivate EXE;51271;23516;269;extend Refined Soap;Corse;Reverse-engineered alarm;c;Intelligent AGP;12;13;17;Steel10;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false

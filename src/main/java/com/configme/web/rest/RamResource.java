@@ -141,6 +141,30 @@ public class RamResource {
                     if (ram.getCas() != null) {
                         existingRam.setCas(ram.getCas());
                     }
+                    if (ram.getBrand() != null) {
+                        existingRam.setBrand(ram.getBrand());
+                    }
+                    if (ram.getDiscount() != null) {
+                        existingRam.setDiscount(ram.getDiscount());
+                    }
+                    if (ram.getPrice() != null) {
+                        existingRam.setPrice(ram.getPrice());
+                    }
+                    if (ram.getStock() != null) {
+                        existingRam.setStock(ram.getStock());
+                    }
+                    if (ram.getDesc() != null) {
+                        existingRam.setDesc(ram.getDesc());
+                    }
+                    if (ram.getImg() != null) {
+                        existingRam.setImg(ram.getImg());
+                    }
+                    if (ram.getName() != null) {
+                        existingRam.setName(ram.getName());
+                    }
+                    if (ram.getIsActive() != null) {
+                        existingRam.setIsActive(ram.getIsActive());
+                    }
 
                     return existingRam;
                 }

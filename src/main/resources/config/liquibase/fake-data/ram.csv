@@ -1,11 +1,11 @@
-id;type;frequency;unit_size;quantity;cas
-1;DDR4;25827;3467;8;Savings Joubert Producteur
-2;DDR4;73421;44377;2;Fundamental Fresh Baby
-3;DDR4;23217;6362;4;Sports
-4;DDR3;57634;90680;6;backing
-5;DDR3;82183;87936;7;Angola leading-edge Bretagne
-6;DDR4;34575;95112;7;Tools Account
-7;DDR3;50552;35394;3;haptic
-8;DDR3;53886;73012;8;action-items Steel
-9;DDR5;27160;17990;7;Ingenieur generating embrace
-10;DDR4;48730;56086;4;real-time
+id;type;frequency;unit_size;quantity;cas;name;price;discount;stock;img;jhi_desc;brand;is_active
+1;DDR4;25827;3467;8;Savings Joubert Producteur;Steel61;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+2;DDR4;73421;44377;2;Fundamental Fresh Baby;Steel62;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+3;DDR4;23217;6362;4;Sports;Steel63;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+4;DDR3;57634;90680;6;backing;Steel64;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+5;DDR3;82183;87936;7;Angola leading-edge Bretagne;Steel65;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+6;DDR4;34575;95112;7;Tools Account;Steel66;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+7;DDR3;50552;35394;3;haptic;Steel67;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+8;DDR3;53886;73012;8;action-items Steel;Steel68;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+9;DDR5;27160;17990;7;Ingenieur generating embrace;Steel69;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+10;DDR4;48730;56086;4;real-time;Steel70;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
