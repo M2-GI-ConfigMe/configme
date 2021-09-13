@@ -92,6 +92,11 @@ describe('Service Tests', () => {
             fanIncluded: 'BBBBBB',
             fanSlotsAvailable: 'BBBBBB',
             watercoolingCompatibility: 'BBBBBB',
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           elemDefault
         );
@@ -122,6 +127,11 @@ describe('Service Tests', () => {
             frontPanelOutputs: 'BBBBBB',
             fanIncluded: 'BBBBBB',
             fanSlotsAvailable: 'BBBBBB',
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           new ComputerCase()
         );
@@ -159,6 +169,11 @@ describe('Service Tests', () => {
             fanIncluded: 'BBBBBB',
             fanSlotsAvailable: 'BBBBBB',
             watercoolingCompatibility: 'BBBBBB',
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           elemDefault
         );

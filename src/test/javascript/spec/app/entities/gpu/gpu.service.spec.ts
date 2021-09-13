@@ -90,6 +90,11 @@ describe('Service Tests', () => {
             output: 'BBBBBB',
             inputPower: 'BBBBBB',
             bus: 'BBBBBB',
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           elemDefault
         );
@@ -122,6 +127,11 @@ describe('Service Tests', () => {
             lithography: 1,
             inputPower: 'BBBBBB',
             bus: 'BBBBBB',
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           new Gpu()
         );
@@ -157,6 +167,11 @@ describe('Service Tests', () => {
             output: 'BBBBBB',
             inputPower: 'BBBBBB',
             bus: 'BBBBBB',
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           elemDefault
         );

@@ -84,6 +84,11 @@ describe('Service Tests', () => {
             rangeFanSpeed: 'BBBBBB',
             noise: 1,
             hasThermalPaste: true,
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           elemDefault
         );
@@ -112,6 +117,11 @@ describe('Service Tests', () => {
           {
             noise: 1,
             hasThermalPaste: true,
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           new Ventirad()
         );
@@ -142,6 +152,11 @@ describe('Service Tests', () => {
             rangeFanSpeed: 'BBBBBB',
             noise: 1,
             hasThermalPaste: true,
+            dimension: {
+              height: 15,
+              width: 15,
+              length: 15,
+            },
           },
           elemDefault
         );
