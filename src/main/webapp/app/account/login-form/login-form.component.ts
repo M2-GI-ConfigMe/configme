@@ -15,17 +15,18 @@ export default class LoginForm extends Vue {
   public authenticationError = null;
   public login = null;
   public password = null;
-  public rememberMe: boolean = null;
+  //public rememberMe: boolean = null;
 
   public doLogin(): void {
-    const data = { username: this.login, password: this.password, rememberMe: this.rememberMe };
+    const data = { username: this.login, password: this.password, rememberMe: false /*this.rememberMe*/ };
     axios
       .post('api/authenticate', data)
       .then(result => {
         const bearerToken = result.headers.authorization;
         if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
           const jwt = bearerToken.slice(7, bearerToken.length);
-          if (this.rememberMe) {
+          if (false) {
+            //this.rememberMe) {
             localStorage.setItem('jhi-authenticationToken', jwt);
             sessionStorage.removeItem('jhi-authenticationToken');
           } else {

@@ -1,46 +1,25 @@
 <template>
   <div class="modal-body">
     <div class="row justify-content-center">
-      <div class="col-md-8">
-        <b-alert show data-cy="loginError" variant="danger" v-if="authenticationError" v-html="$t('login.messages.error.authentication')">
-          <strong>Failed to sign in!</strong> Please check your credentials and try again.
-        </b-alert>
-      </div>
-      <div class="col-md-8">
-        <b-form role="form" v-on:submit.prevent="doLogin()">
-          <b-form-group v-bind:label="$t('global.form[\'username.label\']')" label-for="username">
-            <b-form-input
-              id="username"
-              type="text"
-              name="username"
-              autofocus
-              v-bind:placeholder="$t('global.form[\'username.placeholder\']')"
-              v-model="login"
-              data-cy="username"
-            >
-            </b-form-input>
-          </b-form-group>
-          <b-form-group v-bind:label="$t('login.form.password')" label-for="password">
-            <b-form-input
-              id="password"
-              type="password"
-              name="password"
-              v-model.trim="name"
-              v-bind:placeholder="$t('login.form[\'password.placeholder\']')"
-              v-model="password"
-              data-cy="password"
-            >
-            </b-form-input>
-          </b-form-group>
-          <b-form-checkbox id="rememberMe" name="rememberMe" v-model="rememberMe" checked>
-            <span v-text="$t('login.form.rememberme')">Remember me</span>
-          </b-form-checkbox>
-          <div>
-            <b-button data-cy="submit" type="submit" variant="primary" v-text="$t('login.form.button')">Sign in</b-button>
+      <v-alert v-if="authenticationError">
+        <strong>Impossible de se connecter !</strong> Vérifier l'identifiant et le mot de passe puis réessayer.
+      </v-alert>
+      <div class="col">
+        <v-form role="form" v-on:submit.prevent="doLogin()">
+          <v-text-field v-model="login" label="E-mail" placeholder="template@email.com" outlined required> </v-text-field>
+
+          <v-text-field v-model="password" type="password" label="Mot de passe" placeholder="********" outlined required> </v-text-field>
+
+          <!--          
+          code couleur : 2196F3
+          -->
+          <div class="text-right">
+            <v-btn class="col-md-4" data-cy="submit" type="submit" color="#2196F3">Ok</v-btn>
           </div>
-        </b-form>
+        </v-form>
+
         <p></p>
-        <div>
+        <!-- <div>
           <b-alert show variant="warning">
             <b-link
               :to="'/account/reset/request'"
@@ -50,12 +29,10 @@
               >Did you forget your password?</b-link
             >
           </b-alert>
-        </div>
+        </div> -->
         <div>
-          <b-alert show variant="warning">
-            <span v-text="$t('global.messages.info.register.noaccount')">You don't have an account yet?</span>
-            <b-link :to="'/register'" class="alert-link" v-text="$t('global.messages.info.register.link')">Register a new account</b-link>
-          </b-alert>
+          <span>Nouveau sur Config'Me ?</span>
+          <a href="/register " class="text-decoration-none">S'inscrire</a>
         </div>
       </div>
     </div>

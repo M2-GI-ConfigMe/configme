@@ -42,6 +42,13 @@ import DimensionService from '@/entities/dimension/dimension.service';
 import MbeService from '@/entities/mbe/mbe.service';
 import ComputerCaseService from '@/entities/computer-case/computer-case.service';
 
+//Vuetify
+// import Vuetify from 'vuetify'
+// import 'vuetify/dist/vuetify.min.css'
+import vuetify from '@/plugins/vuetify';
+
+//Vue.use(Vuetify);
+
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
 /* tslint:enable */
@@ -119,4 +126,5 @@ new Vue({
   },
   i18n,
   store,
+  vuetify,
 });
