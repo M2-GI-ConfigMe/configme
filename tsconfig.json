@@ -16,7 +16,7 @@
     "lib": ["es7", "dom"],
     "typeRoots": ["node_modules/@types"],
     "baseUrl": "./",
-    "types": ["vuetify"],
+    "types": ["vuetify", "node", "jest"],
     "paths": {
       "@/*": ["src/main/webapp/app/*"]
     },

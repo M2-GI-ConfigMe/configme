@@ -41,7 +41,11 @@ import VentiradService from '@/entities/ventirad/ventirad.service';
 import MbeService from '@/entities/mbe/mbe.service';
 import ComputerCaseService from '@/entities/computer-case/computer-case.service';
 
+//Vuetify
 import vuetify from '@/plugins/vuetify';
+
+//Vue.use(Vuetify);
+
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
 /* tslint:enable */
