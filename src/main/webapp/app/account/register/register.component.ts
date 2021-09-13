@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component, Inject } from 'vue-property-decorator';
+import { Component, Inject, Watch } from 'vue-property-decorator';
 import { email, helpers, maxLength, minLength, required, sameAs } from 'vuelidate/lib/validators';
 import LoginService from '@/account/login.service';
 import RegisterService from '@/account/register/register.service';
@@ -49,15 +49,26 @@ export default class Register extends Vue {
   @Inject('registerService') private registerService: () => RegisterService;
   @Inject('loginService') private loginService: () => LoginService;
   public registerAccount: any = {
-    login: undefined,
     email: undefined,
     password: undefined,
+    lastName: undefined,
+    firstName: undefined,
+    birthdate: undefined,
+    streetNumber: undefined,
+    streetName: undefined,
+    city: undefined,
+    zipCode: undefined,
   };
+
   public confirmPassword: any = null;
   public error = '';
   public errorEmailExists = '';
   public errorUserExists = '';
   public success = false;
+
+  public activePicker = null;
+  public date = null;
+  public menu = false;
 
   public register(): void {
     this.error = null;
@@ -83,5 +94,10 @@ export default class Register extends Vue {
 
   public openLogin(): void {
     this.loginService().openLogin((<any>this).$root);
+  }
+
+  private save(date) {
+    this.registerAccount.birthdate = date;
+    this.menu = false;
   }
 }

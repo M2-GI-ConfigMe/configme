@@ -1,8 +1,7 @@
 <template>
   <div class="modal-body">
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
       <div class="col-md-8 toastify-container">
-        <h1 v-text="$t('register.title')" id="register-title" data-cy="registerTitle">Registration</h1>
 
         <div class="alert alert-success" role="alert" v-if="success" v-html="$t('register.messages.success')">
           <strong>Registration saved!</strong> Please check your email for confirmation.
@@ -20,59 +19,22 @@
           <strong>Email is already in use!</strong> Please choose another one.
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col">
         <form id="register-form" name="registerForm" role="form" v-on:submit.prevent="register()" v-if="!success" no-validate>
+          <p class="font-weight-bold">Informations de connexion</p>
           <div class="form-group">
-            <label class="form-control-label" for="username" v-text="$t('global.form[\'username.label\']')">Username</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="$v.registerAccount.login.$model"
-              id="username"
-              name="login"
-              :class="{ valid: !$v.registerAccount.login.$invalid, invalid: $v.registerAccount.login.$invalid }"
+            <v-text-field
+              v-model="registerAccount.login"
+              label="E-mail"
+              placeholder="template@email.com"
+              hide-details="auto"
+              outlined
               required
-              minlength="1"
-              maxlength="50"
-              pattern="^[a-zA-Z0-9!#$&'*+=?^_`{|}~.-]+@?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
-              v-bind:placeholder="$t('global.form[\'username.placeholder\']')"
-              data-cy="username"
-            />
-            <div v-if="$v.registerAccount.login.$anyDirty && $v.registerAccount.login.$invalid">
-              <small
-                class="form-text text-danger"
-                v-if="!$v.registerAccount.login.required"
-                v-text="$t('register.messages.validate.login.required')"
-              >
-                Your username is required.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.registerAccount.login.minLength"
-                v-text="$t('register.messages.validate.login.minlength')"
-              >
-                Your username is required to be at least 1 character.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.registerAccount.login.maxLength"
-                v-text="$t('register.messages.validate.login.maxlength')"
-              >
-                Your username cannot be longer than 50 characters.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.registerAccount.login.pattern"
-                v-text="$t('register.messages.validate.login.pattern')"
-              >
-                Your username can only contain letters and digits.
-              </small>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-control-label" for="email" v-text="$t('global.form[\'email.label\']')">Email</label>
+            >
+            </v-text-field>
+            <!-- <label class="form-control-label" for="email"> E-mail</label>
             <input
               type="email"
               class="form-control"
@@ -86,8 +48,8 @@
               required
               v-bind:placeholder="$t('global.form[\'email.placeholder\']')"
               data-cy="email"
-            />
-            <div v-if="$v.registerAccount.email.$anyDirty && $v.registerAccount.email.$invalid">
+            /> -->
+            <!-- <div v-if="$v.registerAccount.email.$anyDirty && $v.registerAccount.email.$invalid">
               <small
                 class="form-text text-danger"
                 v-if="!$v.registerAccount.email.required"
@@ -116,10 +78,21 @@
               >
                 Your email cannot be longer than 100 characters.
               </small>
-            </div>
+            </div> -->
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="firstPassword" v-text="$t('global.form[\'newpassword.label\']')">New password</label>
+            <v-text-field
+              v-model="registerAccount.password"
+              type="password"
+              label="Mot de passe"
+              placeholder="********"
+              hide-details="auto"
+              outlined
+              required
+            >
+            </v-text-field>
+
+            <!-- <label class="form-control-label" for="firstPassword" v-text="$t('global.form[\'newpassword.label\']')">New password</label>
             <input
               type="password"
               class="form-control"
@@ -132,8 +105,8 @@
               required
               v-bind:placeholder="$t('global.form[\'newpassword.placeholder\']')"
               data-cy="firstPassword"
-            />
-            <div v-if="$v.registerAccount.password.$anyDirty && $v.registerAccount.password.$invalid">
+            /> -->
+            <!-- <div v-if="$v.registerAccount.password.$anyDirty && $v.registerAccount.password.$invalid">
               <small
                 class="form-text text-danger"
                 v-if="!$v.registerAccount.password.required"
@@ -155,10 +128,21 @@
               >
                 Your password cannot be longer than 50 characters.
               </small>
-            </div>
+            </div> -->
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="secondPassword" v-text="$t('global.form[\'confirmpassword.label\']')"
+            <v-text-field
+              v-model="confirmPassword"
+              type="password"
+              label="Confirmation de mot de passe"
+              placeholder="********"
+              hide-details="auto"
+              outlined
+              required
+            >
+            </v-text-field>
+
+            <!-- <label class="form-control-label" for="secondPassword" v-text="$t('global.form[\'confirmpassword.label\']')"
               >New password confirmation</label
             >
             <input
@@ -173,8 +157,8 @@
               required
               v-bind:placeholder="$t('global.form[\'confirmpassword.placeholder\']')"
               data-cy="secondPassword"
-            />
-            <div v-if="$v.confirmPassword.$dirty && $v.confirmPassword.$invalid">
+            /> -->
+            <!-- <div v-if="$v.confirmPassword.$dirty && $v.confirmPassword.$invalid">
               <small
                 class="form-text text-danger"
                 v-if="!$v.confirmPassword.required"
@@ -199,14 +183,77 @@
               <small class="form-text text-danger" v-if="!$v.confirmPassword.sameAsPassword" v-text="$t('global.messages.error.dontmatch')">
                 The password and its confirmation do not match!
               </small>
-            </div>
+            </div> -->
+          </div>
+
+          <p class="font-weight-bold">Informations personnelles</p>
+          <div class="form-group">
+            <v-row v-bind:no-gutters="true">
+              <v-text-field v-model="registerAccount.lastName" label="Nom" placeholder="Dupont" hide-details="auto" outlined required>
+              </v-text-field>
+              <v-spacer class="mx-2"></v-spacer>
+              <v-text-field v-model="registerAccount.firstName" label="Prénom" placeholder="François" hide-details="auto" outlined required>
+              </v-text-field>
+            </v-row>
+          </div>
+          <div class="form-group">
+            <v-menu ref="menu" v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="auto">
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="date"
+                  label="Date de naissance"
+                  readonly
+                  hide-details="auto"
+                  outlined
+                  required
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                </v-text-field>
+              </template>
+              <v-date-picker
+                v-model="date"
+                :active-picker.sync="activePicker"
+                :max="new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10)"
+                min="1950-01-01"
+                @change="save"
+              >
+              </v-date-picker>
+            </v-menu>
+          </div>
+
+          <div class="form-group">
+            <v-row v-bind:no-gutters="true">
+              <v-text-field v-model="registerAccount.streetNumber" label="N° de Rue" placeholder="5" hide-details="auto" outlined required>
+              </v-text-field>
+              <v-spacer class="mx-2"></v-spacer>
+              <v-text-field
+                v-model="registerAccount.streetName"
+                label="Rue"
+                placeholder="Rue de l'exemple"
+                hide-details="auto"
+                outlined
+                required
+              >
+              </v-text-field>
+            </v-row>
+          </div>
+
+          <div class="form-group">
+            <v-row v-bind:no-gutters="true">
+              <v-text-field v-model="registerAccount.city" label="Ville" placeholder="Grenoble" hide-details="auto" outlined required>
+              </v-text-field>
+              <v-spacer class="mx-2"></v-spacer>
+              <v-text-field v-model="registerAccount.zipCode" label="Code postal" placeholder="38000" hide-details="auto" outlined required>
+              </v-text-field>
+            </v-row>
           </div>
 
           <button type="submit" :disabled="$v.$invalid" class="btn btn-primary" v-text="$t('register.form.button')" data-cy="submit">
             Register
           </button>
         </form>
-        <p></p>
+        <!-- <p></p>
         <div class="alert alert-warning">
           <span v-text="$t('global.messages.info.authenticated.prefix')">If you want to </span>
           <a class="alert-link" v-on:click="openLogin()" v-text="$t('global.messages.info.authenticated.link')">sign in</a
@@ -214,7 +261,7 @@
             >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
             password="user").</span
           >
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

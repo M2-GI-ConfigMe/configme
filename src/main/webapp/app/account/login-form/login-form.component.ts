@@ -12,10 +12,8 @@ import RegisterService from '@/account/register/register.service';
   },
 })
 export default class LoginForm extends Vue {
-  @Inject('accountService')
-  private accountService: () => AccountService;
-  @Inject('registerService')
-  private registerService: () => RegisterService;
+  @Inject('accountService') private accountService: () => AccountService;
+  @Inject('registerService') private registerService: () => RegisterService;
   public authenticationError = null;
   public login = null;
   public password = null;
