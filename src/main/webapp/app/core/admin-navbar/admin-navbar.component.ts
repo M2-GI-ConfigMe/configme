@@ -5,7 +5,7 @@ import AccountService from '@/account/account.service';
 import TranslationService from '@/locale/translation.service';
 
 @Component
-export default class JhiNavbar extends Vue {
+export default class AdminNavbar extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
   @Inject('translationService') private translationService: () => TranslationService;

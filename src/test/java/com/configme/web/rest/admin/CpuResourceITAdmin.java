@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class CpuResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class CpuResourceITAdmin {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;

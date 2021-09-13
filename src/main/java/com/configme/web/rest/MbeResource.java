@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class MbeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/mbes")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Mbe> createMbe(@Valid @RequestBody Mbe mbe) throws URISyntaxException {
         log.debug("REST request to save Mbe : {}", mbe);
         if (mbe.getId() != null) {
@@ -71,6 +73,7 @@ public class MbeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/mbes/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Mbe> updateMbe(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Mbe mbe)
         throws URISyntaxException {
         log.debug("REST request to update Mbe : {}, {}", id, mbe);
@@ -104,6 +107,7 @@ public class MbeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/mbes/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Mbe> partialUpdateMbe(@PathVariable(value = "id", required = false) final Long id, @NotNull @RequestBody Mbe mbe)
         throws URISyntaxException {
         log.debug("REST request to partial update Mbe partially : {}, {}", id, mbe);
@@ -198,6 +202,7 @@ public class MbeResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/mbes/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteMbe(@PathVariable Long id) {
         log.debug("REST request to delete Mbe : {}", id);
         mbeRepository.deleteById(id);

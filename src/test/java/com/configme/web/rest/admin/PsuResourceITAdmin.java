@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class PsuResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class PsuResourceITAdmin {
 
     private static final Integer DEFAULT_POWER = 1;
     private static final Integer UPDATED_POWER = 2;

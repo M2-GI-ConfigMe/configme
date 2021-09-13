@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class RamResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class RamResourceITAdmin {
 
     private static final RamType DEFAULT_TYPE = RamType.DDR3;
     private static final RamType UPDATED_TYPE = RamType.DDR4;
