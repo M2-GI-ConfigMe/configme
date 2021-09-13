@@ -40,6 +40,7 @@ import PsuService from '@/entities/psu/psu.service';
 import VentiradService from '@/entities/ventirad/ventirad.service';
 import MbeService from '@/entities/mbe/mbe.service';
 import ComputerCaseService from '@/entities/computer-case/computer-case.service';
+
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
 /* tslint:enable */
