@@ -54,3 +54,5 @@
     </v-app-bar>
   </div>
 </template>
+
+<script lang="ts" src="./navbar.component.ts"></script>
