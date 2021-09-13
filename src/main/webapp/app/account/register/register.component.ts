@@ -39,6 +39,11 @@ const validations: any = {
 
 @Component({
   validations,
+  watch: {
+    $route() {
+      this.$root.$emit('bv::hide::modal', 'register-page');
+    },
+  },
 })
 export default class Register extends Vue {
   @Inject('registerService') private registerService: () => RegisterService;

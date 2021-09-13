@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="modal-body">
     <div class="row justify-content-center">
       <div class="col-md-8 toastify-container">
         <h1 v-text="$t('register.title')" id="register-title" data-cy="registerTitle">Registration</h1>

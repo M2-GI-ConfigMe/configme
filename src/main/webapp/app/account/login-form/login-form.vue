@@ -32,7 +32,8 @@
         </div> -->
         <div>
           <span>Nouveau sur Config'Me ?</span>
-          <a href="/register " class="text-decoration-none">S'inscrire</a>
+          <!-- <a href="/register " class="text-decoration-none">S'inscrire</a> -->
+          <span color="#2196F3" v-on:click="doRegister()">S'inscrire</span>
         </div>
       </div>
     </div>

@@ -9,8 +9,13 @@
         <router-view></router-view>
       </div>
       <b-modal id="login-page" hide-footer lazy>
-        <span data-cy="loginTitle" slot="modal-title" id="login-title">Se connecter</span>
+        <span slot="modal-title" id="login-title">Se connecter</span>
         <login-form></login-form>
+      </b-modal>
+
+      <b-modal id="register-page" hide-footer lazy>
+        <span slot="modal-title" id="login-title">S'enregister</span>
+        <register-page></register-page>
       </b-modal>
 
       <jhi-footer></jhi-footer>

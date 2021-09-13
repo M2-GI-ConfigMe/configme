@@ -5,6 +5,8 @@ import JhiFooter from '@/core/jhi-footer/jhi-footer.vue';
 import JhiNavbar from '@/core/jhi-navbar/jhi-navbar.vue';
 import LoginForm from '@/account/login-form/login-form.vue';
 
+import Register from '@/account/register/register.component';
+
 import '@/shared/config/dayjs';
 
 @Component({
@@ -12,6 +14,7 @@ import '@/shared/config/dayjs';
     ribbon: Ribbon,
     'jhi-navbar': JhiNavbar,
     'login-form': LoginForm,
+    register: Register,
 
     'jhi-footer': JhiFooter,
   },
