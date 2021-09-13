@@ -39,7 +39,7 @@
             <th scope="row"><span v-text="$t('configmeApp.computerCase.fanIncluded')">Fan Included</span></th>
             <th scope="row"><span v-text="$t('configmeApp.computerCase.fanSlotsAvailable')">Fan Slots Available</span></th>
             <th scope="row"><span v-text="$t('configmeApp.computerCase.watercoolingCompatibility')">Watercooling Compatibility</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.computerCase.dimension')">Dimension</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.computerCase.dimension') + ' (L, l, H)'">Dimension</span></th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -60,13 +60,7 @@
             <td>{{ computerCase.fanIncluded }}</td>
             <td>{{ computerCase.fanSlotsAvailable }}</td>
             <td>{{ computerCase.watercoolingCompatibility }}</td>
-            <td>
-              <div v-if="computerCase.dimension">
-                <router-link :to="{ name: 'DimensionView', params: { dimensionId: computerCase.dimension.id } }">{{
-                  computerCase.dimension.id
-                }}</router-link>
-              </div>
-            </td>
+            <td>{{ computerCase.dimension.length }}mm, {{ computerCase.dimension.width }}mm, {{ computerCase.dimension.height }}mm</td>
             <td class="text-right">
               <div class="btn-group">
                 <router-link :to="{ name: 'ComputerCaseView', params: { computerCaseId: computerCase.id } }" custom v-slot="{ navigate }">

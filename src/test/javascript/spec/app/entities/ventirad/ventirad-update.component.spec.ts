@@ -8,8 +8,6 @@ import VentiradUpdateComponent from '@/entities/ventirad/ventirad-update.vue';
 import VentiradClass from '@/entities/ventirad/ventirad-update.component';
 import VentiradService from '@/entities/ventirad/ventirad.service';
 
-import DimensionService from '@/entities/dimension/dimension.service';
-
 const localVue = createLocalVue();
 
 config.initVueApp(localVue);
@@ -39,8 +37,6 @@ describe('Component Tests', () => {
         router,
         provide: {
           ventiradService: () => ventiradServiceStub,
-
-          dimensionService: () => new DimensionService(),
         },
       });
       comp = wrapper.vm;

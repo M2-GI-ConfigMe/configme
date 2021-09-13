@@ -66,16 +66,26 @@
           <dd>
             <span>{{ computerCase.watercoolingCompatibility }}</span>
           </dd>
-          <dt>
-            <span v-text="$t('configmeApp.computerCase.dimension')">Dimension</span>
-          </dt>
-          <dd>
-            <div v-if="computerCase.dimension">
-              <router-link :to="{ name: 'DimensionView', params: { dimensionId: computerCase.dimension.id } }">{{
-                computerCase.dimension.id
-              }}</router-link>
-            </div>
-          </dd>
+          <template v-if="computerCase.dimension">
+            <dt>
+              <span v-text="$t('configmeApp.dimension.height')">Height</span>
+            </dt>
+            <dd>
+              <span>{{ computerCase.dimension.height }} mm</span>
+            </dd>
+            <dt>
+              <span v-text="$t('configmeApp.dimension.width')">Width</span>
+            </dt>
+            <dd>
+              <span>{{ computerCase.dimension.width }} mm</span>
+            </dd>
+            <dt>
+              <span v-text="$t('configmeApp.dimension.length')">Length</span>
+            </dt>
+            <dd>
+              <span>{{ computerCase.dimension.length }} mm</span>
+            </dd>
+          </template>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>

@@ -128,10 +128,6 @@
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.ventirad')">Ventirad</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/dimension">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.dimension')">Dimension</span>
-          </b-dropdown-item>
           <b-dropdown-item to="/mbe">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.mbe')">Mbe</span>

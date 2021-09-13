@@ -150,6 +150,9 @@ public class GpuResource {
                     if (gpu.getBus() != null) {
                         existingGpu.setBus(gpu.getBus());
                     }
+                    if (gpu.getDimension() != null) {
+                        existingGpu.setDimension(gpu.getDimension());
+                    }
 
                     return existingGpu;
                 }
@@ -168,7 +171,6 @@ public class GpuResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of gpus in body.
      */
     @GetMapping("/gpus")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<Gpu> getAllGpus() {
         log.debug("REST request to get all Gpus");
         return gpuRepository.findAll();

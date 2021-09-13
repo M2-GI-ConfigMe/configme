@@ -58,8 +58,7 @@ public class ComputerCase implements Serializable {
     @Column(name = "watercooling_compatibility")
     private String watercoolingCompatibility;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Embedded
     private Dimension dimension;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

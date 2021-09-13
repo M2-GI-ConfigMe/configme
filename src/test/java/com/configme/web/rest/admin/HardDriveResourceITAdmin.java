@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class HardDriveResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class HardDriveResourceITAdmin {
 
     private static final Integer DEFAULT_CAPACITY = 1;
     private static final Integer UPDATED_CAPACITY = 2;

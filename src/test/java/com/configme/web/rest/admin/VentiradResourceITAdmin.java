@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Dimension;
 import com.configme.domain.Ventirad;
 import com.configme.repository.VentiradRepository;
 import java.util.List;
@@ -26,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class VentiradResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class VentiradResourceITAdmin {
 
     private static final String DEFAULT_RANGE_FAN_SPEED = "AAAAAAAAAA";
     private static final String UPDATED_RANGE_FAN_SPEED = "BBBBBBBBBB";
@@ -40,6 +41,9 @@ class VentiradResourceIT {
 
     private static final String ENTITY_API_URL = "/api/ventirads";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
+
+    private static final Dimension DEFAULT_DIMENSION = new Dimension(51, 21, 26);
+    private static final Dimension UPDATED_DIMENSION = new Dimension(75, 250, 3950);
 
     private static Random random = new Random();
     private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
@@ -65,7 +69,8 @@ class VentiradResourceIT {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(DEFAULT_RANGE_FAN_SPEED)
             .noise(DEFAULT_NOISE)
-            .hasThermalPaste(DEFAULT_HAS_THERMAL_PASTE);
+            .hasThermalPaste(DEFAULT_HAS_THERMAL_PASTE)
+            .dimension(DEFAULT_DIMENSION);
         return ventirad;
     }
 
@@ -79,7 +84,8 @@ class VentiradResourceIT {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(UPDATED_RANGE_FAN_SPEED)
             .noise(UPDATED_NOISE)
-            .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE);
+            .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE)
+            .dimension(UPDATED_DIMENSION);
         return ventirad;
     }
 
@@ -104,6 +110,7 @@ class VentiradResourceIT {
         assertThat(testVentirad.getRangeFanSpeed()).isEqualTo(DEFAULT_RANGE_FAN_SPEED);
         assertThat(testVentirad.getNoise()).isEqualTo(DEFAULT_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(DEFAULT_HAS_THERMAL_PASTE);
+        assertThat(testVentirad.getDimension()).isEqualTo(DEFAULT_DIMENSION);
     }
 
     @Test
@@ -172,7 +179,10 @@ class VentiradResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(ventirad.getId().intValue())))
             .andExpect(jsonPath("$.[*].rangeFanSpeed").value(hasItem(DEFAULT_RANGE_FAN_SPEED)))
             .andExpect(jsonPath("$.[*].noise").value(hasItem(DEFAULT_NOISE)))
-            .andExpect(jsonPath("$.[*].hasThermalPaste").value(hasItem(DEFAULT_HAS_THERMAL_PASTE.booleanValue())));
+            .andExpect(jsonPath("$.[*].hasThermalPaste").value(hasItem(DEFAULT_HAS_THERMAL_PASTE.booleanValue())))
+            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
     }
 
     @Test
@@ -189,7 +199,8 @@ class VentiradResourceIT {
             .andExpect(jsonPath("$.id").value(ventirad.getId().intValue()))
             .andExpect(jsonPath("$.rangeFanSpeed").value(DEFAULT_RANGE_FAN_SPEED))
             .andExpect(jsonPath("$.noise").value(DEFAULT_NOISE))
-            .andExpect(jsonPath("$.hasThermalPaste").value(DEFAULT_HAS_THERMAL_PASTE.booleanValue()));
+            .andExpect(jsonPath("$.hasThermalPaste").value(DEFAULT_HAS_THERMAL_PASTE.booleanValue()))
+            .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
     }
 
     @Test
@@ -211,7 +222,11 @@ class VentiradResourceIT {
         Ventirad updatedVentirad = ventiradRepository.findById(ventirad.getId()).get();
         // Disconnect from session so that the updates on updatedVentirad are not directly saved in db
         em.detach(updatedVentirad);
-        updatedVentirad.rangeFanSpeed(UPDATED_RANGE_FAN_SPEED).noise(UPDATED_NOISE).hasThermalPaste(UPDATED_HAS_THERMAL_PASTE);
+        updatedVentirad
+            .rangeFanSpeed(UPDATED_RANGE_FAN_SPEED)
+            .noise(UPDATED_NOISE)
+            .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE)
+            .dimension(UPDATED_DIMENSION);
 
         restVentiradMockMvc
             .perform(
@@ -228,6 +243,7 @@ class VentiradResourceIT {
         assertThat(testVentirad.getRangeFanSpeed()).isEqualTo(UPDATED_RANGE_FAN_SPEED);
         assertThat(testVentirad.getNoise()).isEqualTo(UPDATED_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(UPDATED_HAS_THERMAL_PASTE);
+        assertThat(testVentirad.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
     }
 
     @Test
@@ -313,6 +329,7 @@ class VentiradResourceIT {
         assertThat(testVentirad.getRangeFanSpeed()).isEqualTo(DEFAULT_RANGE_FAN_SPEED);
         assertThat(testVentirad.getNoise()).isEqualTo(DEFAULT_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(DEFAULT_HAS_THERMAL_PASTE);
+        assertThat(testVentirad.getDimension()).isEqualTo(DEFAULT_DIMENSION);
     }
 
     @Test
@@ -327,7 +344,11 @@ class VentiradResourceIT {
         Ventirad partialUpdatedVentirad = new Ventirad();
         partialUpdatedVentirad.setId(ventirad.getId());
 
-        partialUpdatedVentirad.rangeFanSpeed(UPDATED_RANGE_FAN_SPEED).noise(UPDATED_NOISE).hasThermalPaste(UPDATED_HAS_THERMAL_PASTE);
+        partialUpdatedVentirad
+            .rangeFanSpeed(UPDATED_RANGE_FAN_SPEED)
+            .noise(UPDATED_NOISE)
+            .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE)
+            .dimension(UPDATED_DIMENSION);
 
         restVentiradMockMvc
             .perform(
@@ -344,6 +365,7 @@ class VentiradResourceIT {
         assertThat(testVentirad.getRangeFanSpeed()).isEqualTo(UPDATED_RANGE_FAN_SPEED);
         assertThat(testVentirad.getNoise()).isEqualTo(UPDATED_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(UPDATED_HAS_THERMAL_PASTE);
+        assertThat(testVentirad.getDimension()).isEqualTo(UPDATED_DIMENSION);
     }
 
     @Test

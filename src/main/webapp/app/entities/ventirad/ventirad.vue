@@ -32,7 +32,7 @@
             <th scope="row"><span v-text="$t('configmeApp.ventirad.rangeFanSpeed')">Range Fan Speed</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.noise')">Noise</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.hasThermalPaste')">Has Thermal Paste</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.ventirad.dimension')">Dimension</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.ventirad.dimension') + ' (L, l, H)'">Dimension</span></th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -44,13 +44,7 @@
             <td>{{ ventirad.rangeFanSpeed }}</td>
             <td>{{ ventirad.noise }}</td>
             <td>{{ ventirad.hasThermalPaste }}</td>
-            <td>
-              <div v-if="ventirad.dimension">
-                <router-link :to="{ name: 'DimensionView', params: { dimensionId: ventirad.dimension.id } }">{{
-                  ventirad.dimension.id
-                }}</router-link>
-              </div>
-            </td>
+            <td>{{ ventirad.dimension.length }}mm, {{ ventirad.dimension.width }}mm, {{ ventirad.dimension.height }}mm</td>
             <td class="text-right">
               <div class="btn-group">
                 <router-link :to="{ name: 'VentiradView', params: { ventiradId: ventirad.id } }" custom v-slot="{ navigate }">

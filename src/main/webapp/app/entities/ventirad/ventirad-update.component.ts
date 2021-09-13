@@ -1,9 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { required } from 'vuelidate/lib/validators';
-
-import DimensionService from '@/entities/dimension/dimension.service';
-import { IDimension } from '@/shared/model/dimension.model';
+import { minValue, numeric, required } from 'vuelidate/lib/validators';
 
 import { IVentirad, Ventirad } from '@/shared/model/ventirad.model';
 import VentiradService from './ventirad.service';
@@ -17,6 +14,23 @@ const validations: any = {
     hasThermalPaste: {
       required,
     },
+    dimension: {
+      height: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+      width: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+      length: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+    },
   },
 };
 
@@ -27,9 +41,6 @@ export default class VentiradUpdate extends Vue {
   @Inject('ventiradService') private ventiradService: () => VentiradService;
   public ventirad: IVentirad = new Ventirad();
 
-  @Inject('dimensionService') private dimensionService: () => DimensionService;
-
-  public dimensions: IDimension[] = [];
   public isSaving = false;
   public currentLanguage = '';
 
@@ -99,11 +110,5 @@ export default class VentiradUpdate extends Vue {
     this.$router.go(-1);
   }
 
-  public initRelationships(): void {
-    this.dimensionService()
-      .retrieve()
-      .then(res => {
-        this.dimensions = res.data;
-      });
-  }
+  public initRelationships(): void {}
 }

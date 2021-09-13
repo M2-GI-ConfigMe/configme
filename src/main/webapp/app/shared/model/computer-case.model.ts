@@ -1,6 +1,5 @@
-import { IDimension } from '@/shared/model/dimension.model';
-
 import { CaseType } from '@/shared/model/enumerations/case-type.model';
+import { IDimension } from '@/shared/model/dimension.model';
 export interface IComputerCase {
   id?: number;
   type?: CaseType;

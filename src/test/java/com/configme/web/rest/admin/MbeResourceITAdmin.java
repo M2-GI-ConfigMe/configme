@@ -29,8 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class MbeResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class MbeResourceITAdmin {
 
     private static final SocketType DEFAULT_SOCKET_CPU = SocketType.AM4;
     private static final SocketType UPDATED_SOCKET_CPU = SocketType.TR4;

@@ -160,6 +160,9 @@ public class ComputerCaseResource {
                     if (computerCase.getWatercoolingCompatibility() != null) {
                         existingComputerCase.setWatercoolingCompatibility(computerCase.getWatercoolingCompatibility());
                     }
+                    if (computerCase.getDimension() != null) {
+                        existingComputerCase.setDimension(computerCase.getDimension());
+                    }
 
                     return existingComputerCase;
                 }
