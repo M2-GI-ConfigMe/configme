@@ -146,6 +146,9 @@ public class GpuResource {
                     if (gpu.getBus() != null) {
                         existingGpu.setBus(gpu.getBus());
                     }
+                    if (gpu.getDimension() != null) {
+                        existingGpu.setDimension(gpu.getDimension());
+                    }
 
                     return existingGpu;
                 }

@@ -181,17 +181,55 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.gpu.dimension')" for="gpu-dimension">Dimension</label>
-            <select class="form-control" id="gpu-dimension" data-cy="dimension" name="dimension" v-model="gpu.dimension">
-              <option v-bind:value="null"></option>
-              <option
-                v-bind:value="gpu.dimension && dimensionOption.id === gpu.dimension.id ? gpu.dimension : dimensionOption"
-                v-for="dimensionOption in dimensions"
-                :key="dimensionOption.id"
-              >
-                {{ dimensionOption.id }}
-              </option>
-            </select>
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')" for="computer-case-height"
+              >Watercooling Compatibility</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-height"
+              data-cy="height"
+              :class="{
+                valid: !$v.gpu.dimension.height.$invalid,
+                invalid: $v.gpu.dimension.height.$invalid,
+              }"
+              v-model="$v.gpu.dimension.height.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')" for="computer-case-width"
+              >Watercooling Compatibility</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="width"
+              id="computer-case-width"
+              data-cy="width"
+              :class="{
+                valid: !$v.gpu.dimension.width.$invalid,
+                invalid: $v.gpu.dimension.width.$invalid,
+              }"
+              v-model="$v.gpu.dimension.width.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.length')" for="computer-case-length"
+              >Watercooling Compatibility</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-length"
+              data-cy="length"
+              :class="{
+                valid: !$v.gpu.dimension.length.$invalid,
+                invalid: $v.gpu.dimension.length.$invalid,
+              }"
+              v-model="$v.gpu.dimension.length.$model"
+            />
           </div>
         </div>
         <div>

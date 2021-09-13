@@ -8,8 +8,6 @@ import ComputerCaseUpdateComponent from '@/entities/computer-case/computer-case-
 import ComputerCaseClass from '@/entities/computer-case/computer-case-update.component';
 import ComputerCaseService from '@/entities/computer-case/computer-case.service';
 
-import DimensionService from '@/entities/dimension/dimension.service';
-
 const localVue = createLocalVue();
 
 config.initVueApp(localVue);
@@ -39,8 +37,6 @@ describe('Component Tests', () => {
         router,
         provide: {
           computerCaseService: () => computerCaseServiceStub,
-
-          dimensionService: () => new DimensionService(),
         },
       });
       comp = wrapper.vm;

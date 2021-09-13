@@ -67,17 +67,55 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.ventirad.dimension')" for="ventirad-dimension">Dimension</label>
-            <select class="form-control" id="ventirad-dimension" data-cy="dimension" name="dimension" v-model="ventirad.dimension">
-              <option v-bind:value="null"></option>
-              <option
-                v-bind:value="ventirad.dimension && dimensionOption.id === ventirad.dimension.id ? ventirad.dimension : dimensionOption"
-                v-for="dimensionOption in dimensions"
-                :key="dimensionOption.id"
-              >
-                {{ dimensionOption.id }}
-              </option>
-            </select>
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')" for="computer-case-height"
+              >Watercooling Compatibility</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-height"
+              data-cy="height"
+              :class="{
+                valid: !$v.ventirad.dimension.height.$invalid,
+                invalid: $v.ventirad.dimension.height.$invalid,
+              }"
+              v-model="$v.ventirad.dimension.height.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')" for="computer-case-width"
+              >Watercooling Compatibility</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="width"
+              id="computer-case-width"
+              data-cy="width"
+              :class="{
+                valid: !$v.ventirad.dimension.width.$invalid,
+                invalid: $v.ventirad.dimension.width.$invalid,
+              }"
+              v-model="$v.ventirad.dimension.width.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.length')" for="computer-case-length"
+              >Watercooling Compatibility</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-length"
+              data-cy="length"
+              :class="{
+                valid: !$v.ventirad.dimension.length.$invalid,
+                invalid: $v.ventirad.dimension.length.$invalid,
+              }"
+              v-model="$v.ventirad.dimension.length.$model"
+            />
           </div>
         </div>
         <div>

@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Dimension;
 import com.configme.domain.Gpu;
 import com.configme.domain.enumeration.BusType;
 import com.configme.repository.GpuRepository;
@@ -54,6 +55,9 @@ class GpuResourceIT {
     private static final BusType DEFAULT_BUS = BusType.PCI;
     private static final BusType UPDATED_BUS = BusType.AGP;
 
+    private static final Dimension DEFAULT_DIMENSION = new Dimension(51, 21, 26);
+    private static final Dimension UPDATED_DIMENSION = new Dimension(75, 250, 3950);
+
     private static final String ENTITY_API_URL = "/api/gpus";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -86,7 +90,8 @@ class GpuResourceIT {
             .lithography(DEFAULT_LITHOGRAPHY)
             .output(DEFAULT_OUTPUT)
             .inputPower(DEFAULT_INPUT_POWER)
-            .bus(DEFAULT_BUS);
+            .bus(DEFAULT_BUS)
+            .dimension(DEFAULT_DIMENSION);
         return gpu;
     }
 
@@ -105,7 +110,8 @@ class GpuResourceIT {
             .lithography(UPDATED_LITHOGRAPHY)
             .output(UPDATED_OUTPUT)
             .inputPower(UPDATED_INPUT_POWER)
-            .bus(UPDATED_BUS);
+            .bus(UPDATED_BUS)
+            .dimension(UPDATED_DIMENSION);
         return gpu;
     }
 
@@ -135,6 +141,7 @@ class GpuResourceIT {
         assertThat(testGpu.getOutput()).isEqualTo(DEFAULT_OUTPUT);
         assertThat(testGpu.getInputPower()).isEqualTo(DEFAULT_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(DEFAULT_BUS);
+        assertThat(testGpu.getDimension()).isEqualTo(DEFAULT_DIMENSION);
     }
 
     @Test
@@ -310,7 +317,10 @@ class GpuResourceIT {
             .andExpect(jsonPath("$.[*].lithography").value(hasItem(DEFAULT_LITHOGRAPHY)))
             .andExpect(jsonPath("$.[*].output").value(hasItem(DEFAULT_OUTPUT)))
             .andExpect(jsonPath("$.[*].inputPower").value(hasItem(DEFAULT_INPUT_POWER)))
-            .andExpect(jsonPath("$.[*].bus").value(hasItem(DEFAULT_BUS.toString())));
+            .andExpect(jsonPath("$.[*].bus").value(hasItem(DEFAULT_BUS.toString())))
+            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
     }
 
     @Test
@@ -332,7 +342,8 @@ class GpuResourceIT {
             .andExpect(jsonPath("$.lithography").value(DEFAULT_LITHOGRAPHY))
             .andExpect(jsonPath("$.output").value(DEFAULT_OUTPUT))
             .andExpect(jsonPath("$.inputPower").value(DEFAULT_INPUT_POWER))
-            .andExpect(jsonPath("$.bus").value(DEFAULT_BUS.toString()));
+            .andExpect(jsonPath("$.bus").value(DEFAULT_BUS.toString()))
+            .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
     }
 
     @Test
@@ -362,7 +373,8 @@ class GpuResourceIT {
             .lithography(UPDATED_LITHOGRAPHY)
             .output(UPDATED_OUTPUT)
             .inputPower(UPDATED_INPUT_POWER)
-            .bus(UPDATED_BUS);
+            .bus(UPDATED_BUS)
+            .dimension(UPDATED_DIMENSION);
 
         restGpuMockMvc
             .perform(
@@ -384,6 +396,7 @@ class GpuResourceIT {
         assertThat(testGpu.getOutput()).isEqualTo(UPDATED_OUTPUT);
         assertThat(testGpu.getInputPower()).isEqualTo(UPDATED_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(UPDATED_BUS);
+        assertThat(testGpu.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
     }
 
     @Test
@@ -479,6 +492,7 @@ class GpuResourceIT {
         assertThat(testGpu.getOutput()).isEqualTo(DEFAULT_OUTPUT);
         assertThat(testGpu.getInputPower()).isEqualTo(UPDATED_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(DEFAULT_BUS);
+        assertThat(testGpu.getDimension()).isEqualTo(DEFAULT_DIMENSION);
     }
 
     @Test
@@ -501,7 +515,8 @@ class GpuResourceIT {
             .lithography(UPDATED_LITHOGRAPHY)
             .output(UPDATED_OUTPUT)
             .inputPower(UPDATED_INPUT_POWER)
-            .bus(UPDATED_BUS);
+            .bus(UPDATED_BUS)
+            .dimension(UPDATED_DIMENSION);
 
         restGpuMockMvc
             .perform(
@@ -523,6 +538,7 @@ class GpuResourceIT {
         assertThat(testGpu.getOutput()).isEqualTo(UPDATED_OUTPUT);
         assertThat(testGpu.getInputPower()).isEqualTo(UPDATED_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(UPDATED_BUS);
+        assertThat(testGpu.getDimension()).isEqualTo(UPDATED_DIMENSION);
     }
 
     @Test

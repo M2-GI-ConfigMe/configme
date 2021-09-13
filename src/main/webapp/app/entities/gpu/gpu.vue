@@ -32,7 +32,7 @@
             <th scope="row"><span v-text="$t('configmeApp.gpu.output')">Output</span></th>
             <th scope="row"><span v-text="$t('configmeApp.gpu.inputPower')">Input Power</span></th>
             <th scope="row"><span v-text="$t('configmeApp.gpu.bus')">Bus</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.gpu.dimension')">Dimension</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.gpu.dimension') + ' (L, l, H)'">Dimension</span></th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -49,11 +49,7 @@
             <td>{{ gpu.output }}</td>
             <td>{{ gpu.inputPower }}</td>
             <td v-text="$t('configmeApp.BusType.' + gpu.bus)">{{ gpu.bus }}</td>
-            <td>
-              <div v-if="gpu.dimension">
-                <router-link :to="{ name: 'DimensionView', params: { dimensionId: gpu.dimension.id } }">{{ gpu.dimension.id }}</router-link>
-              </div>
-            </td>
+            <td>{{ gpu.dimension.length }}mm, {{ gpu.dimension.width }}mm, {{ gpu.dimension.height }}mm</td>
             <td class="text-right">
               <div class="btn-group">
                 <router-link :to="{ name: 'GpuView', params: { gpuId: gpu.id } }" custom v-slot="{ navigate }">

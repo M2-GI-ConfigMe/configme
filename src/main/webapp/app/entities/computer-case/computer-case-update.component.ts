@@ -1,9 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { required, numeric } from 'vuelidate/lib/validators';
-
-import DimensionService from '@/entities/dimension/dimension.service';
-import { IDimension } from '@/shared/model/dimension.model';
+import { required, numeric, minValue } from 'vuelidate/lib/validators';
 
 import { IComputerCase, ComputerCase } from '@/shared/model/computer-case.model';
 import ComputerCaseService from './computer-case.service';
@@ -31,6 +28,23 @@ const validations: any = {
     fanIncluded: {},
     fanSlotsAvailable: {},
     watercoolingCompatibility: {},
+    dimension: {
+      height: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+      width: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+      length: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+    },
   },
 };
 
@@ -41,9 +55,6 @@ export default class ComputerCaseUpdate extends Vue {
   @Inject('computerCaseService') private computerCaseService: () => ComputerCaseService;
   public computerCase: IComputerCase = new ComputerCase();
 
-  @Inject('dimensionService') private dimensionService: () => DimensionService;
-
-  public dimensions: IDimension[] = [];
   public isSaving = false;
   public currentLanguage = '';
 
@@ -113,11 +124,5 @@ export default class ComputerCaseUpdate extends Vue {
     this.$router.go(-1);
   }
 
-  public initRelationships(): void {
-    this.dimensionService()
-      .retrieve()
-      .then(res => {
-        this.dimensions = res.data;
-      });
-  }
+  public initRelationships(): void {}
 }

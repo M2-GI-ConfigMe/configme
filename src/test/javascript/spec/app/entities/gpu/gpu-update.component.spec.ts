@@ -8,8 +8,6 @@ import GpuUpdateComponent from '@/entities/gpu/gpu-update.vue';
 import GpuClass from '@/entities/gpu/gpu-update.component';
 import GpuService from '@/entities/gpu/gpu.service';
 
-import DimensionService from '@/entities/dimension/dimension.service';
-
 const localVue = createLocalVue();
 
 config.initVueApp(localVue);
@@ -39,8 +37,6 @@ describe('Component Tests', () => {
         router,
         provide: {
           gpuService: () => gpuServiceStub,
-
-          dimensionService: () => new DimensionService(),
         },
       });
       comp = wrapper.vm;

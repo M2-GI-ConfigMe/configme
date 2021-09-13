@@ -69,12 +69,6 @@ const VentiradUpdate = () => import('@/entities/ventirad/ventirad-update.vue');
 // prettier-ignore
 const VentiradDetails = () => import('@/entities/ventirad/ventirad-details.vue');
 // prettier-ignore
-const Dimension = () => import('@/entities/dimension/dimension.vue');
-// prettier-ignore
-const DimensionUpdate = () => import('@/entities/dimension/dimension-update.vue');
-// prettier-ignore
-const DimensionDetails = () => import('@/entities/dimension/dimension-details.vue');
-// prettier-ignore
 const Mbe = () => import('@/entities/mbe/mbe.vue');
 // prettier-ignore
 const MbeUpdate = () => import('@/entities/mbe/mbe-update.vue');
@@ -351,30 +345,6 @@ export default [
     path: '/ventirad/:ventiradId/view',
     name: 'VentiradView',
     component: VentiradDetails,
-    meta: { authorities: [Authority.USER] },
-  },
-  {
-    path: '/dimension',
-    name: 'Dimension',
-    component: Dimension,
-    meta: { authorities: [Authority.USER] },
-  },
-  {
-    path: '/dimension/new',
-    name: 'DimensionCreate',
-    component: DimensionUpdate,
-    meta: { authorities: [Authority.USER] },
-  },
-  {
-    path: '/dimension/:dimensionId/edit',
-    name: 'DimensionEdit',
-    component: DimensionUpdate,
-    meta: { authorities: [Authority.USER] },
-  },
-  {
-    path: '/dimension/:dimensionId/view',
-    name: 'DimensionView',
-    component: DimensionDetails,
     meta: { authorities: [Authority.USER] },
   },
   {

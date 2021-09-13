@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.ComputerCase;
+import com.configme.domain.Dimension;
 import com.configme.domain.enumeration.CaseType;
 import com.configme.repository.ComputerCaseRepository;
 import java.util.List;
@@ -60,6 +61,9 @@ class ComputerCaseResourceIT {
     private static final String DEFAULT_WATERCOOLING_COMPATIBILITY = "AAAAAAAAAA";
     private static final String UPDATED_WATERCOOLING_COMPATIBILITY = "BBBBBBBBBB";
 
+    private static final Dimension DEFAULT_DIMENSION = new Dimension(51, 21, 26);
+    private static final Dimension UPDATED_DIMENSION = new Dimension(75, 250, 3950);
+
     private static final String ENTITY_API_URL = "/api/computer-cases";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -94,7 +98,8 @@ class ComputerCaseResourceIT {
             .frontPanelOutputs(DEFAULT_FRONT_PANEL_OUTPUTS)
             .fanIncluded(DEFAULT_FAN_INCLUDED)
             .fanSlotsAvailable(DEFAULT_FAN_SLOTS_AVAILABLE)
-            .watercoolingCompatibility(DEFAULT_WATERCOOLING_COMPATIBILITY);
+            .watercoolingCompatibility(DEFAULT_WATERCOOLING_COMPATIBILITY)
+            .dimension(DEFAULT_DIMENSION);
         return computerCase;
     }
 
@@ -115,7 +120,8 @@ class ComputerCaseResourceIT {
             .frontPanelOutputs(UPDATED_FRONT_PANEL_OUTPUTS)
             .fanIncluded(UPDATED_FAN_INCLUDED)
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
-            .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY);
+            .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
+            .dimension(UPDATED_DIMENSION);
         return computerCase;
     }
 
@@ -147,6 +153,7 @@ class ComputerCaseResourceIT {
         assertThat(testComputerCase.getFanIncluded()).isEqualTo(DEFAULT_FAN_INCLUDED);
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(DEFAULT_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(DEFAULT_WATERCOOLING_COMPATIBILITY);
+        assertThat(testComputerCase.getDimension()).isEqualTo(DEFAULT_DIMENSION);
     }
 
     @Test
@@ -256,7 +263,10 @@ class ComputerCaseResourceIT {
             .andExpect(jsonPath("$.[*].frontPanelOutputs").value(hasItem(DEFAULT_FRONT_PANEL_OUTPUTS)))
             .andExpect(jsonPath("$.[*].fanIncluded").value(hasItem(DEFAULT_FAN_INCLUDED)))
             .andExpect(jsonPath("$.[*].fanSlotsAvailable").value(hasItem(DEFAULT_FAN_SLOTS_AVAILABLE)))
-            .andExpect(jsonPath("$.[*].watercoolingCompatibility").value(hasItem(DEFAULT_WATERCOOLING_COMPATIBILITY)));
+            .andExpect(jsonPath("$.[*].watercoolingCompatibility").value(hasItem(DEFAULT_WATERCOOLING_COMPATIBILITY)))
+            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
     }
 
     @Test
@@ -280,7 +290,8 @@ class ComputerCaseResourceIT {
             .andExpect(jsonPath("$.frontPanelOutputs").value(DEFAULT_FRONT_PANEL_OUTPUTS))
             .andExpect(jsonPath("$.fanIncluded").value(DEFAULT_FAN_INCLUDED))
             .andExpect(jsonPath("$.fanSlotsAvailable").value(DEFAULT_FAN_SLOTS_AVAILABLE))
-            .andExpect(jsonPath("$.watercoolingCompatibility").value(DEFAULT_WATERCOOLING_COMPATIBILITY));
+            .andExpect(jsonPath("$.watercoolingCompatibility").value(DEFAULT_WATERCOOLING_COMPATIBILITY))
+            .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
     }
 
     @Test
@@ -312,7 +323,8 @@ class ComputerCaseResourceIT {
             .frontPanelOutputs(UPDATED_FRONT_PANEL_OUTPUTS)
             .fanIncluded(UPDATED_FAN_INCLUDED)
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
-            .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY);
+            .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
+            .dimension(UPDATED_DIMENSION);
 
         restComputerCaseMockMvc
             .perform(
@@ -336,6 +348,7 @@ class ComputerCaseResourceIT {
         assertThat(testComputerCase.getFanIncluded()).isEqualTo(UPDATED_FAN_INCLUDED);
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(UPDATED_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
+        assertThat(testComputerCase.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
     }
 
     @Test
@@ -438,6 +451,7 @@ class ComputerCaseResourceIT {
         assertThat(testComputerCase.getFanIncluded()).isEqualTo(UPDATED_FAN_INCLUDED);
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(UPDATED_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
+        assertThat(testComputerCase.getDimension()).isEqualTo(DEFAULT_DIMENSION);
     }
 
     @Test
@@ -462,7 +476,8 @@ class ComputerCaseResourceIT {
             .frontPanelOutputs(UPDATED_FRONT_PANEL_OUTPUTS)
             .fanIncluded(UPDATED_FAN_INCLUDED)
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
-            .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY);
+            .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
+            .dimension(UPDATED_DIMENSION);
 
         restComputerCaseMockMvc
             .perform(
@@ -486,6 +501,7 @@ class ComputerCaseResourceIT {
         assertThat(testComputerCase.getFanIncluded()).isEqualTo(UPDATED_FAN_INCLUDED);
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(UPDATED_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
+        assertThat(testComputerCase.getDimension()).isEqualTo(UPDATED_DIMENSION);
     }
 
     @Test
