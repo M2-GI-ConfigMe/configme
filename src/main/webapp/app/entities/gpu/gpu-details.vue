@@ -54,14 +54,26 @@
           <dd>
             <span v-text="$t('configmeApp.BusType.' + gpu.bus)">{{ gpu.bus }}</span>
           </dd>
-          <dt>
-            <span v-text="$t('configmeApp.gpu.dimension')">Dimension</span>
-          </dt>
-          <dd>
-            <div v-if="gpu.dimension">
-              <router-link :to="{ name: 'DimensionView', params: { dimensionId: gpu.dimension.id } }">{{ gpu.dimension.id }}</router-link>
-            </div>
-          </dd>
+          <template v-if="gpu.dimension">
+            <dt>
+              <span v-text="$t('configmeApp.dimension.height')">Height</span>
+            </dt>
+            <dd>
+              <span>{{ gpu.dimension.height }} mm</span>
+            </dd>
+            <dt>
+              <span v-text="$t('configmeApp.dimension.width')">Width</span>
+            </dt>
+            <dd>
+              <span>{{ gpu.dimension.width }} mm</span>
+            </dd>
+            <dt>
+              <span v-text="$t('configmeApp.dimension.length')">Length</span>
+            </dt>
+            <dd>
+              <span>{{ gpu.dimension.length }} mm</span>
+            </dd>
+          </template>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>

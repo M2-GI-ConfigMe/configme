@@ -1,9 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { decimal, required, numeric } from 'vuelidate/lib/validators';
-
-import DimensionService from '@/entities/dimension/dimension.service';
-import { IDimension } from '@/shared/model/dimension.model';
+import { decimal, required, numeric, minValue } from 'vuelidate/lib/validators';
 
 import { IGpu, Gpu } from '@/shared/model/gpu.model';
 import GpuService from './gpu.service';
@@ -39,6 +36,23 @@ const validations: any = {
     bus: {
       required,
     },
+    dimension: {
+      height: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+      width: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+      length: {
+        required,
+        numeric,
+        min: minValue(0),
+      },
+    },
   },
 };
 
@@ -49,9 +63,6 @@ export default class GpuUpdate extends Vue {
   @Inject('gpuService') private gpuService: () => GpuService;
   public gpu: IGpu = new Gpu();
 
-  @Inject('dimensionService') private dimensionService: () => DimensionService;
-
-  public dimensions: IDimension[] = [];
   public isSaving = false;
   public currentLanguage = '';
 
@@ -121,11 +132,5 @@ export default class GpuUpdate extends Vue {
     this.$router.go(-1);
   }
 
-  public initRelationships(): void {
-    this.dimensionService()
-      .retrieve()
-      .then(res => {
-        this.dimensions = res.data;
-      });
-  }
+  public initRelationships(): void {}
 }

@@ -33,8 +33,7 @@ public class Ventirad implements Serializable {
     @Column(name = "has_thermal_paste", nullable = false)
     private Boolean hasThermalPaste;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Embedded
     private Dimension dimension;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

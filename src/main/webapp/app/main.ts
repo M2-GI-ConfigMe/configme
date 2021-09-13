@@ -38,7 +38,6 @@ import HardDriveService from '@/entities/hard-drive/hard-drive.service';
 import RamService from '@/entities/ram/ram.service';
 import PsuService from '@/entities/psu/psu.service';
 import VentiradService from '@/entities/ventirad/ventirad.service';
-import DimensionService from '@/entities/dimension/dimension.service';
 import MbeService from '@/entities/mbe/mbe.service';
 import ComputerCaseService from '@/entities/computer-case/computer-case.service';
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
@@ -110,7 +109,6 @@ new Vue({
     ramService: () => new RamService(),
     psuService: () => new PsuService(),
     ventiradService: () => new VentiradService(),
-    dimensionService: () => new DimensionService(),
     mbeService: () => new MbeService(),
     computerCaseService: () => new ComputerCaseService(),
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here

@@ -135,6 +135,9 @@ public class VentiradResource {
                     if (ventirad.getHasThermalPaste() != null) {
                         existingVentirad.setHasThermalPaste(ventirad.getHasThermalPaste());
                     }
+                    if (ventirad.getDimension() != null) {
+                        existingVentirad.setDimension(ventirad.getDimension());
+                    }
 
                     return existingVentirad;
                 }

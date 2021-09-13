@@ -1,5 +1,3 @@
-import { IDimension } from '@/shared/model/dimension.model';
-
 import { CaseType } from '@/shared/model/enumerations/case-type.model';
 export interface IComputerCase {
   id?: number;
@@ -13,7 +11,7 @@ export interface IComputerCase {
   fanIncluded?: string | null;
   fanSlotsAvailable?: string | null;
   watercoolingCompatibility?: string | null;
-  dimension?: IDimension | null;
+  dimension?: Object | null;
 }
 
 export class ComputerCase implements IComputerCase {
@@ -29,6 +27,6 @@ export class ComputerCase implements IComputerCase {
     public fanIncluded?: string | null,
     public fanSlotsAvailable?: string | null,
     public watercoolingCompatibility?: string | null,
-    public dimension?: IDimension | null
+    public dimension?: Object | null
   ) {}
 }

@@ -56,8 +56,7 @@ public class Gpu implements Serializable {
     @Column(name = "bus", nullable = false)
     private BusType bus;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Embedded
     private Dimension dimension;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

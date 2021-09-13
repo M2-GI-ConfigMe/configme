@@ -26,16 +26,12 @@
     <include file="config/liquibase/changelog/20210910085042_added_entity_Ram.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085043_added_entity_Psu.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085044_added_entity_Ventirad.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210910085045_added_entity_Dimension.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085046_added_entity_Mbe.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085047_added_entity_ComputerCase.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210910085036_added_entity_constraints_Order.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085037_added_entity_constraints_OrderLine.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085038_added_entity_constraints_ClientConfig.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210910085040_added_entity_constraints_Gpu.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210910085044_added_entity_constraints_Ventirad.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210910085047_added_entity_constraints_ComputerCase.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

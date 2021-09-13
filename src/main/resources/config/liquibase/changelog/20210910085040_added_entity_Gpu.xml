@@ -38,8 +38,14 @@
             <column name="bus" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="dimension_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_gpu__dimension_id" />
+            <column name="width" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="height" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="length" type="integer">
+                <constraints nullable="true"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
