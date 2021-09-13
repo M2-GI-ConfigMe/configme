@@ -14,14 +14,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "gpu")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Gpu implements Serializable {
+public class Gpu extends Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
 
     @NotNull
     @Column(name = "frequency", nullable = false)
@@ -58,20 +53,6 @@ public class Gpu implements Serializable {
 
     @Embedded
     private Dimension dimension;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Gpu id(Long id) {
-        this.id = id;
-        return this;
-    }
 
     public Float getFrequency() {
         return this.frequency;
@@ -200,7 +181,7 @@ public class Gpu implements Serializable {
         if (!(o instanceof Gpu)) {
             return false;
         }
-        return id != null && id.equals(((Gpu) o).id);
+        return super.getId() != null && super.getId().equals(((Gpu) o).getId());
     }
 
     @Override
@@ -213,7 +194,7 @@ public class Gpu implements Serializable {
     @Override
     public String toString() {
         return "Gpu{" +
-            "id=" + getId() +
+            "id=" + super.getId() +
             ", frequency=" + getFrequency() +
             ", memory=" + getMemory() +
             ", consumption=" + getConsumption() +
