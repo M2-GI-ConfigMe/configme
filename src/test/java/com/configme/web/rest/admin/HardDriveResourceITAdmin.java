@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -9,6 +9,7 @@ import com.configme.IntegrationTest;
 import com.configme.domain.HardDrive;
 import com.configme.domain.enumeration.MemoryType;
 import com.configme.repository.HardDriveRepository;
+import com.configme.web.rest.*;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;

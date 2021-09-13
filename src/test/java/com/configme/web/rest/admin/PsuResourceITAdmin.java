@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -9,6 +9,9 @@ import com.configme.IntegrationTest;
 import com.configme.domain.Psu;
 import com.configme.domain.enumeration.ModularityType;
 import com.configme.repository.PsuRepository;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.PsuResource;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;

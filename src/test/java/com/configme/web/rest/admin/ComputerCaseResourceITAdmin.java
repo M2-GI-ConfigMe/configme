@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -10,6 +10,9 @@ import com.configme.domain.ComputerCase;
 import com.configme.domain.Dimension;
 import com.configme.domain.enumeration.CaseType;
 import com.configme.repository.ComputerCaseRepository;
+import com.configme.web.rest.ComputerCaseResource;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
