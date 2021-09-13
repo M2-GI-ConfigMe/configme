@@ -78,6 +78,8 @@ class RamResourceITUser {
             .unitSize(DEFAULT_UNIT_SIZE)
             .quantity(DEFAULT_QUANTITY)
             .cas(DEFAULT_CAS);
+
+        ProductResourceIT.createProductField(ram);
         return ram;
     }
 
@@ -94,6 +96,8 @@ class RamResourceITUser {
             .unitSize(UPDATED_UNIT_SIZE)
             .quantity(UPDATED_QUANTITY)
             .cas(UPDATED_CAS);
+
+        ProductResourceIT.updateProductField(ram);
         return ram;
     }
 
@@ -123,7 +127,7 @@ class RamResourceITUser {
         ramRepository.saveAndFlush(ram);
 
         // Get all the ramList
-        restRamMockMvc
+        var action = restRamMockMvc
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -133,6 +137,8 @@ class RamResourceITUser {
             .andExpect(jsonPath("$.[*].unitSize").value(hasItem(DEFAULT_UNIT_SIZE)))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].cas").value(hasItem(DEFAULT_CAS)));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -142,7 +148,7 @@ class RamResourceITUser {
         ramRepository.saveAndFlush(ram);
 
         // Get the ram
-        restRamMockMvc
+        var action = restRamMockMvc
             .perform(get(ENTITY_API_URL_ID, ram.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -152,6 +158,8 @@ class RamResourceITUser {
             .andExpect(jsonPath("$.unitSize").value(DEFAULT_UNIT_SIZE))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
             .andExpect(jsonPath("$.cas").value(DEFAULT_CAS));
+
+        ProductResourceIT.getProductAssertProductField(action);
     }
 
     @Test
@@ -174,6 +182,8 @@ class RamResourceITUser {
         // Disconnect from session so that the updates on updatedRam are not directly saved in db
         em.detach(updatedRam);
         updatedRam.type(UPDATED_TYPE).frequency(UPDATED_FREQUENCY).unitSize(UPDATED_UNIT_SIZE).quantity(UPDATED_QUANTITY).cas(UPDATED_CAS);
+
+        ProductResourceIT.updateProductField(updatedRam);
 
         restRamMockMvc
             .perform(
@@ -201,6 +211,8 @@ class RamResourceITUser {
         partialUpdatedRam.setId(ram.getId());
 
         partialUpdatedRam.frequency(UPDATED_FREQUENCY).cas(UPDATED_CAS);
+
+        ProductResourceIT.partialUpdateField(partialUpdatedRam);
 
         restRamMockMvc
             .perform(

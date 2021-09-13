@@ -11,6 +11,7 @@ import com.configme.domain.Psu;
 import com.configme.domain.enumeration.ModularityType;
 import com.configme.repository.PsuRepository;
 import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.PsuResource;
 import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
@@ -82,6 +83,8 @@ class PsuResourceITUser {
             .nbSata(DEFAULT_NB_SATA)
             .nbPciE(DEFAULT_NB_PCI_E)
             .outputs(DEFAULT_OUTPUTS);
+
+        ProductResourceIT.createProductField(psu);
         return psu;
     }
 
@@ -99,6 +102,8 @@ class PsuResourceITUser {
             .nbSata(UPDATED_NB_SATA)
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
+
+        ProductResourceIT.updateProductField(psu);
         return psu;
     }
 
@@ -128,8 +133,9 @@ class PsuResourceITUser {
         psuRepository.saveAndFlush(psu);
 
         // Get all the psuList
-        restPsuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restPsuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(psu.getId().intValue())))
@@ -139,6 +145,8 @@ class PsuResourceITUser {
             .andExpect(jsonPath("$.[*].nbSata").value(hasItem(DEFAULT_NB_SATA)))
             .andExpect(jsonPath("$.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
             .andExpect(jsonPath("$.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -148,8 +156,9 @@ class PsuResourceITUser {
         psuRepository.saveAndFlush(psu);
 
         // Get the psu
-        restPsuMockMvc
-            .perform(get(ENTITY_API_URL_ID, psu.getId()))
+        var action = restPsuMockMvc.perform(get(ENTITY_API_URL_ID, psu.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(psu.getId().intValue()))
@@ -159,6 +168,8 @@ class PsuResourceITUser {
             .andExpect(jsonPath("$.nbSata").value(DEFAULT_NB_SATA))
             .andExpect(jsonPath("$.nbPciE").value(DEFAULT_NB_PCI_E))
             .andExpect(jsonPath("$.outputs").value(DEFAULT_OUTPUTS));
+
+        ProductResourceIT.getProductAssertProductField(action);
     }
 
     @Test
@@ -187,6 +198,8 @@ class PsuResourceITUser {
             .nbSata(UPDATED_NB_SATA)
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
+
+        ProductResourceIT.updateProductField(updatedPsu);
 
         restPsuMockMvc
             .perform(

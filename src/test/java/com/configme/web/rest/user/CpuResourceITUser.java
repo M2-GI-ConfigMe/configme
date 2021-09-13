@@ -106,6 +106,8 @@ class CpuResourceITUser {
             .ramFrequencyMax(DEFAULT_RAM_FREQUENCY_MAX)
             .consumption(DEFAULT_CONSUMPTION)
             .hasGpu(DEFAULT_HAS_GPU);
+
+        ProductResourceIT.createProductField(cpu);
         return cpu;
     }
 
@@ -129,6 +131,8 @@ class CpuResourceITUser {
             .ramFrequencyMax(UPDATED_RAM_FREQUENCY_MAX)
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
+
+        ProductResourceIT.updateProductField(cpu);
         return cpu;
     }
 
@@ -150,6 +154,11 @@ class CpuResourceITUser {
         // We expect the CPU creation to fail as CREATE is not authorized for an user
         List<Cpu> cpuList = cpuRepository.findAll();
         assertThat(cpuList).hasSize(databaseSizeBeforeCreate);
+
+        Cpu testCpuCase = cpuList.get(cpuList.size() - 1);
+        /* Todo asserts */
+
+        ProductResourceIT.assertProductCreation(testCpuCase);
     }
 
     @Test
@@ -159,8 +168,9 @@ class CpuResourceITUser {
         cpuRepository.saveAndFlush(cpu);
 
         // Get all the cpuList
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restCpuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cpu.getId().intValue())))
@@ -176,6 +186,8 @@ class CpuResourceITUser {
             .andExpect(jsonPath("$.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
             .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
             .andExpect(jsonPath("$.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -185,8 +197,9 @@ class CpuResourceITUser {
         cpuRepository.saveAndFlush(cpu);
 
         // Get the cpu
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL_ID, cpu.getId()))
+        var action = restCpuMockMvc.perform(get(ENTITY_API_URL_ID, cpu.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(cpu.getId().intValue()))
@@ -202,6 +215,8 @@ class CpuResourceITUser {
             .andExpect(jsonPath("$.ramFrequencyMax").value(DEFAULT_RAM_FREQUENCY_MAX.doubleValue()))
             .andExpect(jsonPath("$.consumption").value(DEFAULT_CONSUMPTION))
             .andExpect(jsonPath("$.hasGpu").value(DEFAULT_HAS_GPU.booleanValue()));
+
+        ProductResourceIT.getProductAssertProductField(action);
     }
 
     @Test
@@ -237,6 +252,8 @@ class CpuResourceITUser {
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
 
+        ProductResourceIT.updateProductField(updatedCpu);
+
         restCpuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedCpu.getId())
@@ -269,6 +286,8 @@ class CpuResourceITUser {
             .socketType(UPDATED_SOCKET_TYPE)
             .lithography(UPDATED_LITHOGRAPHY)
             .consumption(UPDATED_CONSUMPTION);
+
+        ProductResourceIT.partialUpdateField((partialUpdatedCpu));
 
         restCpuMockMvc
             .perform(

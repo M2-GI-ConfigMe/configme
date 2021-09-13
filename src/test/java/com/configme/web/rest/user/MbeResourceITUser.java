@@ -103,6 +103,8 @@ class MbeResourceITUser {
             .backPanelOutput(DEFAULT_BACK_PANEL_OUTPUT)
             .bios(DEFAULT_BIOS)
             .format(DEFAULT_FORMAT);
+
+        ProductResourceIT.createProductField(mbe);
         return mbe;
     }
 
@@ -125,6 +127,8 @@ class MbeResourceITUser {
             .backPanelOutput(UPDATED_BACK_PANEL_OUTPUT)
             .bios(UPDATED_BIOS)
             .format(UPDATED_FORMAT);
+
+        ProductResourceIT.updateProductField(mbe);
         return mbe;
     }
 
@@ -154,8 +158,9 @@ class MbeResourceITUser {
         mbeRepository.saveAndFlush(mbe);
 
         // Get all the mbeList
-        restMbeMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restMbeMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(mbe.getId().intValue())))
@@ -170,6 +175,8 @@ class MbeResourceITUser {
             .andExpect(jsonPath("$.[*].backPanelOutput").value(hasItem(DEFAULT_BACK_PANEL_OUTPUT)))
             .andExpect(jsonPath("$.[*].bios").value(hasItem(DEFAULT_BIOS)))
             .andExpect(jsonPath("$.[*].format").value(hasItem(DEFAULT_FORMAT.toString())));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -179,8 +186,9 @@ class MbeResourceITUser {
         mbeRepository.saveAndFlush(mbe);
 
         // Get the mbe
-        restMbeMockMvc
-            .perform(get(ENTITY_API_URL_ID, mbe.getId()))
+        var action = restMbeMockMvc.perform(get(ENTITY_API_URL_ID, mbe.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(mbe.getId().intValue()))
@@ -195,6 +203,8 @@ class MbeResourceITUser {
             .andExpect(jsonPath("$.backPanelOutput").value(DEFAULT_BACK_PANEL_OUTPUT))
             .andExpect(jsonPath("$.bios").value(DEFAULT_BIOS))
             .andExpect(jsonPath("$.format").value(DEFAULT_FORMAT.toString()));
+
+        ProductResourceIT.getProductAssertProductField(action);
     }
 
     @Test
@@ -229,6 +239,8 @@ class MbeResourceITUser {
             .bios(UPDATED_BIOS)
             .format(UPDATED_FORMAT);
 
+        ProductResourceIT.updateProductField(updatedMbe);
+
         restMbeMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedMbe.getId())
@@ -260,6 +272,8 @@ class MbeResourceITUser {
             .insideIO(UPDATED_INSIDE_IO)
             .backPanelOutput(UPDATED_BACK_PANEL_OUTPUT)
             .format(UPDATED_FORMAT);
+
+        ProductResourceIT.partialUpdateField(partialUpdatedMbe);
 
         restMbeMockMvc
             .perform(

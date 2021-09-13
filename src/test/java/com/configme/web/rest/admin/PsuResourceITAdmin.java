@@ -82,6 +82,8 @@ class PsuResourceITAdmin {
             .nbSata(DEFAULT_NB_SATA)
             .nbPciE(DEFAULT_NB_PCI_E)
             .outputs(DEFAULT_OUTPUTS);
+
+        ProductResourceIT.createProductField(psu);
         return psu;
     }
 
@@ -99,6 +101,8 @@ class PsuResourceITAdmin {
             .nbSata(UPDATED_NB_SATA)
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
+
+        ProductResourceIT.updateProductField(psu);
         return psu;
     }
 
@@ -126,6 +130,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(DEFAULT_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(DEFAULT_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(DEFAULT_OUTPUTS);
+
+        ProductResourceIT.assertProductCreation(testPsu);
     }
 
     @Test
@@ -238,8 +244,9 @@ class PsuResourceITAdmin {
         psuRepository.saveAndFlush(psu);
 
         // Get all the psuList
-        restPsuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restPsuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(psu.getId().intValue())))
@@ -249,6 +256,8 @@ class PsuResourceITAdmin {
             .andExpect(jsonPath("$.[*].nbSata").value(hasItem(DEFAULT_NB_SATA)))
             .andExpect(jsonPath("$.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
             .andExpect(jsonPath("$.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -258,8 +267,9 @@ class PsuResourceITAdmin {
         psuRepository.saveAndFlush(psu);
 
         // Get the psu
-        restPsuMockMvc
-            .perform(get(ENTITY_API_URL_ID, psu.getId()))
+        var actions = restPsuMockMvc.perform(get(ENTITY_API_URL_ID, psu.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(psu.getId().intValue()))
@@ -269,6 +279,8 @@ class PsuResourceITAdmin {
             .andExpect(jsonPath("$.nbSata").value(DEFAULT_NB_SATA))
             .andExpect(jsonPath("$.nbPciE").value(DEFAULT_NB_PCI_E))
             .andExpect(jsonPath("$.outputs").value(DEFAULT_OUTPUTS));
+
+        ProductResourceIT.getProductAssertProductField(actions);
     }
 
     @Test
@@ -298,6 +310,8 @@ class PsuResourceITAdmin {
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
 
+        ProductResourceIT.updateProductField(updatedPsu);
+
         restPsuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedPsu.getId())
@@ -316,6 +330,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(UPDATED_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(UPDATED_OUTPUTS);
+
+        ProductResourceIT.assertProductUpdate(testPsu);
     }
 
     @Test
@@ -386,6 +402,8 @@ class PsuResourceITAdmin {
 
         partialUpdatedPsu.power(UPDATED_POWER).nbSata(UPDATED_NB_SATA).nbPciE(UPDATED_NB_PCI_E);
 
+        ProductResourceIT.partialUpdateField(partialUpdatedPsu);
+
         restPsuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedPsu.getId())
@@ -404,6 +422,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(UPDATED_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(DEFAULT_OUTPUTS);
+
+        ProductResourceIT.assertPartialUpdateField(testPsu);
     }
 
     @Test
@@ -426,6 +446,8 @@ class PsuResourceITAdmin {
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
 
+        ProductResourceIT.updateProductField(partialUpdatedPsu);
+
         restPsuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedPsu.getId())
@@ -444,6 +466,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(UPDATED_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(UPDATED_OUTPUTS);
+
+        ProductResourceIT.assertProductUpdate((testPsu));
     }
 
     @Test

@@ -74,6 +74,8 @@ class HardDriveResourceITUser {
             .speedWrite(DEFAULT_SPEED_WRITE)
             .speedRead(DEFAULT_SPEED_READ)
             .type(DEFAULT_TYPE);
+
+        ProductResourceIT.createProductField(hardDrive);
         return hardDrive;
     }
 
@@ -89,6 +91,8 @@ class HardDriveResourceITUser {
             .speedWrite(UPDATED_SPEED_WRITE)
             .speedRead(UPDATED_SPEED_READ)
             .type(UPDATED_TYPE);
+
+        ProductResourceIT.updateProductField(hardDrive);
         return hardDrive;
     }
 
@@ -118,8 +122,9 @@ class HardDriveResourceITUser {
         hardDriveRepository.saveAndFlush(hardDrive);
 
         // Get all the hardDriveList
-        restHardDriveMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restHardDriveMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hardDrive.getId().intValue())))
@@ -127,6 +132,8 @@ class HardDriveResourceITUser {
             .andExpect(jsonPath("$.[*].speedWrite").value(hasItem(DEFAULT_SPEED_WRITE.doubleValue())))
             .andExpect(jsonPath("$.[*].speedRead").value(hasItem(DEFAULT_SPEED_READ.doubleValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
+
+        ProductResourceIT.getProductAssertProductField(action);
     }
 
     @Test
@@ -136,8 +143,9 @@ class HardDriveResourceITUser {
         hardDriveRepository.saveAndFlush(hardDrive);
 
         // Get the hardDrive
-        restHardDriveMockMvc
-            .perform(get(ENTITY_API_URL_ID, hardDrive.getId()))
+        var action = restHardDriveMockMvc.perform(get(ENTITY_API_URL_ID, hardDrive.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hardDrive.getId().intValue()))
@@ -145,6 +153,8 @@ class HardDriveResourceITUser {
             .andExpect(jsonPath("$.speedWrite").value(DEFAULT_SPEED_WRITE.doubleValue()))
             .andExpect(jsonPath("$.speedRead").value(DEFAULT_SPEED_READ.doubleValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -168,6 +178,7 @@ class HardDriveResourceITUser {
         em.detach(updatedHardDrive);
         updatedHardDrive.capacity(UPDATED_CAPACITY).speedWrite(UPDATED_SPEED_WRITE).speedRead(UPDATED_SPEED_READ).type(UPDATED_TYPE);
 
+        ProductResourceIT.updateProductField(updatedHardDrive);
         restHardDriveMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedHardDrive.getId())

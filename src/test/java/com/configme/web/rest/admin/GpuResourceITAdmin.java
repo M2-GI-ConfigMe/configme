@@ -95,6 +95,8 @@ class GpuResourceITAdmin {
             .inputPower(DEFAULT_INPUT_POWER)
             .bus(DEFAULT_BUS)
             .dimension(DEFAULT_DIMENSION);
+
+        ProductResourceIT.createProductField(gpu);
         return gpu;
     }
 
@@ -115,6 +117,8 @@ class GpuResourceITAdmin {
             .inputPower(UPDATED_INPUT_POWER)
             .bus(UPDATED_BUS)
             .dimension(UPDATED_DIMENSION);
+
+        ProductResourceIT.updateProductField(gpu);
         return gpu;
     }
 
@@ -145,6 +149,8 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getInputPower()).isEqualTo(DEFAULT_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(DEFAULT_BUS);
         assertThat(testGpu.getDimension()).isEqualTo(DEFAULT_DIMENSION);
+
+        ProductResourceIT.assertProductCreation(testGpu);
     }
 
     @Test
@@ -308,8 +314,9 @@ class GpuResourceITAdmin {
         gpuRepository.saveAndFlush(gpu);
 
         // Get all the gpuList
-        restGpuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restGpuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(gpu.getId().intValue())))
@@ -324,6 +331,8 @@ class GpuResourceITAdmin {
             .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -333,8 +342,9 @@ class GpuResourceITAdmin {
         gpuRepository.saveAndFlush(gpu);
 
         // Get the gpu
-        restGpuMockMvc
-            .perform(get(ENTITY_API_URL_ID, gpu.getId()))
+        var actions = restGpuMockMvc.perform(get(ENTITY_API_URL_ID, gpu.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(gpu.getId().intValue()))
@@ -347,6 +357,8 @@ class GpuResourceITAdmin {
             .andExpect(jsonPath("$.inputPower").value(DEFAULT_INPUT_POWER))
             .andExpect(jsonPath("$.bus").value(DEFAULT_BUS.toString()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
+
+        ProductResourceIT.getProductAssertProductField(actions);
     }
 
     @Test
@@ -379,6 +391,8 @@ class GpuResourceITAdmin {
             .bus(UPDATED_BUS)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(updatedGpu);
+
         restGpuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedGpu.getId())
@@ -400,6 +414,8 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getInputPower()).isEqualTo(UPDATED_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(UPDATED_BUS);
         assertThat(testGpu.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
+
+        ProductResourceIT.assertProductUpdate(testGpu);
     }
 
     @Test
@@ -475,6 +491,8 @@ class GpuResourceITAdmin {
             .lithography(UPDATED_LITHOGRAPHY)
             .inputPower(UPDATED_INPUT_POWER);
 
+        ProductResourceIT.partialUpdateField(partialUpdatedGpu);
+
         restGpuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedGpu.getId())
@@ -496,6 +514,8 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getInputPower()).isEqualTo(UPDATED_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(DEFAULT_BUS);
         assertThat(testGpu.getDimension()).isEqualTo(DEFAULT_DIMENSION);
+
+        ProductResourceIT.assertPartialUpdateField(testGpu);
     }
 
     @Test
@@ -521,6 +541,8 @@ class GpuResourceITAdmin {
             .bus(UPDATED_BUS)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(partialUpdatedGpu);
+
         restGpuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedGpu.getId())
@@ -542,6 +564,8 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getInputPower()).isEqualTo(UPDATED_INPUT_POWER);
         assertThat(testGpu.getBus()).isEqualTo(UPDATED_BUS);
         assertThat(testGpu.getDimension()).isEqualTo(UPDATED_DIMENSION);
+
+        ProductResourceIT.assertProductUpdate(testGpu);
     }
 
     @Test

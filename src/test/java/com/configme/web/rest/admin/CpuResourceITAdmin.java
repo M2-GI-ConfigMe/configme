@@ -106,6 +106,8 @@ class CpuResourceITAdmin {
             .ramFrequencyMax(DEFAULT_RAM_FREQUENCY_MAX)
             .consumption(DEFAULT_CONSUMPTION)
             .hasGpu(DEFAULT_HAS_GPU);
+
+        ProductResourceIT.createProductField(cpu);
         return cpu;
     }
 
@@ -129,6 +131,8 @@ class CpuResourceITAdmin {
             .ramFrequencyMax(UPDATED_RAM_FREQUENCY_MAX)
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
+
+        ProductResourceIT.updateProductField(cpu);
         return cpu;
     }
 
@@ -162,6 +166,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(DEFAULT_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(DEFAULT_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(DEFAULT_HAS_GPU);
+
+        ProductResourceIT.assertProductCreation(testCpu);
     }
 
     @Test
@@ -342,8 +348,9 @@ class CpuResourceITAdmin {
         cpuRepository.saveAndFlush(cpu);
 
         // Get all the cpuList
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restCpuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cpu.getId().intValue())))
@@ -359,6 +366,8 @@ class CpuResourceITAdmin {
             .andExpect(jsonPath("$.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
             .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
             .andExpect(jsonPath("$.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
+
+        ProductResourceIT.getAllProductAssertProductField(action);
     }
 
     @Test
@@ -368,8 +377,9 @@ class CpuResourceITAdmin {
         cpuRepository.saveAndFlush(cpu);
 
         // Get the cpu
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL_ID, cpu.getId()))
+        var actions = restCpuMockMvc.perform(get(ENTITY_API_URL_ID, cpu.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(cpu.getId().intValue()))
@@ -385,6 +395,8 @@ class CpuResourceITAdmin {
             .andExpect(jsonPath("$.ramFrequencyMax").value(DEFAULT_RAM_FREQUENCY_MAX.doubleValue()))
             .andExpect(jsonPath("$.consumption").value(DEFAULT_CONSUMPTION))
             .andExpect(jsonPath("$.hasGpu").value(DEFAULT_HAS_GPU.booleanValue()));
+
+        ProductResourceIT.getProductAssertProductField(actions);
     }
 
     @Test
@@ -420,6 +432,8 @@ class CpuResourceITAdmin {
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
 
+        ProductResourceIT.updateProductField(updatedCpu);
+
         restCpuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedCpu.getId())
@@ -444,6 +458,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(UPDATED_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(UPDATED_HAS_GPU);
+
+        ProductResourceIT.assertProductUpdate(testCpu);
     }
 
     @Test
@@ -520,6 +536,8 @@ class CpuResourceITAdmin {
             .lithography(UPDATED_LITHOGRAPHY)
             .consumption(UPDATED_CONSUMPTION);
 
+        ProductResourceIT.partialUpdateField(partialUpdatedCpu);
+
         restCpuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCpu.getId())
@@ -544,6 +562,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(DEFAULT_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(DEFAULT_HAS_GPU);
+
+        ProductResourceIT.assertPartialUpdateField(testCpu);
     }
 
     @Test
@@ -572,6 +592,8 @@ class CpuResourceITAdmin {
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
 
+        ProductResourceIT.updateProductField(partialUpdatedCpu);
+
         restCpuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCpu.getId())
@@ -596,6 +618,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(UPDATED_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(UPDATED_HAS_GPU);
+
+        ProductResourceIT.assertProductUpdate(testCpu);
     }
 
     @Test
