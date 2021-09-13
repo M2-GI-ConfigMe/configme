@@ -2,7 +2,7 @@
   <b-navbar data-cy="navbar" toggleable="md" type="dark" class="jh-navbar">
     <b-navbar-brand class="logo" b-link to="/">
       <span class="logo-img"></span>
-      <span v-text="$t('global.title')" class="navbar-title">configme</span> <span class="navbar-version">{{ version }}</span>
+      <span class="navbar-title">gfdgjfgj</span> <span class="navbar-version">{{ version }}</span>
     </b-navbar-brand>
     <b-navbar-toggle
       right
@@ -21,72 +21,75 @@
         <b-nav-item to="/" exact>
           <span>
             <font-awesome-icon icon="home" />
-            <span v-text="$t('global.menu.home')">Home</span>
+            <span>Home</span>
           </span>
         </b-nav-item>
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="th-list" />
-            <span class="no-bold" v-text="$t('global.menu.entities.main')">Entities</span>
+            <span class="no-bold">Entities</span>
           </span>
           <b-dropdown-item to="/address">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.address')">Address</span>
+            <span>Address</span>
           </b-dropdown-item>
           <b-dropdown-item to="/product">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.product')">Product</span>
+            <span>Product</span>
           </b-dropdown-item>
           <b-dropdown-item to="/order">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.order')">Order</span>
+            <span>Order</span>
           </b-dropdown-item>
           <b-dropdown-item to="/order-line">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.orderLine')">Order Line</span>
+            <span>Order Line</span>
           </b-dropdown-item>
           <b-dropdown-item to="/client-config">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.clientConfig')">Client Config</span>
+            <span>Client Config</span>
           </b-dropdown-item>
           <b-dropdown-item to="/cpu">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.cpu')">Cpu</span>
+            <span>Cpu</span>
           </b-dropdown-item>
           <b-dropdown-item to="/gpu">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.gpu')">Gpu</span>
+            <span>Gpu</span>
           </b-dropdown-item>
           <b-dropdown-item to="/hard-drive">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.hardDrive')">Hard Drive</span>
+            <span>Hard Drive</span>
           </b-dropdown-item>
           <b-dropdown-item to="/ram">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.ram')">Ram</span>
+            <span>Ram</span>
           </b-dropdown-item>
           <b-dropdown-item to="/psu">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.psu')">Psu</span>
+            <span>Psu</span>
           </b-dropdown-item>
           <b-dropdown-item to="/ventirad">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.ventirad')">Ventirad</span>
+            <span>Ventirad</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/dimension">
+            <font-awesome-icon icon="asterisk" />
+            <span>Dimension</span>
           </b-dropdown-item>
           <b-dropdown-item to="/mbe">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.mbe')">Mbe</span>
+            <span>Mbe</span>
           </b-dropdown-item>
           <b-dropdown-item to="/computer-case">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.computerCase')">Computer Case</span>
+            <span>Computer Case</span>
           </b-dropdown-item>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </b-nav-item-dropdown>
         <b-nav-item-dropdown
           right
           id="admin-menu"
-          v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
           :class="{ 'router-link-active': subIsActive('/admin') }"
           active-class="active"
           class="pointer"
@@ -146,23 +149,23 @@
         >
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="user" />
-            <span class="no-bold" v-text="$t('global.menu.account.main')"> Account </span>
+            <span class="no-bold"> Account </span>
           </span>
           <b-dropdown-item data-cy="settings" to="/account/settings" tag="b-dropdown-item" v-if="authenticated" active-class="active">
             <font-awesome-icon icon="wrench" />
-            <span v-text="$t('global.menu.account.settings')">Settings</span>
+            <span>Settings</span>
           </b-dropdown-item>
           <b-dropdown-item data-cy="passwordItem" to="/account/password" tag="b-dropdown-item" v-if="authenticated" active-class="active">
             <font-awesome-icon icon="lock" />
-            <span v-text="$t('global.menu.account.password')">Password</span>
+            <span>Password</span>
           </b-dropdown-item>
           <b-dropdown-item data-cy="logout" v-if="authenticated" v-on:click="logout()" id="logout" active-class="active">
             <font-awesome-icon icon="sign-out-alt" />
-            <span v-text="$t('global.menu.account.logout')">Sign out</span>
+            <span>Sign out</span>
           </b-dropdown-item>
           <b-dropdown-item data-cy="login" v-if="!authenticated" v-on:click="openLogin()" id="login" active-class="active">
             <font-awesome-icon icon="sign-in-alt" />
-            <span v-text="$t('global.menu.account.login')">Sign in</span>
+            <span>Sign in</span>
           </b-dropdown-item>
           <b-dropdown-item
             data-cy="register"
@@ -173,7 +176,7 @@
             active-class="active"
           >
             <font-awesome-icon icon="user-plus" />
-            <span v-text="$t('global.menu.account.register')">Register</span>
+            <span>Register</span>
           </b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
@@ -181,7 +184,7 @@
   </b-navbar>
 </template>
 
-<script lang="ts" src="./jhi-navbar.component.ts"></script>
+<script lang="ts" src="./admin-navbar.component.ts"></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

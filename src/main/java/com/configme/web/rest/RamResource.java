@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class RamResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/rams")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Ram> createRam(@Valid @RequestBody Ram ram) throws URISyntaxException {
         log.debug("REST request to save Ram : {}", ram);
         if (ram.getId() != null) {
@@ -71,6 +73,7 @@ public class RamResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/rams/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Ram> updateRam(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Ram ram)
         throws URISyntaxException {
         log.debug("REST request to update Ram : {}, {}", id, ram);
@@ -104,6 +107,7 @@ public class RamResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/rams/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Ram> partialUpdateRam(@PathVariable(value = "id", required = false) final Long id, @NotNull @RequestBody Ram ram)
         throws URISyntaxException {
         log.debug("REST request to partial update Ram partially : {}, {}", id, ram);
@@ -180,6 +184,7 @@ public class RamResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/rams/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteRam(@PathVariable Long id) {
         log.debug("REST request to delete Ram : {}", id);
         ramRepository.deleteById(id);

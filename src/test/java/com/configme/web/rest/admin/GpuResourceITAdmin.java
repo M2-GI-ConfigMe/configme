@@ -28,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class GpuResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class GpuResourceITAdmin {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;

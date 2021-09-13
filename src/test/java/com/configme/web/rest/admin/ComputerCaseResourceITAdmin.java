@@ -28,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
-class ComputerCaseResourceIT {
+@WithMockUser(roles = { "ADMIN" })
+class ComputerCaseResourceITAdmin {
 
     private static final CaseType DEFAULT_TYPE = CaseType.PETITE;
     private static final CaseType UPDATED_TYPE = CaseType.MOYENNE;

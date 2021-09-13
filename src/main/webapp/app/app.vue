@@ -1,21 +1,21 @@
 <template>
-  <div id="app">
+  <v-app>
     <ribbon></ribbon>
     <div id="app-header">
-      <jhi-navbar></jhi-navbar>
+      <navbar></navbar>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid mt-10">
       <div class="card jh-card">
         <router-view></router-view>
       </div>
       <b-modal id="login-page" hide-footer lazy>
-        <span data-cy="loginTitle" slot="modal-title" id="login-title" v-text="$t('login.title')">Sign in</span>
+        <span data-cy="loginTitle" slot="modal-title" id="login-title">Se connecter</span>
         <login-form></login-form>
       </b-modal>
 
       <jhi-footer></jhi-footer>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts" src="./app.component.ts"></script>
