@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class PsuResourceITUser {
+class PsuResourceITUser implements ProductResourceIT {
 
     private static final Integer DEFAULT_POWER = 1;
     private static final Integer UPDATED_POWER = 2;
@@ -146,7 +146,7 @@ class PsuResourceITUser {
             .andExpect(jsonPath("$.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
             .andExpect(jsonPath("$.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -169,7 +169,7 @@ class PsuResourceITUser {
             .andExpect(jsonPath("$.nbPciE").value(DEFAULT_NB_PCI_E))
             .andExpect(jsonPath("$.outputs").value(DEFAULT_OUTPUTS));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -233,6 +233,8 @@ class PsuResourceITUser {
             .nbSata(UPDATED_NB_SATA)
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
+
+        partialUpdateField(partialUpdatedPsu);
 
         restPsuMockMvc
             .perform(

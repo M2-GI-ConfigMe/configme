@@ -154,7 +154,10 @@ public class VentiradResource {
                     if (ventirad.getStock() != null) {
                         existingVentirad.setStock(ventirad.getStock());
                     }
-                    if (ventirad.getDesc() != null) if (ventirad.getImg() != null) {
+                    if (ventirad.getDesc() != null) {
+                        existingVentirad.setDesc(ventirad.getDesc());
+                    }
+                    if (ventirad.getImg() != null) {
                         existingVentirad.setImg(ventirad.getImg());
                     }
                     if (ventirad.getName() != null) {

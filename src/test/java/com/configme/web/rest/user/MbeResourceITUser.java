@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class MbeResourceITUser {
+class MbeResourceITUser implements ProductResourceIT {
 
     private static final SocketType DEFAULT_SOCKET_CPU = SocketType.AM4;
     private static final SocketType UPDATED_SOCKET_CPU = SocketType.TR4;
@@ -176,7 +176,7 @@ class MbeResourceITUser {
             .andExpect(jsonPath("$.[*].bios").value(hasItem(DEFAULT_BIOS)))
             .andExpect(jsonPath("$.[*].format").value(hasItem(DEFAULT_FORMAT.toString())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -204,7 +204,7 @@ class MbeResourceITUser {
             .andExpect(jsonPath("$.bios").value(DEFAULT_BIOS))
             .andExpect(jsonPath("$.format").value(DEFAULT_FORMAT.toString()));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -273,7 +273,7 @@ class MbeResourceITUser {
             .backPanelOutput(UPDATED_BACK_PANEL_OUTPUT)
             .format(UPDATED_FORMAT);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedMbe);
+        partialUpdateField(partialUpdatedMbe);
 
         restMbeMockMvc
             .perform(

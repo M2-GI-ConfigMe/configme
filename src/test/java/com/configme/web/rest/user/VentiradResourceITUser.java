@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class VentiradResourceITUser {
+class VentiradResourceITUser implements ProductResourceIT {
 
     private static final String DEFAULT_RANGE_FAN_SPEED = "AAAAAAAAAA";
     private static final String UPDATED_RANGE_FAN_SPEED = "BBBBBBBBBB";
@@ -134,7 +134,7 @@ class VentiradResourceITUser {
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -154,7 +154,7 @@ class VentiradResourceITUser {
             .andExpect(jsonPath("$.hasThermalPaste").value(DEFAULT_HAS_THERMAL_PASTE.booleanValue()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -209,7 +209,7 @@ class VentiradResourceITUser {
         Ventirad partialUpdatedVentirad = new Ventirad();
         partialUpdatedVentirad.setId(ventirad.getId());
 
-        ProductResourceIT.partialUpdateField(partialUpdatedVentirad);
+        partialUpdateField(partialUpdatedVentirad);
 
         restVentiradMockMvc
             .perform(

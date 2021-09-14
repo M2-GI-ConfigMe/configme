@@ -7,7 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.Dimension;
+import com.configme.domain.Product;
 import com.configme.domain.Ventirad;
+import com.configme.repository.ProductRepository;
 import com.configme.repository.VentiradRepository;
 import com.configme.web.rest.ProductResourceIT;
 import com.configme.web.rest.TestUtil;
@@ -31,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class VentiradResourceITAdmin {
+class VentiradResourceITAdmin implements ProductResourceIT {
 
     private static final String DEFAULT_RANGE_FAN_SPEED = "AAAAAAAAAA";
     private static final String UPDATED_RANGE_FAN_SPEED = "BBBBBBBBBB";
@@ -117,7 +119,7 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(DEFAULT_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).isEqualTo(DEFAULT_DIMENSION);
 
-        ProductResourceIT.assertProductCreation(testVentirad);
+        assertProductCreation(testVentirad);
     }
 
     @Test
@@ -192,7 +194,7 @@ class VentiradResourceITAdmin {
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -213,7 +215,7 @@ class VentiradResourceITAdmin {
             .andExpect(jsonPath("$.hasThermalPaste").value(DEFAULT_HAS_THERMAL_PASTE.booleanValue()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
 
-        ProductResourceIT.getProductAssertProductField(actions);
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -260,7 +262,7 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(UPDATED_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
 
-        ProductResourceIT.assertProductUpdate(testVentirad);
+        assertProductUpdate(testVentirad);
     }
 
     @Test
@@ -331,7 +333,8 @@ class VentiradResourceITAdmin {
         Ventirad partialUpdatedVentirad = new Ventirad();
         partialUpdatedVentirad.setId(ventirad.getId());
 
-        ProductResourceIT.partialUpdateField(partialUpdatedVentirad);
+        partialUpdateField(partialUpdatedVentirad);
+
         restVentiradMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedVentirad.getId())
@@ -349,7 +352,7 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(DEFAULT_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).isEqualTo(DEFAULT_DIMENSION);
 
-        ProductResourceIT.assertPartialUpdateField(testVentirad);
+        assertPartialUpdateField(testVentirad);
     }
 
     @Test
@@ -389,7 +392,7 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(UPDATED_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).isEqualTo(UPDATED_DIMENSION);
 
-        ProductResourceIT.assertProductUpdate(testVentirad);
+        assertProductUpdate(testVentirad);
     }
 
     @Test
@@ -464,5 +467,12 @@ class VentiradResourceITAdmin {
         // Validate the database contains one less item
         List<Ventirad> ventiradList = ventiradRepository.findAll();
         assertThat(ventiradList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "USER" })
-class CpuResourceITUser {
+class CpuResourceITUser implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -154,11 +154,6 @@ class CpuResourceITUser {
         // We expect the CPU creation to fail as CREATE is not authorized for an user
         List<Cpu> cpuList = cpuRepository.findAll();
         assertThat(cpuList).hasSize(databaseSizeBeforeCreate);
-
-        Cpu testCpuCase = cpuList.get(cpuList.size() - 1);
-        /* Todo asserts */
-
-        ProductResourceIT.assertProductCreation(testCpuCase);
     }
 
     @Test
@@ -187,7 +182,7 @@ class CpuResourceITUser {
             .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
             .andExpect(jsonPath("$.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -216,7 +211,7 @@ class CpuResourceITUser {
             .andExpect(jsonPath("$.consumption").value(DEFAULT_CONSUMPTION))
             .andExpect(jsonPath("$.hasGpu").value(DEFAULT_HAS_GPU.booleanValue()));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -287,7 +282,7 @@ class CpuResourceITUser {
             .lithography(UPDATED_LITHOGRAPHY)
             .consumption(UPDATED_CONSUMPTION);
 
-        ProductResourceIT.partialUpdateField((partialUpdatedCpu));
+        partialUpdateField((partialUpdatedCpu));
 
         restCpuMockMvc
             .perform(

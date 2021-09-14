@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class RamResourceITUser {
+class RamResourceITUser implements ProductResourceIT {
 
     private static final RamType DEFAULT_TYPE = RamType.DDR3;
     private static final RamType UPDATED_TYPE = RamType.DDR4;
@@ -138,7 +138,7 @@ class RamResourceITUser {
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].cas").value(hasItem(DEFAULT_CAS)));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -159,7 +159,7 @@ class RamResourceITUser {
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
             .andExpect(jsonPath("$.cas").value(DEFAULT_CAS));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -212,7 +212,7 @@ class RamResourceITUser {
 
         partialUpdatedRam.frequency(UPDATED_FREQUENCY).cas(UPDATED_CAS);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedRam);
+        partialUpdateField(partialUpdatedRam);
 
         restRamMockMvc
             .perform(

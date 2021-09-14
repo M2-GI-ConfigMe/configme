@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Product;
 import com.configme.domain.Psu;
 import com.configme.domain.enumeration.ModularityType;
+import com.configme.repository.ProductRepository;
 import com.configme.repository.PsuRepository;
 import com.configme.web.rest.ProductResourceIT;
 import com.configme.web.rest.PsuResource;
@@ -31,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class PsuResourceITAdmin {
+class PsuResourceITAdmin implements ProductResourceIT {
 
     private static final Integer DEFAULT_POWER = 1;
     private static final Integer UPDATED_POWER = 2;
@@ -131,7 +133,7 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbPciE()).isEqualTo(DEFAULT_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(DEFAULT_OUTPUTS);
 
-        ProductResourceIT.assertProductCreation(testPsu);
+        assertProductCreation(testPsu);
     }
 
     @Test
@@ -257,7 +259,7 @@ class PsuResourceITAdmin {
             .andExpect(jsonPath("$.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
             .andExpect(jsonPath("$.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -280,7 +282,7 @@ class PsuResourceITAdmin {
             .andExpect(jsonPath("$.nbPciE").value(DEFAULT_NB_PCI_E))
             .andExpect(jsonPath("$.outputs").value(DEFAULT_OUTPUTS));
 
-        ProductResourceIT.getProductAssertProductField(actions);
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -331,7 +333,7 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(UPDATED_OUTPUTS);
 
-        ProductResourceIT.assertProductUpdate(testPsu);
+        assertProductUpdate(testPsu);
     }
 
     @Test
@@ -402,7 +404,7 @@ class PsuResourceITAdmin {
 
         partialUpdatedPsu.power(UPDATED_POWER).nbSata(UPDATED_NB_SATA).nbPciE(UPDATED_NB_PCI_E);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedPsu);
+        partialUpdateField(partialUpdatedPsu);
 
         restPsuMockMvc
             .perform(
@@ -423,7 +425,7 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(DEFAULT_OUTPUTS);
 
-        ProductResourceIT.assertPartialUpdateField(testPsu);
+        assertPartialUpdateField(testPsu);
     }
 
     @Test
@@ -467,7 +469,7 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(UPDATED_OUTPUTS);
 
-        ProductResourceIT.assertProductUpdate((testPsu));
+        assertProductUpdate((testPsu));
     }
 
     @Test
@@ -540,5 +542,12 @@ class PsuResourceITAdmin {
         // Validate the database contains one less item
         List<Psu> psuList = psuRepository.findAll();
         assertThat(psuList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

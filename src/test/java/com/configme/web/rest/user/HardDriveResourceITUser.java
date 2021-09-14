@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class HardDriveResourceITUser {
+class HardDriveResourceITUser implements ProductResourceIT {
 
     private static final Integer DEFAULT_CAPACITY = 1;
     private static final Integer UPDATED_CAPACITY = 2;
@@ -133,7 +133,7 @@ class HardDriveResourceITUser {
             .andExpect(jsonPath("$.[*].speedRead").value(hasItem(DEFAULT_SPEED_READ.doubleValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -154,7 +154,7 @@ class HardDriveResourceITUser {
             .andExpect(jsonPath("$.speedRead").value(DEFAULT_SPEED_READ.doubleValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test

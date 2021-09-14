@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class GpuResourceITAdmin {
+class GpuResourceITAdmin implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -150,7 +150,7 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getBus()).isEqualTo(DEFAULT_BUS);
         assertThat(testGpu.getDimension()).isEqualTo(DEFAULT_DIMENSION);
 
-        ProductResourceIT.assertProductCreation(testGpu);
+        assertProductCreation(testGpu);
     }
 
     @Test
@@ -332,7 +332,7 @@ class GpuResourceITAdmin {
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -358,7 +358,7 @@ class GpuResourceITAdmin {
             .andExpect(jsonPath("$.bus").value(DEFAULT_BUS.toString()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
 
-        ProductResourceIT.getProductAssertProductField(actions);
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -415,7 +415,7 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getBus()).isEqualTo(UPDATED_BUS);
         assertThat(testGpu.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
 
-        ProductResourceIT.assertProductUpdate(testGpu);
+        assertProductUpdate(testGpu);
     }
 
     @Test
@@ -491,7 +491,7 @@ class GpuResourceITAdmin {
             .lithography(UPDATED_LITHOGRAPHY)
             .inputPower(UPDATED_INPUT_POWER);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedGpu);
+        partialUpdateField(partialUpdatedGpu);
 
         restGpuMockMvc
             .perform(
@@ -515,7 +515,7 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getBus()).isEqualTo(DEFAULT_BUS);
         assertThat(testGpu.getDimension()).isEqualTo(DEFAULT_DIMENSION);
 
-        ProductResourceIT.assertPartialUpdateField(testGpu);
+        assertPartialUpdateField(testGpu);
     }
 
     @Test
@@ -565,7 +565,7 @@ class GpuResourceITAdmin {
         assertThat(testGpu.getBus()).isEqualTo(UPDATED_BUS);
         assertThat(testGpu.getDimension()).isEqualTo(UPDATED_DIMENSION);
 
-        ProductResourceIT.assertProductUpdate(testGpu);
+        assertProductUpdate(testGpu);
     }
 
     @Test

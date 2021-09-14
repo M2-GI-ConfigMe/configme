@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class GpuResourceITUser {
+class GpuResourceITUser implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -164,7 +164,7 @@ class GpuResourceITUser {
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -190,7 +190,7 @@ class GpuResourceITUser {
             .andExpect(jsonPath("$.bus").value(DEFAULT_BUS.toString()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -257,7 +257,7 @@ class GpuResourceITUser {
             .lithography(UPDATED_LITHOGRAPHY)
             .inputPower(UPDATED_INPUT_POWER);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedGpu);
+        partialUpdateField(partialUpdatedGpu);
 
         restGpuMockMvc
             .perform(

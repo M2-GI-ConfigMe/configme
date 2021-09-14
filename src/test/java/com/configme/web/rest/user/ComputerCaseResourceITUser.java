@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class ComputerCaseResourceITUser {
+class ComputerCaseResourceITUser implements ProductResourceIT {
 
     private static final CaseType DEFAULT_TYPE = CaseType.PETITE;
     private static final CaseType UPDATED_TYPE = CaseType.MOYENNE;
@@ -175,7 +175,7 @@ class ComputerCaseResourceITUser {
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -203,7 +203,7 @@ class ComputerCaseResourceITUser {
             .andExpect(jsonPath("$.watercoolingCompatibility").value(DEFAULT_WATERCOOLING_COMPATIBILITY))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
 
-        ProductResourceIT.getProductAssertProductField(action);
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -275,7 +275,7 @@ class ComputerCaseResourceITUser {
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedComputerCase);
+        partialUpdateField(partialUpdatedComputerCase);
 
         restComputerCaseMockMvc
             .perform(

@@ -7,8 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.Cpu;
+import com.configme.domain.Product;
 import com.configme.domain.enumeration.SocketType;
 import com.configme.repository.CpuRepository;
+import com.configme.repository.ProductRepository;
 import com.configme.web.rest.CpuResource;
 import com.configme.web.rest.ProductResourceIT;
 import com.configme.web.rest.TestUtil;
@@ -31,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class CpuResourceITAdmin {
+class CpuResourceITAdmin implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -167,7 +169,7 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getConsumption()).isEqualTo(DEFAULT_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(DEFAULT_HAS_GPU);
 
-        ProductResourceIT.assertProductCreation(testCpu);
+        assertProductCreation(testCpu);
     }
 
     @Test
@@ -367,7 +369,7 @@ class CpuResourceITAdmin {
             .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
             .andExpect(jsonPath("$.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -396,7 +398,7 @@ class CpuResourceITAdmin {
             .andExpect(jsonPath("$.consumption").value(DEFAULT_CONSUMPTION))
             .andExpect(jsonPath("$.hasGpu").value(DEFAULT_HAS_GPU.booleanValue()));
 
-        ProductResourceIT.getProductAssertProductField(actions);
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -459,7 +461,7 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(UPDATED_HAS_GPU);
 
-        ProductResourceIT.assertProductUpdate(testCpu);
+        assertProductUpdate(testCpu);
     }
 
     @Test
@@ -536,7 +538,7 @@ class CpuResourceITAdmin {
             .lithography(UPDATED_LITHOGRAPHY)
             .consumption(UPDATED_CONSUMPTION);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedCpu);
+        partialUpdateField(partialUpdatedCpu);
 
         restCpuMockMvc
             .perform(
@@ -563,7 +565,7 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(DEFAULT_HAS_GPU);
 
-        ProductResourceIT.assertPartialUpdateField(testCpu);
+        assertPartialUpdateField(testCpu);
     }
 
     @Test
@@ -619,7 +621,7 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(UPDATED_HAS_GPU);
 
-        ProductResourceIT.assertProductUpdate(testCpu);
+        assertProductUpdate(testCpu);
     }
 
     @Test
@@ -692,5 +694,12 @@ class CpuResourceITAdmin {
         // Validate the database contains one less item
         List<Cpu> cpuList = cpuRepository.findAll();
         assertThat(cpuList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

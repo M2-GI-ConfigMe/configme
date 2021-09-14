@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Product;
 import com.configme.domain.Ram;
 import com.configme.domain.enumeration.RamType;
+import com.configme.repository.ProductRepository;
 import com.configme.repository.RamRepository;
 import com.configme.web.rest.ProductResourceIT;
 import com.configme.web.rest.RamResource;
@@ -31,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class RamResourceITAdmin {
+class RamResourceITAdmin implements ProductResourceIT {
 
     private static final RamType DEFAULT_TYPE = RamType.DDR3;
     private static final RamType UPDATED_TYPE = RamType.DDR4;
@@ -125,7 +127,7 @@ class RamResourceITAdmin {
         assertThat(testRam.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(DEFAULT_CAS);
 
-        ProductResourceIT.assertProductCreation(testRam);
+        assertProductCreation(testRam);
     }
 
     @Test
@@ -250,7 +252,7 @@ class RamResourceITAdmin {
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].cas").value(hasItem(DEFAULT_CAS)));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -272,7 +274,7 @@ class RamResourceITAdmin {
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
             .andExpect(jsonPath("$.cas").value(DEFAULT_CAS));
 
-        ProductResourceIT.getProductAssertProductField(actions);
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -315,7 +317,7 @@ class RamResourceITAdmin {
         assertThat(testRam.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(UPDATED_CAS);
 
-        ProductResourceIT.assertProductUpdate(testRam);
+        assertProductUpdate(testRam);
     }
 
     @Test
@@ -386,7 +388,7 @@ class RamResourceITAdmin {
 
         partialUpdatedRam.frequency(UPDATED_FREQUENCY).cas(UPDATED_CAS);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedRam);
+        partialUpdateField(partialUpdatedRam);
 
         restRamMockMvc
             .perform(
@@ -406,7 +408,7 @@ class RamResourceITAdmin {
         assertThat(testRam.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(UPDATED_CAS);
 
-        ProductResourceIT.assertPartialUpdateField(testRam);
+        assertPartialUpdateField(testRam);
     }
 
     @Test
@@ -448,7 +450,7 @@ class RamResourceITAdmin {
         assertThat(testRam.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(UPDATED_CAS);
 
-        ProductResourceIT.assertProductUpdate(testRam);
+        assertProductUpdate(testRam);
     }
 
     @Test
@@ -521,5 +523,12 @@ class RamResourceITAdmin {
         // Validate the database contains one less item
         List<Ram> ramList = ramRepository.findAll();
         assertThat(ramList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

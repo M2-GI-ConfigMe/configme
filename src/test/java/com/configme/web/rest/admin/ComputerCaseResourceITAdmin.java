@@ -8,8 +8,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.configme.IntegrationTest;
 import com.configme.domain.ComputerCase;
 import com.configme.domain.Dimension;
+import com.configme.domain.Product;
 import com.configme.domain.enumeration.CaseType;
 import com.configme.repository.ComputerCaseRepository;
+import com.configme.repository.ProductRepository;
 import com.configme.web.rest.ComputerCaseResource;
 import com.configme.web.rest.ProductResourceIT;
 import com.configme.web.rest.TestUtil;
@@ -32,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class ComputerCaseResourceITAdmin {
+class ComputerCaseResourceITAdmin implements ProductResourceIT {
 
     private static final CaseType DEFAULT_TYPE = CaseType.PETITE;
     private static final CaseType UPDATED_TYPE = CaseType.MOYENNE;
@@ -162,7 +164,7 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(DEFAULT_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).isEqualTo(DEFAULT_DIMENSION);
 
-        ProductResourceIT.assertProductCreation(testComputerCase);
+        assertProductCreation(testComputerCase);
     }
 
     @Test
@@ -278,7 +280,7 @@ class ComputerCaseResourceITAdmin {
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
-        ProductResourceIT.getAllProductAssertProductField(action);
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -306,7 +308,7 @@ class ComputerCaseResourceITAdmin {
             .andExpect(jsonPath("$.watercoolingCompatibility").value(DEFAULT_WATERCOOLING_COMPATIBILITY))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
 
-        ProductResourceIT.getProductAssertProductField(actions);
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -367,7 +369,7 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
 
-        ProductResourceIT.assertProductUpdate(testComputerCase);
+        assertProductUpdate(testComputerCase);
     }
 
     @Test
@@ -448,7 +450,7 @@ class ComputerCaseResourceITAdmin {
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY);
 
-        ProductResourceIT.partialUpdateField(partialUpdatedComputerCase);
+        partialUpdateField(partialUpdatedComputerCase);
 
         restComputerCaseMockMvc
             .perform(
@@ -474,7 +476,7 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).isEqualTo(DEFAULT_DIMENSION);
 
-        ProductResourceIT.assertPartialUpdateField(testComputerCase);
+        assertPartialUpdateField(testComputerCase);
     }
 
     @Test
@@ -528,7 +530,7 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).isEqualTo(UPDATED_DIMENSION);
 
-        ProductResourceIT.assertProductUpdate(testComputerCase);
+        assertProductUpdate(testComputerCase);
     }
 
     @Test
@@ -605,5 +607,12 @@ class ComputerCaseResourceITAdmin {
         // Validate the database contains one less item
         List<ComputerCase> computerCaseList = computerCaseRepository.findAll();
         assertThat(computerCaseList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }
