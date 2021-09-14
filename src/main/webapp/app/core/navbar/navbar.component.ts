@@ -16,7 +16,7 @@ export default class Navbar extends Vue {
   private languages: any = this.$store.getters.languages;
   private hasAnyAuthorityValue = false;
 
-  public appTitle = 'ConfigMe';
+  public appTitle = "Config'Me";
   public sidebar = false;
   public entitiesItems = [
     { title: 'Cpus', path: '/cpu' },
