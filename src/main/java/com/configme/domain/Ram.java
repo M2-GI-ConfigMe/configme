@@ -24,6 +24,7 @@ public class Ram extends Product implements Serializable {
     private RamType type;
 
     @NotNull
+    @Min(value = 0)
     @Column(name = "frequency", nullable = false)
     private Float frequency;
 

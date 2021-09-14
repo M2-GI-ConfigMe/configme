@@ -15,6 +15,7 @@ const validations: any = {
       required,
     },
     frequency: {
+      min: minValue(2),
       required,
       decimal,
     },

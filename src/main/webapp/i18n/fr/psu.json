@@ -18,11 +18,11 @@
         "title": "Psu"
       },
       "id": "ID",
-      "power": "Power",
+      "power": "Puissance W",
       "certification": "Certification",
-      "modularity": "Modularity",
-      "nbSata": "Nb Sata",
-      "nbPciE": "Nb Pci E",
+      "modularity": "Modularité",
+      "nbSata": "Nombre de sortie Sata",
+      "nbPciE": "Nombre de sortie PciExpress",
       "outputs": "Outputs"
     }
   }

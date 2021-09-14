@@ -31,10 +31,12 @@ public class Mbe extends Product implements Serializable {
     private RamType ramType;
 
     @NotNull
+    @Min(value = 0)
     @Column(name = "ram_frequency_max", nullable = false)
     private Float ramFrequencyMax;
 
     @NotNull
+    @Min(value = 0)
     @Column(name = "ram_size_max", nullable = false)
     private Float ramSizeMax;
 

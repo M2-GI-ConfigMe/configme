@@ -14,10 +14,12 @@ const validations: any = {
       required,
     },
     ramFrequencyMax: {
+      min: minValue(0),
       required,
       decimal,
     },
     ramSizeMax: {
+      min: minValue(0),
       required,
       decimal,
     },

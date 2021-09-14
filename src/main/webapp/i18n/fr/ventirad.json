@@ -18,9 +18,9 @@
         "title": "Ventirad"
       },
       "id": "ID",
-      "rangeFanSpeed": "Range Fan Speed",
-      "noise": "Noise",
-      "hasThermalPaste": "Has Thermal Paste",
+      "rangeFanSpeed": "Vitesse de rotation tours/min",
+      "noise": "Bruits Db",
+      "hasThermalPaste": "Pâte thermique inclu",
       "dimension": "Dimension"
     }
   }

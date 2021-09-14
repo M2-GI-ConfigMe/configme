@@ -18,14 +18,14 @@
         "title": "Product"
       },
       "id": "ID",
-      "name": "Name",
-      "price": "Price",
-      "discount": "Discount",
+      "name": "Nom",
+      "price": "Prix",
+      "discount": "Réduction",
       "stock": "Stock",
-      "img": "Img",
-      "desc": "Desc",
-      "brand": "Brand",
-      "isActive": "Is Active"
+      "img": "Image",
+      "desc": "Description",
+      "brand": "Marque",
+      "isActive": "Actif"
     }
   }
 }

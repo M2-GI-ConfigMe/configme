@@ -47,12 +47,6 @@
             <span>{{ ram.brand }}</span>
           </dd>
           <dt>
-            <span v-text="$t('configmeApp.ram.speed')">Speed</span>
-          </dt>
-          <dd>
-            <span>{{ ram.speed }}</span>
-          </dd>
-          <dt>
             <span v-text="$t('configmeApp.ram.type')">Type</span>
           </dt>
           <dd>
