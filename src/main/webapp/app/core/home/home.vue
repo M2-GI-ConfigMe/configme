@@ -1,7 +1,7 @@
 <template>
   <div class="height:100%">
     <v-layout fill-height class="grad-bg" style="height: calc(100vh - 64px)">
-      <div class="pt-10 pl-10 text-white" style="margin-top: 10%; margin-left: 10%">
+      <div class="col pt-10 pl-10 text-white" style="margin-top: 10%; margin-left: 10%">
         <p class="pl-10 h1">Bienvenue sur <span class="font-weight-bold">Config'Me</span></p>
         <p class="pl-10 h5">Vous pouvez créer votre propre config' grâce à notre ConfigMaker !</p>
         <v-btn class="ml-10" @click="$vuetify.goTo('#configMaker', {})"> C'est parti ! </v-btn>
