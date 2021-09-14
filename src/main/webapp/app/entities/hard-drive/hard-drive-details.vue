@@ -2,10 +2,52 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="hardDrive">
-        <h2 class="jh-entity-heading" data-cy="hardDriveDetailsHeading">
-          <span v-text="$t('configmeApp.hardDrive.detail.title')">HardDrive</span> {{ hardDrive.id }}
+        <h2 class="jh-entity-heading titre-container-entity" data-cy="hardDriveDetailsHeading">
+          <div><span v-text="$t('configmeApp.hardDrive.detail.title')">ComputerCase</span> {{ hardDrive.id }}</div>
+          <div>
+            <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(hardDrive, true)" v-if="!hardDrive.isActive">
+              Activer
+            </button>
+            <button class="btn btn-success btn-sm" v-on:click="setActive(hardDrive, false)" v-if="hardDrive.isActive">Désactiver</button>
+          </div>
         </h2>
         <dl class="row jh-entity-details">
+          <dt>
+            <span v-text="$t('configmeApp.product.name')">Name</span>
+          </dt>
+          <dd>
+            <span>{{ hardDrive.name }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.price')">Price</span>
+          </dt>
+          <dd>
+            <span>{{ hardDrive.price }} €</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.discount')">Discount</span>
+          </dt>
+          <dd>
+            <span>{{ Math.floor((1 - hardDrive.discount) * 100) }}%</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.stock')">Stock</span>
+          </dt>
+          <dd>
+            <span>{{ hardDrive.stock }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.img')">Image</span>
+          </dt>
+          <dd>
+            <span><img :src="hardDrive.img" alt="photot de l'article" /></span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.brand')">Marque</span>
+          </dt>
+          <dd>
+            <span>{{ hardDrive.brand }}</span>
+          </dd>
           <dt>
             <span v-text="$t('configmeApp.hardDrive.capacity')">Capacity</span>
           </dt>

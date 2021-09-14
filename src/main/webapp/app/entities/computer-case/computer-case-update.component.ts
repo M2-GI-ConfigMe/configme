@@ -1,6 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { required, numeric, minValue } from 'vuelidate/lib/validators';
+import { required, numeric, minValue, decimal, maxValue } from 'vuelidate/lib/validators';
 
 import { IComputerCase, ComputerCase } from '@/shared/model/computer-case.model';
 import ComputerCaseService from './computer-case.service';
@@ -44,6 +44,31 @@ const validations: any = {
         numeric,
         min: minValue(0),
       },
+    },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
+      required,
     },
   },
 };
@@ -95,6 +120,7 @@ export default class ComputerCaseUpdate extends Vue {
           });
         });
     } else {
+      this.computerCase.isActive = true;
       this.computerCaseService()
         .create(this.computerCase)
         .then(param => {

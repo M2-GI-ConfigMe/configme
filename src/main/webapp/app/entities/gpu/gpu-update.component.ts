@@ -1,6 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { decimal, required, numeric, minValue } from 'vuelidate/lib/validators';
+import { decimal, required, numeric, minValue, maxValue } from 'vuelidate/lib/validators';
 
 import { IGpu, Gpu } from '@/shared/model/gpu.model';
 import GpuService from './gpu.service';
@@ -53,6 +53,31 @@ const validations: any = {
         min: minValue(0),
       },
     },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
+      required,
+    },
   },
 };
 
@@ -103,6 +128,7 @@ export default class GpuUpdate extends Vue {
           });
         });
     } else {
+      this.gpu.isActive = true;
       this.gpuService()
         .create(this.gpu)
         .then(param => {

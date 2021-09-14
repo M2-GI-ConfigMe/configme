@@ -1,6 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { decimal, required, numeric, minValue } from 'vuelidate/lib/validators';
+import { decimal, required, numeric, minValue, maxValue } from 'vuelidate/lib/validators';
 
 import { ICpu, Cpu } from '@/shared/model/cpu.model';
 import CpuService from './cpu.service';
@@ -43,6 +43,31 @@ const validations: any = {
       numeric,
     },
     hasGpu: {
+      required,
+    },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
       required,
     },
   },
@@ -93,6 +118,7 @@ export default class CpuUpdate extends Vue {
           });
         });
     } else {
+      this.cpu.isActive = true;
       this.cpuService()
         .create(this.cpu)
         .then(param => {

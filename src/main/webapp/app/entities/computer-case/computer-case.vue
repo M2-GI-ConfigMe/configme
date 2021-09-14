@@ -29,6 +29,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.computerCase.type')">Type</span></th>
             <th scope="row"><span v-text="$t('configmeApp.computerCase.formats')">Formats</span></th>
             <th scope="row"><span v-text="$t('configmeApp.computerCase.sizeMaxGpu')">Size Max Gpu</span></th>
@@ -49,6 +56,20 @@
               <router-link :to="{ name: 'ComputerCaseView', params: { computerCaseId: computerCase.id } }">{{
                 computerCase.id
               }}</router-link>
+            </td>
+            <td>{{ computerCase.name }}</td>
+            <td>{{ computerCase.price }}</td>
+            <td>{{ computerCase.discount }}</td>
+            <td>{{ computerCase.stock }}</td>
+            <td>{{ computerCase.img }}</td>
+            <td>{{ computerCase.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(computerCase, true)" v-if="!computerCase.isActive">
+                Activer
+              </button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(computerCase, false)" v-if="computerCase.isActive">
+                Désactiver
+              </button>
             </td>
             <td v-text="$t('configmeApp.CaseType.' + computerCase.type)">{{ computerCase.type }}</td>
             <td>{{ computerCase.formats }}</td>

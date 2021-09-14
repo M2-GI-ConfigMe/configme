@@ -262,3 +262,9 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.titre-container-entity {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}

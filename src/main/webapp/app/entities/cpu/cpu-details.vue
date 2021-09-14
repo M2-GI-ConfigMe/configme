@@ -2,10 +2,50 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="cpu">
-        <h2 class="jh-entity-heading" data-cy="cpuDetailsHeading">
-          <span v-text="$t('configmeApp.cpu.detail.title')">Cpu</span> {{ cpu.id }}
+        <h2 class="jh-entity-heading titre-container-entity" data-cy="cpuDetailsHeading">
+          <div><span v-text="$t('configmeApp.cpu.detail.title')">Cpu</span> {{ cpu.id }}</div>
+          <div>
+            <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(cpu, true)" v-if="!cpu.isActive">Activer</button>
+            <button class="btn btn-success btn-sm" v-on:click="setActive(cpu, false)" v-if="cpu.isActive">Désactiver</button>
+          </div>
         </h2>
         <dl class="row jh-entity-details">
+          <dt>
+            <span v-text="$t('configmeApp.product.name')">Name</span>
+          </dt>
+          <dd>
+            <span>{{ cpu.name }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.price')">Price</span>
+          </dt>
+          <dd>
+            <span>{{ cpu.price }} €</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.discount')">Discount</span>
+          </dt>
+          <dd>
+            <span>{{ Math.floor((1 - cpu.discount) * 100) }}%</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.stock')">Stock</span>
+          </dt>
+          <dd>
+            <span>{{ cpu.stock }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.img')">Image</span>
+          </dt>
+          <dd>
+            <span><img :src="cpu.img" alt="photot de l'article" /></span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.brand')">Marque</span>
+          </dt>
+          <dd>
+            <span>{{ cpu.brand }}</span>
+          </dd>
           <dt>
             <span v-text="$t('configmeApp.cpu.frequency')">Frequency</span>
           </dt>

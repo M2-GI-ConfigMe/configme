@@ -1,6 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { minValue, numeric, required } from 'vuelidate/lib/validators';
+import { decimal, maxValue, minValue, numeric, required } from 'vuelidate/lib/validators';
 
 import { IVentirad, Ventirad } from '@/shared/model/ventirad.model';
 import VentiradService from './ventirad.service';
@@ -30,6 +30,31 @@ const validations: any = {
         numeric,
         min: minValue(0),
       },
+    },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
+      required,
     },
   },
 };
@@ -81,6 +106,7 @@ export default class VentiradUpdate extends Vue {
           });
         });
     } else {
+      this.ventirad.isActive = true;
       this.ventiradService()
         .create(this.ventirad)
         .then(param => {

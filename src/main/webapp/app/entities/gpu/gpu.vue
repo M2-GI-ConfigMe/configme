@@ -24,6 +24,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.gpu.frequency')">Frequency</span></th>
             <th scope="row"><span v-text="$t('configmeApp.gpu.memory')">Memory</span></th>
             <th scope="row"><span v-text="$t('configmeApp.gpu.consumption')">Consumption</span></th>
@@ -40,6 +47,16 @@
           <tr v-for="gpu in gpus" :key="gpu.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'GpuView', params: { gpuId: gpu.id } }">{{ gpu.id }}</router-link>
+            </td>
+            <td>{{ gpu.name }}</td>
+            <td>{{ gpu.price }}</td>
+            <td>{{ gpu.discount }}</td>
+            <td>{{ gpu.stock }}</td>
+            <td>{{ gpu.img }}</td>
+            <td>{{ gpu.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(gpu, true)" v-if="!gpu.isActive">Activer</button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(gpu, false)" v-if="gpu.isActive">Désactiver</button>
             </td>
             <td>{{ gpu.frequency }}</td>
             <td>{{ gpu.memory }}</td>

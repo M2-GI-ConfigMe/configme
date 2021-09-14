@@ -31,6 +31,31 @@ const validations: any = {
     cas: {
       required,
     },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
+      required,
+    },
   },
 };
 
@@ -79,6 +104,7 @@ export default class RamUpdate extends Vue {
           });
         });
     } else {
+      this.ram.isActive = true;
       this.ramService()
         .create(this.ram)
         .then(param => {

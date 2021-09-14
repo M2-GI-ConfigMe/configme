@@ -32,9 +32,6 @@ const validations: any = {
     brand: {
       required,
     },
-    isActive: {
-      required,
-    },
   },
 };
 
@@ -83,6 +80,7 @@ export default class ProductUpdate extends Vue {
           });
         });
     } else {
+      this.product.isActive = true;
       this.productService()
         .create(this.product)
         .then(param => {
