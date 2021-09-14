@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -7,8 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.Cpu;
+import com.configme.domain.Product;
 import com.configme.domain.enumeration.SocketType;
 import com.configme.repository.CpuRepository;
+import com.configme.repository.ProductRepository;
+import com.configme.web.rest.CpuResource;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class CpuResourceITAdmin {
+class CpuResourceITAdmin implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -103,6 +108,8 @@ class CpuResourceITAdmin {
             .ramFrequencyMax(DEFAULT_RAM_FREQUENCY_MAX)
             .consumption(DEFAULT_CONSUMPTION)
             .hasGpu(DEFAULT_HAS_GPU);
+
+        ProductResourceIT.createProductField(cpu);
         return cpu;
     }
 
@@ -126,6 +133,8 @@ class CpuResourceITAdmin {
             .ramFrequencyMax(UPDATED_RAM_FREQUENCY_MAX)
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
+
+        ProductResourceIT.updateProductField(cpu);
         return cpu;
     }
 
@@ -159,6 +168,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(DEFAULT_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(DEFAULT_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(DEFAULT_HAS_GPU);
+
+        assertProductCreation(testCpu);
     }
 
     @Test
@@ -339,8 +350,9 @@ class CpuResourceITAdmin {
         cpuRepository.saveAndFlush(cpu);
 
         // Get all the cpuList
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restCpuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cpu.getId().intValue())))
@@ -356,6 +368,8 @@ class CpuResourceITAdmin {
             .andExpect(jsonPath("$.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
             .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
             .andExpect(jsonPath("$.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -365,8 +379,9 @@ class CpuResourceITAdmin {
         cpuRepository.saveAndFlush(cpu);
 
         // Get the cpu
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL_ID, cpu.getId()))
+        var actions = restCpuMockMvc.perform(get(ENTITY_API_URL_ID, cpu.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(cpu.getId().intValue()))
@@ -382,6 +397,8 @@ class CpuResourceITAdmin {
             .andExpect(jsonPath("$.ramFrequencyMax").value(DEFAULT_RAM_FREQUENCY_MAX.doubleValue()))
             .andExpect(jsonPath("$.consumption").value(DEFAULT_CONSUMPTION))
             .andExpect(jsonPath("$.hasGpu").value(DEFAULT_HAS_GPU.booleanValue()));
+
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -417,6 +434,8 @@ class CpuResourceITAdmin {
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
 
+        ProductResourceIT.updateProductField(updatedCpu);
+
         restCpuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedCpu.getId())
@@ -441,6 +460,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(UPDATED_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(UPDATED_HAS_GPU);
+
+        assertProductUpdate(testCpu);
     }
 
     @Test
@@ -517,6 +538,8 @@ class CpuResourceITAdmin {
             .lithography(UPDATED_LITHOGRAPHY)
             .consumption(UPDATED_CONSUMPTION);
 
+        partialUpdateField(partialUpdatedCpu);
+
         restCpuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCpu.getId())
@@ -541,6 +564,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(DEFAULT_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(DEFAULT_HAS_GPU);
+
+        assertPartialUpdateField(testCpu);
     }
 
     @Test
@@ -569,6 +594,8 @@ class CpuResourceITAdmin {
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
 
+        ProductResourceIT.updateProductField(partialUpdatedCpu);
+
         restCpuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCpu.getId())
@@ -593,6 +620,8 @@ class CpuResourceITAdmin {
         assertThat(testCpu.getRamFrequencyMax()).isEqualTo(UPDATED_RAM_FREQUENCY_MAX);
         assertThat(testCpu.getConsumption()).isEqualTo(UPDATED_CONSUMPTION);
         assertThat(testCpu.getHasGpu()).isEqualTo(UPDATED_HAS_GPU);
+
+        assertProductUpdate(testCpu);
     }
 
     @Test
@@ -665,5 +694,12 @@ class CpuResourceITAdmin {
         // Validate the database contains one less item
         List<Cpu> cpuList = cpuRepository.findAll();
         assertThat(cpuList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

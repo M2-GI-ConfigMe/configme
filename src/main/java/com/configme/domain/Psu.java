@@ -14,14 +14,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "psu")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Psu implements Serializable {
+public class Psu extends Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
 
     @NotNull
     @Column(name = "power", nullable = false)
@@ -48,20 +43,6 @@ public class Psu implements Serializable {
     @NotNull
     @Column(name = "outputs", nullable = false)
     private String outputs;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Psu id(Long id) {
-        this.id = id;
-        return this;
-    }
 
     public Integer getPower() {
         return this.power;
@@ -151,7 +132,7 @@ public class Psu implements Serializable {
         if (!(o instanceof Psu)) {
             return false;
         }
-        return id != null && id.equals(((Psu) o).id);
+        return super.getId() != null && super.getId().equals(((Psu) o).getId());
     }
 
     @Override
@@ -164,7 +145,7 @@ public class Psu implements Serializable {
     @Override
     public String toString() {
         return "Psu{" +
-            "id=" + getId() +
+            "id=" + super.getId() +
             ", power=" + getPower() +
             ", certification='" + getCertification() + "'" +
             ", modularity='" + getModularity() + "'" +

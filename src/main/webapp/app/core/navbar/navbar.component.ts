@@ -26,6 +26,7 @@ export default class Navbar extends Vue {
     { title: 'Rams', path: '/ram' },
     { title: 'Hard Drives', path: '/hard-drive' },
     { title: 'Computer Cases', path: '/computer-case' },
+    { title: 'Ventirad', path: '/ventirad' },
     { title: 'Orders', path: '/order' },
   ];
 

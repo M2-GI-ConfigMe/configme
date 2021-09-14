@@ -29,6 +29,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.hardDrive.capacity')">Capacity</span></th>
             <th scope="row"><span v-text="$t('configmeApp.hardDrive.speedWrite')">Speed Write</span></th>
             <th scope="row"><span v-text="$t('configmeApp.hardDrive.speedRead')">Speed Read</span></th>
@@ -40,6 +47,18 @@
           <tr v-for="hardDrive in hardDrives" :key="hardDrive.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: hardDrive.id } }">{{ hardDrive.id }}</router-link>
+            </td>
+            <td>{{ hardDrive.name }}</td>
+            <td>{{ hardDrive.price }}</td>
+            <td>{{ hardDrive.discount }}</td>
+            <td>{{ hardDrive.stock }}</td>
+            <td>{{ hardDrive.img }}</td>
+            <td>{{ hardDrive.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(hardDrive, true)" v-if="!hardDrive.isActive">
+                Activer
+              </button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(hardDrive, false)" v-if="hardDrive.isActive">Désactiver</button>
             </td>
             <td>{{ hardDrive.capacity }}</td>
             <td>{{ hardDrive.speedWrite }}</td>

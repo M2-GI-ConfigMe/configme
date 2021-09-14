@@ -1,6 +1,13 @@
 import { SocketType } from '@/shared/model/enumerations/socket-type.model';
 export interface ICpu {
   id?: number;
+  name?: string;
+  price?: number;
+  discount?: number;
+  stock?: number;
+  img?: string;
+  brand?: string;
+  isActive?: boolean;
   frequency?: number;
   cacheL1?: number | null;
   cacheL2?: number | null;
@@ -18,6 +25,13 @@ export interface ICpu {
 export class Cpu implements ICpu {
   constructor(
     public id?: number,
+    public name?: string,
+    public price?: number,
+    public discount?: number,
+    public stock?: number,
+    public img?: string,
+    public brand?: string,
+    public isActive?: boolean,
     public frequency?: number,
     public cacheL1?: number | null,
     public cacheL2?: number | null,

@@ -14,14 +14,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "computer_case")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ComputerCase implements Serializable {
+public class ComputerCase extends Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -60,20 +55,6 @@ public class ComputerCase implements Serializable {
 
     @Embedded
     private Dimension dimension;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ComputerCase id(Long id) {
-        this.id = id;
-        return this;
-    }
 
     public CaseType getType() {
         return this.type;
@@ -228,7 +209,7 @@ public class ComputerCase implements Serializable {
         if (!(o instanceof ComputerCase)) {
             return false;
         }
-        return id != null && id.equals(((ComputerCase) o).id);
+        return super.getId() != null && super.getId().equals(((ComputerCase) o).getId());
     }
 
     @Override
@@ -241,7 +222,7 @@ public class ComputerCase implements Serializable {
     @Override
     public String toString() {
         return "ComputerCase{" +
-            "id=" + getId() +
+            "id=" + super.getId() +
             ", type='" + getType() + "'" +
             ", formats='" + getFormats() + "'" +
             ", sizeMaxGpu=" + getSizeMaxGpu() +

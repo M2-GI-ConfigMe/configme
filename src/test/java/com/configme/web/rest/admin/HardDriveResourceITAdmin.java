@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -7,8 +7,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.HardDrive;
+import com.configme.domain.Product;
 import com.configme.domain.enumeration.MemoryType;
 import com.configme.repository.HardDriveRepository;
+import com.configme.repository.ProductRepository;
+import com.configme.web.rest.*;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class HardDriveResourceITAdmin {
+class HardDriveResourceITAdmin implements ProductResourceIT {
 
     private static final Integer DEFAULT_CAPACITY = 1;
     private static final Integer UPDATED_CAPACITY = 2;
@@ -71,6 +74,8 @@ class HardDriveResourceITAdmin {
             .speedWrite(DEFAULT_SPEED_WRITE)
             .speedRead(DEFAULT_SPEED_READ)
             .type(DEFAULT_TYPE);
+
+        ProductResourceIT.createProductField(hardDrive);
         return hardDrive;
     }
 
@@ -86,6 +91,8 @@ class HardDriveResourceITAdmin {
             .speedWrite(UPDATED_SPEED_WRITE)
             .speedRead(UPDATED_SPEED_READ)
             .type(UPDATED_TYPE);
+
+        ProductResourceIT.updateProductField(hardDrive);
         return hardDrive;
     }
 
@@ -111,6 +118,8 @@ class HardDriveResourceITAdmin {
         assertThat(testHardDrive.getSpeedWrite()).isEqualTo(DEFAULT_SPEED_WRITE);
         assertThat(testHardDrive.getSpeedRead()).isEqualTo(DEFAULT_SPEED_READ);
         assertThat(testHardDrive.getType()).isEqualTo(DEFAULT_TYPE);
+
+        assertProductCreation(testHardDrive);
     }
 
     @Test
@@ -206,8 +215,9 @@ class HardDriveResourceITAdmin {
         hardDriveRepository.saveAndFlush(hardDrive);
 
         // Get all the hardDriveList
-        restHardDriveMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restHardDriveMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hardDrive.getId().intValue())))
@@ -215,6 +225,8 @@ class HardDriveResourceITAdmin {
             .andExpect(jsonPath("$.[*].speedWrite").value(hasItem(DEFAULT_SPEED_WRITE.doubleValue())))
             .andExpect(jsonPath("$.[*].speedRead").value(hasItem(DEFAULT_SPEED_READ.doubleValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -224,8 +236,9 @@ class HardDriveResourceITAdmin {
         hardDriveRepository.saveAndFlush(hardDrive);
 
         // Get the hardDrive
-        restHardDriveMockMvc
-            .perform(get(ENTITY_API_URL_ID, hardDrive.getId()))
+        var actions = restHardDriveMockMvc.perform(get(ENTITY_API_URL_ID, hardDrive.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hardDrive.getId().intValue()))
@@ -233,6 +246,8 @@ class HardDriveResourceITAdmin {
             .andExpect(jsonPath("$.speedWrite").value(DEFAULT_SPEED_WRITE.doubleValue()))
             .andExpect(jsonPath("$.speedRead").value(DEFAULT_SPEED_READ.doubleValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
+
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -256,6 +271,8 @@ class HardDriveResourceITAdmin {
         em.detach(updatedHardDrive);
         updatedHardDrive.capacity(UPDATED_CAPACITY).speedWrite(UPDATED_SPEED_WRITE).speedRead(UPDATED_SPEED_READ).type(UPDATED_TYPE);
 
+        ProductResourceIT.updateProductField(updatedHardDrive);
+
         restHardDriveMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedHardDrive.getId())
@@ -272,6 +289,8 @@ class HardDriveResourceITAdmin {
         assertThat(testHardDrive.getSpeedWrite()).isEqualTo(UPDATED_SPEED_WRITE);
         assertThat(testHardDrive.getSpeedRead()).isEqualTo(UPDATED_SPEED_READ);
         assertThat(testHardDrive.getType()).isEqualTo(UPDATED_TYPE);
+
+        assertProductUpdate(testHardDrive);
     }
 
     @Test
@@ -344,6 +363,8 @@ class HardDriveResourceITAdmin {
 
         partialUpdatedHardDrive.capacity(UPDATED_CAPACITY).speedWrite(UPDATED_SPEED_WRITE);
 
+        partialUpdateField(partialUpdatedHardDrive);
+
         restHardDriveMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedHardDrive.getId())
@@ -360,6 +381,8 @@ class HardDriveResourceITAdmin {
         assertThat(testHardDrive.getSpeedWrite()).isEqualTo(UPDATED_SPEED_WRITE);
         assertThat(testHardDrive.getSpeedRead()).isEqualTo(DEFAULT_SPEED_READ);
         assertThat(testHardDrive.getType()).isEqualTo(DEFAULT_TYPE);
+
+        assertPartialUpdateField(testHardDrive);
     }
 
     @Test
@@ -375,6 +398,8 @@ class HardDriveResourceITAdmin {
         partialUpdatedHardDrive.setId(hardDrive.getId());
 
         partialUpdatedHardDrive.capacity(UPDATED_CAPACITY).speedWrite(UPDATED_SPEED_WRITE).speedRead(UPDATED_SPEED_READ).type(UPDATED_TYPE);
+
+        ProductResourceIT.updateProductField(partialUpdatedHardDrive);
 
         restHardDriveMockMvc
             .perform(
@@ -392,6 +417,8 @@ class HardDriveResourceITAdmin {
         assertThat(testHardDrive.getSpeedWrite()).isEqualTo(UPDATED_SPEED_WRITE);
         assertThat(testHardDrive.getSpeedRead()).isEqualTo(UPDATED_SPEED_READ);
         assertThat(testHardDrive.getType()).isEqualTo(UPDATED_TYPE);
+
+        assertProductUpdate(testHardDrive);
     }
 
     @Test
@@ -468,5 +495,12 @@ class HardDriveResourceITAdmin {
         // Validate the database contains one less item
         List<HardDrive> hardDriveList = hardDriveRepository.findAll();
         assertThat(hardDriveList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

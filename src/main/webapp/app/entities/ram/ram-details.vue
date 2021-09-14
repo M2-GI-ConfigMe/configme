@@ -2,10 +2,50 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="ram">
-        <h2 class="jh-entity-heading" data-cy="ramDetailsHeading">
-          <span v-text="$t('configmeApp.ram.detail.title')">Ram</span> {{ ram.id }}
+        <h2 class="jh-entity-heading titre-container-entity" data-cy="ramDetailsHeading">
+          <div><span v-text="$t('configmeApp.ram.detail.title')">ComputerCase</span> {{ ram.id }}</div>
+          <div>
+            <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(ram, true)" v-if="!ram.isActive">Activer</button>
+            <button class="btn btn-success btn-sm" v-on:click="setActive(ram, false)" v-if="ram.isActive">Désactiver</button>
+          </div>
         </h2>
         <dl class="row jh-entity-details">
+          <dt>
+            <span v-text="$t('configmeApp.product.name')">Name</span>
+          </dt>
+          <dd>
+            <span>{{ ram.name }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.price')">Price</span>
+          </dt>
+          <dd>
+            <span>{{ ram.price }} €</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.discount')">Discount</span>
+          </dt>
+          <dd>
+            <span>{{ Math.floor((1 - ram.discount) * 100) }}%</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.stock')">Stock</span>
+          </dt>
+          <dd>
+            <span>{{ ram.stock }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.img')">Image</span>
+          </dt>
+          <dd>
+            <span><img :src="ram.img" alt="photot de l'article" /></span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.brand')">Marque</span>
+          </dt>
+          <dd>
+            <span>{{ ram.brand }}</span>
+          </dd>
           <dt>
             <span v-text="$t('configmeApp.ram.speed')">Speed</span>
           </dt>

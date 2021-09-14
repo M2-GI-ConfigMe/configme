@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -11,6 +11,8 @@ import com.configme.domain.enumeration.FormatType;
 import com.configme.domain.enumeration.RamType;
 import com.configme.domain.enumeration.SocketType;
 import com.configme.repository.MbeRepository;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class MbeResourceITUser {
+class MbeResourceITUser implements ProductResourceIT {
 
     private static final SocketType DEFAULT_SOCKET_CPU = SocketType.AM4;
     private static final SocketType UPDATED_SOCKET_CPU = SocketType.TR4;
@@ -101,6 +103,8 @@ class MbeResourceITUser {
             .backPanelOutput(DEFAULT_BACK_PANEL_OUTPUT)
             .bios(DEFAULT_BIOS)
             .format(DEFAULT_FORMAT);
+
+        ProductResourceIT.createProductField(mbe);
         return mbe;
     }
 
@@ -123,6 +127,8 @@ class MbeResourceITUser {
             .backPanelOutput(UPDATED_BACK_PANEL_OUTPUT)
             .bios(UPDATED_BIOS)
             .format(UPDATED_FORMAT);
+
+        ProductResourceIT.updateProductField(mbe);
         return mbe;
     }
 
@@ -152,8 +158,9 @@ class MbeResourceITUser {
         mbeRepository.saveAndFlush(mbe);
 
         // Get all the mbeList
-        restMbeMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restMbeMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(mbe.getId().intValue())))
@@ -168,6 +175,8 @@ class MbeResourceITUser {
             .andExpect(jsonPath("$.[*].backPanelOutput").value(hasItem(DEFAULT_BACK_PANEL_OUTPUT)))
             .andExpect(jsonPath("$.[*].bios").value(hasItem(DEFAULT_BIOS)))
             .andExpect(jsonPath("$.[*].format").value(hasItem(DEFAULT_FORMAT.toString())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -177,8 +186,9 @@ class MbeResourceITUser {
         mbeRepository.saveAndFlush(mbe);
 
         // Get the mbe
-        restMbeMockMvc
-            .perform(get(ENTITY_API_URL_ID, mbe.getId()))
+        var action = restMbeMockMvc.perform(get(ENTITY_API_URL_ID, mbe.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(mbe.getId().intValue()))
@@ -193,6 +203,8 @@ class MbeResourceITUser {
             .andExpect(jsonPath("$.backPanelOutput").value(DEFAULT_BACK_PANEL_OUTPUT))
             .andExpect(jsonPath("$.bios").value(DEFAULT_BIOS))
             .andExpect(jsonPath("$.format").value(DEFAULT_FORMAT.toString()));
+
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -227,6 +239,8 @@ class MbeResourceITUser {
             .bios(UPDATED_BIOS)
             .format(UPDATED_FORMAT);
 
+        ProductResourceIT.updateProductField(updatedMbe);
+
         restMbeMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedMbe.getId())
@@ -258,6 +272,8 @@ class MbeResourceITUser {
             .insideIO(UPDATED_INSIDE_IO)
             .backPanelOutput(UPDATED_BACK_PANEL_OUTPUT)
             .format(UPDATED_FORMAT);
+
+        partialUpdateField(partialUpdatedMbe);
 
         restMbeMockMvc
             .perform(

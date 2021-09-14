@@ -15,6 +15,78 @@
             <input type="text" class="form-control" id="id" name="id" v-model="psu.id" readonly />
           </div>
           <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="computer-case-name">Nom</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="computer-case-name"
+              data-cy="name"
+              :class="{ valid: !$v.psu.name.$invalid, invalid: $v.psu.name.$invalid }"
+              v-model="$v.psu.name.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="computer-case-price">Prix</label>
+            <input
+              type="text"
+              class="form-control"
+              name="price"
+              id="computer-case-price"
+              data-cy="price"
+              :class="{ valid: !$v.psu.price.$invalid, invalid: $v.psu.price.$invalid }"
+              v-model="$v.psu.price.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="computer-case-discount">Réduction</label>
+            <input
+              type="text"
+              class="form-control"
+              name="discount"
+              id="computer-case-discount"
+              data-cy="discount"
+              :class="{ valid: !$v.psu.discount.$invalid, invalid: $v.psu.discount.$invalid }"
+              v-model="$v.psu.discount.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="computer-case-stock">Stock</label>
+            <input
+              type="text"
+              class="form-control"
+              name="stock"
+              id="computer-case-stock"
+              data-cy="stock"
+              :class="{ valid: !$v.psu.stock.$invalid, invalid: $v.psu.stock.$invalid }"
+              v-model="$v.psu.stock.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
+            <input
+              type="text"
+              class="form-control"
+              name="img"
+              id="computer-case-img"
+              data-cy="img"
+              :class="{ valid: !$v.psu.img.$invalid, invalid: $v.psu.img.$invalid }"
+              v-model="$v.psu.img.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="computer-case-brand">Marque</label>
+            <input
+              type="text"
+              class="form-control"
+              name="brand"
+              id="computer-case-brand"
+              data-cy="brand"
+              :class="{ valid: !$v.psu.brand.$invalid, invalid: $v.psu.brand.$invalid }"
+              v-model="$v.psu.brand.$model"
+            />
+          </div>
+          <div class="form-group">
             <label class="form-control-label" v-text="$t('configmeApp.psu.power')" for="psu-power">Power</label>
             <input
               type="number"

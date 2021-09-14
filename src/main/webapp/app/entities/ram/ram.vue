@@ -24,6 +24,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ram.speed')">Speed</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ram.type')">Type</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ram.frequency')">Frequency</span></th>
@@ -37,6 +44,16 @@
           <tr v-for="ram in rams" :key="ram.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'RamView', params: { ramId: ram.id } }">{{ ram.id }}</router-link>
+            </td>
+            <td>{{ ram.name }}</td>
+            <td>{{ ram.price }}</td>
+            <td>{{ ram.discount }}</td>
+            <td>{{ ram.stock }}</td>
+            <td>{{ ram.img }}</td>
+            <td>{{ ram.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(ram, true)" v-if="!ram.isActive">Activer</button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(ram, false)" v-if="ram.isActive">Désactiver</button>
             </td>
             <td>{{ ram.speed }}</td>
             <td v-text="$t('configmeApp.RamType.' + ram.type)">{{ ram.type }}</td>

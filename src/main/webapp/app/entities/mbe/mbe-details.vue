@@ -2,10 +2,50 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="mbe">
-        <h2 class="jh-entity-heading" data-cy="mbeDetailsHeading">
-          <span v-text="$t('configmeApp.mbe.detail.title')">Mbe</span> {{ mbe.id }}
+        <h2 class="jh-entity-heading titre-container-entity" data-cy="mbeDetailsHeading">
+          <div><span v-text="$t('configmeApp.mbe.detail.title')">ComputerCase</span> {{ mbe.id }}</div>
+          <div>
+            <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(mbe, true)" v-if="!mbe.isActive">Activer</button>
+            <button class="btn btn-success btn-sm" v-on:click="setActive(mbe, false)" v-if="mbe.isActive">Désactiver</button>
+          </div>
         </h2>
         <dl class="row jh-entity-details">
+          <dt>
+            <span v-text="$t('configmeApp.product.name')">Name</span>
+          </dt>
+          <dd>
+            <span>{{ mbe.name }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.price')">Price</span>
+          </dt>
+          <dd>
+            <span>{{ mbe.price }} €</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.discount')">Discount</span>
+          </dt>
+          <dd>
+            <span>{{ Math.floor((1 - mbe.discount) * 100) }}%</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.stock')">Stock</span>
+          </dt>
+          <dd>
+            <span>{{ mbe.stock }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.img')">Image</span>
+          </dt>
+          <dd>
+            <span><img :src="mbe.img" alt="photot de l'article" /></span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.brand')">Marque</span>
+          </dt>
+          <dd>
+            <span>{{ mbe.brand }}</span>
+          </dd>
           <dt>
             <span v-text="$t('configmeApp.mbe.socketCpu')">Socket Cpu</span>
           </dt>

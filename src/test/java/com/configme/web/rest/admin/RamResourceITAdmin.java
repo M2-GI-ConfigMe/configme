@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -6,9 +6,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Product;
 import com.configme.domain.Ram;
 import com.configme.domain.enumeration.RamType;
+import com.configme.repository.ProductRepository;
 import com.configme.repository.RamRepository;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.RamResource;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class RamResourceITAdmin {
+class RamResourceITAdmin implements ProductResourceIT {
 
     private static final RamType DEFAULT_TYPE = RamType.DDR3;
     private static final RamType UPDATED_TYPE = RamType.DDR4;
@@ -75,6 +80,8 @@ class RamResourceITAdmin {
             .unitSize(DEFAULT_UNIT_SIZE)
             .quantity(DEFAULT_QUANTITY)
             .cas(DEFAULT_CAS);
+
+        ProductResourceIT.createProductField(ram);
         return ram;
     }
 
@@ -91,6 +98,8 @@ class RamResourceITAdmin {
             .unitSize(UPDATED_UNIT_SIZE)
             .quantity(UPDATED_QUANTITY)
             .cas(UPDATED_CAS);
+
+        ProductResourceIT.updateProductField(ram);
         return ram;
     }
 
@@ -117,6 +126,8 @@ class RamResourceITAdmin {
         assertThat(testRam.getUnitSize()).isEqualTo(DEFAULT_UNIT_SIZE);
         assertThat(testRam.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(DEFAULT_CAS);
+
+        assertProductCreation(testRam);
     }
 
     @Test
@@ -229,8 +240,9 @@ class RamResourceITAdmin {
         ramRepository.saveAndFlush(ram);
 
         // Get all the ramList
-        restRamMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restRamMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ram.getId().intValue())))
@@ -239,6 +251,8 @@ class RamResourceITAdmin {
             .andExpect(jsonPath("$.[*].unitSize").value(hasItem(DEFAULT_UNIT_SIZE)))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].cas").value(hasItem(DEFAULT_CAS)));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -248,8 +262,9 @@ class RamResourceITAdmin {
         ramRepository.saveAndFlush(ram);
 
         // Get the ram
-        restRamMockMvc
-            .perform(get(ENTITY_API_URL_ID, ram.getId()))
+        var actions = restRamMockMvc.perform(get(ENTITY_API_URL_ID, ram.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ram.getId().intValue()))
@@ -258,6 +273,8 @@ class RamResourceITAdmin {
             .andExpect(jsonPath("$.unitSize").value(DEFAULT_UNIT_SIZE))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
             .andExpect(jsonPath("$.cas").value(DEFAULT_CAS));
+
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -281,6 +298,7 @@ class RamResourceITAdmin {
         em.detach(updatedRam);
         updatedRam.type(UPDATED_TYPE).frequency(UPDATED_FREQUENCY).unitSize(UPDATED_UNIT_SIZE).quantity(UPDATED_QUANTITY).cas(UPDATED_CAS);
 
+        ProductResourceIT.updateProductField((updatedRam));
         restRamMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedRam.getId())
@@ -298,6 +316,8 @@ class RamResourceITAdmin {
         assertThat(testRam.getUnitSize()).isEqualTo(UPDATED_UNIT_SIZE);
         assertThat(testRam.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(UPDATED_CAS);
+
+        assertProductUpdate(testRam);
     }
 
     @Test
@@ -368,6 +388,8 @@ class RamResourceITAdmin {
 
         partialUpdatedRam.frequency(UPDATED_FREQUENCY).cas(UPDATED_CAS);
 
+        partialUpdateField(partialUpdatedRam);
+
         restRamMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedRam.getId())
@@ -385,6 +407,8 @@ class RamResourceITAdmin {
         assertThat(testRam.getUnitSize()).isEqualTo(DEFAULT_UNIT_SIZE);
         assertThat(testRam.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(UPDATED_CAS);
+
+        assertPartialUpdateField(testRam);
     }
 
     @Test
@@ -406,6 +430,8 @@ class RamResourceITAdmin {
             .quantity(UPDATED_QUANTITY)
             .cas(UPDATED_CAS);
 
+        ProductResourceIT.updateProductField(partialUpdatedRam);
+
         restRamMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedRam.getId())
@@ -423,6 +449,8 @@ class RamResourceITAdmin {
         assertThat(testRam.getUnitSize()).isEqualTo(UPDATED_UNIT_SIZE);
         assertThat(testRam.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testRam.getCas()).isEqualTo(UPDATED_CAS);
+
+        assertProductUpdate(testRam);
     }
 
     @Test
@@ -495,5 +523,12 @@ class RamResourceITAdmin {
         // Validate the database contains one less item
         List<Ram> ramList = ramRepository.findAll();
         assertThat(ramList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -9,6 +9,9 @@ import com.configme.IntegrationTest;
 import com.configme.domain.Dimension;
 import com.configme.domain.Ventirad;
 import com.configme.repository.VentiradRepository;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
+import com.configme.web.rest.VentiradResource;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class VentiradResourceITUser {
+class VentiradResourceITUser implements ProductResourceIT {
 
     private static final String DEFAULT_RANGE_FAN_SPEED = "AAAAAAAAAA";
     private static final String UPDATED_RANGE_FAN_SPEED = "BBBBBBBBBB";
@@ -71,6 +74,8 @@ class VentiradResourceITUser {
             .noise(DEFAULT_NOISE)
             .hasThermalPaste(DEFAULT_HAS_THERMAL_PASTE)
             .dimension(DEFAULT_DIMENSION);
+
+        ProductResourceIT.createProductField(ventirad);
         return ventirad;
     }
 
@@ -86,6 +91,8 @@ class VentiradResourceITUser {
             .noise(UPDATED_NOISE)
             .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE)
             .dimension(UPDATED_DIMENSION);
+
+        ProductResourceIT.updateProductField(ventirad);
         return ventirad;
     }
 
@@ -115,7 +122,7 @@ class VentiradResourceITUser {
         ventiradRepository.saveAndFlush(ventirad);
 
         // Get all the ventiradList
-        restVentiradMockMvc
+        var action = restVentiradMockMvc
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -126,6 +133,8 @@ class VentiradResourceITUser {
             .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -135,7 +144,7 @@ class VentiradResourceITUser {
         ventiradRepository.saveAndFlush(ventirad);
 
         // Get the ventirad
-        restVentiradMockMvc
+        var action = restVentiradMockMvc
             .perform(get(ENTITY_API_URL_ID, ventirad.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -144,6 +153,8 @@ class VentiradResourceITUser {
             .andExpect(jsonPath("$.noise").value(DEFAULT_NOISE))
             .andExpect(jsonPath("$.hasThermalPaste").value(DEFAULT_HAS_THERMAL_PASTE.booleanValue()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
+
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -171,6 +182,8 @@ class VentiradResourceITUser {
             .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(updatedVentirad);
+
         restVentiradMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedVentirad.getId())
@@ -195,6 +208,8 @@ class VentiradResourceITUser {
         // Update the ventirad using partial update
         Ventirad partialUpdatedVentirad = new Ventirad();
         partialUpdatedVentirad.setId(ventirad.getId());
+
+        partialUpdateField(partialUpdatedVentirad);
 
         restVentiradMockMvc
             .perform(

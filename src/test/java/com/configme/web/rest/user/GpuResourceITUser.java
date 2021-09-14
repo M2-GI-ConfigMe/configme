@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -10,6 +10,9 @@ import com.configme.domain.Dimension;
 import com.configme.domain.Gpu;
 import com.configme.domain.enumeration.BusType;
 import com.configme.repository.GpuRepository;
+import com.configme.web.rest.GpuResource;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -29,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class GpuResourceITUser {
+class GpuResourceITUser implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -92,6 +95,7 @@ class GpuResourceITUser {
             .inputPower(DEFAULT_INPUT_POWER)
             .bus(DEFAULT_BUS)
             .dimension(DEFAULT_DIMENSION);
+        ProductResourceIT.createProductField(gpu);
         return gpu;
     }
 
@@ -112,6 +116,7 @@ class GpuResourceITUser {
             .inputPower(UPDATED_INPUT_POWER)
             .bus(UPDATED_BUS)
             .dimension(UPDATED_DIMENSION);
+        ProductResourceIT.updateProductField(gpu);
         return gpu;
     }
 
@@ -141,8 +146,9 @@ class GpuResourceITUser {
         gpuRepository.saveAndFlush(gpu);
 
         // Get all the gpuList
-        restGpuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restGpuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(gpu.getId().intValue())))
@@ -157,6 +163,8 @@ class GpuResourceITUser {
             .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -166,8 +174,9 @@ class GpuResourceITUser {
         gpuRepository.saveAndFlush(gpu);
 
         // Get the gpu
-        restGpuMockMvc
-            .perform(get(ENTITY_API_URL_ID, gpu.getId()))
+        var action = restGpuMockMvc.perform(get(ENTITY_API_URL_ID, gpu.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(gpu.getId().intValue()))
@@ -180,6 +189,8 @@ class GpuResourceITUser {
             .andExpect(jsonPath("$.inputPower").value(DEFAULT_INPUT_POWER))
             .andExpect(jsonPath("$.bus").value(DEFAULT_BUS.toString()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
+
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -212,6 +223,8 @@ class GpuResourceITUser {
             .bus(UPDATED_BUS)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(updatedGpu);
+
         restGpuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedGpu.getId())
@@ -243,6 +256,8 @@ class GpuResourceITUser {
             .clockSpeed(UPDATED_CLOCK_SPEED)
             .lithography(UPDATED_LITHOGRAPHY)
             .inputPower(UPDATED_INPUT_POWER);
+
+        partialUpdateField(partialUpdatedGpu);
 
         restGpuMockMvc
             .perform(

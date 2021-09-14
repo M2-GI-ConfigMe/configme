@@ -30,7 +30,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new GpuService();
-      elemDefault = new Gpu(123, 0, 0, 0, 0, 0, 'AAAAAAA', 'AAAAAAA', BusType.PCI);
+      elemDefault = new Gpu(123, 'AAAAAA', 0.5, 0.3, 27, 'fsdf', 'INTEL', true, 0, 0, 0, 0, 0, 'AAAAAAA', 'AAAAAAA', BusType.PCI);
     });
 
     describe('Service methods', () => {
@@ -82,6 +82,13 @@ describe('Service Tests', () => {
       it('should update a Gpu', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            discount: 0.3,
+            stock: 27,
+            img: 'fsdf',
+            brand: 'INTEL',
+            isActive: false,
             frequency: 1,
             memory: 1,
             consumption: 1,
@@ -121,6 +128,10 @@ describe('Service Tests', () => {
       it('should partial update a Gpu', async () => {
         const patchObject = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            stock: 27,
+            brand: 'INTEL',
             frequency: 1,
             memory: 1,
             consumption: 1,

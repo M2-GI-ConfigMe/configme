@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -8,8 +8,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.configme.IntegrationTest;
 import com.configme.domain.ComputerCase;
 import com.configme.domain.Dimension;
+import com.configme.domain.Product;
 import com.configme.domain.enumeration.CaseType;
 import com.configme.repository.ComputerCaseRepository;
+import com.configme.repository.ProductRepository;
+import com.configme.web.rest.ComputerCaseResource;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -29,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class ComputerCaseResourceITAdmin {
+class ComputerCaseResourceITAdmin implements ProductResourceIT {
 
     private static final CaseType DEFAULT_TYPE = CaseType.PETITE;
     private static final CaseType UPDATED_TYPE = CaseType.MOYENNE;
@@ -100,6 +105,8 @@ class ComputerCaseResourceITAdmin {
             .fanSlotsAvailable(DEFAULT_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(DEFAULT_WATERCOOLING_COMPATIBILITY)
             .dimension(DEFAULT_DIMENSION);
+
+        ProductResourceIT.createProductField(computerCase);
         return computerCase;
     }
 
@@ -122,6 +129,8 @@ class ComputerCaseResourceITAdmin {
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
             .dimension(UPDATED_DIMENSION);
+
+        ProductResourceIT.updateProductField(computerCase);
         return computerCase;
     }
 
@@ -154,6 +163,8 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(DEFAULT_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(DEFAULT_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).isEqualTo(DEFAULT_DIMENSION);
+
+        assertProductCreation(testComputerCase);
     }
 
     @Test
@@ -249,8 +260,9 @@ class ComputerCaseResourceITAdmin {
         computerCaseRepository.saveAndFlush(computerCase);
 
         // Get all the computerCaseList
-        restComputerCaseMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restComputerCaseMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(computerCase.getId().intValue())))
@@ -267,6 +279,8 @@ class ComputerCaseResourceITAdmin {
             .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -276,8 +290,9 @@ class ComputerCaseResourceITAdmin {
         computerCaseRepository.saveAndFlush(computerCase);
 
         // Get the computerCase
-        restComputerCaseMockMvc
-            .perform(get(ENTITY_API_URL_ID, computerCase.getId()))
+        var actions = restComputerCaseMockMvc.perform(get(ENTITY_API_URL_ID, computerCase.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(computerCase.getId().intValue()))
@@ -292,6 +307,8 @@ class ComputerCaseResourceITAdmin {
             .andExpect(jsonPath("$.fanSlotsAvailable").value(DEFAULT_FAN_SLOTS_AVAILABLE))
             .andExpect(jsonPath("$.watercoolingCompatibility").value(DEFAULT_WATERCOOLING_COMPATIBILITY))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
+
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -326,6 +343,8 @@ class ComputerCaseResourceITAdmin {
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(updatedComputerCase);
+
         restComputerCaseMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedComputerCase.getId())
@@ -349,6 +368,8 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(UPDATED_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
+
+        assertProductUpdate(testComputerCase);
     }
 
     @Test
@@ -429,6 +450,8 @@ class ComputerCaseResourceITAdmin {
             .fanSlotsAvailable(UPDATED_FAN_SLOTS_AVAILABLE)
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY);
 
+        partialUpdateField(partialUpdatedComputerCase);
+
         restComputerCaseMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedComputerCase.getId())
@@ -452,6 +475,8 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(UPDATED_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).isEqualTo(DEFAULT_DIMENSION);
+
+        assertPartialUpdateField(testComputerCase);
     }
 
     @Test
@@ -479,6 +504,8 @@ class ComputerCaseResourceITAdmin {
             .watercoolingCompatibility(UPDATED_WATERCOOLING_COMPATIBILITY)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(partialUpdatedComputerCase);
+
         restComputerCaseMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedComputerCase.getId())
@@ -502,6 +529,8 @@ class ComputerCaseResourceITAdmin {
         assertThat(testComputerCase.getFanSlotsAvailable()).isEqualTo(UPDATED_FAN_SLOTS_AVAILABLE);
         assertThat(testComputerCase.getWatercoolingCompatibility()).isEqualTo(UPDATED_WATERCOOLING_COMPATIBILITY);
         assertThat(testComputerCase.getDimension()).isEqualTo(UPDATED_DIMENSION);
+
+        assertProductUpdate(testComputerCase);
     }
 
     @Test
@@ -578,5 +607,12 @@ class ComputerCaseResourceITAdmin {
         // Validate the database contains one less item
         List<ComputerCase> computerCaseList = computerCaseRepository.findAll();
         assertThat(computerCaseList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

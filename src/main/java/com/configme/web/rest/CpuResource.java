@@ -162,6 +162,30 @@ public class CpuResource {
                     if (cpu.getHasGpu() != null) {
                         existingCpu.setHasGpu(cpu.getHasGpu());
                     }
+                    if (cpu.getBrand() != null) {
+                        existingCpu.setBrand(cpu.getBrand());
+                    }
+                    if (cpu.getDiscount() != null) {
+                        existingCpu.setDiscount(cpu.getDiscount());
+                    }
+                    if (cpu.getPrice() != null) {
+                        existingCpu.setPrice(cpu.getPrice());
+                    }
+                    if (cpu.getStock() != null) {
+                        existingCpu.setStock(cpu.getStock());
+                    }
+                    if (cpu.getDesc() != null) {
+                        existingCpu.setDesc(cpu.getDesc());
+                    }
+                    if (cpu.getImg() != null) {
+                        existingCpu.setImg(cpu.getImg());
+                    }
+                    if (cpu.getName() != null) {
+                        existingCpu.setName(cpu.getName());
+                    }
+                    if (cpu.getIsActive() != null) {
+                        existingCpu.setIsActive(cpu.getIsActive());
+                    }
 
                     return existingCpu;
                 }

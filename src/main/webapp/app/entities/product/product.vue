@@ -37,6 +37,7 @@
             <th scope="row"><span v-text="$t('configmeApp.product.desc')">Desc</span></th>
             <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
             <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"></th>
           </tr>
         </thead>

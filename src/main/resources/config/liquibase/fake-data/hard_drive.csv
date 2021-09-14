@@ -1,11 +1,11 @@
-id;capacity;speed_write;speed_read;type
-1;59301;39414;58056;SSD
-2;26808;65657;437;HDD
-3;71442;4000;84373;SSD
-4;89977;53330;78386;HDD
-5;21451;38055;7694;M2
-6;43596;16623;21708;HDD
-7;9531;53452;9696;M2
-8;42172;67940;66020;SSD
-9;95964;72297;32145;M2
-10;99009;26837;68127;SSD
+id;capacity;speed_write;speed_read;type;name;price;discount;stock;img;jhi_desc;brand;is_active
+1;59301;39414;58056;SSD;Steel31;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+2;26808;65657;437;HDD;Steel32;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+3;71442;4000;84373;SSD;Steel33;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+4;89977;53330;78386;HDD;Steel34;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+5;21451;38055;7694;M2;Steel35;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+6;43596;16623;21708;HDD;Steel36;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+7;9531;53452;9696;M2;Steel37;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+8;42172;67940;66020;SSD;Steel38;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+9;95964;72297;32145;M2;Steel39;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+10;99009;26837;68127;SSD;Steel40;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false

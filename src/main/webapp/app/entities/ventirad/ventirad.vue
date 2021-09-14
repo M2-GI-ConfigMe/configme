@@ -29,6 +29,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.rangeFanSpeed')">Range Fan Speed</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.noise')">Noise</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.hasThermalPaste')">Has Thermal Paste</span></th>
@@ -40,6 +47,18 @@
           <tr v-for="ventirad in ventirads" :key="ventirad.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'VentiradView', params: { ventiradId: ventirad.id } }">{{ ventirad.id }}</router-link>
+            </td>
+            <td>{{ ventirad.name }}</td>
+            <td>{{ ventirad.price }}</td>
+            <td>{{ ventirad.discount }}</td>
+            <td>{{ ventirad.stock }}</td>
+            <td>{{ ventirad.img }}</td>
+            <td>{{ ventirad.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(ventirad, true)" v-if="!ventirad.isActive">
+                Activer
+              </button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(ventirad, false)" v-if="ventirad.isActive">Désactiver</button>
             </td>
             <td>{{ ventirad.rangeFanSpeed }}</td>
             <td>{{ ventirad.noise }}</td>

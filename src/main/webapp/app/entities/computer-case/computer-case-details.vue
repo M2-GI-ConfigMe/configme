@@ -2,10 +2,54 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="computerCase">
-        <h2 class="jh-entity-heading" data-cy="computerCaseDetailsHeading">
-          <span v-text="$t('configmeApp.computerCase.detail.title')">ComputerCase</span> {{ computerCase.id }}
+        <h2 class="jh-entity-heading titre-container-entity" data-cy="computerCaseDetailsHeading">
+          <div><span v-text="$t('configmeApp.computerCase.detail.title')">ComputerCase</span> {{ computerCase.id }}</div>
+          <div>
+            <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(computerCase, true)" v-if="!computerCase.isActive">
+              Activer
+            </button>
+            <button class="btn btn-success btn-sm" v-on:click="setActive(computerCase, false)" v-if="computerCase.isActive">
+              Désactiver
+            </button>
+          </div>
         </h2>
         <dl class="row jh-entity-details">
+          <dt>
+            <span v-text="$t('configmeApp.product.name')">Name</span>
+          </dt>
+          <dd>
+            <span>{{ computerCase.name }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.price')">Price</span>
+          </dt>
+          <dd>
+            <span>{{ computerCase.price }} €</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.discount')">Discount</span>
+          </dt>
+          <dd>
+            <span>{{ Math.floor((1 - computerCase.discount) * 100) }}%</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.stock')">Stock</span>
+          </dt>
+          <dd>
+            <span>{{ computerCase.stock }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.img')">Image</span>
+          </dt>
+          <dd>
+            <span><img :src="computerCase.img" alt="photot de l'article" /></span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.brand')">Marque</span>
+          </dt>
+          <dd>
+            <span>{{ computerCase.brand }}</span>
+          </dd>
           <dt>
             <span v-text="$t('configmeApp.computerCase.type')">Type</span>
           </dt>

@@ -15,6 +15,78 @@
             <input type="text" class="form-control" id="id" name="id" v-model="ventirad.id" readonly />
           </div>
           <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="computer-case-name">Nom</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="computer-case-name"
+              data-cy="name"
+              :class="{ valid: !$v.ventirad.name.$invalid, invalid: $v.ventirad.name.$invalid }"
+              v-model="$v.ventirad.name.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="computer-case-price">Prix</label>
+            <input
+              type="text"
+              class="form-control"
+              name="price"
+              id="computer-case-price"
+              data-cy="price"
+              :class="{ valid: !$v.ventirad.price.$invalid, invalid: $v.ventirad.price.$invalid }"
+              v-model="$v.ventirad.price.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="computer-case-discount">Réduction</label>
+            <input
+              type="text"
+              class="form-control"
+              name="discount"
+              id="computer-case-discount"
+              data-cy="discount"
+              :class="{ valid: !$v.ventirad.discount.$invalid, invalid: $v.ventirad.discount.$invalid }"
+              v-model="$v.ventirad.discount.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="computer-case-stock">Stock</label>
+            <input
+              type="text"
+              class="form-control"
+              name="stock"
+              id="computer-case-stock"
+              data-cy="stock"
+              :class="{ valid: !$v.ventirad.stock.$invalid, invalid: $v.ventirad.stock.$invalid }"
+              v-model="$v.ventirad.stock.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
+            <input
+              type="text"
+              class="form-control"
+              name="img"
+              id="computer-case-img"
+              data-cy="img"
+              :class="{ valid: !$v.ventirad.img.$invalid, invalid: $v.ventirad.img.$invalid }"
+              v-model="$v.ventirad.img.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="computer-case-brand">Marque</label>
+            <input
+              type="text"
+              class="form-control"
+              name="brand"
+              id="computer-case-brand"
+              data-cy="brand"
+              :class="{ valid: !$v.ventirad.brand.$invalid, invalid: $v.ventirad.brand.$invalid }"
+              v-model="$v.ventirad.brand.$model"
+            />
+          </div>
+          <div class="form-group">
             <label class="form-control-label" v-text="$t('configmeApp.ventirad.rangeFanSpeed')" for="ventirad-rangeFanSpeed"
               >Range Fan Speed</label
             >

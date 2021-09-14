@@ -153,6 +153,30 @@ public class GpuResource {
                     if (gpu.getDimension() != null) {
                         existingGpu.setDimension(gpu.getDimension());
                     }
+                    if (gpu.getBrand() != null) {
+                        existingGpu.setBrand(gpu.getBrand());
+                    }
+                    if (gpu.getDiscount() != null) {
+                        existingGpu.setDiscount(gpu.getDiscount());
+                    }
+                    if (gpu.getPrice() != null) {
+                        existingGpu.setPrice(gpu.getPrice());
+                    }
+                    if (gpu.getStock() != null) {
+                        existingGpu.setStock(gpu.getStock());
+                    }
+                    if (gpu.getDesc() != null) {
+                        existingGpu.setDesc(gpu.getDesc());
+                    }
+                    if (gpu.getImg() != null) {
+                        existingGpu.setImg(gpu.getImg());
+                    }
+                    if (gpu.getName() != null) {
+                        existingGpu.setName(gpu.getName());
+                    }
+                    if (gpu.getIsActive() != null) {
+                        existingGpu.setIsActive(gpu.getIsActive());
+                    }
 
                     return existingGpu;
                 }

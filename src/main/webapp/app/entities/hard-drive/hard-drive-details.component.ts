@@ -16,6 +16,31 @@ export default class HardDriveDetails extends Vue {
     });
   }
 
+  public setActive(product, isActivated): void {
+    product.isActive = isActivated;
+    this.hardDriveService()
+      .update(product)
+      .then(() => {
+        this.$bvToast.toast('Produit ' + (isActivated ? 'activé' : 'Désactivé'), {
+          toaster: 'b-toaster-top-center',
+          title: 'Info',
+          variant: 'success',
+          solid: true,
+          autoHideDelay: 5000,
+        });
+      })
+      .catch(() => {
+        this.$bvToast.toast('Erreur de la modification du produit', {
+          toaster: 'b-toaster-top-center',
+          title: 'Info',
+          variant: 'danger',
+          solid: true,
+          autoHideDelay: 5000,
+        });
+        product.isActive = !isActivated;
+      });
+  }
+
   public retrieveHardDrive(hardDriveId) {
     this.hardDriveService()
       .find(hardDriveId)

@@ -2,10 +2,50 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div v-if="gpu">
-        <h2 class="jh-entity-heading" data-cy="gpuDetailsHeading">
-          <span v-text="$t('configmeApp.gpu.detail.title')">Gpu</span> {{ gpu.id }}
+        <h2 class="jh-entity-heading titre-container-entity" data-cy="gpuDetailsHeading">
+          <div><span v-text="$t('configmeApp.gpu.detail.title')">ComputerCase</span> {{ gpu.id }}</div>
+          <div>
+            <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(gpu, true)" v-if="!gpu.isActive">Activer</button>
+            <button class="btn btn-success btn-sm" v-on:click="setActive(gpu, false)" v-if="gpu.isActive">Désactiver</button>
+          </div>
         </h2>
         <dl class="row jh-entity-details">
+          <dt>
+            <span v-text="$t('configmeApp.product.name')">Name</span>
+          </dt>
+          <dd>
+            <span>{{ gpu.name }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.price')">Price</span>
+          </dt>
+          <dd>
+            <span>{{ gpu.price }} €</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.discount')">Discount</span>
+          </dt>
+          <dd>
+            <span>{{ Math.floor((1 - gpu.discount) * 100) }}%</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.stock')">Stock</span>
+          </dt>
+          <dd>
+            <span>{{ gpu.stock }}</span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.img')">Image</span>
+          </dt>
+          <dd>
+            <span><img :src="gpu.img" alt="photot de l'article" /></span>
+          </dd>
+          <dt>
+            <span v-text="$t('configmeApp.product.brand')">Marque</span>
+          </dt>
+          <dd>
+            <span>{{ gpu.brand }}</span>
+          </dd>
           <dt>
             <span v-text="$t('configmeApp.gpu.frequency')">Frequency</span>
           </dt>

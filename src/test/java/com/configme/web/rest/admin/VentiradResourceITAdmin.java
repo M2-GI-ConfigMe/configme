@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -7,8 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.Dimension;
+import com.configme.domain.Product;
 import com.configme.domain.Ventirad;
+import com.configme.repository.ProductRepository;
 import com.configme.repository.VentiradRepository;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
+import com.configme.web.rest.VentiradResource;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class VentiradResourceITAdmin {
+class VentiradResourceITAdmin implements ProductResourceIT {
 
     private static final String DEFAULT_RANGE_FAN_SPEED = "AAAAAAAAAA";
     private static final String UPDATED_RANGE_FAN_SPEED = "BBBBBBBBBB";
@@ -71,6 +76,8 @@ class VentiradResourceITAdmin {
             .noise(DEFAULT_NOISE)
             .hasThermalPaste(DEFAULT_HAS_THERMAL_PASTE)
             .dimension(DEFAULT_DIMENSION);
+
+        ProductResourceIT.createProductField(ventirad);
         return ventirad;
     }
 
@@ -111,6 +118,8 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getNoise()).isEqualTo(DEFAULT_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(DEFAULT_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).isEqualTo(DEFAULT_DIMENSION);
+
+        assertProductCreation(testVentirad);
     }
 
     @Test
@@ -172,8 +181,9 @@ class VentiradResourceITAdmin {
         ventiradRepository.saveAndFlush(ventirad);
 
         // Get all the ventiradList
-        restVentiradMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restVentiradMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ventirad.getId().intValue())))
@@ -183,6 +193,8 @@ class VentiradResourceITAdmin {
             .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
             .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
             .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -192,8 +204,9 @@ class VentiradResourceITAdmin {
         ventiradRepository.saveAndFlush(ventirad);
 
         // Get the ventirad
-        restVentiradMockMvc
-            .perform(get(ENTITY_API_URL_ID, ventirad.getId()))
+        var actions = restVentiradMockMvc.perform(get(ENTITY_API_URL_ID, ventirad.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ventirad.getId().intValue()))
@@ -201,6 +214,8 @@ class VentiradResourceITAdmin {
             .andExpect(jsonPath("$.noise").value(DEFAULT_NOISE))
             .andExpect(jsonPath("$.hasThermalPaste").value(DEFAULT_HAS_THERMAL_PASTE.booleanValue()))
             .andExpect(jsonPath("$.dimension").value(DEFAULT_DIMENSION));
+
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -228,6 +243,8 @@ class VentiradResourceITAdmin {
             .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(updatedVentirad);
+
         restVentiradMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedVentirad.getId())
@@ -244,6 +261,8 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getNoise()).isEqualTo(UPDATED_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(UPDATED_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).usingRecursiveComparison().isEqualTo(UPDATED_DIMENSION);
+
+        assertProductUpdate(testVentirad);
     }
 
     @Test
@@ -314,6 +333,8 @@ class VentiradResourceITAdmin {
         Ventirad partialUpdatedVentirad = new Ventirad();
         partialUpdatedVentirad.setId(ventirad.getId());
 
+        partialUpdateField(partialUpdatedVentirad);
+
         restVentiradMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedVentirad.getId())
@@ -330,6 +351,8 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getNoise()).isEqualTo(DEFAULT_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(DEFAULT_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).isEqualTo(DEFAULT_DIMENSION);
+
+        assertPartialUpdateField(testVentirad);
     }
 
     @Test
@@ -350,6 +373,8 @@ class VentiradResourceITAdmin {
             .hasThermalPaste(UPDATED_HAS_THERMAL_PASTE)
             .dimension(UPDATED_DIMENSION);
 
+        ProductResourceIT.updateProductField(partialUpdatedVentirad);
+
         restVentiradMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedVentirad.getId())
@@ -366,6 +391,8 @@ class VentiradResourceITAdmin {
         assertThat(testVentirad.getNoise()).isEqualTo(UPDATED_NOISE);
         assertThat(testVentirad.getHasThermalPaste()).isEqualTo(UPDATED_HAS_THERMAL_PASTE);
         assertThat(testVentirad.getDimension()).isEqualTo(UPDATED_DIMENSION);
+
+        assertProductUpdate(testVentirad);
     }
 
     @Test
@@ -440,5 +467,12 @@ class VentiradResourceITAdmin {
         // Validate the database contains one less item
         List<Ventirad> ventiradList = ventiradRepository.findAll();
         assertThat(ventiradList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

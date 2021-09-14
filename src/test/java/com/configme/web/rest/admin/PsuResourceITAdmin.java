@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -6,9 +6,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Product;
 import com.configme.domain.Psu;
 import com.configme.domain.enumeration.ModularityType;
+import com.configme.repository.ProductRepository;
 import com.configme.repository.PsuRepository;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.PsuResource;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "ADMIN" })
-class PsuResourceITAdmin {
+class PsuResourceITAdmin implements ProductResourceIT {
 
     private static final Integer DEFAULT_POWER = 1;
     private static final Integer UPDATED_POWER = 2;
@@ -79,6 +84,8 @@ class PsuResourceITAdmin {
             .nbSata(DEFAULT_NB_SATA)
             .nbPciE(DEFAULT_NB_PCI_E)
             .outputs(DEFAULT_OUTPUTS);
+
+        ProductResourceIT.createProductField(psu);
         return psu;
     }
 
@@ -96,6 +103,8 @@ class PsuResourceITAdmin {
             .nbSata(UPDATED_NB_SATA)
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
+
+        ProductResourceIT.updateProductField(psu);
         return psu;
     }
 
@@ -123,6 +132,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(DEFAULT_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(DEFAULT_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(DEFAULT_OUTPUTS);
+
+        assertProductCreation(testPsu);
     }
 
     @Test
@@ -235,8 +246,9 @@ class PsuResourceITAdmin {
         psuRepository.saveAndFlush(psu);
 
         // Get all the psuList
-        restPsuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restPsuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(psu.getId().intValue())))
@@ -246,6 +258,8 @@ class PsuResourceITAdmin {
             .andExpect(jsonPath("$.[*].nbSata").value(hasItem(DEFAULT_NB_SATA)))
             .andExpect(jsonPath("$.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
             .andExpect(jsonPath("$.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -255,8 +269,9 @@ class PsuResourceITAdmin {
         psuRepository.saveAndFlush(psu);
 
         // Get the psu
-        restPsuMockMvc
-            .perform(get(ENTITY_API_URL_ID, psu.getId()))
+        var actions = restPsuMockMvc.perform(get(ENTITY_API_URL_ID, psu.getId()));
+
+        actions
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(psu.getId().intValue()))
@@ -266,6 +281,8 @@ class PsuResourceITAdmin {
             .andExpect(jsonPath("$.nbSata").value(DEFAULT_NB_SATA))
             .andExpect(jsonPath("$.nbPciE").value(DEFAULT_NB_PCI_E))
             .andExpect(jsonPath("$.outputs").value(DEFAULT_OUTPUTS));
+
+        getProductAssertProductField(actions);
     }
 
     @Test
@@ -295,6 +312,8 @@ class PsuResourceITAdmin {
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
 
+        ProductResourceIT.updateProductField(updatedPsu);
+
         restPsuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedPsu.getId())
@@ -313,6 +332,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(UPDATED_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(UPDATED_OUTPUTS);
+
+        assertProductUpdate(testPsu);
     }
 
     @Test
@@ -383,6 +404,8 @@ class PsuResourceITAdmin {
 
         partialUpdatedPsu.power(UPDATED_POWER).nbSata(UPDATED_NB_SATA).nbPciE(UPDATED_NB_PCI_E);
 
+        partialUpdateField(partialUpdatedPsu);
+
         restPsuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedPsu.getId())
@@ -401,6 +424,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(UPDATED_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(DEFAULT_OUTPUTS);
+
+        assertPartialUpdateField(testPsu);
     }
 
     @Test
@@ -423,6 +448,8 @@ class PsuResourceITAdmin {
             .nbPciE(UPDATED_NB_PCI_E)
             .outputs(UPDATED_OUTPUTS);
 
+        ProductResourceIT.updateProductField(partialUpdatedPsu);
+
         restPsuMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedPsu.getId())
@@ -441,6 +468,8 @@ class PsuResourceITAdmin {
         assertThat(testPsu.getNbSata()).isEqualTo(UPDATED_NB_SATA);
         assertThat(testPsu.getNbPciE()).isEqualTo(UPDATED_NB_PCI_E);
         assertThat(testPsu.getOutputs()).isEqualTo(UPDATED_OUTPUTS);
+
+        assertProductUpdate((testPsu));
     }
 
     @Test
@@ -513,5 +542,12 @@ class PsuResourceITAdmin {
         // Validate the database contains one less item
         List<Psu> psuList = psuRepository.findAll();
         assertThat(psuList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
+        Product product = createEntity(em);
+        testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }
