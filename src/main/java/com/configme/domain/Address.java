@@ -186,4 +186,17 @@ public class Address implements Serializable {
             ", lastName='" + getLastName() + "'" +
             "}";
     }
+
+    public static Address of(String firstName, String lastName, String streetNumber, String streetName, String zipCode, String city) {
+        Address toReturn = new Address();
+
+        toReturn.setFirstName(firstName);
+        toReturn.setLastName(lastName);
+        toReturn.setStreetNumber(streetNumber);
+        toReturn.setStreetName(streetName);
+        toReturn.setCity(city);
+        toReturn.setZipCode(zipCode);
+
+        return toReturn;
+    }
 }

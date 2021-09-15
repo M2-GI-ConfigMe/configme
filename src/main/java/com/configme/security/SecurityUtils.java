@@ -16,11 +16,11 @@ public final class SecurityUtils {
     private SecurityUtils() {}
 
     /**
-     * Get the login of the current user.
+     * Get the email of the current user.
      *
-     * @return the login of the current user.
+     * @return the email of the current user.
      */
-    public static Optional<String> getCurrentUserLogin() {
+    public static Optional<String> getCurrentUserEmail() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
     }

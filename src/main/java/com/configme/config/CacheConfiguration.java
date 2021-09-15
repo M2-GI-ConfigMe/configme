@@ -43,7 +43,6 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
-            createCache(cm, com.configme.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, com.configme.repository.UserRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, com.configme.domain.User.class.getName());
             createCache(cm, com.configme.domain.Authority.class.getName());
