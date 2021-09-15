@@ -81,9 +81,7 @@ export default class Register extends Vue {
       v => !v || v.length >= 8 || 'Le mot de passe doit faire au moins 8 caractères',
       v => !v || /\d/.test(v) || 'Le mot de passe doit contenir au moins un chiffre',
     ],
-    confirmPasswordRules: [
-      v => !v || v === this.informations.password || 'Les mots de passe ne correspondent pas ' + v + ' - ' + this.informations.password,
-    ],
+    confirmPasswordRules: [v => !v || v === this.informations.password || 'Les mots de passe ne correspondent pas '],
     firstNameRules: [],
     lastNameRules: [],
     birthdateRules: [],
@@ -106,7 +104,6 @@ export default class Register extends Vue {
   public menu = false;
 
   public register(): void {
-    console.log(this.informations.birthdate);
     var registerAccount: any = {};
 
     this.error = null;
@@ -132,6 +129,7 @@ export default class Register extends Vue {
       .processRegistration(registerAccount)
       .then(() => {
         this.success = true;
+        this.$root.$emit('bv::hide::modal', 'register-page');
       })
       .catch(error => {
         this.success = null;
@@ -148,7 +146,6 @@ export default class Register extends Vue {
   }
 
   private save(date) {
-    console.log('date - ', date);
     this.informations.birthdate = date;
     this.menu = false;
   }

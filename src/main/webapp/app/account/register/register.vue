@@ -149,9 +149,7 @@
             </v-row>
           </div>
 
-          <button type="submit" :disabled="!isValid" class="btn btn-primary" v-text="$t('register.form.button')" data-cy="submit">
-            Register
-          </button>
+          <button type="submit" :disabled="!isValid" class="btn btn-primary">S'inscrire</button>
         </v-form>
       </div>
     </div>
