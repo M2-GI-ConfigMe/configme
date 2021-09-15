@@ -10,11 +10,13 @@ import com.configme.domain.ComputerCase;
 import com.configme.domain.Dimension;
 import com.configme.domain.Product;
 import com.configme.domain.enumeration.CaseType;
+import com.configme.domain.enumeration.FormatType;
 import com.configme.repository.ComputerCaseRepository;
 import com.configme.repository.ProductRepository;
 import com.configme.web.rest.ComputerCaseResource;
 import com.configme.web.rest.ProductResourceIT;
 import com.configme.web.rest.TestUtil;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -39,8 +41,18 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
     private static final CaseType DEFAULT_TYPE = CaseType.PETITE;
     private static final CaseType UPDATED_TYPE = CaseType.MOYENNE;
 
-    private static final String DEFAULT_FORMATS = "AAAAAAAAAA";
-    private static final String UPDATED_FORMATS = "BBBBBBBBBB";
+    private static final List<FormatType> DEFAULT_FORMATS = new ArrayList<>() {
+        {
+            add(FormatType.ATX);
+            add(FormatType.FLEX_ATX);
+        }
+    };
+    private static final List<FormatType> UPDATED_FORMATS = new ArrayList<>() {
+        {
+            add(FormatType.FLEX_ATX);
+            add(FormatType.MICRO_ATX);
+        }
+    };
 
     private static final Integer DEFAULT_SIZE_MAX_GPU = 1;
     private static final Integer UPDATED_SIZE_MAX_GPU = 2;

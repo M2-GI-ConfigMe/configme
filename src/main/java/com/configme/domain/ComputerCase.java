@@ -1,7 +1,9 @@
 package com.configme.domain;
 
 import com.configme.domain.enumeration.CaseType;
+import com.configme.domain.enumeration.FormatType;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -23,8 +25,10 @@ public class ComputerCase extends Product implements Serializable {
     @Column(name = "type", nullable = false)
     private CaseType type;
 
-    @Column(name = "formats")
-    private String formats;
+    @ElementCollection(targetClass = FormatType.class)
+    @CollectionTable(name = "computer_case_formats", joinColumns = @JoinColumn(name = "computer_case_id", referencedColumnName = "id"))
+    @Enumerated(EnumType.STRING)
+    private Collection<FormatType> formats;
 
     @NotNull
     @Column(name = "size_max_gpu", nullable = false)
@@ -69,16 +73,16 @@ public class ComputerCase extends Product implements Serializable {
         this.type = type;
     }
 
-    public String getFormats() {
+    public Collection<FormatType> getFormats() {
         return this.formats;
     }
 
-    public ComputerCase formats(String formats) {
+    public ComputerCase formats(Collection<FormatType> formats) {
         this.formats = formats;
         return this;
     }
 
-    public void setFormats(String formats) {
+    public void setFormats(Collection<FormatType> formats) {
         this.formats = formats;
     }
 

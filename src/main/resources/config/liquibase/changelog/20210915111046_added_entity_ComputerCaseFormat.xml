@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity ComputerCase.
+    -->
+    <changeSet id="20210915111046-1" author="jhipster">
+        <createTable tableName="computer_case_formats">
+            <column name="computer_case_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="formats" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="computer_case_id, formats" tableName="computer_case_formats"/>
+
+        <addForeignKeyConstraint baseColumnNames="computer_case_id"
+                                 baseTableName="computer_case_formats"
+                                 constraintName="fk_computer_case_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="computer_case"/>
+    </changeSet>
+
+    <changeSet id="20210915111046-1-data" author="jhipster" context="faker">
+        <loadData
+            file="config/liquibase/fake-data/computer_case_formats.csv"
+            separator=";"
+            tableName="computer_case_formats">
+            <column name="computer_case_id" type="numeric"/>
+            <column name="formats" type="string"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
