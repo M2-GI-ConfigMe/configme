@@ -13,6 +13,8 @@ const opts = {
     themes: {
       light: {
         primary: colors.blue.base,
+        success: '#67E153',
+        primary2: '#1867C0',
       },
     },
   },

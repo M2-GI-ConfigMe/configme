@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.Authority;
+import com.configme.domain.ClientConfig;
 import com.configme.domain.User;
 import com.configme.repository.UserRepository;
 import com.configme.security.AuthoritiesConstants;
@@ -37,6 +38,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
 @IntegrationTest
 class UserResourceIT {
+
+    private static final String DEFAULT_CONFIG_NAME = "AAAAAAAAAA";
 
     private static final String DEFAULT_LOGIN = "johndoe";
     private static final String UPDATED_LOGIN = "jhipster";
@@ -100,6 +103,11 @@ class UserResourceIT {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+
+        ClientConfig c = new ClientConfig();
+        c.setName(DEFAULT_CONFIG_NAME);
+        user.addClientConfig(c);
+
         return user;
     }
 

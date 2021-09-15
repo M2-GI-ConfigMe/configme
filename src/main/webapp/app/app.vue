@@ -4,7 +4,7 @@
     <div id="app-header">
       <navbar></navbar>
     </div>
-    <div style="padding-top: 64px; height: 100%">
+    <div style="padding-top: 64px; height: 100%; background: #f9f9f9">
       <router-view></router-view>
       <b-modal id="login-page" hide-footer lazy>
         <span data-cy="loginTitle" slot="modal-title" id="login-title">Se connecter</span>
