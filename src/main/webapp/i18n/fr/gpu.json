@@ -18,13 +18,13 @@
         "title": "Gpu"
       },
       "id": "ID",
-      "frequency": "Frequency",
-      "memory": "Memory",
-      "consumption": "Consumption",
-      "clockSpeed": "Clock Speed",
-      "lithography": "Lithography",
+      "frequency": "Frequence MHz",
+      "memory": "Mémoire",
+      "consumption": "Consommation",
+      "clockSpeed": "Frequence de l'horloge MHz",
+      "lithography": "Taille de gravure",
       "output": "Output",
-      "inputPower": "Input Power",
+      "inputPower": "Connecteurs",
       "bus": "Bus",
       "dimension": "Dimension"
     }

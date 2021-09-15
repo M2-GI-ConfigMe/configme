@@ -29,7 +29,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new VentiradService();
-      elemDefault = new Ventirad(123, 'AAAAAA', 0.5, 0.3, 27, 'fsdf', 'INTEL', true, 'AAAAAAA', 0, false);
+      elemDefault = new Ventirad(123, 'AAAAAA', 0.5, 0.3, 27, 'fsdf', 'INTEL', true, ['LGA_1151', 'LGA_1200'], 'AAAAAAA', 0, false);
     });
 
     describe('Service methods', () => {
@@ -88,6 +88,7 @@ describe('Service Tests', () => {
             img: 'fsdf',
             brand: 'INTEL',
             rangeFanSpeed: 'BBBBBB',
+            sockets: ['LGA_1151', 'LGA_1200'],
             noise: 1,
             hasThermalPaste: true,
             dimension: {
@@ -126,6 +127,7 @@ describe('Service Tests', () => {
             stock: 27,
             brand: 'INTEL',
             isActive: false,
+            sockets: ['LGA_1151', 'LGA_1200'],
             noise: 1,
             hasThermalPaste: true,
             dimension: {
@@ -163,6 +165,7 @@ describe('Service Tests', () => {
             rangeFanSpeed: 'BBBBBB',
             noise: 1,
             hasThermalPaste: true,
+            sockets: ['LGA_1151', 'LGA_1200'],
             dimension: {
               height: 15,
               width: 15,

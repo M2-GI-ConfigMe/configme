@@ -108,16 +108,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.computerCase.formats')" for="computer-case-formats">Formats</label>
-            <input
-              type="text"
-              class="form-control"
-              name="formats"
-              id="computer-case-formats"
-              data-cy="formats"
-              :class="{ valid: !$v.computerCase.formats.$invalid, invalid: $v.computerCase.formats.$invalid }"
-              v-model="$v.computerCase.formats.$model"
-            />
+            <label v-text="$t('configmeApp.computerCase.formats')">Formats</label>
+            <select class="form-control" multiple name="formats" v-model="formats">
+              <option v-for="(format, key) of formatTypes" :value="format" :key="key">{{ format }}</option>
+            </select>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('configmeApp.computerCase.sizeMaxGpu')" for="computer-case-sizeMaxGpu"

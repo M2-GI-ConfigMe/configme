@@ -20,14 +20,14 @@
       "id": "ID",
       "type": "Type",
       "formats": "Formats",
-      "sizeMaxGpu": "Size Max Gpu",
-      "sizeMaxVentirad": "Size Max Ventirad",
-      "sizeMaxPsu": "Size Max Psu",
-      "hardDriveSlots": "Hard Drive Slots",
-      "frontPanelOutputs": "Front Panel Outputs",
-      "fanIncluded": "Fan Included",
-      "fanSlotsAvailable": "Fan Slots Available",
-      "watercoolingCompatibility": "Watercooling Compatibility",
+      "sizeMaxGpu": "Hauteur max carte graphique",
+      "sizeMaxVentirad": "Hauteur max Ventirad",
+      "sizeMaxPsu": "Hauteur max block alimentation",
+      "hardDriveSlots": "Emplacement disque dur",
+      "frontPanelOutputs": "Sortie avant",
+      "fanIncluded": "Ventilateur inclu",
+      "fanSlotsAvailable": "Possibilité ventilateur",
+      "watercoolingCompatibility": "Compatibilité Watercooling",
       "dimension": "Dimension"
     }
   }

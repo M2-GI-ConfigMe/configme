@@ -27,7 +27,7 @@ export default class Ventirad extends Vue {
       .update(product)
       .then(() => {
         this.$bvToast.toast('Produit ' + (isActivated ? 'activé' : 'Désactivé'), {
-          toaster: 'b-toaster-top-center',
+          toaster: 'b-toaster-bottom-right',
           title: 'Info',
           variant: 'success',
           solid: true,
@@ -36,7 +36,7 @@ export default class Ventirad extends Vue {
       })
       .catch(() => {
         this.$bvToast.toast('Erreur de la modification du produit', {
-          toaster: 'b-toaster-top-center',
+          toaster: 'b-toaster-bottom-right',
           title: 'Info',
           variant: 'danger',
           solid: true,
@@ -82,7 +82,7 @@ export default class Ventirad extends Vue {
       .then(() => {
         const message = this.$t('configmeApp.ventirad.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
-          toaster: 'b-toaster-top-center',
+          toaster: 'b-toaster-bottom-right',
           title: 'Info',
           variant: 'danger',
           solid: true,
