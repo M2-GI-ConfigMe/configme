@@ -67,7 +67,7 @@ export default class OrderUpdate extends Vue {
           this.$router.go(-1);
           const message = this.$t('configmeApp.order.updated', { param: param.id });
           return this.$root.$bvToast.toast(message.toString(), {
-            toaster: 'b-toaster-top-center',
+            toaster: 'b-toaster-bottom-right',
             title: 'Info',
             variant: 'info',
             solid: true,
@@ -82,7 +82,7 @@ export default class OrderUpdate extends Vue {
           this.$router.go(-1);
           const message = this.$t('configmeApp.order.created', { param: param.id });
           this.$root.$bvToast.toast(message.toString(), {
-            toaster: 'b-toaster-top-center',
+            toaster: 'b-toaster-bottom-right',
             title: 'Success',
             variant: 'success',
             solid: true,

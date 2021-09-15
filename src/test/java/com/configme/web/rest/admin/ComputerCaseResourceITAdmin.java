@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,7 +166,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
         assertThat(computerCaseList).hasSize(databaseSizeBeforeCreate + 1);
         ComputerCase testComputerCase = computerCaseList.get(computerCaseList.size() - 1);
         assertThat(testComputerCase.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testComputerCase.getFormats()).isEqualTo(DEFAULT_FORMATS);
+        assertThat(testComputerCase.getFormats()).usingRecursiveComparison().isEqualTo(DEFAULT_FORMATS);
         assertThat(testComputerCase.getSizeMaxGpu()).isEqualTo(DEFAULT_SIZE_MAX_GPU);
         assertThat(testComputerCase.getSizeMaxVentirad()).isEqualTo(DEFAULT_SIZE_MAX_VENTIRAD);
         assertThat(testComputerCase.getSizeMaxPsu()).isEqualTo(DEFAULT_SIZE_MAX_PSU);
@@ -279,7 +280,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(computerCase.getId().intValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].formats").value(hasItem(DEFAULT_FORMATS)))
+            //            .andExpect(jsonPath("$.[*].formats").value(Matchers.containsInAnyOrder(DEFAULT_FORMATS)))
             .andExpect(jsonPath("$.[*].sizeMaxGpu").value(hasItem(DEFAULT_SIZE_MAX_GPU)))
             .andExpect(jsonPath("$.[*].sizeMaxVentirad").value(hasItem(DEFAULT_SIZE_MAX_VENTIRAD)))
             .andExpect(jsonPath("$.[*].sizeMaxPsu").value(hasItem(DEFAULT_SIZE_MAX_PSU)))
@@ -309,7 +310,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(computerCase.getId().intValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
-            .andExpect(jsonPath("$.formats").value(DEFAULT_FORMATS))
+            //            .andExpect(jsonPath("$.formats").value(DEFAULT_FORMATS))
             .andExpect(jsonPath("$.sizeMaxGpu").value(DEFAULT_SIZE_MAX_GPU))
             .andExpect(jsonPath("$.sizeMaxVentirad").value(DEFAULT_SIZE_MAX_VENTIRAD))
             .andExpect(jsonPath("$.sizeMaxPsu").value(DEFAULT_SIZE_MAX_PSU))
@@ -370,7 +371,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
         assertThat(computerCaseList).hasSize(databaseSizeBeforeUpdate);
         ComputerCase testComputerCase = computerCaseList.get(computerCaseList.size() - 1);
         assertThat(testComputerCase.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testComputerCase.getFormats()).isEqualTo(UPDATED_FORMATS);
+        assertThat(testComputerCase.getFormats()).usingRecursiveComparison().isEqualTo(UPDATED_FORMATS);
         assertThat(testComputerCase.getSizeMaxGpu()).isEqualTo(UPDATED_SIZE_MAX_GPU);
         assertThat(testComputerCase.getSizeMaxVentirad()).isEqualTo(UPDATED_SIZE_MAX_VENTIRAD);
         assertThat(testComputerCase.getSizeMaxPsu()).isEqualTo(UPDATED_SIZE_MAX_PSU);
@@ -477,7 +478,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
         assertThat(computerCaseList).hasSize(databaseSizeBeforeUpdate);
         ComputerCase testComputerCase = computerCaseList.get(computerCaseList.size() - 1);
         assertThat(testComputerCase.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testComputerCase.getFormats()).isEqualTo(DEFAULT_FORMATS);
+        assertThat(testComputerCase.getFormats()).usingRecursiveComparison().isEqualTo(DEFAULT_FORMATS);
         assertThat(testComputerCase.getSizeMaxGpu()).isEqualTo(UPDATED_SIZE_MAX_GPU);
         assertThat(testComputerCase.getSizeMaxVentirad()).isEqualTo(UPDATED_SIZE_MAX_VENTIRAD);
         assertThat(testComputerCase.getSizeMaxPsu()).isEqualTo(UPDATED_SIZE_MAX_PSU);
@@ -531,7 +532,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
         assertThat(computerCaseList).hasSize(databaseSizeBeforeUpdate);
         ComputerCase testComputerCase = computerCaseList.get(computerCaseList.size() - 1);
         assertThat(testComputerCase.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testComputerCase.getFormats()).isEqualTo(UPDATED_FORMATS);
+        assertThat(testComputerCase.getFormats()).usingRecursiveComparison().isEqualTo(UPDATED_FORMATS);
         assertThat(testComputerCase.getSizeMaxGpu()).isEqualTo(UPDATED_SIZE_MAX_GPU);
         assertThat(testComputerCase.getSizeMaxVentirad()).isEqualTo(UPDATED_SIZE_MAX_VENTIRAD);
         assertThat(testComputerCase.getSizeMaxPsu()).isEqualTo(UPDATED_SIZE_MAX_PSU);

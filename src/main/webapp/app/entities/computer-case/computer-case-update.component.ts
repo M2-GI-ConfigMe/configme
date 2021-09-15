@@ -4,13 +4,15 @@ import { required, numeric, minValue, decimal, maxValue } from 'vuelidate/lib/va
 
 import { IComputerCase, ComputerCase } from '@/shared/model/computer-case.model';
 import ComputerCaseService from './computer-case.service';
+import { FormatType } from '@/shared/model/enumerations/format-type.model';
+import { data } from 'autoprefixer';
+import { Dimension } from '@/shared/model/dimension.model';
 
 const validations: any = {
   computerCase: {
     type: {
       required,
     },
-    formats: {},
     sizeMaxGpu: {
       required,
       numeric,
@@ -80,6 +82,9 @@ export default class ComputerCaseUpdate extends Vue {
   @Inject('computerCaseService') private computerCaseService: () => ComputerCaseService;
   public computerCase: IComputerCase = new ComputerCase();
 
+  public formatTypes = FormatType;
+  public formats = [];
+
   public isSaving = false;
   public currentLanguage = '';
 
@@ -104,6 +109,7 @@ export default class ComputerCaseUpdate extends Vue {
 
   public save(): void {
     this.isSaving = true;
+    this.computerCase.formats = this.formats;
     if (this.computerCase.id) {
       this.computerCaseService()
         .update(this.computerCase)
@@ -112,7 +118,7 @@ export default class ComputerCaseUpdate extends Vue {
           this.$router.go(-1);
           const message = this.$t('configmeApp.computerCase.updated', { param: param.id });
           return this.$root.$bvToast.toast(message.toString(), {
-            toaster: 'b-toaster-top-center',
+            toaster: 'b-toaster-bottom-right',
             title: 'Info',
             variant: 'info',
             solid: true,
@@ -128,7 +134,7 @@ export default class ComputerCaseUpdate extends Vue {
           this.$router.go(-1);
           const message = this.$t('configmeApp.computerCase.created', { param: param.id });
           this.$root.$bvToast.toast(message.toString(), {
-            toaster: 'b-toaster-top-center',
+            toaster: 'b-toaster-bottom-right',
             title: 'Success',
             variant: 'success',
             solid: true,
@@ -143,6 +149,7 @@ export default class ComputerCaseUpdate extends Vue {
       .find(computerCaseId)
       .then(res => {
         this.computerCase = res;
+        res.formats.forEach(format => this.formats.push(format));
       });
   }
 

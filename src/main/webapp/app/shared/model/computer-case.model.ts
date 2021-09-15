@@ -1,5 +1,5 @@
 import { CaseType } from '@/shared/model/enumerations/case-type.model';
-import { IDimension } from '@/shared/model/dimension.model';
+import { Dimension, IDimension } from '@/shared/model/dimension.model';
 export interface IComputerCase {
   id?: number;
   name?: string;
@@ -10,7 +10,7 @@ export interface IComputerCase {
   brand?: string;
   isActive?: boolean;
   type?: CaseType;
-  formats?: string | null;
+  formats?: string[];
   sizeMaxGpu?: number;
   sizeMaxVentirad?: number;
   sizeMaxPsu?: number;
@@ -19,7 +19,7 @@ export interface IComputerCase {
   fanIncluded?: string | null;
   fanSlotsAvailable?: string | null;
   watercoolingCompatibility?: string | null;
-  dimension?: IDimension | null;
+  dimension?: IDimension;
 }
 
 export class ComputerCase implements IComputerCase {
@@ -33,7 +33,7 @@ export class ComputerCase implements IComputerCase {
     public brand?: string,
     public isActive?: boolean,
     public type?: CaseType,
-    public formats?: string | null,
+    public formats?: string[],
     public sizeMaxGpu?: number,
     public sizeMaxVentirad?: number,
     public sizeMaxPsu?: number,
@@ -42,6 +42,9 @@ export class ComputerCase implements IComputerCase {
     public fanIncluded?: string | null,
     public fanSlotsAvailable?: string | null,
     public watercoolingCompatibility?: string | null,
-    public dimension?: IDimension | null
-  ) {}
+    public dimension?: IDimension
+  ) {
+    this.dimension = new Dimension();
+    this.formats = [];
+  }
 }

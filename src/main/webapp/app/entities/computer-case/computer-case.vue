@@ -72,7 +72,9 @@
               </button>
             </td>
             <td v-text="$t('configmeApp.CaseType.' + computerCase.type)">{{ computerCase.type }}</td>
-            <td>{{ computerCase.formats }}</td>
+            <td>
+              <p v-for="(format, key) in computerCase.formats" :key="key">{{ format }}</p>
+            </td>
             <td>{{ computerCase.sizeMaxGpu }}</td>
             <td>{{ computerCase.sizeMaxVentirad }}</td>
             <td>{{ computerCase.sizeMaxPsu }}</td>

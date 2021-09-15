@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity ComputerCase.
+    -->
+    <changeSet id="20210915162803-1" author="jhipster">
+        <createTable tableName="ventirad_sockets">
+            <column name="ventirad_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="sockets" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="ventirad_id, sockets" tableName="ventirad_sockets"/>
+
+        <addForeignKeyConstraint baseColumnNames="ventirad_id"
+                                 baseTableName="ventirad_sockets"
+                                 constraintName="fk_ventirad_sockets_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ventirad"/>
+    </changeSet>
+
+    <changeSet id="20210915162803-1-data" author="jhipster" context="faker">
+        <loadData
+            file="config/liquibase/fake-data/ventirad_sockets.csv"
+            separator=";"
+            tableName="ventirad_sockets">
+            <column name="ventirad_id" type="numeric"/>
+            <column name="sockets" type="string"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

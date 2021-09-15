@@ -37,6 +37,7 @@
             <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
             <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.rangeFanSpeed')">Range Fan Speed</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.ventirad.sockets')">Sockets</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.noise')">Noise</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.hasThermalPaste')">Has Thermal Paste</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ventirad.dimension') + ' (L, l, H)'">Dimension</span></th>
@@ -61,6 +62,9 @@
               <button class="btn btn-success btn-sm" v-on:click="setActive(ventirad, false)" v-if="ventirad.isActive">Désactiver</button>
             </td>
             <td>{{ ventirad.rangeFanSpeed }}</td>
+            <td>
+              <p v-for="(socket, key) in ventirad.sockets" :key="key">{{ socket }}</p>
+            </td>
             <td>{{ ventirad.noise }}</td>
             <td>{{ ventirad.hasThermalPaste }}</td>
             <td>{{ ventirad.dimension.length }}mm, {{ ventirad.dimension.width }}mm, {{ ventirad.dimension.height }}mm</td>

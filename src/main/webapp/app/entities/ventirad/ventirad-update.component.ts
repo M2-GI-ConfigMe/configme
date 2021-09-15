@@ -3,6 +3,7 @@ import { Component, Vue, Inject } from 'vue-property-decorator';
 import { decimal, maxValue, minValue, numeric, required } from 'vuelidate/lib/validators';
 
 import { IVentirad, Ventirad } from '@/shared/model/ventirad.model';
+import { SocketType } from '@/shared/model/enumerations/socket-type.model';
 import VentiradService from './ventirad.service';
 
 const validations: any = {
@@ -69,6 +70,9 @@ export default class VentiradUpdate extends Vue {
   public isSaving = false;
   public currentLanguage = '';
 
+  public socketTypes = SocketType;
+  public sockets = [];
+
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (to.params.ventiradId) {
@@ -90,6 +94,7 @@ export default class VentiradUpdate extends Vue {
 
   public save(): void {
     this.isSaving = true;
+    this.ventirad.sockets = this.sockets;
     if (this.ventirad.id) {
       this.ventiradService()
         .update(this.ventirad)
@@ -98,7 +103,7 @@ export default class VentiradUpdate extends Vue {
           this.$router.go(-1);
           const message = this.$t('configmeApp.ventirad.updated', { param: param.id });
           return this.$root.$bvToast.toast(message.toString(), {
-            toaster: 'b-toaster-top-center',
+            toaster: 'b-toaster-bottom-right',
             title: 'Info',
             variant: 'info',
             solid: true,
@@ -114,7 +119,7 @@ export default class VentiradUpdate extends Vue {
           this.$router.go(-1);
           const message = this.$t('configmeApp.ventirad.created', { param: param.id });
           this.$root.$bvToast.toast(message.toString(), {
-            toaster: 'b-toaster-top-center',
+            toaster: 'b-toaster-bottom-right',
             title: 'Success',
             variant: 'success',
             solid: true,
@@ -129,6 +134,7 @@ export default class VentiradUpdate extends Vue {
       .find(ventiradId)
       .then(res => {
         this.ventirad = res;
+        res.sockets.forEach(socket => this.sockets.push(socket));
       });
   }
 

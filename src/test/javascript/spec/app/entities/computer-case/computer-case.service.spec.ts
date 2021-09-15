@@ -40,7 +40,7 @@ describe('Service Tests', () => {
         'INTEL',
         true,
         CaseType.PETITE,
-        'AAAAAAA',
+        ['ATX', 'MICRO_ATX'],
         0,
         0,
         0,
@@ -108,7 +108,7 @@ describe('Service Tests', () => {
             img: 'fsdf',
             brand: 'INTEL',
             type: 'BBBBBB',
-            formats: 'BBBBBB',
+            formats: ['ATX', 'MICRO_ATX'],
             sizeMaxGpu: 1,
             sizeMaxVentirad: 1,
             sizeMaxPsu: 1,
@@ -189,7 +189,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             type: 'BBBBBB',
-            formats: 'BBBBBB',
+            formats: ['ATX', 'MICRO_ATX'],
             sizeMaxGpu: 1,
             sizeMaxVentirad: 1,
             sizeMaxPsu: 1,

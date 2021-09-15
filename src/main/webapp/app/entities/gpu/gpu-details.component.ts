@@ -22,7 +22,7 @@ export default class GpuDetails extends Vue {
       .update(product)
       .then(() => {
         this.$bvToast.toast('Produit ' + (isActivated ? 'activé' : 'Désactivé'), {
-          toaster: 'b-toaster-top-center',
+          toaster: 'b-toaster-bottom-right',
           title: 'Info',
           variant: 'success',
           solid: true,
@@ -31,7 +31,7 @@ export default class GpuDetails extends Vue {
       })
       .catch(() => {
         this.$bvToast.toast('Erreur de la modification du produit', {
-          toaster: 'b-toaster-top-center',
+          toaster: 'b-toaster-bottom-right',
           title: 'Info',
           variant: 'danger',
           solid: true,

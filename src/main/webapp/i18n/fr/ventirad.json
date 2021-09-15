@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "rangeFanSpeed": "Vitesse de rotation tours/min",
+      "sockets": "Sockets compatibles",
       "noise": "Bruits Db",
       "hasThermalPaste": "Pâte thermique inclu",
       "dimension": "Dimension"

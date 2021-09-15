@@ -60,7 +60,7 @@
             <span v-text="$t('configmeApp.computerCase.formats')">Formats</span>
           </dt>
           <dd>
-            <span>{{ computerCase.formats }}</span>
+            <p v-for="(format, key) in computerCase.formats" :key="key">{{ format }}</p>
           </dd>
           <dt>
             <span v-text="$t('configmeApp.computerCase.sizeMaxGpu')">Size Max Gpu</span>
