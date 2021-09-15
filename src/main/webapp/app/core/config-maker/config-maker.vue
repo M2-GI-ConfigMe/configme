@@ -20,7 +20,16 @@
             <div>
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn fab color="primary" small class="mr-2" elevation="0" v-on="on" v-bind="attrs">
+                  <v-btn
+                    fab
+                    color="primary"
+                    small
+                    class="mr-2"
+                    elevation="0"
+                    v-on="on"
+                    v-bind="attrs"
+                    @click="authenticated ? saveConfig(selectedConfig) : openLogin()"
+                  >
                     <v-icon dark>mdi-content-save</v-icon>
                   </v-btn>
                 </template>
@@ -36,7 +45,7 @@
               </v-tooltip>
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn fab color="red" small elevation="0" v-on="on" v-bind="attrs">
+                  <v-btn fab color="red" small elevation="0" v-on="on" v-bind="attrs" @click="deleteConfig(selectedConfig)">
                     <v-icon color="white">mdi-trash-can</v-icon>
                   </v-btn>
                 </template>
@@ -63,13 +72,13 @@
                     v-html="selectedConfig[field.key] ? selectedConfig[field.key].name : 'Sélectionner un composant'"
                   ></span>
                 </div>
-                <v-btn icon class="font-weight-bold" v-if="selectedConfig[field.key]" color="primary2">
+                <v-btn icon class="font-weight-bold" v-if="selectedConfig[field.key]" color="primary2" @click="removeComponent(field.key)">
                   <v-icon v-if="selectedConfig[field.key]" class="font-weight-bold" color="primary2">mdi-close</v-icon>
                 </v-btn>
               </v-sheet>
             </v-col>
             <v-col class="pt-2 flex-grow-0 d-flex flex-column justify-content-end">
-              <span class="h3 mb-0 align-self-end font-weight-bold"> Total : 900€ </span>
+              <span class="h3 mb-0 align-self-end font-weight-bold"> Total : {{ getTotalPrice }}€ </span>
               <v-btn color="primary" rounded>
                 <v-icon>mdi-cart</v-icon>
                 Ajouter au panier
@@ -81,12 +90,48 @@
           <v-card style="border-radius: 1rem; flex: 1">
             <v-card-title class="d-flex justify-content-between">
               <span class="font-weight-bold h4 mb-0">Mes Configs</span>
-              <v-btn icon color="primary" large>
-                <v-icon class="font-weight-bold">mdi-plus</v-icon>
-              </v-btn>
+
+              <v-dialog v-model="dialog" max-width="600px" width="auto">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon color="primary" v-if="authenticated" large v-on="on" v-bind="attrs">
+                    <v-icon class="font-weight-bold">mdi-plus</v-icon>
+                  </v-btn>
+                  <v-btn icon color="primary" v-else @click="openLogin()">
+                    <v-icon class="font-weight-bold">mdi-plus</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title class="mb-2">
+                    <span class="text-h5 font-weight-bold">Créer une Config</span>
+                  </v-card-title>
+                  <v-form v-model="formCreateValid">
+                    <v-card-text class="pb-0">
+                      <v-container class="p-0">
+                        <v-row no-gutters>
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Nom*"
+                              placeholder="Ma Config"
+                              outlined
+                              required
+                              v-model="formCreateConfig.name"
+                              :rules="[v => !!v || 'Le champ nom est obligatoire']"
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="dialog = false"> Fermer </v-btn>
+                      <v-btn color="blue darken-1" text :disabled="!formCreateValid" @click="createConfig()"> OK </v-btn>
+                    </v-card-actions>
+                  </v-form>
+                </v-card>
+              </v-dialog>
             </v-card-title>
             <v-list class="pt-0">
-              <v-list-item-group v-model="selectedConfigIndex" color="primary">
+              <v-list-item-group v-model="selectedConfigIndex" color="primary" mandatory>
                 <v-list-item v-for="(config, i) in clientConfigs" :key="i">
                   <v-list-item-content>
                     <v-list-item-title v-text="config.name"></v-list-item-title>
