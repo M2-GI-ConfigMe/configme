@@ -1,6 +1,7 @@
 package com.configme.service;
 
 import com.configme.config.Constants;
+import com.configme.domain.Address;
 import com.configme.domain.Authority;
 import com.configme.domain.User;
 import com.configme.repository.AuthorityRepository;
@@ -10,6 +11,7 @@ import com.configme.security.SecurityUtils;
 import com.configme.service.dto.AdminUserDTO;
 import com.configme.service.dto.UserDTO;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -118,9 +120,9 @@ public class UserService {
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
 
+        newUser.setBirthdate(userDTO.getBirthdate());
         //Ajouter les adresses
         newUser.setAddress(userDTO.getAddress());
-        newUser.setBirthdate(userDTO.getBirthdate());
 
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
@@ -150,11 +152,12 @@ public class UserService {
 
     public User createUser(AdminUserDTO userDTO) {
         User user = new User();
+        user.setEmail(userDTO.getEmail().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        if (userDTO.getEmail() != null) {
-            user.setEmail(userDTO.getEmail().toLowerCase());
-        }
+        user.setBirthdate(userDTO.getBirthdate());
+        user.setAddress(userDTO.getAddress());
+
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
             user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
@@ -196,11 +199,11 @@ public class UserService {
             .map(
                 user -> {
                     this.clearUserCaches(user);
+                    user.setEmail(userDTO.getEmail().toLowerCase());
                     user.setFirstName(userDTO.getFirstName());
                     user.setLastName(userDTO.getLastName());
-                    if (userDTO.getEmail() != null) {
-                        user.setEmail(userDTO.getEmail().toLowerCase());
-                    }
+                    user.setBirthdate(userDTO.getBirthdate());
+                    user.setAddress(userDTO.getAddress());
                     user.setImageUrl(userDTO.getImageUrl());
                     user.setActivated(userDTO.isActivated());
                     user.setLangKey(userDTO.getLangKey());
@@ -242,17 +245,25 @@ public class UserService {
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(
+        String email,
+        String firstName,
+        String lastName,
+        LocalDate birthdate,
+        Address address,
+        String langKey,
+        String imageUrl
+    ) {
         SecurityUtils
             .getCurrentUserEmail()
             .flatMap(userRepository::findOneByEmail)
             .ifPresent(
                 user -> {
+                    user.setEmail(email.toLowerCase());
                     user.setFirstName(firstName);
                     user.setLastName(lastName);
-                    if (email != null) {
-                        user.setEmail(email.toLowerCase());
-                    }
+                    user.setBirthdate(birthdate);
+                    user.setAddress(address);
                     user.setLangKey(langKey);
                     user.setImageUrl(imageUrl);
                     this.clearUserCaches(user);

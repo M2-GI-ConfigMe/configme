@@ -22,7 +22,8 @@ class UserMapperTest {
 
     private static final String DEFAULT_EMAIL = "johndoe@univ-grenoble-alpes.fr";
     private static final Long DEFAULT_ID = 1L;
-    //private static final LocalDate DEFAULT_BIRTHDATE = new LocalDate(1999,9,9);
+    private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(1999, 9, 9);
+    private static final Address DEFAULT_ADDRESS = Address.of("John", "Doe", "5", "Rue de l'exmple", "Grenoble", "38000");
 
     private UserMapper userMapper;
     private User user;
@@ -33,21 +34,16 @@ class UserMapperTest {
         userMapper = new UserMapper();
         user = new User();
 
-        Address address = new Address();
-        address.setFirstName("john");
-        address.setLastName("doe");
-        address.setStreetName("rue de l'exemple");
-        address.setStreetNumber("5");
-        address.setCity("Grenoble");
-        address.setZipCode("38000");
-
         user.setEmail(DEFAULT_EMAIL);
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
-        //user.setBirthdate(DEFAULT_BIRTHDATE);
-        user.setAddress(address);
+
         user.setFirstName("john");
         user.setLastName("doe");
+
+        user.setBirthdate(DEFAULT_BIRTHDATE);
+        user.setAddress(DEFAULT_ADDRESS);
+
         user.setImageUrl("image_url");
         user.setLangKey("en");
 

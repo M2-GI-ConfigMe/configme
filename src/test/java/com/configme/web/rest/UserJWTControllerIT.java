@@ -10,9 +10,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Address;
 import com.configme.domain.User;
 import com.configme.repository.UserRepository;
 import com.configme.web.rest.vm.LoginVM;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -42,14 +44,19 @@ class UserJWTControllerIT {
     void testAuthorize() throws Exception {
         User user = new User();
         user.setEmail("user-jwt-controller@example.com");
+        user.setFirstName("user-jwt-controller");
+        user.setLastName("lastname");
+        user.setBirthdate(LocalDate.of(2000, 02, 02));
+        user.setAddress(Address.of("user-jwt-controller", "lastname", "5", "Rue de l'oublie", "Grenoblle", "39000"));
+
         user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
+        user.setPassword(passwordEncoder.encode("testtest9"));
 
         userRepository.saveAndFlush(user);
 
         LoginVM login = new LoginVM();
-        login.setUsername("user-jwt-controller");
-        login.setPassword("test");
+        login.setUsername("user-jwt-controller@example.com");
+        login.setPassword("testtest9");
         mockMvc
             .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))
             .andExpect(status().isOk())
@@ -59,28 +66,29 @@ class UserJWTControllerIT {
             .andExpect(header().string("Authorization", not(is(emptyString()))));
     }
 
-    @Test
-    @Transactional
-    void testAuthorizeWithRememberMe() throws Exception {
-        User user = new User();
-        user.setEmail("user-jwt-controller-remember-me@example.com");
-        user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
+    //On a supprimé le remember me pour l'instant
+    // @Test
+    // @Transactional
+    // void testAuthorizeWithRememberMe() throws Exception {
+    //     User user = new User();
+    //     user.setEmail("user-jwt-controller-remember-me@example.com");
+    //     user.setActivated(true);
+    //     user.setPassword(passwordEncoder.encode("test"));
 
-        userRepository.saveAndFlush(user);
+    //     userRepository.saveAndFlush(user);
 
-        LoginVM login = new LoginVM();
-        login.setUsername("user-jwt-controller-remember-me");
-        login.setPassword("test");
-        login.setRememberMe(true);
-        mockMvc
-            .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id_token").isString())
-            .andExpect(jsonPath("$.id_token").isNotEmpty())
-            .andExpect(header().string("Authorization", not(nullValue())))
-            .andExpect(header().string("Authorization", not(is(emptyString()))));
-    }
+    //     LoginVM login = new LoginVM();
+    //     login.setUsername("user-jwt-controller-remember-me@example.com");
+    //     login.setPassword("test");
+    //     login.setRememberMe(true);
+    //     mockMvc
+    //         .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))
+    //         .andExpect(status().isOk())
+    //         .andExpect(jsonPath("$.id_token").isString())
+    //         .andExpect(jsonPath("$.id_token").isNotEmpty())
+    //         .andExpect(header().string("Authorization", not(nullValue())))
+    //         .andExpect(header().string("Authorization", not(is(emptyString()))));
+    // }
 
     @Test
     void testAuthorizeFails() throws Exception {
