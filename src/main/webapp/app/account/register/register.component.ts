@@ -50,17 +50,6 @@ export default class Register extends Vue {
   @Inject('registerService') private registerService: () => RegisterService;
   @Inject('loginService') private loginService: () => LoginService;
 
-  //Account informations
-  // public email: string = "";
-  // public password: string = "";
-  // public lastName: string = "";
-  // public firstName: string = "";
-  // public birthdate: string = Date();
-  // public streetNumber: string = "";
-  // public streetName: string = "";
-  // public city: string = "";
-  // public zipCode: string = "";
-
   public informations: any = {
     email: undefined,
     password: undefined,
@@ -91,7 +80,7 @@ export default class Register extends Vue {
     zipCodeRules: [],
   };
   public confirmPassword: string = null;
-  public isValid: boolean = false;
+  public isValid = false;
 
   public error = '';
   public errorEmailExists = '';
@@ -104,7 +93,7 @@ export default class Register extends Vue {
   public menu = false;
 
   public register(): void {
-    var registerAccount: any = {};
+    const registerAccount: any = {};
 
     this.error = null;
     this.errorUserExists = null;
