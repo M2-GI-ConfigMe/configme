@@ -79,10 +79,10 @@ public class MailService {
 
     @Async
     public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
-        if (user.getEmail() == null) {
-            log.debug("Email doesn't exist for user '{}'", user.getLogin());
-            return;
-        }
+        // if (user.getEmail() == null) {
+        //     log.debug("Email doesn't exist for user '{}'", user.getEmail());
+        //     return;
+        // }
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
         context.setVariable(USER, user);

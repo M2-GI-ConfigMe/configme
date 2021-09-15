@@ -46,10 +46,11 @@ public class UserMapper {
         } else {
             User user = new User();
             user.setId(userDTO.getId());
-            user.setLogin(userDTO.getLogin());
+            user.setEmail(userDTO.getEmail());
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
-            user.setEmail(userDTO.getEmail());
+            user.setBirthdate(userDTO.getBirthdate());
+            user.setAddress(userDTO.getAddress());
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
@@ -116,32 +117,32 @@ public class UserMapper {
         return userSet;
     }
 
-    @Named("login")
+    @Named("email")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "login", source = "login")
-    public UserDTO toDtoLogin(User user) {
+    @Mapping(target = "email", source = "email")
+    public UserDTO toDtoEmail(User user) {
         if (user == null) {
             return null;
         }
         UserDTO userDto = new UserDTO();
         userDto.setId(user.getId());
-        userDto.setLogin(user.getLogin());
+        userDto.setEmail(user.getEmail());
         return userDto;
     }
 
-    @Named("loginSet")
+    @Named("emailSet")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "login", source = "login")
-    public Set<UserDTO> toDtoLoginSet(Set<User> users) {
+    @Mapping(target = "email", source = "email")
+    public Set<UserDTO> toDtoEmailSet(Set<User> users) {
         if (users == null) {
             return Collections.emptySet();
         }
 
         Set<UserDTO> userSet = new HashSet<>();
         for (User userEntity : users) {
-            userSet.add(this.toDtoLogin(userEntity));
+            userSet.add(this.toDtoEmail(userEntity));
         }
 
         return userSet;
