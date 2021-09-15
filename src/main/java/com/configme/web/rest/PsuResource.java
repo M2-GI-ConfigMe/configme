@@ -144,6 +144,30 @@ public class PsuResource {
                     if (psu.getOutputs() != null) {
                         existingPsu.setOutputs(psu.getOutputs());
                     }
+                    if (psu.getBrand() != null) {
+                        existingPsu.setBrand(psu.getBrand());
+                    }
+                    if (psu.getDiscount() != null) {
+                        existingPsu.setDiscount(psu.getDiscount());
+                    }
+                    if (psu.getPrice() != null) {
+                        existingPsu.setPrice(psu.getPrice());
+                    }
+                    if (psu.getStock() != null) {
+                        existingPsu.setStock(psu.getStock());
+                    }
+                    if (psu.getDesc() != null) {
+                        existingPsu.setDesc(psu.getDesc());
+                    }
+                    if (psu.getImg() != null) {
+                        existingPsu.setImg(psu.getImg());
+                    }
+                    if (psu.getName() != null) {
+                        existingPsu.setName(psu.getName());
+                    }
+                    if (psu.getIsActive() != null) {
+                        existingPsu.setIsActive(psu.getIsActive());
+                    }
 
                     return existingPsu;
                 }

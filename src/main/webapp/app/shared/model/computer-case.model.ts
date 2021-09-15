@@ -2,6 +2,13 @@ import { CaseType } from '@/shared/model/enumerations/case-type.model';
 import { IDimension } from '@/shared/model/dimension.model';
 export interface IComputerCase {
   id?: number;
+  name?: string;
+  price?: number;
+  discount?: number;
+  stock?: number;
+  img?: string;
+  brand?: string;
+  isActive?: boolean;
   type?: CaseType;
   formats?: string | null;
   sizeMaxGpu?: number;
@@ -18,6 +25,13 @@ export interface IComputerCase {
 export class ComputerCase implements IComputerCase {
   constructor(
     public id?: number,
+    public name?: string,
+    public price?: number,
+    public discount?: number,
+    public stock?: number,
+    public img?: string,
+    public brand?: string,
+    public isActive?: boolean,
     public type?: CaseType,
     public formats?: string | null,
     public sizeMaxGpu?: number,

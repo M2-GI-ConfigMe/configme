@@ -1,6 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { numeric, required, minValue } from 'vuelidate/lib/validators';
+import { numeric, required, minValue, decimal, maxValue } from 'vuelidate/lib/validators';
 
 import { IPsu, Psu } from '@/shared/model/psu.model';
 import PsuService from './psu.service';
@@ -26,6 +26,31 @@ const validations: any = {
       min: minValue(1),
     },
     outputs: {
+      required,
+    },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
       required,
     },
   },
@@ -76,6 +101,7 @@ export default class PsuUpdate extends Vue {
           });
         });
     } else {
+      this.psu.isActive = true;
       this.psuService()
         .create(this.psu)
         .then(param => {

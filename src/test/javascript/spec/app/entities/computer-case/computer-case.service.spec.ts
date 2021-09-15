@@ -30,7 +30,26 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new ComputerCaseService();
-      elemDefault = new ComputerCase(123, CaseType.PETITE, 'AAAAAAA', 0, 0, 0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new ComputerCase(
+        123,
+        'AAAAAA',
+        0.5,
+        0.3,
+        27,
+        'fsdf',
+        'INTEL',
+        true,
+        CaseType.PETITE,
+        'AAAAAAA',
+        0,
+        0,
+        0,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA'
+      );
     });
 
     describe('Service methods', () => {
@@ -82,6 +101,12 @@ describe('Service Tests', () => {
       it('should update a ComputerCase', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            discount: 0.3,
+            stock: 27,
+            img: 'fsdf',
+            brand: 'INTEL',
             type: 'BBBBBB',
             formats: 'BBBBBB',
             sizeMaxGpu: 1,
@@ -123,6 +148,10 @@ describe('Service Tests', () => {
       it('should partial update a ComputerCase', async () => {
         const patchObject = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            stock: 27,
+            brand: 'INTEL',
             type: 'BBBBBB',
             frontPanelOutputs: 'BBBBBB',
             fanIncluded: 'BBBBBB',

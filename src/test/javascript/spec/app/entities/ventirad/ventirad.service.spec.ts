@@ -29,7 +29,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new VentiradService();
-      elemDefault = new Ventirad(123, 'AAAAAAA', 0, false);
+      elemDefault = new Ventirad(123, 'AAAAAA', 0.5, 0.3, 27, 'fsdf', 'INTEL', true, 'AAAAAAA', 0, false);
     });
 
     describe('Service methods', () => {
@@ -81,6 +81,12 @@ describe('Service Tests', () => {
       it('should update a Ventirad', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            discount: 0.3,
+            stock: 27,
+            img: 'fsdf',
+            brand: 'INTEL',
             rangeFanSpeed: 'BBBBBB',
             noise: 1,
             hasThermalPaste: true,
@@ -115,6 +121,11 @@ describe('Service Tests', () => {
       it('should partial update a Ventirad', async () => {
         const patchObject = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            stock: 27,
+            brand: 'INTEL',
+            isActive: false,
             noise: 1,
             hasThermalPaste: true,
             dimension: {

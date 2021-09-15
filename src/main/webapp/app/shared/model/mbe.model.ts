@@ -3,6 +3,13 @@ import { RamType } from '@/shared/model/enumerations/ram-type.model';
 import { FormatType } from '@/shared/model/enumerations/format-type.model';
 export interface IMbe {
   id?: number;
+  name?: string;
+  price?: number;
+  discount?: number;
+  stock?: number;
+  img?: string;
+  brand?: string;
+  isActive?: boolean;
   socketCpu?: SocketType;
   ramType?: RamType;
   ramFrequencyMax?: number;
@@ -19,6 +26,13 @@ export interface IMbe {
 export class Mbe implements IMbe {
   constructor(
     public id?: number,
+    public name?: string,
+    public price?: number,
+    public discount?: number,
+    public stock?: number,
+    public img?: string,
+    public brand?: string,
+    public isActive?: boolean,
     public socketCpu?: SocketType,
     public ramType?: RamType,
     public ramFrequencyMax?: number,

@@ -24,6 +24,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.cpu.frequency')">Frequency</span></th>
             <th scope="row"><span v-text="$t('configmeApp.cpu.cacheL1')">Cache L 1</span></th>
             <th scope="row"><span v-text="$t('configmeApp.cpu.cacheL2')">Cache L 2</span></th>
@@ -43,6 +50,16 @@
           <tr v-for="cpu in cpus" :key="cpu.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'CpuView', params: { cpuId: cpu.id } }">{{ cpu.id }}</router-link>
+            </td>
+            <td>{{ cpu.name }}</td>
+            <td>{{ cpu.price }}</td>
+            <td>{{ cpu.discount }}</td>
+            <td>{{ cpu.stock }}</td>
+            <td>{{ cpu.img }}</td>
+            <td>{{ cpu.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(cpu, true)" v-if="!cpu.isActive">Activer</button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(cpu, false)" v-if="cpu.isActive">Désactiver</button>
             </td>
             <td>{{ cpu.frequency }}</td>
             <td>{{ cpu.cacheL1 }}</td>

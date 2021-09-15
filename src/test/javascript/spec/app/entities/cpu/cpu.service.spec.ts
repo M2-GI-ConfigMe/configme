@@ -30,7 +30,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new CpuService();
-      elemDefault = new Cpu(123, 0, 0, 0, 0, 0, 0, false, SocketType.AM4, 0, 0, 0, false);
+      elemDefault = new Cpu(123, 'AAAAAA', 0.5, 0.3, 27, 'fsdf', 'INTEL', true, 0, 0, 0, 0, 0, 0, false, SocketType.AM4, 0, 0, 0, false);
     });
 
     describe('Service methods', () => {
@@ -82,6 +82,13 @@ describe('Service Tests', () => {
       it('should update a Cpu', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            discount: 0.3,
+            stock: 27,
+            img: 'fsdf',
+            brand: 'INTEL',
+            isActive: false,
             frequency: 1,
             cacheL1: 1,
             cacheL2: 1,
@@ -150,6 +157,10 @@ describe('Service Tests', () => {
       it('should return a list of Cpu', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            stock: 27,
+            brand: 'INTEL',
             frequency: 1,
             cacheL1: 1,
             cacheL2: 1,

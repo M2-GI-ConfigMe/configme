@@ -34,6 +34,13 @@ describe('Service Tests', () => {
       service = new MbeService();
       elemDefault = new Mbe(
         123,
+        'AAAAAA',
+        0.5,
+        0.3,
+        27,
+        'fsdf',
+        'INTEL',
+        true,
         SocketType.AM4,
         RamType.DDR3,
         0,
@@ -97,6 +104,13 @@ describe('Service Tests', () => {
       it('should update a Mbe', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            discount: 0.3,
+            stock: 27,
+            img: 'fsdf',
+            brand: 'INTEL',
+            isActive: false,
             socketCpu: 'BBBBBB',
             ramType: 'BBBBBB',
             ramFrequencyMax: 1,
@@ -134,6 +148,10 @@ describe('Service Tests', () => {
       it('should partial update a Mbe', async () => {
         const patchObject = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            stock: 27,
+            brand: 'INTEL',
             ramSizeMax: 1,
             displayOutput: 'BBBBBB',
             storageOutput: 'BBBBBB',

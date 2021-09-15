@@ -24,6 +24,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.psu.power')">Power</span></th>
             <th scope="row"><span v-text="$t('configmeApp.psu.certification')">Certification</span></th>
             <th scope="row"><span v-text="$t('configmeApp.psu.modularity')">Modularity</span></th>
@@ -37,6 +44,16 @@
           <tr v-for="psu in psus" :key="psu.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'PsuView', params: { psuId: psu.id } }">{{ psu.id }}</router-link>
+            </td>
+            <td>{{ psu.name }}</td>
+            <td>{{ psu.price }}</td>
+            <td>{{ psu.discount }}</td>
+            <td>{{ psu.stock }}</td>
+            <td>{{ psu.img }}</td>
+            <td>{{ psu.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(psu, true)" v-if="!psu.isActive">Activer</button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(psu, false)" v-if="psu.isActive">Désactiver</button>
             </td>
             <td>{{ psu.power }}</td>
             <td>{{ psu.certification }}</td>

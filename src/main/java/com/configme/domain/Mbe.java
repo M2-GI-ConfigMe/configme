@@ -16,14 +16,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "mbe")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Mbe implements Serializable {
+public class Mbe extends Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -66,20 +61,6 @@ public class Mbe implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "format", nullable = false)
     private FormatType format;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Mbe id(Long id) {
-        this.id = id;
-        return this;
-    }
 
     public SocketType getSocketCpu() {
         return this.socketCpu;
@@ -234,7 +215,7 @@ public class Mbe implements Serializable {
         if (!(o instanceof Mbe)) {
             return false;
         }
-        return id != null && id.equals(((Mbe) o).id);
+        return super.getId() != null && super.getId().equals(((Mbe) o).getId());
     }
 
     @Override
@@ -247,7 +228,7 @@ public class Mbe implements Serializable {
     @Override
     public String toString() {
         return "Mbe{" +
-            "id=" + getId() +
+            "id=" + super.getId() +
             ", socketCpu='" + getSocketCpu() + "'" +
             ", ramType='" + getRamType() + "'" +
             ", ramFrequencyMax=" + getRamFrequencyMax() +

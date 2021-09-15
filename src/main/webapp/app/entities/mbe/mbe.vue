@@ -24,6 +24,13 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.name')">Name</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.discount')">Discount</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.stock')">Stock</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
             <th scope="row"><span v-text="$t('configmeApp.mbe.socketCpu')">Socket Cpu</span></th>
             <th scope="row"><span v-text="$t('configmeApp.mbe.ramType')">Ram Type</span></th>
             <th scope="row"><span v-text="$t('configmeApp.mbe.ramFrequencyMax')">Ram Frequency Max</span></th>
@@ -42,6 +49,16 @@
           <tr v-for="mbe in mbes" :key="mbe.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'MbeView', params: { mbeId: mbe.id } }">{{ mbe.id }}</router-link>
+            </td>
+            <td>{{ mbe.name }}</td>
+            <td>{{ mbe.price }}</td>
+            <td>{{ mbe.discount }}</td>
+            <td>{{ mbe.stock }}</td>
+            <td>{{ mbe.img }}</td>
+            <td>{{ mbe.brand }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(mbe, true)" v-if="!mbe.isActive">Activer</button>
+              <button class="btn btn-success btn-sm" v-on:click="setActive(mbe, false)" v-if="mbe.isActive">Désactiver</button>
             </td>
             <td v-text="$t('configmeApp.SocketType.' + mbe.socketCpu)">{{ mbe.socketCpu }}</td>
             <td v-text="$t('configmeApp.RamType.' + mbe.ramType)">{{ mbe.ramType }}</td>

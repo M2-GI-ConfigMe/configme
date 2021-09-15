@@ -30,7 +30,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new HardDriveService();
-      elemDefault = new HardDrive(123, 0, 0, 0, MemoryType.HDD);
+      elemDefault = new HardDrive(123, 'AAAAAA', 0.5, 0.3, 27, 'fsdf', 'INTEL', true, 0, 0, 0, MemoryType.HDD);
     });
 
     describe('Service methods', () => {
@@ -82,6 +82,13 @@ describe('Service Tests', () => {
       it('should update a HardDrive', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            discount: 0.3,
+            stock: 27,
+            img: 'fsdf',
+            brand: 'INTEL',
+            isActive: false,
             capacity: 1,
             speedWrite: 1,
             speedRead: 1,
@@ -141,6 +148,10 @@ describe('Service Tests', () => {
       it('should return a list of HardDrive', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            stock: 27,
+            brand: 'INTEL',
             capacity: 1,
             speedWrite: 1,
             speedRead: 1,

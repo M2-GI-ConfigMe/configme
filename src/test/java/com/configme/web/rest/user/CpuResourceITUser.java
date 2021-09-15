@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -9,6 +9,9 @@ import com.configme.IntegrationTest;
 import com.configme.domain.Cpu;
 import com.configme.domain.enumeration.SocketType;
 import com.configme.repository.CpuRepository;
+import com.configme.web.rest.CpuResource;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "USER" })
-class CpuResourceITUser {
+class CpuResourceITUser implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -103,6 +106,8 @@ class CpuResourceITUser {
             .ramFrequencyMax(DEFAULT_RAM_FREQUENCY_MAX)
             .consumption(DEFAULT_CONSUMPTION)
             .hasGpu(DEFAULT_HAS_GPU);
+
+        ProductResourceIT.createProductField(cpu);
         return cpu;
     }
 
@@ -126,6 +131,8 @@ class CpuResourceITUser {
             .ramFrequencyMax(UPDATED_RAM_FREQUENCY_MAX)
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
+
+        ProductResourceIT.updateProductField(cpu);
         return cpu;
     }
 
@@ -156,8 +163,9 @@ class CpuResourceITUser {
         cpuRepository.saveAndFlush(cpu);
 
         // Get all the cpuList
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+        var action = restCpuMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc"));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cpu.getId().intValue())))
@@ -173,6 +181,8 @@ class CpuResourceITUser {
             .andExpect(jsonPath("$.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
             .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
             .andExpect(jsonPath("$.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
+
+        getAllProductAssertProductField(action);
     }
 
     @Test
@@ -182,8 +192,9 @@ class CpuResourceITUser {
         cpuRepository.saveAndFlush(cpu);
 
         // Get the cpu
-        restCpuMockMvc
-            .perform(get(ENTITY_API_URL_ID, cpu.getId()))
+        var action = restCpuMockMvc.perform(get(ENTITY_API_URL_ID, cpu.getId()));
+
+        action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(cpu.getId().intValue()))
@@ -199,6 +210,8 @@ class CpuResourceITUser {
             .andExpect(jsonPath("$.ramFrequencyMax").value(DEFAULT_RAM_FREQUENCY_MAX.doubleValue()))
             .andExpect(jsonPath("$.consumption").value(DEFAULT_CONSUMPTION))
             .andExpect(jsonPath("$.hasGpu").value(DEFAULT_HAS_GPU.booleanValue()));
+
+        getProductAssertProductField(action);
     }
 
     @Test
@@ -234,6 +247,8 @@ class CpuResourceITUser {
             .consumption(UPDATED_CONSUMPTION)
             .hasGpu(UPDATED_HAS_GPU);
 
+        ProductResourceIT.updateProductField(updatedCpu);
+
         restCpuMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, updatedCpu.getId())
@@ -266,6 +281,8 @@ class CpuResourceITUser {
             .socketType(UPDATED_SOCKET_TYPE)
             .lithography(UPDATED_LITHOGRAPHY)
             .consumption(UPDATED_CONSUMPTION);
+
+        partialUpdateField((partialUpdatedCpu));
 
         restCpuMockMvc
             .perform(

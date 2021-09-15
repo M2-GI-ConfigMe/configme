@@ -30,7 +30,22 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new PsuService();
-      elemDefault = new Psu(123, 0, 'AAAAAAA', ModularityType.NON_MODULAIRE, 0, 0, 'AAAAAAA');
+      elemDefault = new Psu(
+        123,
+        'AAAAAA',
+        0.5,
+        0.3,
+        27,
+        'fsdf',
+        'INTEL',
+        true,
+        0,
+        'AAAAAAA',
+        ModularityType.NON_MODULAIRE,
+        0,
+        0,
+        'AAAAAAA'
+      );
     });
 
     describe('Service methods', () => {
@@ -82,6 +97,13 @@ describe('Service Tests', () => {
       it('should update a Psu', async () => {
         const returnedFromService = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            discount: 0.3,
+            stock: 27,
+            img: 'fsdf',
+            brand: 'INTEL',
+            isActive: false,
             power: 1,
             certification: 'BBBBBB',
             modularity: 'BBBBBB',
@@ -114,6 +136,10 @@ describe('Service Tests', () => {
       it('should partial update a Psu', async () => {
         const patchObject = Object.assign(
           {
+            name: 'AAAAAA',
+            price: 0.5,
+            stock: 27,
+            brand: 'INTEL',
             certification: 'BBBBBB',
             nbSata: 1,
             nbPciE: 1,

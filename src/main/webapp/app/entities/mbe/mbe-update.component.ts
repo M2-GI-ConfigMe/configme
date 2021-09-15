@@ -1,6 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { required, decimal } from 'vuelidate/lib/validators';
+import { required, decimal, minValue, maxValue, numeric } from 'vuelidate/lib/validators';
 
 import { IMbe, Mbe } from '@/shared/model/mbe.model';
 import MbeService from './mbe.service';
@@ -30,6 +30,31 @@ const validations: any = {
     backPanelOutput: {},
     bios: {},
     format: {
+      required,
+    },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
       required,
     },
   },
@@ -80,6 +105,7 @@ export default class MbeUpdate extends Vue {
           });
         });
     } else {
+      this.mbe.isActive = true;
       this.mbeService()
         .create(this.mbe)
         .then(param => {

@@ -142,6 +142,30 @@ public class HardDriveResource {
                     if (hardDrive.getType() != null) {
                         existingHardDrive.setType(hardDrive.getType());
                     }
+                    if (hardDrive.getBrand() != null) {
+                        existingHardDrive.setBrand(hardDrive.getBrand());
+                    }
+                    if (hardDrive.getDiscount() != null) {
+                        existingHardDrive.setDiscount(hardDrive.getDiscount());
+                    }
+                    if (hardDrive.getPrice() != null) {
+                        existingHardDrive.setPrice(hardDrive.getPrice());
+                    }
+                    if (hardDrive.getStock() != null) {
+                        existingHardDrive.setStock(hardDrive.getStock());
+                    }
+                    if (hardDrive.getDesc() != null) {
+                        existingHardDrive.setDesc(hardDrive.getDesc());
+                    }
+                    if (hardDrive.getImg() != null) {
+                        existingHardDrive.setImg(hardDrive.getImg());
+                    }
+                    if (hardDrive.getName() != null) {
+                        existingHardDrive.setName(hardDrive.getName());
+                    }
+                    if (hardDrive.getIsActive() != null) {
+                        existingHardDrive.setIsActive(hardDrive.getIsActive());
+                    }
 
                     return existingHardDrive;
                 }

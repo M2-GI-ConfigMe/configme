@@ -12,7 +12,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "product")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Product implements Serializable {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -163,6 +163,30 @@ public class ComputerCaseResource {
                     if (computerCase.getDimension() != null) {
                         existingComputerCase.setDimension(computerCase.getDimension());
                     }
+                    if (computerCase.getBrand() != null) {
+                        existingComputerCase.setBrand(computerCase.getBrand());
+                    }
+                    if (computerCase.getDiscount() != null) {
+                        existingComputerCase.setDiscount(computerCase.getDiscount());
+                    }
+                    if (computerCase.getPrice() != null) {
+                        existingComputerCase.setPrice(computerCase.getPrice());
+                    }
+                    if (computerCase.getStock() != null) {
+                        existingComputerCase.setStock(computerCase.getStock());
+                    }
+                    if (computerCase.getDesc() != null) {
+                        existingComputerCase.setDesc(computerCase.getDesc());
+                    }
+                    if (computerCase.getImg() != null) {
+                        existingComputerCase.setImg(computerCase.getImg());
+                    }
+                    if (computerCase.getName() != null) {
+                        existingComputerCase.setName(computerCase.getName());
+                    }
+                    if (computerCase.getIsActive() != null) {
+                        existingComputerCase.setIsActive(computerCase.getIsActive());
+                    }
 
                     return existingComputerCase;
                 }

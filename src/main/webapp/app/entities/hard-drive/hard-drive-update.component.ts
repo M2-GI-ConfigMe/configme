@@ -1,6 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
-import { numeric, required, decimal } from 'vuelidate/lib/validators';
+import { numeric, required, decimal, minValue, maxValue } from 'vuelidate/lib/validators';
 
 import { IHardDrive, HardDrive } from '@/shared/model/hard-drive.model';
 import HardDriveService from './hard-drive.service';
@@ -20,6 +20,31 @@ const validations: any = {
       decimal,
     },
     type: {
+      required,
+    },
+    name: {
+      required,
+    },
+    price: {
+      required,
+      decimal,
+      min: minValue(0.5),
+    },
+    discount: {
+      decimal,
+      min: minValue(0),
+      max: maxValue(1),
+    },
+    stock: {
+      required,
+      numeric,
+      min: minValue(0),
+    },
+    img: {
+      required,
+    },
+    desc: {},
+    brand: {
       required,
     },
   },
@@ -70,6 +95,7 @@ export default class HardDriveUpdate extends Vue {
           });
         });
     } else {
+      this.hardDrive.isActive = true;
       this.hardDriveService()
         .create(this.hardDrive)
         .then(param => {

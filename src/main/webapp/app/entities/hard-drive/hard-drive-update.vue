@@ -15,6 +15,78 @@
             <input type="text" class="form-control" id="id" name="id" v-model="hardDrive.id" readonly />
           </div>
           <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="computer-case-name">Nom</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="computer-case-name"
+              data-cy="name"
+              :class="{ valid: !$v.hardDrive.name.$invalid, invalid: $v.hardDrive.name.$invalid }"
+              v-model="$v.hardDrive.name.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="computer-case-price">Prix</label>
+            <input
+              type="text"
+              class="form-control"
+              name="price"
+              id="computer-case-price"
+              data-cy="price"
+              :class="{ valid: !$v.hardDrive.price.$invalid, invalid: $v.hardDrive.price.$invalid }"
+              v-model="$v.hardDrive.price.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="computer-case-discount">Réduction</label>
+            <input
+              type="text"
+              class="form-control"
+              name="discount"
+              id="computer-case-discount"
+              data-cy="discount"
+              :class="{ valid: !$v.hardDrive.discount.$invalid, invalid: $v.hardDrive.discount.$invalid }"
+              v-model="$v.hardDrive.discount.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="computer-case-stock">Stock</label>
+            <input
+              type="text"
+              class="form-control"
+              name="stock"
+              id="computer-case-stock"
+              data-cy="stock"
+              :class="{ valid: !$v.hardDrive.stock.$invalid, invalid: $v.hardDrive.stock.$invalid }"
+              v-model="$v.hardDrive.stock.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
+            <input
+              type="text"
+              class="form-control"
+              name="img"
+              id="computer-case-img"
+              data-cy="img"
+              :class="{ valid: !$v.hardDrive.img.$invalid, invalid: $v.hardDrive.img.$invalid }"
+              v-model="$v.hardDrive.img.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="computer-case-brand">Marque</label>
+            <input
+              type="text"
+              class="form-control"
+              name="brand"
+              id="computer-case-brand"
+              data-cy="brand"
+              :class="{ valid: !$v.hardDrive.brand.$invalid, invalid: $v.hardDrive.brand.$invalid }"
+              v-model="$v.hardDrive.brand.$model"
+            />
+          </div>
+          <div class="form-group">
             <label class="form-control-label" v-text="$t('configmeApp.hardDrive.capacity')" for="hard-drive-capacity">Capacity</label>
             <input
               type="number"
