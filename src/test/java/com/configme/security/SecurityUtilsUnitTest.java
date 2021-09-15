@@ -26,12 +26,12 @@ class SecurityUtilsUnitTest {
     }
 
     @Test
-    void testGetCurrentUserLogin() {
+    void testGetCurrentUserEmail() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
         SecurityContextHolder.setContext(securityContext);
-        Optional<String> login = SecurityUtils.getCurrentUserLogin();
-        assertThat(login).contains("admin");
+        Optional<String> email = SecurityUtils.getCurrentUserEmail();
+        assertThat(email).contains("admin");
     }
 
     @Test

@@ -6,10 +6,22 @@
       </v-alert>
       <div class="col">
         <v-form role="form" v-on:submit.prevent="doLogin()">
-          <v-text-field v-model="login" label="E-mail" placeholder="template@email.com" outlined required> </v-text-field>
-
-          <v-text-field v-model="password" type="password" label="Mot de passe" placeholder="********" outlined required> </v-text-field>
-
+          <div class="form-group">
+            <v-text-field v-model="login" label="E-mail" placeholder="template@email.com" hide-details="auto" outlined required>
+            </v-text-field>
+          </div>
+          <div class="form-group">
+            <v-text-field
+              v-model="password"
+              type="password"
+              label="Mot de passe"
+              placeholder="********"
+              hide-details="auto"
+              outlined
+              required
+            >
+            </v-text-field>
+          </div>
           <!--          
           code couleur : 2196F3
           -->
@@ -32,7 +44,8 @@
         </div> -->
         <div>
           <span>Nouveau sur Config'Me ?</span>
-          <a href="/register " class="text-decoration-none">S'inscrire</a>
+          <!-- <a href="/register " class="text-decoration-none">S'inscrire</a> -->
+          <span color="#2196F3" v-on:click="doRegister()">S'inscrire</span>
         </div>
       </div>
     </div>

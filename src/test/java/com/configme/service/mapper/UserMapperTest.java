@@ -2,9 +2,11 @@ package com.configme.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.configme.domain.Address;
 import com.configme.domain.User;
 import com.configme.service.dto.AdminUserDTO;
 import com.configme.service.dto.UserDTO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,8 +20,10 @@ import org.junit.jupiter.api.Test;
  */
 class UserMapperTest {
 
-    private static final String DEFAULT_LOGIN = "johndoe";
+    private static final String DEFAULT_EMAIL = "johndoe@univ-grenoble-alpes.fr";
     private static final Long DEFAULT_ID = 1L;
+    private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(1999, 9, 9);
+    private static final Address DEFAULT_ADDRESS = Address.of("John", "Doe", "5", "Rue de l'exmple", "Grenoble", "38000");
 
     private UserMapper userMapper;
     private User user;
@@ -29,12 +33,17 @@ class UserMapperTest {
     public void init() {
         userMapper = new UserMapper();
         user = new User();
-        user.setLogin(DEFAULT_LOGIN);
+
+        user.setEmail(DEFAULT_EMAIL);
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
-        user.setEmail("johndoe@localhost");
+
         user.setFirstName("john");
         user.setLastName("doe");
+
+        user.setBirthdate(DEFAULT_BIRTHDATE);
+        user.setAddress(DEFAULT_ADDRESS);
+
         user.setImageUrl("image_url");
         user.setLangKey("en");
 

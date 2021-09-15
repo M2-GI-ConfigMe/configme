@@ -6,6 +6,8 @@ import AdminNavbar from '@/core/admin-navbar/admin-navbar.vue';
 import Navbar from '@/core/navbar/navbar.vue';
 import LoginForm from '@/account/login-form/login-form.vue';
 
+import Register from '@/account/register/register.vue';
+
 import '@/shared/config/dayjs';
 
 @Component({
@@ -14,6 +16,7 @@ import '@/shared/config/dayjs';
     'admin-navbar': AdminNavbar,
     navbar: Navbar,
     'login-form': LoginForm,
+    'register-form': Register,
 
     'jhi-footer': JhiFooter,
   },
