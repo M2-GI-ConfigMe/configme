@@ -57,7 +57,7 @@ export default class ConfigMaker extends Vue {
     return this.selectedConfigIndex == -1 ? this.defaultConfig : this.clientConfigs[this.selectedConfigIndex];
   }
 
-  public isFetching: Boolean = false;
+  public isFetching = false;
 
   public get authenticated(): boolean {
     return this.$store.getters.authenticated;
@@ -93,7 +93,6 @@ export default class ConfigMaker extends Vue {
       .configs()
       .then(async res => {
         this.clientConfigs = res.data;
-        if (this.clientConfigs.length > 0) this.selectedConfig = this.clientConfigs[0];
       })
       .finally(() => {
         this.isFetching = false;
