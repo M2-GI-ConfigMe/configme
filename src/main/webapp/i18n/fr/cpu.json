@@ -18,18 +18,18 @@
         "title": "Cpu"
       },
       "id": "ID",
-      "frequency": "Frequency",
+      "frequency": "Frequence MHz",
       "cacheL1": "Cache L 1",
       "cacheL2": "Cache L 2",
       "cacheL3": "Cache L 3",
-      "nbHeart": "Nb Heart",
-      "nbThread": "Nb Thread",
-      "hasVentirad": "Has Ventirad",
+      "nbHeart": "Nb Coeurs",
+      "nbThread": "Nb Threads",
+      "hasVentirad": "Ventirad inclus",
       "socketType": "Socket Type",
-      "lithography": "Lithography",
-      "ramFrequencyMax": "Ram Frequency Max",
-      "consumption": "Consumption",
-      "hasGpu": "Has Gpu"
+      "lithography": "Taille de gravure",
+      "ramFrequencyMax": "Ram Frequency Max MHz",
+      "consumption": "Consommation",
+      "hasGpu": "Gpu inclus"
     }
   }
 }

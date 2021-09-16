@@ -1,9 +1,12 @@
+import { IAddress } from './address.model';
+
 export interface IUser {
   id?: any;
-  login?: string;
+  email?: string;
   firstName?: string;
   lastName?: string;
-  email?: string;
+  birthdate?: Date;
+  address?: IAddress;
   activated?: boolean;
   langKey?: string;
   authorities?: any[];
@@ -17,10 +20,11 @@ export interface IUser {
 export class User implements IUser {
   constructor(
     public id?: any,
-    public login?: string,
+    public email?: string,
     public firstName?: string,
     public lastName?: string,
-    public email?: string,
+    public birthdate?: Date,
+    public address?: IAddress,
     public activated?: boolean,
     public langKey?: string,
     public authorities?: any[],

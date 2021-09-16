@@ -31,7 +31,6 @@
             <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
             <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
             <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.ram.speed')">Speed</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ram.type')">Type</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ram.frequency')">Frequency</span></th>
             <th scope="row"><span v-text="$t('configmeApp.ram.unitSize')">Unit Size</span></th>
@@ -55,7 +54,6 @@
               <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(ram, true)" v-if="!ram.isActive">Activer</button>
               <button class="btn btn-success btn-sm" v-on:click="setActive(ram, false)" v-if="ram.isActive">Désactiver</button>
             </td>
-            <td>{{ ram.speed }}</td>
             <td v-text="$t('configmeApp.RamType.' + ram.type)">{{ ram.type }}</td>
             <td>{{ ram.frequency }}</td>
             <td>{{ ram.unitSize }}</td>

@@ -1,4 +1,4 @@
-import { IDimension } from '@/shared/model/dimension.model';
+import { Dimension, IDimension } from '@/shared/model/dimension.model';
 
 import { BusType } from '@/shared/model/enumerations/bus-type.model';
 export interface IGpu {
@@ -40,5 +40,7 @@ export class Gpu implements IGpu {
     public inputPower?: string,
     public bus?: BusType,
     public dimension?: IDimension | null
-  ) {}
+  ) {
+    this.dimension = new Dimension();
+  }
 }

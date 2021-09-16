@@ -17,9 +17,6 @@
             <column name="type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="formats" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="size_max_gpu" type="integer">
                 <constraints nullable="false" />
             </column>
@@ -81,16 +78,6 @@
         </createTable>
     </changeSet>
 
-    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
-
-    <!--
-        Load sample data generated with Faker.js
-        - This data can be easily edited using a CSV editor (or even MS Excel) and
-          is located in the 'src/main/resources/config/liquibase/fake-data' directory
-        - By default this data is applied when running with the JHipster 'dev' profile.
-          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
-          Spring Boot configuration key.
-    -->
     <changeSet id="20210910085047-1-data" author="jhipster" context="faker">
         <loadData
                   file="config/liquibase/fake-data/computer_case.csv"

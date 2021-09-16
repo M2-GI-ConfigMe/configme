@@ -1,4 +1,4 @@
-import { IDimension } from '@/shared/model/dimension.model';
+import { Dimension, IDimension } from '@/shared/model/dimension.model';
 
 export interface IVentirad {
   id?: number;
@@ -9,6 +9,7 @@ export interface IVentirad {
   img?: string;
   brand?: string;
   isActive?: boolean;
+  sockets?: string[];
   rangeFanSpeed?: string;
   noise?: number | null;
   hasThermalPaste?: boolean;
@@ -25,11 +26,13 @@ export class Ventirad implements IVentirad {
     public img?: string,
     public brand?: string,
     public isActive?: boolean,
+    public sockets?: string[],
     public rangeFanSpeed?: string,
     public noise?: number | null,
     public hasThermalPaste?: boolean,
     public dimension?: IDimension | null
   ) {
+    this.dimension = new Dimension();
     this.hasThermalPaste = this.hasThermalPaste ?? false;
   }
 }

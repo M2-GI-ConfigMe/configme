@@ -1,9 +1,11 @@
 package com.configme.service.dto;
 
 import com.configme.config.Constants;
+import com.configme.domain.Address;
 import com.configme.domain.Authority;
 import com.configme.domain.User;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
@@ -16,19 +18,23 @@ public class AdminUserDTO {
     private Long id;
 
     @NotBlank
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
-    private String login;
-
-    @Size(max = 50)
-    private String firstName;
-
-    @Size(max = 50)
-    private String lastName;
-
     @Email
     @Size(min = 5, max = 254)
     private String email;
+
+    @NotBlank
+    @Size(max = 50)
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 50)
+    private String lastName;
+
+    @NotNull
+    private LocalDate birthdate;
+
+    @NotNull
+    private Address address;
 
     @Size(max = 256)
     private String imageUrl;
@@ -54,10 +60,13 @@ public class AdminUserDTO {
 
     public AdminUserDTO(User user) {
         this.id = user.getId();
-        this.login = user.getLogin();
+        this.email = user.getEmail();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.email = user.getEmail();
+
+        this.birthdate = user.getBirthdate();
+        this.address = user.getAddress();
+
         this.activated = user.isActivated();
         this.imageUrl = user.getImageUrl();
         this.langKey = user.getLangKey();
@@ -76,12 +85,12 @@ public class AdminUserDTO {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -100,12 +109,20 @@ public class AdminUserDTO {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public LocalDate getBirthdate() {
+        return birthdate;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getImageUrl() {
@@ -176,10 +193,11 @@ public class AdminUserDTO {
     @Override
     public String toString() {
         return "AdminUserDTO{" +
-            "login='" + login + '\'' +
+            "email='" + email + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
+            ", birthdate='" + birthdate.toString() + '\'' +
+            ", address='" + address.toString() + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +

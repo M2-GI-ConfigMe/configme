@@ -1,6 +1,8 @@
 package com.configme.domain;
 
+import com.configme.domain.enumeration.SocketType;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -16,6 +18,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Ventirad extends Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @ElementCollection(targetClass = SocketType.class)
+    @CollectionTable(name = "ventirad_sockets", joinColumns = @JoinColumn(name = "ventirad_id", referencedColumnName = "id"))
+    @Enumerated(EnumType.STRING)
+    private Collection<SocketType> sockets;
 
     @NotNull
     @Column(name = "range_fan_speed", nullable = false)
@@ -110,6 +117,19 @@ public class Ventirad extends Product implements Serializable {
             ", rangeFanSpeed='" + getRangeFanSpeed() + "'" +
             ", noise=" + getNoise() +
             ", hasThermalPaste='" + getHasThermalPaste() + "'" +
+            ", sockets='" + getSockets() + "'" +
             "}";
+    }
+
+    public Collection<SocketType> getSockets() {
+        return sockets;
+    }
+
+    public void setSockets(Collection<SocketType> sockets) {
+        this.sockets = sockets;
+    }
+
+    public void sockets(Collection<SocketType> sockets) {
+        this.sockets = sockets;
     }
 }

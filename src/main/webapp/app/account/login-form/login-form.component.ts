@@ -2,6 +2,8 @@ import axios from 'axios';
 import Component from 'vue-class-component';
 import { Vue, Inject } from 'vue-property-decorator';
 import AccountService from '@/account/account.service';
+import RegisterService from '@/account/register/register.service';
+
 @Component({
   watch: {
     $route() {
@@ -10,8 +12,8 @@ import AccountService from '@/account/account.service';
   },
 })
 export default class LoginForm extends Vue {
-  @Inject('accountService')
-  private accountService: () => AccountService;
+  @Inject('accountService') private accountService: () => AccountService;
+  @Inject('registerService') private registerService: () => RegisterService;
   public authenticationError = null;
   public login = null;
   public password = null;
@@ -40,5 +42,10 @@ export default class LoginForm extends Vue {
       .catch(() => {
         this.authenticationError = true;
       });
+  }
+
+  public doRegister(): void {
+    this.$root.$emit('bv::hide::modal', 'login-page');
+    this.registerService().openRegister((<any>this).$root);
   }
 }

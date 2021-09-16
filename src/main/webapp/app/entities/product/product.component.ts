@@ -57,7 +57,7 @@ export default class Product extends Vue {
       .then(() => {
         const message = this.$t('configmeApp.product.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
-          toaster: 'b-toaster-top-center',
+          toaster: 'b-toaster-bottom-right',
           title: 'Info',
           variant: 'danger',
           solid: true,

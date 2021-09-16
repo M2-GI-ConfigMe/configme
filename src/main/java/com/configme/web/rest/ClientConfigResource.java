@@ -110,10 +110,6 @@ public class ClientConfigResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        // TODO : Régler ce soucis sorti des enfers d'un marabout
-        // findById retourne NULL si findAll n'est pas appelé avant...
-        // Quoi..? alors que l'id est bien check juste avant par existsById
-        // Alors en attendant de trouver une solution, je laisse un appel vers findAll
         clientConfigRepository.findAll();
 
         ClientConfig c = clientConfigRepository.findById(id).get();

@@ -107,6 +107,12 @@
             </div>
           </div>
           <div class="form-group">
+            <label v-text="$t('configmeApp.computerCase.sockets')">Sockets</label>
+            <select class="form-control" multiple name="sockets" v-model="sockets">
+              <option v-for="(socket, key) of socketTypes" :value="socket" :key="key">{{ socket }}</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label class="form-control-label" v-text="$t('configmeApp.ventirad.noise')" for="ventirad-noise">Noise</label>
             <input
               type="number"
