@@ -28,8 +28,8 @@ export default class ConfigMaker extends Vue {
     computerCase: null,
     ram1: null,
     ram2: null,
-    hd1: null,
-    hd2: null,
+    deadMemory1: null,
+    deadMemory2: null,
     psu: null,
     ventirad: null,
   };

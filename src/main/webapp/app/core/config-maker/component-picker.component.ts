@@ -121,7 +121,7 @@ export default class ComponentPicker extends Vue {
     return !this.componentName ? undefined : this.componentTableInfo[this.componentName];
   }
 
-  public get currentEndpoint(): String {
+  public get currentEndpoint(): string {
     return !this.currentComponent ? undefined : this.currentComponent.apiEndpoint;
   }
 
