@@ -1,6 +1,5 @@
 package com.configme.service.dto;
 
-import com.configme.config.Constants;
 import com.configme.domain.Address;
 import com.configme.domain.Authority;
 import com.configme.domain.User;

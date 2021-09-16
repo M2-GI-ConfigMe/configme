@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.configme.IntegrationTest;
 import com.configme.domain.ClientConfig;
 import com.configme.repository.ClientConfigRepository;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;

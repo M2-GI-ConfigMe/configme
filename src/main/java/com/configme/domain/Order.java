@@ -40,8 +40,7 @@ public class Order implements Serializable {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Embedded
     private Address deliveryAddress;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

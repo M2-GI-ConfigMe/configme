@@ -5,21 +5,33 @@ import { Vue, Component } from 'vue-property-decorator';
 
 const validations = {
   settingsAccount: {
-    firstName: {
-      required,
-      minLength: minLength(1),
-      maxLength: maxLength(50),
-    },
-    lastName: {
-      required,
-      minLength: minLength(1),
-      maxLength: maxLength(50),
-    },
     email: {
       required,
       email,
-      minLength: minLength(5),
-      maxLength: maxLength(254),
+    },
+    firstName: {
+      required,
+    },
+    lastName: {
+      required,
+    },
+    birthdate: {
+      required,
+    },
+    address: {
+      streetNumber: {
+        required,
+      },
+      streetName: {
+        required,
+      },
+      city: {
+        required,
+      },
+      zipCode: {
+        required,
+      },
+      required,
     },
   },
 };
@@ -28,6 +40,33 @@ const validations = {
   validations,
 })
 export default class Settings extends Vue {
+  //Form gestion
+  public rules = {
+    requiredField: [v => !!v || 'Champs obligatoire'],
+    emailRules: [v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail non valide'],
+    firstNameRules: [],
+    lastNameRules: [],
+    birthdateRules: [],
+    streetNumberRules: [],
+    streetNameRules: [],
+    cityRules: [],
+    zipCodeRules: [],
+  };
+
+  // public informations: any = {
+  //   email: undefined,
+  //   password: undefined,
+  //   lastName: undefined,
+  //   firstName: undefined,
+  //   birthdate: undefined,
+  //   streetNumber: undefined,
+  //   streetName: undefined,
+  //   city: undefined,
+  //   zipCode: undefined,
+  // };
+
+  public isValid = false;
+
   public success: string = null;
   public error: string = null;
   public errorEmailExists: string = null;

@@ -33,6 +33,7 @@ export default class AccountService {
         .get('api/account')
         .then(response => {
           this.store.commit('authenticate');
+          console.log(response);
           const account = response.data;
           if (account) {
             this.store.commit('authenticated', account);
