@@ -129,6 +129,8 @@ export default class ConfigMaker extends Vue {
         .delete(config.id)
         .then(res => {
           this.clientConfigs.splice(this.selectedConfigIndex, 1);
+          const newId = this.selectedConfigIndex > 0 ? this.selectedConfigIndex - 1 : -1;
+          this.selectedConfigIndex = newId;
           this.$root.$bvToast.toast('Config supprimée !', {
             toaster: 'b-toaster-top-right',
             variant: 'success',
