@@ -21,4 +21,19 @@ import '@/shared/config/dayjs';
     'jhi-footer': JhiFooter,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  public showLogin = false;
+  public showRegister = false;
+  created() {
+    this.$root.$on('showLogin', this.showLoginEventHandler);
+    this.$root.$on('showRegister', this.showRegisterEventHandler);
+  }
+
+  showLoginEventHandler() {
+    this.showLogin = true;
+  }
+
+  showRegisterEventHandler() {
+    this.showRegister = true;
+  }
+}

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component, Inject, Watch } from 'vue-property-decorator';
+import { Component, Inject, Watch, Prop } from 'vue-property-decorator';
 import { email, helpers, maxLength, minLength, required, sameAs } from 'vuelidate/lib/validators';
 import LoginService from '@/account/login.service';
 import RegisterService from '@/account/register/register.service';
@@ -62,9 +62,17 @@ export default class Register extends Vue {
     zipCode: undefined,
   };
 
+  @Prop({ required: true }) show: boolean;
+  public get showDialog(): boolean {
+    return this.show;
+  }
+  public set showDialog(v) {
+    if (!v) this.$emit('close');
+  }
+
   //Form gestion
   public rules = {
-    requiredField: [v => !!v || 'Champs obligatoire'],
+    requiredField: [v => !!v || 'Champ obligatoire'],
     emailRules: [v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail non valide'],
     passwordRules: [
       v => !v || v.length >= 8 || 'Le mot de passe doit faire au moins 8 caractères',
@@ -118,10 +126,16 @@ export default class Register extends Vue {
       .processRegistration(registerAccount)
       .then(() => {
         this.success = true;
-        this.$root.$emit('bv::hide::modal', 'register-page');
+        this.showDialog = false;
+        this.$root.$bvToast.toast('Inscription réussie !', {
+          toaster: 'b-toaster-top-right',
+          variant: 'success',
+          solid: true,
+        });
       })
       .catch(error => {
         this.success = null;
+        this.$vuetify.goTo('#register', {});
         if (error.response.status === 400 && error.response.data.type === EMAIL_ALREADY_USED_TYPE) {
           this.errorEmailExists = 'ERROR';
         } else {
