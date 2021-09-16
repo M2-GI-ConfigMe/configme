@@ -1,7 +1,10 @@
 package com.configme.web.rest;
 
 import com.configme.domain.ClientConfig;
+import com.configme.domain.User;
 import com.configme.repository.ClientConfigRepository;
+import com.configme.service.UserService;
+import com.configme.service.dto.AdminUserDTO;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -25,6 +29,13 @@ import tech.jhipster.web.util.ResponseUtil;
 @Transactional
 public class ClientConfigResource {
 
+    private static class ClientConfigResourceException extends RuntimeException {
+
+        private ClientConfigResourceException(String message) {
+            super(message);
+        }
+    }
+
     private final Logger log = LoggerFactory.getLogger(ClientConfigResource.class);
 
     private static final String ENTITY_NAME = "clientConfig";
@@ -34,8 +45,11 @@ public class ClientConfigResource {
 
     private final ClientConfigRepository clientConfigRepository;
 
-    public ClientConfigResource(ClientConfigRepository clientConfigRepository) {
+    private final UserService userService;
+
+    public ClientConfigResource(ClientConfigRepository clientConfigRepository, UserService userService) {
         this.clientConfigRepository = clientConfigRepository;
+        this.userService = userService;
     }
 
     /**
@@ -48,6 +62,17 @@ public class ClientConfigResource {
     @PostMapping("/client-configs")
     public ResponseEntity<ClientConfig> createClientConfig(@RequestBody ClientConfig clientConfig) throws URISyntaxException {
         log.debug("REST request to save ClientConfig : {}", clientConfig);
+
+        AdminUserDTO user = userService
+            .getUserWithAuthorities()
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
+        User owner = clientConfig.getUser();
+        boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
+        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+            throw new AccessDeniedException("User is not authorized");
+        }
+
         if (clientConfig.getId() != null) {
             throw new BadRequestAlertException("A new clientConfig cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -85,6 +110,23 @@ public class ClientConfigResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        // TODO : Régler ce soucis sorti des enfers d'un marabout
+        // findById retourne NULL si findAll n'est pas appelé avant...
+        // Quoi..? alors que l'id est bien check juste avant par existsById
+        // Alors en attendant de trouver une solution, je laisse un appel vers findAll
+        clientConfigRepository.findAll();
+
+        ClientConfig c = clientConfigRepository.findById(id).get();
+        AdminUserDTO user = userService
+            .getUserWithAuthorities()
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
+        User owner = c.getUser();
+        boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
+        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+            throw new AccessDeniedException("User is not authorized");
+        }
+
         ClientConfig result = clientConfigRepository.save(clientConfig);
         return ResponseEntity
             .ok()
@@ -118,6 +160,17 @@ public class ClientConfigResource {
 
         if (!clientConfigRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        ClientConfig c = clientConfigRepository.findById(id).get();
+        AdminUserDTO user = userService
+            .getUserWithAuthorities()
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
+        User owner = c.getUser();
+        boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
+        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+            throw new AccessDeniedException("User is not authorized");
         }
 
         Optional<ClientConfig> result = clientConfigRepository
@@ -211,6 +264,18 @@ public class ClientConfigResource {
     @DeleteMapping("/client-configs/{id}")
     public ResponseEntity<Void> deleteClientConfig(@PathVariable Long id) {
         log.debug("REST request to delete ClientConfig : {}", id);
+
+        ClientConfig clientConfig = clientConfigRepository.findById(id).get();
+        AdminUserDTO user = userService
+            .getUserWithAuthorities()
+            .map(AdminUserDTO::new)
+            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
+        User owner = clientConfig.getUser();
+        boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
+        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+            throw new AccessDeniedException("User is not authorized");
+        }
+
         clientConfigRepository.deleteById(id);
         return ResponseEntity
             .noContent()
