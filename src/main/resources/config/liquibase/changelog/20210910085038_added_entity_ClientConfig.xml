@@ -56,6 +56,9 @@
             <column name="hd_2_price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="cpu_id" type="bigint">
                 <constraints nullable="true" />
             </column>

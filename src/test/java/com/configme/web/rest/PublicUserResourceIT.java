@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.configme.IntegrationTest;
 import com.configme.domain.User;
+import com.configme.repository.ClientConfigRepository;
 import com.configme.repository.UserRepository;
 import com.configme.security.AuthoritiesConstants;
 import javax.persistence.EntityManager;
@@ -28,6 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 class PublicUserResourceIT {
 
+    private static final String DEFAULT_CONFIG_NAME = "AAAAAAAAAA";
+
+    private static final String DEFAULT_LOGIN = "johndoe";
     private static final String DEFAULT_EMAIL = "johndoe@exemple.com";
 
     @Autowired
