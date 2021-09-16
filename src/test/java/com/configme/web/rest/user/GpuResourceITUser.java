@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class GpuResourceITUser implements ProductResourceIT {
+public class GpuResourceITUser implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -84,7 +84,7 @@ class GpuResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Gpu createEntity(EntityManager em) {
+    public static Gpu createEntity() {
         Gpu gpu = new Gpu()
             .frequency(DEFAULT_FREQUENCY)
             .memory(DEFAULT_MEMORY)
@@ -105,7 +105,7 @@ class GpuResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Gpu createUpdatedEntity(EntityManager em) {
+    public static Gpu createUpdatedEntity() {
         Gpu gpu = new Gpu()
             .frequency(UPDATED_FREQUENCY)
             .memory(UPDATED_MEMORY)
@@ -122,7 +122,7 @@ class GpuResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        gpu = createEntity(em);
+        gpu = createEntity();
     }
 
     @Test

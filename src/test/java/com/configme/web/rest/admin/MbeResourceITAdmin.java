@@ -93,7 +93,7 @@ class MbeResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Mbe createEntity(EntityManager em) {
+    public static Mbe createEntity() {
         Mbe mbe = new Mbe()
             .socketCpu(DEFAULT_SOCKET_CPU)
             .ramType(DEFAULT_RAM_TYPE)
@@ -117,7 +117,7 @@ class MbeResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Mbe createUpdatedEntity(EntityManager em) {
+    public static Mbe createUpdatedEntity() {
         Mbe mbe = new Mbe()
             .socketCpu(UPDATED_SOCKET_CPU)
             .ramType(UPDATED_RAM_TYPE)
@@ -137,7 +137,7 @@ class MbeResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        mbe = createEntity(em);
+        mbe = createEntity();
     }
 
     @Test
@@ -636,7 +636,7 @@ class MbeResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

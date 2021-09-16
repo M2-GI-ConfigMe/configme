@@ -1,20 +1,15 @@
 package com.configme.domain;
 
-import com.configme.config.Constants;
-import com.configme.domain.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -61,7 +56,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private LocalDate birthdate;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private Address address;
 
@@ -100,6 +95,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST)
+    private Set<Order> orders;
 
     public Long getId() {
         return id;
@@ -222,6 +220,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
             return false;
         }
         return id != null && id.equals(((User) o).id);
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

@@ -70,7 +70,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ventirad createEntity(EntityManager em) {
+    public static Ventirad createEntity() {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(DEFAULT_RANGE_FAN_SPEED)
             .noise(DEFAULT_NOISE)
@@ -87,7 +87,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ventirad createUpdatedEntity(EntityManager em) {
+    public static Ventirad createUpdatedEntity() {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(UPDATED_RANGE_FAN_SPEED)
             .noise(UPDATED_NOISE)
@@ -98,7 +98,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        ventirad = createEntity(em);
+        ventirad = createEntity();
     }
 
     @Test
@@ -472,7 +472,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

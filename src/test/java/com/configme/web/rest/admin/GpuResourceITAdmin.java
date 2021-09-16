@@ -84,7 +84,7 @@ class GpuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Gpu createEntity(EntityManager em) {
+    public static Gpu createEntity() {
         Gpu gpu = new Gpu()
             .frequency(DEFAULT_FREQUENCY)
             .memory(DEFAULT_MEMORY)
@@ -106,7 +106,7 @@ class GpuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Gpu createUpdatedEntity(EntityManager em) {
+    public static Gpu createUpdatedEntity() {
         Gpu gpu = new Gpu()
             .frequency(UPDATED_FREQUENCY)
             .memory(UPDATED_MEMORY)
@@ -124,7 +124,7 @@ class GpuResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        gpu = createEntity(em);
+        gpu = createEntity();
     }
 
     @Test

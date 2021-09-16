@@ -22,7 +22,7 @@ public class OrderLine implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @NotNull
     @JsonIgnoreProperties(
         value = { "cpu", "gpu", "psu", "ventirad", "mbe", "computerCase", "deadMemory1", "deadMemory2", "ram1", "ram2" },

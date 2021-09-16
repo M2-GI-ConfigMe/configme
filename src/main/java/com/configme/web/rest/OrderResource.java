@@ -1,7 +1,12 @@
 package com.configme.web.rest;
 
 import com.configme.domain.Order;
+import com.configme.domain.User;
+import com.configme.domain.enumeration.OrderStatus;
 import com.configme.repository.OrderRepository;
+import com.configme.service.OrderHandler;
+import com.configme.service.UserService;
+import com.configme.service.dto.CartDTO;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -31,33 +37,44 @@ public class OrderResource {
 
     private static final String ENTITY_NAME = "order";
 
+    private OrderHandler orderHandler;
+
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final OrderRepository orderRepository;
 
-    public OrderResource(OrderRepository orderRepository) {
+    private UserService userService;
+
+    public OrderResource(OrderRepository orderRepository, UserService userService, OrderHandler orderHandler) {
+        this.userService = userService;
+
         this.orderRepository = orderRepository;
+
+        this.orderHandler = orderHandler;
     }
 
     /**
-     * {@code POST  /orders} : Create a new order.
+     * {@code POST  /orders} : Create a new order from cart.
      *
-     * @param order the order to create.
+     * @param cart cart to associate with the order.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new order, or with status {@code 400 (Bad Request)} if the order has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/orders")
-    public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) throws URISyntaxException {
-        log.debug("REST request to save Order : {}", order);
-        if (order.getId() != null) {
-            throw new BadRequestAlertException("A new order cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        Order result = orderRepository.save(order);
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseEntity<String> createOrder(@Valid @RequestBody CartDTO[] cart) throws URISyntaxException {
         return ResponseEntity
-            .created(new URI("/api/orders/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .created(new URI("/api/orders/"))
+            .headers(
+                HeaderUtil.createEntityCreationAlert(
+                    applicationName,
+                    true,
+                    ENTITY_NAME,
+                    orderHandler.createOrderFromCart(cart, userService.getUserWithAuthorities().get()).getId().toString()
+                )
+            )
+            .body("ok");
     }
 
     /**

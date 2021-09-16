@@ -68,7 +68,7 @@ class HardDriveResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HardDrive createEntity(EntityManager em) {
+    public static HardDrive createEntity() {
         HardDrive hardDrive = new HardDrive()
             .capacity(DEFAULT_CAPACITY)
             .speedWrite(DEFAULT_SPEED_WRITE)
@@ -85,7 +85,7 @@ class HardDriveResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HardDrive createUpdatedEntity(EntityManager em) {
+    public static HardDrive createUpdatedEntity() {
         HardDrive hardDrive = new HardDrive()
             .capacity(UPDATED_CAPACITY)
             .speedWrite(UPDATED_SPEED_WRITE)
@@ -98,7 +98,7 @@ class HardDriveResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        hardDrive = createEntity(em);
+        hardDrive = createEntity();
     }
 
     @Test
@@ -500,7 +500,7 @@ class HardDriveResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

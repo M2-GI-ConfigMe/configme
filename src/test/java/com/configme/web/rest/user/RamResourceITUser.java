@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class RamResourceITUser implements ProductResourceIT {
+public class RamResourceITUser implements ProductResourceIT {
 
     private static final RamType DEFAULT_TYPE = RamType.DDR3;
     private static final RamType UPDATED_TYPE = RamType.DDR4;
@@ -71,7 +71,7 @@ class RamResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ram createEntity(EntityManager em) {
+    public static Ram createEntity() {
         Ram ram = new Ram()
             .type(DEFAULT_TYPE)
             .frequency(DEFAULT_FREQUENCY)
@@ -89,7 +89,7 @@ class RamResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ram createUpdatedEntity(EntityManager em) {
+    public static Ram createUpdatedEntity() {
         Ram ram = new Ram()
             .type(UPDATED_TYPE)
             .frequency(UPDATED_FREQUENCY)
@@ -103,7 +103,7 @@ class RamResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        ram = createEntity(em);
+        ram = createEntity();
     }
 
     @Test
