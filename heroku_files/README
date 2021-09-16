@@ -1,0 +1,7 @@
+/!\ Edit: ./src/resources/config/application-heroku.yml
+eureka:
+  instance:
+    hostname: <MYAPPNAME>.herokuapp.coM
+
+move *.yml to src/main/resources/config
+move Procfile and system.properties to project root
