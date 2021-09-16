@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -9,6 +9,7 @@ import com.configme.IntegrationTest;
 import com.configme.domain.Order;
 import com.configme.domain.enumeration.OrderStatus;
 import com.configme.repository.OrderRepository;
+import com.configme.web.rest.TestUtil;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;

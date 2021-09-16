@@ -1,4 +1,4 @@
-package com.configme.web.rest;
+package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -11,6 +11,8 @@ import com.configme.domain.Dimension;
 import com.configme.domain.enumeration.CaseType;
 import com.configme.domain.enumeration.FormatType;
 import com.configme.repository.ComputerCaseRepository;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
