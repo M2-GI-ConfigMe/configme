@@ -100,6 +100,9 @@ export default class Register extends Vue {
   public date = null;
   public menu = false;
 
+  public showPass = false;
+  public showPass2 = false;
+
   public register(): void {
     const registerAccount: any = {};
 

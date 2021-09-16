@@ -15,8 +15,10 @@
               </div>
               <div class="form-group">
                 <v-text-field
+                  :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPass = !showPass"
+                  :type="showPass ? 'text' : 'password'"
                   v-model="password"
-                  type="password"
                   label="Mot de passe"
                   placeholder="********"
                   hide-details="auto"

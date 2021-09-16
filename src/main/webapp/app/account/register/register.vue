@@ -27,7 +27,9 @@
                 <v-text-field
                   v-model="informations.password"
                   :rules="rules.passwordRules.concat(rules.requiredField)"
-                  type="password"
+                  :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPass = !showPass"
+                  :type="showPass ? 'text' : 'password'"
                   label="Mot de passe"
                   placeholder="********"
                   hide-details="auto"
@@ -40,7 +42,9 @@
                 <v-text-field
                   v-model="confirmPassword"
                   :rules="rules.confirmPasswordRules.concat(rules.requiredField)"
-                  type="password"
+                  :append-icon="showPass2 ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPass2 = !showPass2"
+                  :type="showPass2 ? 'text' : 'password'"
                   label="Confirmation de mot de passe"
                   placeholder="********"
                   hide-details="auto"

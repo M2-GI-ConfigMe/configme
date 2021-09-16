@@ -17,6 +17,7 @@ export default class LoginForm extends Vue {
   public authenticationError = null;
   public login = null;
   public password = null;
+  public showPass = false;
 
   @Prop({ required: true }) show: boolean;
   public get showDialog(): boolean {
