@@ -62,15 +62,6 @@ describe('Register Component', () => {
     expect(register.informations.password).toBe(undefined);
   });
 
-  it('should open login modal when asked to', () => {
-    let called = false;
-    register.$root.$on('bv::show::modal', () => {
-      called = true;
-    });
-    register.openLogin();
-    expect(called).toBe(true);
-  });
-
   // it('should register when password match', async () => {
   //   axiosStub.post.resolves();
   //   register.informations = filledRegisterAccount;
