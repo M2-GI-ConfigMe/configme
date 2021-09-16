@@ -1,4 +1,4 @@
-id;tags;name;description;is_comlete;research_key;cpu_price;gpu_price;ram_1_price;ram_2_price;psu_price;computer_case_price;ventirad_price;hd_1_price;hd_2_price;user_id;gpu_id
+id;tags;name;description;is_comlete;research_key;cpu_price;gpu_price;ram_1_price;ram_2_price;psu_price;computer_case_price;ventirad_price;hd_1_price;hd_2_price;user_id;cpu_id
 1;Gloves;revolutionary Centre didactic;invoice invoice;false;Granite;53923;46601;10346;82773;10494;22365;16136;33123;3687;2;1
 2;Savings;Sports Computer;Books ADP invoice;true;synergize;25070;76556;58407;29272;60224;68138;22556;92696;11323;2;2
 3;Fish Gorgeous;Franche-Comté;online UAE mobile;false;Clothing;22990;5802;59605;15247;89910;5192;11619;88702;80313;1;3

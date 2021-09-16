@@ -5,8 +5,13 @@ import Component from 'vue-class-component';
 import { Inject, Vue, Watch } from 'vue-property-decorator';
 import ClientConfigService from '@/entities/client-config/client-config.service';
 import LoginService from '@/account/login.service';
+import ComponentPicker from './component-picker.vue';
 
-@Component({})
+@Component({
+  components: {
+    'component-picker': ComponentPicker,
+  },
+})
 export default class ConfigMaker extends Vue {
   @Inject('userOAuth2Service') private userOAuth2Service: () => UserOAuth2Service;
   @Inject('accountService') private accountService: () => AccountService;
@@ -17,7 +22,19 @@ export default class ConfigMaker extends Vue {
   public selectedConfigIndex = -1;
   public defaultConfig: IClientConfig = {
     name: 'Ma config',
+    gpu: null,
+    cpu: null,
+    mbe: null,
+    computerCase: null,
+    ram1: null,
+    ram2: null,
+    hd1: null,
+    hd2: null,
+    psu: null,
+    ventirad: null,
   };
+
+  public componentPickerDialog = false;
 
   public configFields = [
     {
@@ -26,18 +43,18 @@ export default class ConfigMaker extends Vue {
     },
     {
       key: 'mbe',
-      displayName: 'mbe',
+      displayName: 'Carte mère',
     },
     {
       key: 'cpu',
-      displayName: 'cpu',
+      displayName: 'Processeur',
     },
     {
       key: 'ventirad',
       displayName: 'ventirad',
     },
     {
-      key: 'ram',
+      key: 'ram1',
       displayName: 'ram',
     },
     {
@@ -45,11 +62,11 @@ export default class ConfigMaker extends Vue {
       displayName: 'gpu',
     },
     {
-      key: 'hd1',
+      key: 'deadMemory1',
       displayName: 'Stockage 1',
     },
     {
-      key: 'hd2',
+      key: 'deadMemory2',
       displayName: 'Stockage 2',
     },
     {
@@ -64,9 +81,16 @@ export default class ConfigMaker extends Vue {
   public formCreateConfig = {
     name: '',
   };
+  public endpoint = '';
 
   public get selectedConfig(): IClientConfig {
     return this.selectedConfigIndex == -1 ? this.defaultConfig : this.clientConfigs[this.selectedConfigIndex];
+  }
+
+  public openDialog(endpoint) {
+    this.endpoint = endpoint;
+    this.componentPickerDialog = true;
+    this.$vuetify.goTo('#configMaker', {});
   }
 
   public createConfig() {
@@ -155,6 +179,11 @@ export default class ConfigMaker extends Vue {
 
   public removeComponent(key) {
     this.selectedConfig[key] = null;
+  }
+
+  public handlePicked(value) {
+    this.componentPickerDialog = false;
+    this.selectedConfig[this.endpoint] = value;
   }
 
   public get getTotalPrice() {

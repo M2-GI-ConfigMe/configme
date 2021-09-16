@@ -64,7 +64,6 @@ public class ClientConfig implements Serializable {
     private Float hd2Price;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne

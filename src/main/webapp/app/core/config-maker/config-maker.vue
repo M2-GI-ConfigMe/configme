@@ -64,6 +64,7 @@
                 class="round px-6 py-1 mb-3 d-flex justify-content-between align-items-center w-75"
                 elevation="1"
                 :class="selectedConfig[field.key] ? 'selected-item' : ''"
+                @click="openDialog(field.key)"
               >
                 <div class="d-flex flex-column">
                   <span class="overline pt-2" style="line-height: 0">{{ field.displayName }}</span>
@@ -72,7 +73,13 @@
                     v-html="selectedConfig[field.key] ? selectedConfig[field.key].name : 'Sélectionner un composant'"
                   ></span>
                 </div>
-                <v-btn icon class="font-weight-bold" v-if="selectedConfig[field.key]" color="primary2" @click="removeComponent(field.key)">
+                <v-btn
+                  icon
+                  class="font-weight-bold"
+                  v-if="selectedConfig[field.key]"
+                  color="primary2"
+                  @click.stop="removeComponent(field.key)"
+                >
                   <v-icon v-if="selectedConfig[field.key]" class="font-weight-bold" color="primary2">mdi-close</v-icon>
                 </v-btn>
               </v-sheet>
@@ -143,6 +150,13 @@
         </v-col>
       </v-row>
     </template>
+
+    <component-picker
+      :activated="componentPickerDialog"
+      :componentName="endpoint"
+      @close="componentPickerDialog = false"
+      @picked="handlePicked"
+    ></component-picker>
   </v-container>
 </template>
 
