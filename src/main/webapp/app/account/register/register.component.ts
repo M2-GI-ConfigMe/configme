@@ -103,6 +103,8 @@ export default class Register extends Vue {
   public showPass = false;
   public showPass2 = false;
 
+  public loading = false;
+
   public register(): void {
     const registerAccount: any = {};
 
@@ -125,6 +127,7 @@ export default class Register extends Vue {
       zipCode: this.informations.zipCode,
     };
 
+    this.loading = true;
     this.registerService()
       .processRegistration(registerAccount)
       .then(() => {
@@ -144,6 +147,9 @@ export default class Register extends Vue {
         } else {
           this.error = 'ERROR';
         }
+      })
+      .finally(() => {
+        this.loading = false;
       });
   }
 

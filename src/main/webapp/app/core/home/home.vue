@@ -1,11 +1,15 @@
 <template>
   <div class="height:100%">
     <v-layout fill-height class="grad-bg" style="height: calc(100vh - 64px)">
-      <div class="col pt-10 pl-10 text-white" style="margin-top: 10vh; margin-left: 10vh">
-        <p class="pl-10 h1">Bienvenue sur <span class="font-weight-bold">Config'Me</span></p>
-        <p class="pl-10 h5">Vous pouvez créer votre propre config' grâce à notre ConfigMaker !</p>
-        <v-btn class="ml-10" @click="$vuetify.goTo('#configMaker', {})"> C'est parti ! </v-btn>
-      </div>
+      <v-container>
+        <v-row no-gutters>
+          <v-col class="pt-10 text-white" style="margin-top: 10vh">
+            <p class="text-h3">Bienvenue sur <span class="font-weight-bold">Config'Me</span></p>
+            <p class="text-h5">Vous pouvez créer votre propre config' grâce à notre ConfigMaker !</p>
+            <v-btn class="" @click="$vuetify.goTo('#configMaker', {})" large> C'est parti ! </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-layout>
 
     <config-maker></config-maker>
