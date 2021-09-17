@@ -91,7 +91,7 @@
             </v-col>
             <v-col class="pt-2 flex-grow-0 d-flex flex-column justify-content-end">
               <span class="h3 mb-0 align-self-end font-weight-bold"> Total : {{ getTotalPrice }}€ </span>
-              <v-btn color="primary" rounded>
+              <v-btn color="primary" rounded @click="addToCart(selectedConfig)">
                 <v-icon>mdi-cart</v-icon>
                 Ajouter au panier
               </v-btn>

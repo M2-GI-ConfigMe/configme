@@ -7,7 +7,8 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="primary" large elevation="0" v-on:click="openLogin()" v-if="!authenticated"> Connexion </v-btn>
+      <cart></cart>
+      <v-btn color="primary" large elevation="0" v-on:click="openLogin()" v-if="!authenticated" class="ml-2"> Connexion </v-btn>
       <v-btn
         text
         v-if="authenticated"

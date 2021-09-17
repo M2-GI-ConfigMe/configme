@@ -3,8 +3,13 @@ import { VERSION } from '@/constants';
 import LoginService from '@/account/login.service';
 import AccountService from '@/account/account.service';
 import TranslationService from '@/locale/translation.service';
+import Cart from './cart.vue';
 
-@Component
+@Component({
+  components: {
+    Cart,
+  },
+})
 export default class Navbar extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
