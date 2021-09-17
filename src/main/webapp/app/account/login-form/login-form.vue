@@ -8,7 +8,7 @@
       <v-card-text>
         <div class="row justify-content-center">
           <v-alert type="error" v-if="authenticationError" class="mb-1 mt-2">
-            <strong>Impossible de se connecter !</strong>Vérifier l'identifiant et le mot de passe puis réessayer.
+            <strong>Impossible de se connecter !</strong> Vérifier l'identifiant et le mot de passe puis réessayer.
           </v-alert>
           <div class="col">
             <v-form @submit.stop.prevent="doLogin()">

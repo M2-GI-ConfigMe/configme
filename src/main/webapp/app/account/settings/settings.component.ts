@@ -1,7 +1,8 @@
 import { email, maxLength, minLength, required } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import { EMAIL_ALREADY_USED_TYPE } from '@/constants';
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Inject, Component } from 'vue-property-decorator';
+import AccountService from '@/account/account.service';
 
 const validations = {
   settingsAccount: {
@@ -40,6 +41,8 @@ const validations = {
   validations,
 })
 export default class Settings extends Vue {
+  @Inject('accountService') private accountService: () => AccountService;
+
   //Form gestion
   public rules = {
     requiredField: [v => !!v || 'Champs obligatoire'],
@@ -53,19 +56,9 @@ export default class Settings extends Vue {
     zipCodeRules: [],
   };
 
-  // public informations: any = {
-  //   email: undefined,
-  //   password: undefined,
-  //   lastName: undefined,
-  //   firstName: undefined,
-  //   birthdate: undefined,
-  //   streetNumber: undefined,
-  //   streetName: undefined,
-  //   city: undefined,
-  //   zipCode: undefined,
-  // };
-
   public isValid = false;
+
+  public dialog = false;
 
   public success: string = null;
   public error: string = null;
@@ -98,5 +91,10 @@ export default class Settings extends Vue {
 
   public get username(): string {
     return this.$store.getters.account ? this.$store.getters.account.login : '';
+  }
+
+  public deleteAccount(): void {
+    let idStocked: String = this.$store.getters.account.id;
+    this.accountService().deleteUser(idStocked);
   }
 }
