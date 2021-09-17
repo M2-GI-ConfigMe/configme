@@ -18,9 +18,11 @@ export default class LoginForm extends Vue {
   public login = null;
   public password = null;
   public showPass = false;
+  public loading = false;
 
   @Prop({ required: true }) show: boolean;
   public get showDialog(): boolean {
+    this.authenticationError = false;
     return this.show;
   }
   public set showDialog(v) {
@@ -31,6 +33,7 @@ export default class LoginForm extends Vue {
 
   public doLogin(): void {
     const data = { username: this.login, password: this.password, rememberMe: false /*this.rememberMe*/ };
+    this.loading = true;
     axios
       .post('api/authenticate', data)
       .then(result => {
@@ -48,7 +51,7 @@ export default class LoginForm extends Vue {
         this.authenticationError = false;
         this.showDialog = false;
         this.$root.$bvToast.toast('Connexion réussie !', {
-          toaster: 'b-toaster-top-right',
+          toaster: 'b-toaster-top-center',
           variant: 'success',
           solid: true,
           noCloseButton: false,
@@ -57,6 +60,9 @@ export default class LoginForm extends Vue {
       })
       .catch(() => {
         this.authenticationError = true;
+      })
+      .finally(() => {
+        this.loading = false;
       });
   }
 

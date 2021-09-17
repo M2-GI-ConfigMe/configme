@@ -15,7 +15,6 @@
     <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210910085034_added_entity_Address.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085036_added_entity_Order.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085037_added_entity_OrderLine.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210910085038_added_entity_ClientConfig.xml" relativeToChangelogFile="false"/>

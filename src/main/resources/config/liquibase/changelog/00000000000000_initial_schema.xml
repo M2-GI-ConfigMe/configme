@@ -14,20 +14,14 @@
         JHipster core tables.
         The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.
     -->
-    <!--
-        J'ai changé l'id pour éviter l'override
-    -->
-    <changeSet id="10000000000001" author="jhipster">
+    <changeSet id="00000000000001" author="jhipster">
         <createTable tableName="jhi_user">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="email" type="varchar(191)">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_email"/>
-            </column>
-            <!-- <column name="login" type="varchar(50)">
-                <constraints unique="true" nullable="false" uniqueConstraintName="ux_user_login"/>
-            </column> -->
+            </column>            
             <column name="password_hash" type="varchar(60)">
                 <constraints nullable="false"/>
             </column>
@@ -36,14 +30,30 @@
             </column>
             <column name="last_name" type="varchar(50)">
                 <constraints nullable="false"/>
-            </column>
-            
+            </column>            
             <column name="birthdate" type="date">
                 <constraints nullable="false"/>
+            </column>            
+            <column name="zip_code" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
-
-            <column name="address_id" type="bigint">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_db_user__address_id" />
+            <column name="city" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="street_number" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="street_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="complementary" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="address_first_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="address_last_name" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
 
 
@@ -105,6 +115,7 @@
             <column name="id" type="numeric"/>
             <column name="activated" type="boolean"/>
             <column name="created_date" type="timestamp"/>
+        
         </loadData>
            
         <dropDefaultValue tableName="jhi_user" columnName="created_date" columnDataType="${datetimeType}"/>

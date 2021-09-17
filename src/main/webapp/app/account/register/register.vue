@@ -1,6 +1,9 @@
 <template>
   <v-dialog v-model="showDialog" max-width="600" id="form">
     <v-card class="p-3">
+      <v-overlay :value="loading" absolute>
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
       <v-card-title class="font-weight-bold text-h4 mb-4">
         <span id="register">S'inscrire</span>
       </v-card-title>
@@ -12,7 +15,7 @@
               <p class="font-weight-bold text-dark">Informations de connexion</p>
               <div class="form-group">
                 <v-text-field
-                  v-model="informations.email"
+                  v-model="$v.account.email.$model"
                   :rules="rules.emailRules.concat(rules.requiredField)"
                   type="email"
                   label="E-mail"
@@ -25,7 +28,7 @@
               </div>
               <div class="form-group">
                 <v-text-field
-                  v-model="informations.password"
+                  v-model="$v.account.password.$model"
                   :rules="rules.passwordRules.concat(rules.requiredField)"
                   :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
                   @click:append="showPass = !showPass"
@@ -58,18 +61,18 @@
               <div class="form-group">
                 <v-row v-bind:no-gutters="true">
                   <v-text-field
-                    v-model="informations.lastName"
+                    v-model="$v.account.lastName.$model"
                     :rules="rules.requiredField"
                     label="Nom"
                     placeholder="Dupont"
                     hide-details="auto"
                     outlined
                     required
+                    class="mr-2"
                   >
                   </v-text-field>
-                  <v-spacer class="mx-2"></v-spacer>
                   <v-text-field
-                    v-model="informations.firstName"
+                    v-model="$v.account.firstName.$model"
                     :rules="rules.requiredField"
                     label="Prénom"
                     placeholder="François"
@@ -110,24 +113,25 @@
               <div class="form-group">
                 <v-row v-bind:no-gutters="true">
                   <v-text-field
-                    v-model="informations.streetNumber"
+                    v-model="$v.account.address.streetNumber.$model"
                     :rules="rules.requiredField"
                     label="N° de Rue"
                     placeholder="5"
                     hide-details="auto"
                     outlined
                     required
+                    class="flex-grow-0 mr-2"
                   >
                   </v-text-field>
-                  <v-spacer class="mx-2"></v-spacer>
                   <v-text-field
-                    v-model="informations.streetName"
+                    v-model="$v.account.address.streetName.$model"
                     :rules="rules.requiredField"
                     label="Rue"
                     placeholder="Rue de l'exemple"
                     hide-details="auto"
                     outlined
                     required
+                    class="flex-grow-1"
                   >
                   </v-text-field>
                 </v-row>
@@ -136,7 +140,7 @@
               <div class="form-group">
                 <v-row v-bind:no-gutters="true">
                   <v-text-field
-                    v-model="informations.city"
+                    v-model="$v.account.address.city.$model"
                     :rules="rules.requiredField"
                     label="Ville"
                     placeholder="Grenoble"
@@ -145,15 +149,15 @@
                     required
                   >
                   </v-text-field>
-                  <v-spacer class="mx-2"></v-spacer>
                   <v-text-field
-                    v-model="informations.zipCode"
+                    v-model="$v.account.address.zipCode.$model"
                     :rules="rules.requiredField"
                     label="Code postal"
                     placeholder="38000"
                     hide-details="auto"
                     outlined
                     required
+                    class="ml-2"
                   >
                   </v-text-field>
                 </v-row>

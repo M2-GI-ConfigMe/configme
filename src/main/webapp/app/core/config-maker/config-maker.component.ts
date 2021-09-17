@@ -101,13 +101,24 @@ export default class ConfigMaker extends Vue {
     this.saveConfig(config);
   }
 
+  public addToCart(config) {
+    if (!this.isEmpty(config)) this.$store.commit('addToCart', config);
+    else
+      this.$root.$bvToast.toast('Votre config est vide !', {
+        toaster: 'b-toaster-top-center',
+        variant: 'danger',
+        solid: true,
+        noCloseButton: true,
+      });
+  }
+
   public saveConfig(config) {
     if (config.id) {
       this.clientConfigService()
         .update(config)
         .then(res => {
           this.$root.$bvToast.toast('Config mise à jour!', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'success',
             solid: true,
             noCloseButton: true,
@@ -115,7 +126,7 @@ export default class ConfigMaker extends Vue {
         })
         .catch(res => {
           this.$root.$bvToast.toast('Erreur lors de la mise à jour', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true,
             noCloseButton: true,
@@ -126,8 +137,9 @@ export default class ConfigMaker extends Vue {
         .create(config)
         .then(res => {
           this.clientConfigs.push(res);
+          this.selectedConfigIndex = this.clientConfigs.length;
           this.$root.$bvToast.toast('Config créée !', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'success',
             solid: true,
             noCloseButton: true,
@@ -135,7 +147,7 @@ export default class ConfigMaker extends Vue {
         })
         .catch(res => {
           this.$root.$bvToast.toast('Erreur lors de la mise à jour', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true,
             noCloseButton: true,
@@ -156,7 +168,7 @@ export default class ConfigMaker extends Vue {
           const newId = this.selectedConfigIndex > 0 ? this.selectedConfigIndex - 1 : -1;
           this.selectedConfigIndex = newId;
           this.$root.$bvToast.toast('Config supprimée !', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'success',
             solid: true,
             noCloseButton: true,
@@ -164,7 +176,7 @@ export default class ConfigMaker extends Vue {
         })
         .catch(res => {
           this.$root.$bvToast.toast('Erreur lors de la mise à jour', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true,
             noCloseButton: true,
@@ -194,6 +206,7 @@ export default class ConfigMaker extends Vue {
       (this.selectedConfig.gpu ? this.selectedConfig.gpu.price : 0) +
       (this.selectedConfig.cpu ? this.selectedConfig.cpu.price : 0) +
       (this.selectedConfig.psu ? this.selectedConfig.psu.price : 0) +
+      (this.selectedConfig.ventirad ? this.selectedConfig.ventirad.price : 0) +
       (this.selectedConfig.deadMemory1 ? this.selectedConfig.deadMemory1.price : 0) +
       (this.selectedConfig.deadMemory2 ? this.selectedConfig.deadMemory2.price : 0)
     );
@@ -206,8 +219,10 @@ export default class ConfigMaker extends Vue {
   @Watch('authenticated')
   onAuthenticatedChanged(value: boolean, oldValue: boolean) {
     if (value) this.retrieveUserConfigs();
-    else this.clientConfigs = [];
-    this.selectedConfigIndex = -1;
+    else {
+      this.clientConfigs = [];
+      this.selectedConfigIndex = -1;
+    }
   }
 
   public get username(): string {
@@ -222,16 +237,35 @@ export default class ConfigMaker extends Vue {
     this.accountService().retrieveAccount();
   }
 
-  created() {
-    this.retrieveUserConfigs();
-  }
-
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  public isComplete(config) {
-    return config.gpu && config.cpu && config.mbe && config.psu && config.ram1 && config.computerCase && (config.hd1 || config.hd2);
+  public get isComplete(): boolean {
+    return (
+      this.selectedConfig.gpu &&
+      this.selectedConfig.cpu &&
+      this.selectedConfig.mbe &&
+      this.selectedConfig.psu &&
+      this.selectedConfig.ventirad &&
+      this.selectedConfig.ram1 &&
+      this.selectedConfig.computerCase &&
+      (this.selectedConfig.deadMemory1 != null || this.selectedConfig.deadMemory2 != null)
+    );
+  }
+
+  public isEmpty(config) {
+    return (
+      !config.gpu &&
+      !config.cpu &&
+      !config.mbe &&
+      !config.psu &&
+      !config.ram1 &&
+      !config.ventirad &&
+      !config.computerCase &&
+      !config.deadMemory1 &&
+      !config.deadMemory2
+    );
   }
 
   private retrieveUserConfigs() {

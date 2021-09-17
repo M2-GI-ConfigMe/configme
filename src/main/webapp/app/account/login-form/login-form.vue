@@ -1,11 +1,14 @@
 <template>
   <v-dialog v-model="showDialog" max-width="600">
     <v-card class="p-3">
+      <v-overlay :value="loading" absolute>
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
       <v-card-title class="font-weight-bold text-h4 mb-4"> Se connecter </v-card-title>
       <v-card-text>
         <div class="row justify-content-center">
           <v-alert type="error" v-if="authenticationError" class="mb-1 mt-2">
-            <strong>Impossible de se connecter !</strong>Vérifier l'identifiant et le mot de passe puis réessayer.
+            <strong>Impossible de se connecter !</strong> Vérifier l'identifiant et le mot de passe puis réessayer.
           </v-alert>
           <div class="col">
             <v-form @submit.stop.prevent="doLogin()">

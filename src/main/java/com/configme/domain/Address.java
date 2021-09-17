@@ -3,65 +3,36 @@ package com.configme.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Address.
  */
-@Entity
-@Table(name = "address")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Embeddable
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
-
     @NotNull
-    @Column(name = "zip_code", nullable = false)
     private String zipCode;
 
     @NotNull
-    @Column(name = "city", nullable = false)
     private String city;
 
     @NotNull
-    @Column(name = "street_number", nullable = false)
     private String streetNumber;
 
     @NotNull
-    @Column(name = "street_name", nullable = false)
     private String streetName;
 
-    @Column(name = "complementary")
     private String complementary;
 
     @NotNull
-    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @NotNull
-    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Address id(Long id) {
-        this.id = id;
-        return this;
-    }
-
     public String getZipCode() {
         return this.zipCode;
     }
@@ -163,7 +134,8 @@ public class Address implements Serializable {
         if (!(o instanceof Address)) {
             return false;
         }
-        return id != null && id.equals(((Address) o).id);
+        Address a = (Address) o;
+        return a.getCity().equals(this.city);
     }
 
     @Override
@@ -176,8 +148,7 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return "Address{" +
-            "id=" + getId() +
-            ", zipCode='" + getZipCode() + "'" +
+            "zipCode='" + getZipCode() + "'" +
             ", city='" + getCity() + "'" +
             ", streetNumber='" + getStreetNumber() + "'" +
             ", streetName='" + getStreetName() + "'" +

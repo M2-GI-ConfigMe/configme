@@ -44,10 +44,10 @@ export default class OrderService {
     });
   }
 
-  public create(entity: IOrder): Promise<IOrder> {
+  public create(cart: any): Promise<IOrder> {
     return new Promise<IOrder>((resolve, reject) => {
       axios
-        .post(`${baseApiUrl}`, entity)
+        .post(`${baseApiUrl}`, cart)
         .then(res => {
           resolve(res.data);
         })

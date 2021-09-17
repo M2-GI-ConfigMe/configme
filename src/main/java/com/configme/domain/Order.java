@@ -41,8 +41,7 @@ public class Order implements Serializable {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(unique = true)
+    @Embedded
     private Address deliveryAddress;
 
     @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.EAGER)
@@ -160,6 +159,7 @@ public class Order implements Serializable {
             ", updatedAt='" + getUpdatedAt() + "'" +
             ", validatedAt='" + getValidatedAt() + "'" +
             ", status='" + getStatus() + "'" +
+            ", address='" + getDeliveryAddress() + "'" +
             "}";
     }
 
