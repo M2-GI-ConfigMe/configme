@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Address;
 import com.configme.domain.Order;
 import com.configme.domain.enumeration.OrderStatus;
 import com.configme.repository.OrderRepository;
@@ -45,6 +46,9 @@ class OrderResourceIT {
     private static final OrderStatus DEFAULT_STATUS = OrderStatus.CART;
     private static final OrderStatus UPDATED_STATUS = OrderStatus.PROCESSING;
 
+    private static final Address DEFAULT_ADDRESS = Address.of("first_name", "last_name", "0", "rue exemple", "grenboble", "38000");
+    private static final Address UPDATED_ADDRESS = Address.of("first_name_bis", "last_name_bis", "0", "rue exemple", "chambery", "73000");
+
     private static final String ENTITY_API_URL = "/api/orders";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -73,7 +77,8 @@ class OrderResourceIT {
             .createdAt(DEFAULT_CREATED_AT)
             .updatedAt(DEFAULT_UPDATED_AT)
             .validatedAt(DEFAULT_VALIDATED_AT)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .deliveryAddress(DEFAULT_ADDRESS);
         return order;
     }
 
@@ -88,7 +93,8 @@ class OrderResourceIT {
             .createdAt(UPDATED_CREATED_AT)
             .updatedAt(UPDATED_UPDATED_AT)
             .validatedAt(UPDATED_VALIDATED_AT)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .deliveryAddress(UPDATED_ADDRESS);
         return order;
     }
 
@@ -114,6 +120,7 @@ class OrderResourceIT {
         assertThat(testOrder.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
         assertThat(testOrder.getValidatedAt()).isEqualTo(DEFAULT_VALIDATED_AT);
         assertThat(testOrder.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testOrder.getDeliveryAddress()).isEqualTo(DEFAULT_ADDRESS);
     }
 
     @Test
@@ -218,6 +225,7 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(DEFAULT_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].validatedAt").value(hasItem(DEFAULT_VALIDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
     }
 
     @Test
@@ -236,6 +244,7 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.updatedAt").value(DEFAULT_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.validatedAt").value(DEFAULT_VALIDATED_AT.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
     }
 
     @Test
@@ -257,7 +266,12 @@ class OrderResourceIT {
         Order updatedOrder = orderRepository.findById(order.getId()).get();
         // Disconnect from session so that the updates on updatedOrder are not directly saved in db
         em.detach(updatedOrder);
-        updatedOrder.createdAt(UPDATED_CREATED_AT).updatedAt(UPDATED_UPDATED_AT).validatedAt(UPDATED_VALIDATED_AT).status(UPDATED_STATUS);
+        updatedOrder
+            .createdAt(UPDATED_CREATED_AT)
+            .updatedAt(UPDATED_UPDATED_AT)
+            .validatedAt(UPDATED_VALIDATED_AT)
+            .status(UPDATED_STATUS)
+            .deliveryAddress(UPDATED_ADDRESS);
 
         restOrderMockMvc
             .perform(
@@ -275,6 +289,7 @@ class OrderResourceIT {
         assertThat(testOrder.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
         assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
         assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testOrder.getDeliveryAddress()).isEqualTo(UPDATED_ADDRESS);
     }
 
     @Test
@@ -345,7 +360,11 @@ class OrderResourceIT {
         Order partialUpdatedOrder = new Order();
         partialUpdatedOrder.setId(order.getId());
 
-        partialUpdatedOrder.createdAt(UPDATED_CREATED_AT).validatedAt(UPDATED_VALIDATED_AT).status(UPDATED_STATUS);
+        partialUpdatedOrder
+            .createdAt(UPDATED_CREATED_AT)
+            .validatedAt(UPDATED_VALIDATED_AT)
+            .status(UPDATED_STATUS)
+            .deliveryAddress(UPDATED_ADDRESS);
 
         restOrderMockMvc
             .perform(
@@ -363,6 +382,7 @@ class OrderResourceIT {
         assertThat(testOrder.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
         assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
         assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
+        //TODO : assertThat(testOrder.getDeliveryAddress()).isEqualTo(UPDATED_ADDRESS);
     }
 
     @Test
@@ -381,7 +401,8 @@ class OrderResourceIT {
             .createdAt(UPDATED_CREATED_AT)
             .updatedAt(UPDATED_UPDATED_AT)
             .validatedAt(UPDATED_VALIDATED_AT)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .deliveryAddress(DEFAULT_ADDRESS);
 
         restOrderMockMvc
             .perform(
@@ -399,6 +420,7 @@ class OrderResourceIT {
         assertThat(testOrder.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
         assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
         assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
+        //TODO : assertThat(testOrder.getDeliveryAddress())).isEqualTo(UPDATED_ADDRESS);
     }
 
     @Test

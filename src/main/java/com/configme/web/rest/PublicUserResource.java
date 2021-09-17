@@ -1,15 +1,17 @@
 package com.configme.web.rest;
 
 import com.configme.domain.ClientConfig;
+import com.configme.domain.User;
 import com.configme.repository.ClientConfigRepository;
-import com.configme.repository.UserRepository;
 import com.configme.service.UserService;
 import com.configme.service.dto.UserDTO;
+import com.configme.web.rest.errors.BadRequestAlertException;
 import java.util.*;
 import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 
 @RestController
@@ -29,6 +32,11 @@ public class PublicUserResource {
     );
 
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
+
+    private static final String ENTITY_NAME = "publicUser";
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
 
     private final UserService userService;
 
@@ -80,5 +88,24 @@ public class PublicUserResource {
         log.debug("REST request to get authenticated user's ClientConfigs");
         log.debug("Is present : " + userService.getUserWithAuthorities().isPresent());
         return clientConfigRepository.findByUser(userService.getUserWithAuthorities());
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        log.debug("REST request to delete User-id: {}", id);
+        log.debug("Is present : " + userService.getUserWithAuthorities().isPresent());
+        Optional<User> connectedUser = userService.getUserWithAuthorities();
+
+        Long userId = connectedUser.get().getId();
+
+        if (!Objects.equals(id, userId)) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        String userEmail = connectedUser.get().getEmail();
+
+        userService.deleteUser(userEmail);
+
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", userEmail)).build();
     }
 }
