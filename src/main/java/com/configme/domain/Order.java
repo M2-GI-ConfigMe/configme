@@ -41,11 +41,11 @@ public class Order implements Serializable {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private Address deliveryAddress;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.EAGER)
     private Set<OrderLine> lines;
 
     @ManyToOne

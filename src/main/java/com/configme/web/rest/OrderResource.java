@@ -86,6 +86,7 @@ public class OrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/orders/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Order> updateOrder(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Order order)
         throws URISyntaxException {
         log.debug("REST request to update Order : {}, {}", id, order);
@@ -119,6 +120,7 @@ public class OrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/orders/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Order> partialUpdateOrder(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Order order
@@ -169,6 +171,7 @@ public class OrderResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of orders in body.
      */
     @GetMapping("/orders")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<Order> getAllOrders() {
         log.debug("REST request to get all Orders");
         return orderRepository.findAll();
@@ -195,6 +198,7 @@ public class OrderResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the order, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/orders/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Order> getOrder(@PathVariable Long id) {
         log.debug("REST request to get Order : {}", id);
         Optional<Order> order = orderRepository.findById(id);
@@ -208,6 +212,7 @@ public class OrderResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/orders/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         log.debug("REST request to delete Order : {}", id);
         orderRepository.deleteById(id);

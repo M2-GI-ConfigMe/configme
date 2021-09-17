@@ -23,7 +23,7 @@ public class OrderLine implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @NotNull
     private ClientConfig config;
 

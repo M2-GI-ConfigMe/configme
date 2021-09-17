@@ -1,19 +1,26 @@
 package com.configme.web.rest;
 
+import com.configme.domain.Order;
 import com.configme.domain.OrderLine;
+import com.configme.domain.User;
 import com.configme.repository.OrderLineRepository;
+import com.configme.repository.OrderRepository;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -36,8 +43,22 @@ public class OrderLineResource {
 
     private final OrderLineRepository orderLineRepository;
 
-    public OrderLineResource(OrderLineRepository orderLineRepository) {
+    private final OrderRepository orderRepository;
+
+    private UserService userService;
+
+    private EntityManager entityManager;
+
+    public OrderLineResource(
+        OrderLineRepository orderLineRepository,
+        UserService userService,
+        OrderRepository orderRepository,
+        EntityManager entityManager
+    ) {
+        this.userService = userService;
         this.orderLineRepository = orderLineRepository;
+        this.orderRepository = orderRepository;
+        this.entityManager = entityManager;
     }
 
     /**
@@ -48,6 +69,7 @@ public class OrderLineResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/order-lines")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OrderLine> createOrderLine(@Valid @RequestBody OrderLine orderLine) throws URISyntaxException {
         log.debug("REST request to save OrderLine : {}", orderLine);
         if (orderLine.getId() != null) {
@@ -71,6 +93,7 @@ public class OrderLineResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/order-lines/{id}")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<OrderLine> updateOrderLine(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody OrderLine orderLine
@@ -86,6 +109,9 @@ public class OrderLineResource {
         if (!orderLineRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
+        User user = userService.getUserWithAuthorities().get();
+
+        if (orderLine.getOrder().getBuyer().getId() != user.getId()) throw new AccessDeniedException("403 returned");
 
         OrderLine result = orderLineRepository.save(orderLine);
         return ResponseEntity
@@ -106,6 +132,7 @@ public class OrderLineResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/order-lines/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OrderLine> partialUpdateOrderLine(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody OrderLine orderLine
@@ -143,6 +170,7 @@ public class OrderLineResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of orderLines in body.
      */
     @GetMapping("/order-lines")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<OrderLine> getAllOrderLines() {
         log.debug("REST request to get all OrderLines");
         return orderLineRepository.findAll();
@@ -155,6 +183,7 @@ public class OrderLineResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the orderLine, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/order-lines/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OrderLine> getOrderLine(@PathVariable Long id) {
         log.debug("REST request to get OrderLine : {}", id);
         Optional<OrderLine> orderLine = orderLineRepository.findById(id);
@@ -168,9 +197,26 @@ public class OrderLineResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/order-lines/{id}")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<Void> deleteOrderLine(@PathVariable Long id) {
+        User user = userService.getUserWithAuthorities().get();
+        OrderLine orderLine;
+
+        if (!orderLineRepository.existsById(id)) throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnotfound");
+
+        orderLine = orderLineRepository.findById(id).get();
+
+        if (orderLine.getOrder().getBuyer().getId() != user.getId()) throw new AccessDeniedException("403 returned");
+
         log.debug("REST request to delete OrderLine : {}", id);
-        orderLineRepository.deleteById(id);
+
+        if (orderLine.getOrder().getLines().size() == 1) {
+            this.orderRepository.deleteById(orderLine.getOrder().getId());
+        } else {
+            this.entityManager.detach(orderLine.getOrder());
+            orderLineRepository.deleteById(id);
+        }
+
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

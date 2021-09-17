@@ -5,7 +5,7 @@
       <navbar></navbar>
     </div>
     <div style="padding-top: 64px; height: 100%; background: #f9f9f9">
-      <router-view></router-view>
+      <router-view style="min-height: 100%"></router-view>
 
       <login-form :show="showLogin" @close="showLogin = false"></login-form>
       <register-form :show="showRegister" @close="showRegister = false"></register-form>

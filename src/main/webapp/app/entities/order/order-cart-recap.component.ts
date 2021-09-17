@@ -1,18 +1,34 @@
 import Component from 'vue-class-component';
 import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
-import OrderService from '@/entities/order/order.service';
+import OrderCartConfig from '@/entities/order/order-cart-config.vue';
 
-@Component({})
+@Component({
+  components: {
+    OrderCartConfig,
+  },
+})
 export default class OrderCartRecap extends Vue {
-  @Inject('orderService') private orderService: () => OrderService;
+  @Prop() private cart: any;
 
-  private cart = null;
+  public get globalPrice() {
+    if (this.cart) return this.cart.lines.reduce((oldValue, newValue) => oldValue + this.configPrice(newValue.config), 0);
+    else return 0;
+  }
 
-  public created() {
-    this.orderService()
-      .cart()
-      .then(res => {
-        this.cart = res;
-      });
+  public configPrice(config: any) {
+    let price = 0;
+
+    if (config.cpu) price += config.cpuPrice;
+    if (config.gpu) price += config.gpuPrice;
+    if (config.computerCase) price += config.computerCasePrice;
+    if (config.ventirad) price += config.ventiradPrice;
+    if (config.ram1) price += config.ram1Price;
+    if (config.ram2) price += config.ram2Price;
+    if (config.deadMemory1) price += config.hd1Price;
+    if (config.deadMemory2) price += config.hd2Price;
+    if (config.mbe) price += config.cpuPrice;
+    if (config.psu) price += config.psuPrice;
+
+    return price;
   }
 }

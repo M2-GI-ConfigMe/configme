@@ -6,6 +6,7 @@
           {{ appTitle }}
         </router-link>
       </v-toolbar-title>
+      <router-link to="/order/cart" tag="span" style="color: #2196f3; cursor: pointer; font-size: 1.5em"> order </router-link>
       <v-spacer></v-spacer>
       <v-btn color="primary" large elevation="0" v-on:click="openLogin()" v-if="!authenticated"> Connexion </v-btn>
       <v-btn
