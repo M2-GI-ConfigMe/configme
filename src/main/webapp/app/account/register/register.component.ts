@@ -125,7 +125,7 @@ export default class Register extends Vue {
         this.success = true;
         this.showDialog = false;
         this.$root.$bvToast.toast('Inscription réussie !', {
-          toaster: 'b-toaster-top-right',
+          toaster: 'b-toaster-top-center',
           variant: 'success',
           solid: true,
         });
