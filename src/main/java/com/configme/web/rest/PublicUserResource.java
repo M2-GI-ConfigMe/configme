@@ -1,9 +1,13 @@
 package com.configme.web.rest;
 
+import com.configme.domain.ClientConfig;
+import com.configme.repository.ClientConfigRepository;
+import com.configme.repository.UserRepository;
 import com.configme.service.UserService;
 import com.configme.service.dto.UserDTO;
 import java.util.*;
 import java.util.Collections;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -28,8 +32,11 @@ public class PublicUserResource {
 
     private final UserService userService;
 
-    public PublicUserResource(UserService userService) {
+    private final ClientConfigRepository clientConfigRepository;
+
+    public PublicUserResource(UserService userService, ClientConfigRepository clientConfigRepository) {
         this.userService = userService;
+        this.clientConfigRepository = clientConfigRepository;
     }
 
     /**
@@ -61,5 +68,17 @@ public class PublicUserResource {
     @GetMapping("/authorities")
     public List<String> getAuthorities() {
         return userService.getAuthorities();
+    }
+
+    /**
+     * {@code GET  /users/client-configs} : get the authenticated user's client configs
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientConfigs in body.
+     */
+    @GetMapping("/users/client-configs")
+    public List<ClientConfig> getUserClientConfigs(HttpServletRequest request) {
+        log.debug("REST request to get authenticated user's ClientConfigs");
+        log.debug("Is present : " + userService.getUserWithAuthorities().isPresent());
+        return clientConfigRepository.findByUser(userService.getUserWithAuthorities());
     }
 }

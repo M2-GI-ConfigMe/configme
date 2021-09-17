@@ -1,11 +1,11 @@
-id;tags;name;description;is_comlete;research_key;cpu_price;gpu_price;ram_1_price;ram_2_price;psu_price;computer_case_price;ventirad_price;hd_1_price;hd_2_price
-1;Gloves;revolutionary Centre didactic;invoice invoice;false;Granite;53923;46601;10346;82773;10494;22365;16136;33123;3687
-2;Savings;Sports Computer;Books ADP invoice;true;synergize;25070;76556;58407;29272;60224;68138;22556;92696;11323
-3;Fish Gorgeous;Franche-Comté;online UAE mobile;false;Clothing;22990;5802;59605;15247;89910;5192;11619;88702;80313
-4;generate Towels;Awesome;Unbranded networks HDD;false;connecting hybrid;5775;26100;31827;37065;30123;78208;93525;84498;70612
-5;Producteur;red hard;Haute-Normandie Frozen Sausages;true;Brazilian B2C;37718;38706;7401;35546;6990;7797;43569;9043;2140
-6;Berkshire Aquitaine Cuban;deposit Frozen;Slovaquie Account;false;Developpeur;36422;92223;89312;67217;113;99597;46213;43010;54176
-7;Avon User-centric Generic;Picardie;SQL;true;ADP mesh withdrawal;10196;59244;38113;62122;80277;53829;57912;51693;50065
-8;c Refined e-services;GB innovative reboot;metrics;false;des;18456;47116;31947;17840;55204;4223;36798;10730;11819
-9;Tools drive Cotton;de Sports back-end;client-driven;true;bluetooth Toys Aquitaine;85974;94615;26705;78294;1713;45988;18994;58213;60105
-10;deposit;Sausages Chair Technicien;multi-byte digital payment;true;copy;13299;14680;80215;66971;42507;89958;44776;48366;99482
+id;tags;name;description;is_comlete;research_key;cpu_price;gpu_price;ram_1_price;ram_2_price;psu_price;computer_case_price;ventirad_price;hd_1_price;hd_2_price;user_id
+1;Gloves;revolutionary Centre didactic;invoice invoice;false;Granite;53923;46601;10346;82773;10494;22365;16136;33123;3687;2
+2;Savings;Sports Computer;Books ADP invoice;true;synergize;25070;76556;58407;29272;60224;68138;22556;92696;11323;2
+3;Fish Gorgeous;Franche-Comté;online UAE mobile;false;Clothing;22990;5802;59605;15247;89910;5192;11619;88702;80313;1
+4;generate Towels;Awesome;Unbranded networks HDD;false;connecting hybrid;5775;26100;31827;37065;30123;78208;93525;84498;70612;1
+5;Producteur;red hard;Haute-Normandie Frozen Sausages;true;Brazilian B2C;37718;38706;7401;35546;6990;7797;43569;9043;2140;1
+6;Berkshire Aquitaine Cuban;deposit Frozen;Slovaquie Account;false;Developpeur;36422;92223;89312;67217;113;99597;46213;43010;54176;1
+7;Avon User-centric Generic;Picardie;SQL;true;ADP mesh withdrawal;10196;59244;38113;62122;80277;53829;57912;51693;50065;1
+8;c Refined e-services;GB innovative reboot;metrics;false;des;18456;47116;31947;17840;55204;4223;36798;10730;11819;1
+9;Tools drive Cotton;de Sports back-end;client-driven;true;bluetooth Toys Aquitaine;85974;94615;26705;78294;1713;45988;18994;58213;60105;1
+10;deposit;Sausages Chair Technicien;multi-byte digital payment;true;copy;13299;14680;80215;66971;42507;89958;44776;48366;99482;1

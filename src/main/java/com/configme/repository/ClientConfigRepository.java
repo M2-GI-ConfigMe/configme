@@ -1,6 +1,9 @@
 package com.configme.repository;
 
 import com.configme.domain.ClientConfig;
+import com.configme.domain.User;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +12,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ClientConfigRepository extends JpaRepository<ClientConfig, Long> {}
+public interface ClientConfigRepository extends JpaRepository<ClientConfig, Long> {
+    List<ClientConfig> findByUser(Optional<User> user);
+}

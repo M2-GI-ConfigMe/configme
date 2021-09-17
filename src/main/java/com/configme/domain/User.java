@@ -90,6 +90,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private Set<ClientConfig> clientConfigs = new HashSet<>();
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -211,6 +214,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Set<ClientConfig> getClientConfigs() {
+        return clientConfigs;
+    }
+
+    public void setClientConfigs(Set<ClientConfig> clientConfigs) {
+        this.clientConfigs = clientConfigs;
+    }
+
+    public void addClientConfig(ClientConfig clientConfig) {
+        this.clientConfigs.add(clientConfig);
     }
 
     @Override

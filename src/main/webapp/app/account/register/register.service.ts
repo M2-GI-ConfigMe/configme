@@ -6,6 +6,6 @@ export default class RegisterService {
   }
 
   public openRegister(instance: Vue): void {
-    instance.$emit('bv::show::modal', 'register-page');
+    instance.$emit('showRegister');
   }
 }
