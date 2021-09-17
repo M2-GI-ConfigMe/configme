@@ -150,6 +150,7 @@ public class Order implements Serializable {
             ", updatedAt='" + getUpdatedAt() + "'" +
             ", validatedAt='" + getValidatedAt() + "'" +
             ", status='" + getStatus() + "'" +
+            ", address='" + getDeliveryAddress() + "'" +
             "}";
     }
 }

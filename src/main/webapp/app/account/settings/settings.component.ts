@@ -94,7 +94,7 @@ export default class Settings extends Vue {
   }
 
   public deleteAccount(): void {
-    let idStocked: String = this.$store.getters.account.id;
+    const idStocked: string = this.$store.getters.account.id;
     this.accountService().deleteUser(idStocked);
   }
 }
