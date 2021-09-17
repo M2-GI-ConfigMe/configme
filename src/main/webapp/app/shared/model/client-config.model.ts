@@ -6,6 +6,7 @@ import { IMbe } from '@/shared/model/mbe.model';
 import { IComputerCase } from '@/shared/model/computer-case.model';
 import { IHardDrive } from '@/shared/model/hard-drive.model';
 import { IRam } from '@/shared/model/ram.model';
+import { IUser } from './user.model';
 
 export interface IClientConfig {
   id?: number;
@@ -33,6 +34,7 @@ export interface IClientConfig {
   deadMemory2?: IHardDrive | null;
   ram1?: IRam | null;
   ram2?: IRam | null;
+  user?: IUser | null;
 }
 
 export class ClientConfig implements IClientConfig {

@@ -13,6 +13,8 @@ import com.configme.domain.enumeration.FormatType;
 import com.configme.repository.ComputerCaseRepository;
 import com.configme.web.rest.ComputerCaseResource;
 import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import com.configme.web.rest.TestUtil;
 import java.util.ArrayList;
 import java.util.List;

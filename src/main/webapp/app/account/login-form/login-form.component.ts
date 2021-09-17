@@ -1,13 +1,13 @@
 import axios from 'axios';
 import Component from 'vue-class-component';
-import { Vue, Inject } from 'vue-property-decorator';
+import { Vue, Inject, Prop } from 'vue-property-decorator';
 import AccountService from '@/account/account.service';
 import RegisterService from '@/account/register/register.service';
 
 @Component({
   watch: {
     $route() {
-      this.$root.$emit('bv::hide::modal', 'login-page');
+      this.showDialog = false;
     },
   },
 })
@@ -17,6 +17,16 @@ export default class LoginForm extends Vue {
   public authenticationError = null;
   public login = null;
   public password = null;
+  public showPass = false;
+
+  @Prop({ required: true }) show: boolean;
+  public get showDialog(): boolean {
+    return this.show;
+  }
+  public set showDialog(v) {
+    if (!v) this.$emit('close');
+  }
+
   //public rememberMe: boolean = null;
 
   public doLogin(): void {
@@ -36,7 +46,13 @@ export default class LoginForm extends Vue {
           //}
         }
         this.authenticationError = false;
-        this.$root.$emit('bv::hide::modal', 'login-page');
+        this.showDialog = false;
+        this.$root.$bvToast.toast('Connexion réussie !', {
+          toaster: 'b-toaster-top-right',
+          variant: 'success',
+          solid: true,
+          noCloseButton: false,
+        });
         this.accountService().retrieveAccount();
       })
       .catch(() => {
@@ -45,7 +61,7 @@ export default class LoginForm extends Vue {
   }
 
   public doRegister(): void {
-    this.$root.$emit('bv::hide::modal', 'login-page');
+    this.showDialog = false;
     this.registerService().openRegister((<any>this).$root);
   }
 }

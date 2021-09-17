@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.configme.IntegrationTest;
 import com.configme.domain.Address;
 import com.configme.domain.Authority;
+import com.configme.domain.ClientConfig;
 import com.configme.domain.User;
 import com.configme.repository.UserRepository;
 import com.configme.security.AuthoritiesConstants;
@@ -112,6 +113,7 @@ class UserResourceIT {
         user.setAddress(DEFAULT_ADDRESS);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+
         return user;
     }
 

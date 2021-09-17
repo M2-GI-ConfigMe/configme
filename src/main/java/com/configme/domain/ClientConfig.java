@@ -63,6 +63,9 @@ public class ClientConfig implements Serializable {
     @Column(name = "hd_2_price")
     private Float hd2Price;
 
+    @ManyToOne
+    private User user;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Cpu cpu;
 
@@ -417,6 +420,14 @@ public class ClientConfig implements Serializable {
 
     public void setRam2(Ram ram) {
         this.ram2 = ram;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

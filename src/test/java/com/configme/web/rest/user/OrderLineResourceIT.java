@@ -12,6 +12,7 @@ import com.configme.domain.OrderLine;
 import com.configme.repository.OrderLineRepository;
 import com.configme.web.rest.OrderLineResource;
 import com.configme.web.rest.TestUtil;
+import com.configme.web.rest.TestUtil;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
