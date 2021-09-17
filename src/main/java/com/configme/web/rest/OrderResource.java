@@ -1,8 +1,6 @@
 package com.configme.web.rest;
 
 import com.configme.domain.Order;
-import com.configme.domain.User;
-import com.configme.domain.enumeration.OrderStatus;
 import com.configme.repository.OrderRepository;
 import com.configme.service.OrderHandler;
 import com.configme.service.UserService;
@@ -174,6 +172,20 @@ public class OrderResource {
     public List<Order> getAllOrders() {
         log.debug("REST request to get all Orders");
         return orderRepository.findAll();
+    }
+
+    /**
+     * {@code GET  /orders/cart} : get all the orders.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of orders in body.
+     */
+    @GetMapping("/order/cart")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public Order getOrderInCart() {
+        log.debug("REST request to get all Orders");
+        //        System.out.println( "Est présent : " + (userService.getUserWithAuthorities().isPresent() ? "oui" : "non"));
+        return orderRepository.findOrderInCartByUser(userService.getUserWithAuthorities().get());
+        //        return orderRepository.findById(Long.valueOf(1));
     }
 
     /**

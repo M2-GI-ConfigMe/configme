@@ -73,7 +73,20 @@ export default class OrderService {
   public partialUpdate(entity: IOrder): Promise<IOrder> {
     return new Promise<IOrder>((resolve, reject) => {
       axios
-        .patch(`${baseApiUrl}/${entity.id}`, entity)
+        .get(`${baseApiUrl}/${entity.id}`)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
+  public cart(): Promise<IOrder> {
+    return new Promise<IOrder>((resolve, reject) => {
+      axios
+        .get(`/api/order/cart`)
         .then(res => {
           resolve(res.data);
         })

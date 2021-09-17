@@ -63,37 +63,34 @@ public class ClientConfig implements Serializable {
     @Column(name = "hd_2_price")
     private Float hd2Price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Cpu cpu;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "dimension" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Gpu gpu;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Psu psu;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "dimension" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Ventirad ventirad;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Mbe mbe;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "dimension" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ComputerCase computerCase;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private HardDrive deadMemory1;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private HardDrive deadMemory2;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Ram ram1;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Ram ram2;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -1,5 +1,6 @@
 package com.configme.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -24,14 +25,11 @@ public class OrderLine implements Serializable {
 
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @NotNull
-    @JsonIgnoreProperties(
-        value = { "cpu", "gpu", "psu", "ventirad", "mbe", "computerCase", "deadMemory1", "deadMemory2", "ram1", "ram2" },
-        allowSetters = true
-    )
     private ClientConfig config;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @NotNull
+    @JsonIgnore
     @JsonIgnoreProperties(value = { "deliveryAddress" }, allowSetters = true)
     private Order order;
 
