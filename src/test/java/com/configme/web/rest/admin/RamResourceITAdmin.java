@@ -245,12 +245,12 @@ class RamResourceITAdmin implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(ram.getId().intValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
-            .andExpect(jsonPath("$.[*].unitSize").value(hasItem(DEFAULT_UNIT_SIZE)))
-            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
-            .andExpect(jsonPath("$.[*].cas").value(hasItem(DEFAULT_CAS)));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(ram.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.content.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].unitSize").value(hasItem(DEFAULT_UNIT_SIZE)))
+            .andExpect(jsonPath("$.content.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
+            .andExpect(jsonPath("$.content.[*].cas").value(hasItem(DEFAULT_CAS)));
 
         getAllProductAssertProductField(action);
     }
