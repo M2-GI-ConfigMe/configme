@@ -14,7 +14,12 @@
             <div>
               <h1 class="font-weight-bold">
                 {{ selectedConfig.name }}
-                <v-icon v-if="isComplete(selectedConfig)" class="mr-2 mb-1" color="success" x-large> mdi-check-circle </v-icon>
+                <v-tooltip top color="success" v-if="isComplete">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon class="mr-2 mb-1" color="success" x-large v-on="on" v-bind="attrs"> mdi-check-circle </v-icon>
+                  </template>
+                  <span>Complète</span>
+                </v-tooltip>
               </h1>
             </div>
             <div>
@@ -165,6 +170,11 @@
 <style>
 .round {
   border-radius: 10rem;
+  transition: 0.2s all ease;
+}
+
+.round:hover {
+  background-color: #f3f3f3;
 }
 
 .selected-item {

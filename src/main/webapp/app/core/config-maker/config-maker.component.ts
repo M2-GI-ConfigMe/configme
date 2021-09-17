@@ -194,6 +194,7 @@ export default class ConfigMaker extends Vue {
       (this.selectedConfig.gpu ? this.selectedConfig.gpu.price : 0) +
       (this.selectedConfig.cpu ? this.selectedConfig.cpu.price : 0) +
       (this.selectedConfig.psu ? this.selectedConfig.psu.price : 0) +
+      (this.selectedConfig.ventirad ? this.selectedConfig.ventirad.price : 0) +
       (this.selectedConfig.deadMemory1 ? this.selectedConfig.deadMemory1.price : 0) +
       (this.selectedConfig.deadMemory2 ? this.selectedConfig.deadMemory2.price : 0)
     );
@@ -230,8 +231,16 @@ export default class ConfigMaker extends Vue {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  public isComplete(config) {
-    return config.gpu && config.cpu && config.mbe && config.psu && config.ram1 && config.computerCase && (config.hd1 || config.hd2);
+  public get isComplete(): boolean {
+    return (
+      this.selectedConfig.gpu &&
+      this.selectedConfig.cpu &&
+      this.selectedConfig.mbe &&
+      this.selectedConfig.psu &&
+      this.selectedConfig.ram1 &&
+      this.selectedConfig.computerCase &&
+      (this.selectedConfig.deadMemory1 != null || this.selectedConfig.deadMemory2 != null)
+    );
   }
 
   private retrieveUserConfigs() {

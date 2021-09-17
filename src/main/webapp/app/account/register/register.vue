@@ -1,6 +1,9 @@
 <template>
   <v-dialog v-model="showDialog" max-width="600" id="form">
     <v-card class="p-3">
+      <v-overlay :value="loading" absolute>
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
       <v-card-title class="font-weight-bold text-h4 mb-4">
         <span id="register">S'inscrire</span>
       </v-card-title>
@@ -65,9 +68,9 @@
                     hide-details="auto"
                     outlined
                     required
+                    class="mr-2"
                   >
                   </v-text-field>
-                  <v-spacer class="mx-2"></v-spacer>
                   <v-text-field
                     v-model="informations.firstName"
                     :rules="rules.requiredField"
@@ -117,9 +120,9 @@
                     hide-details="auto"
                     outlined
                     required
+                    class="flex-grow-0 mr-2"
                   >
                   </v-text-field>
-                  <v-spacer class="mx-2"></v-spacer>
                   <v-text-field
                     v-model="informations.streetName"
                     :rules="rules.requiredField"
@@ -128,6 +131,7 @@
                     hide-details="auto"
                     outlined
                     required
+                    class="flex-grow-1"
                   >
                   </v-text-field>
                 </v-row>
@@ -145,7 +149,6 @@
                     required
                   >
                   </v-text-field>
-                  <v-spacer class="mx-2"></v-spacer>
                   <v-text-field
                     v-model="informations.zipCode"
                     :rules="rules.requiredField"
@@ -154,6 +157,7 @@
                     hide-details="auto"
                     outlined
                     required
+                    class="ml-2"
                   >
                   </v-text-field>
                 </v-row>
