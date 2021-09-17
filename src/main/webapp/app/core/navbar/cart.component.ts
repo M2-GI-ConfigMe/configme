@@ -13,7 +13,7 @@ export default class Cart extends Vue {
   public components = ['computerCase', 'mbe', 'cpu', 'ram1', 'ram2', 'ventirad', 'psu', 'gpu', 'deadMemory1', 'deadMemory2'];
 
   public get cart(): any {
-    let configs = this.$store.getters.cart;
+    const configs = this.$store.getters.cart;
     configs.forEach((el, index, arr) => {
       arr[index] = Object.entries(el).reduce((a, [k, v]) => ((v && this.components.includes(k)) || k == 'name' ? ((a[k] = v), a) : a), {});
     });
@@ -42,11 +42,11 @@ export default class Cart extends Vue {
       return;
     }
 
-    let formattedCart = [];
+    const formattedCart = [];
 
     this.cart.forEach(config => {
-      let formattedConfig = {};
-      for (let itm in config) {
+      const formattedConfig = {};
+      for (const itm in config) {
         if (this.components.includes(itm)) {
           formattedConfig[itm + 'Id'] = config[itm]['id'];
         }
@@ -54,7 +54,6 @@ export default class Cart extends Vue {
       formattedCart.push(formattedConfig);
     });
 
-    console.log(formattedCart);
     /*
             Remove from comments once back is ready.
 
