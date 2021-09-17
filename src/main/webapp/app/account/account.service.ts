@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Store } from 'vuex';
 import VueRouter from 'vue-router';
 import TranslationService from '@/locale/translation.service';
+import { resolve } from 'path/posix';
 
 export default class AccountService {
   constructor(private store: Store<any>, private translationService: TranslationService, private router: VueRouter) {
@@ -10,6 +11,18 @@ export default class AccountService {
 
   public init(): void {
     this.retrieveProfiles();
+  }
+
+  public deleteUser(id: any): Promise<any> {
+    return axios
+      .delete('api/users/' + id)
+      .then(res => {
+        localStorage.removeItem('jhi-authenticationToken');
+        sessionStorage.removeItem('jhi-authenticationToken');
+        this.store.commit('logout');
+        this.router.push('/', () => {});
+      })
+      .catch();
   }
 
   public retrieveProfiles(): Promise<boolean> {
@@ -33,6 +46,7 @@ export default class AccountService {
         .get('api/account')
         .then(response => {
           this.store.commit('authenticate');
+          console.log(response);
           const account = response.data;
           if (account) {
             this.store.commit('authenticated', account);

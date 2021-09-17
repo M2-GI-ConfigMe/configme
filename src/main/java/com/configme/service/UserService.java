@@ -155,6 +155,7 @@ public class UserService {
         user.setEmail(userDTO.getEmail().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
+
         user.setBirthdate(userDTO.getBirthdate());
         user.setAddress(userDTO.getAddress());
 
@@ -202,8 +203,10 @@ public class UserService {
                     user.setEmail(userDTO.getEmail().toLowerCase());
                     user.setFirstName(userDTO.getFirstName());
                     user.setLastName(userDTO.getLastName());
+
                     user.setBirthdate(userDTO.getBirthdate());
                     user.setAddress(userDTO.getAddress());
+
                     user.setImageUrl(userDTO.getImageUrl());
                     user.setActivated(userDTO.isActivated());
                     user.setLangKey(userDTO.getLangKey());

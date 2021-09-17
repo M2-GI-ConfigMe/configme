@@ -58,9 +58,11 @@ describe('Register Component', () => {
     expect(register.errorEmailExists).toBe('');
     expect(register.errorUserExists).toBe('');
     expect(register.confirmPassword).toBe(null);
-    expect(register.informations.email).toBe(undefined);
-    expect(register.informations.password).toBe(undefined);
+    expect(register.account.email).toBe(undefined);
+    expect(register.account.password).toBe(undefined);
   });
+
+  // TODO
 
   // it('should register when password match', async () => {
   //   axiosStub.post.resolves();
