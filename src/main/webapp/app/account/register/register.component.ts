@@ -27,22 +27,22 @@ const validations: any = {
       required,
     },
     address: {
-      addressZipCode: {
+      zipCode: {
         required,
       },
-      addressCity: {
+      city: {
         required,
       },
-      addressStreetName: {
+      streetName: {
         required,
       },
-      addressStreetNumber: {
+      streetNumber: {
         required,
       },
-      addressFirstName: {
+      firstName: {
         required,
       },
-      addressLastName: {
+      lastName: {
         required,
       },
     },
@@ -62,18 +62,6 @@ export default class Register extends Vue {
   @Inject('loginService') private loginService: () => LoginService;
 
   public account: IUser = new User();
-
-  // public informations: any = {
-  //   email: undefined,
-  //   password: undefined,
-  //   lastName: undefined,
-  //   firstName: undefined,
-  //   birthdate: undefined,
-  //   streetNumber: undefined,
-  //   streetName: undefined,
-  //   city: undefined,
-  //   zipCode: undefined,
-  // };
 
   //Form gestion
   public rules = {
@@ -113,22 +101,10 @@ export default class Register extends Vue {
     this.errorUserExists = null;
     this.errorEmailExists = null;
 
-    // registerAccount.langKey = this.$store.getters.currentLanguage;
-    // registerAccount.email = this.informations.email;
-    // registerAccount.password = this.informations.password;
-    // registerAccount.lastName = this.informations.lastName;
-    // registerAccount.firstName = this.informations.firstName;
-    // registerAccount.birthdate = this.informations.birthdate;
-
-    // registerAccount.addressZipCode = this.informations.zipCode
-    // registerAccount.addressCity = this.informations.city
-    // registerAccount.addressStreetName = this.informations.streetName
-    // registerAccount.addressStreetNumber = this.informations.streetNumber
-    // registerAccount.addressFirstName = this.informations.firstName
-    // registerAccount.addressLastName = this.informations.lastName
-    console.log(this.$v.account);
+    this.account.address.firstName = this.account.firstName;
+    this.account.address.lastName = this.account.lastName;
     this.registerService()
-      .processRegistration(this.$v.account)
+      .processRegistration(this.account)
       .then(() => {
         this.success = true;
         this.$root.$emit('bv::hide::modal', 'register-page');

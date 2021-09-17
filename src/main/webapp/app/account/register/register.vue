@@ -99,7 +99,7 @@
           <div class="form-group">
             <v-row v-bind:no-gutters="true">
               <v-text-field
-                v-model="$v.account.address.addressStreetNumber.$model"
+                v-model="$v.account.address.streetNumber.$model"
                 :rules="rules.requiredField"
                 label="N° de Rue"
                 placeholder="5"
@@ -110,7 +110,7 @@
               </v-text-field>
               <v-spacer class="mx-2"></v-spacer>
               <v-text-field
-                v-model="$v.account.address.addressStreetName.$model"
+                v-model="$v.account.address.streetName.$model"
                 :rules="rules.requiredField"
                 label="Rue"
                 placeholder="Rue de l'exemple"
@@ -125,7 +125,7 @@
           <div class="form-group">
             <v-row v-bind:no-gutters="true">
               <v-text-field
-                v-model="$v.account.address.addressCity.$model"
+                v-model="$v.account.address.city.$model"
                 :rules="rules.requiredField"
                 label="Ville"
                 placeholder="Grenoble"
@@ -136,7 +136,7 @@
               </v-text-field>
               <v-spacer class="mx-2"></v-spacer>
               <v-text-field
-                v-model="$v.account.address.addressZipCode.$model"
+                v-model="$v.account.address.zipCode.$model"
                 :rules="rules.requiredField"
                 label="Code postal"
                 placeholder="38000"
