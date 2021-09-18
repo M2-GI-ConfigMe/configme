@@ -1,6 +1,6 @@
 <template>
   <div class="height:100%">
-    <v-layout fill-height class="grad-bg" style="height: calc(100vh - 64px)">
+    <v-layout id="home" fill-height class="grad-bg" style="height: calc(100vh - 64px)">
       <v-container>
         <v-row no-gutters>
           <v-col class="pt-10 text-white" style="margin-top: 10vh">
