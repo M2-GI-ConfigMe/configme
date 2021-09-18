@@ -1,5 +1,5 @@
 <template>
-  <v-container id="configMaker" style="min-height: calc(100vh - 64px)" class="pt-10">
+  <v-container id="configMaker" style="min-height: calc(100vh - 64px)" class="pt-lg-10">
     <template v-if="isFetching">
       <v-container fluid fill-height style="background-color: rgba(255, 255, 255, 0.5)">
         <v-layout justify-center align-center>
@@ -9,20 +9,20 @@
     </template>
     <template v-else>
       <v-row no-gutters>
-        <v-col cols="9" class="pr-4">
-          <div class="mb-4 d-flex justify-content-between align-items-center">
-            <div>
-              <h1 class="font-weight-bold">
+        <v-col cols="12" lg="9" sm="12" class="pr-4">
+          <v-row no-gutters class="mb-4 justify-content-between align-items-center pt-lg-4">
+            <v-col cols="12" lg="9" sm="12" class="d-flex mb-lg-0 mb-2">
+              <span class="text-h4 font-weight-bold d-flex" style="overflow: hidden; text-overflow: ellipsis">
                 {{ selectedConfig.name }}
                 <v-tooltip top color="success" v-if="isComplete">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-icon class="mr-2 mb-1" color="success" x-large v-on="on" v-bind="attrs"> mdi-check-circle </v-icon>
+                    <v-icon class="ml-2" color="success" x-large v-on="on" v-bind="attrs"> mdi-check-circle </v-icon>
                   </template>
                   <span>Complète</span>
                 </v-tooltip>
-              </h1>
-            </div>
-            <div>
+              </span>
+            </v-col>
+            <v-col cols="12" lg="3" sm="12" class="text-lg-right">
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -56,17 +56,17 @@
                 </template>
                 <span>Supprimer</span>
               </v-tooltip>
-            </div>
-          </div>
+            </v-col>
+          </v-row>
           <v-row no-gutters>
-            <v-col>
+            <v-col cols="12" lg="7">
               <!-- Composant PC -->
               <v-sheet
                 v-for="(field, index) in configFields"
                 :key="index"
                 v-ripple="{ class: `primary--text` }"
                 style="cursor: pointer; user-select: none"
-                class="round px-6 py-1 mb-3 d-flex justify-content-between align-items-center w-75"
+                class="round px-6 py-1 mb-3 d-flex justify-content-between align-items-center w-100"
                 elevation="1"
                 :class="selectedConfig[field.key] ? 'selected-item' : ''"
                 @click="openDialog(field.key)"
@@ -89,16 +89,16 @@
                 </v-btn>
               </v-sheet>
             </v-col>
-            <v-col class="pt-2 flex-grow-0 d-flex flex-column justify-content-end">
+            <v-col cols="12" lg="5" class="pt-2 d-flex flex-column justify-content-end text-lg-right">
               <span class="h3 mb-0 align-self-end font-weight-bold"> Total : {{ getTotalPrice }}€ </span>
-              <v-btn color="primary" rounded @click="addToCart(selectedConfig)">
-                <v-icon>mdi-cart</v-icon>
+              <v-btn color="primary" class="align-self-end" rounded @click="addToCart(selectedConfig)">
+                <v-icon class="mr-1">mdi-cart-plus</v-icon>
                 Ajouter au panier
               </v-btn>
             </v-col>
           </v-row>
         </v-col>
-        <v-col class="d-flex flex-column">
+        <v-col cols="12" lg="3" class="mt-4 mt-lg-0 d-flex flex-column">
           <v-card style="border-radius: 1rem; flex: 1">
             <v-card-title class="d-flex justify-content-between">
               <span class="font-weight-bold h4 mb-0">Mes Configs</span>
