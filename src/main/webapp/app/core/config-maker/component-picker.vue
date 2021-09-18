@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="show" fullscreen transition="slide-x-reverse-transition" content-class="component-picker" @click:outside.stop>
       <v-card class="d-flex flex-column">
-        <v-toolbar dark color="primary" max-height="64">
+        <v-toolbar dark color="primary" max-height="64" style="position: sticky; top: 0">
           <v-btn icon dark @click="activated = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -47,7 +47,7 @@
             <template v-slot:item.capacity="{ item }"> {{ item.capacity }}Go </template>
             <template v-slot:item.power="{ item }"> {{ item.power }}W </template>
           </v-data-table>
-          <div class="text-center pt-2">
+          <div class="text-center pt-2 pagination-sticky">
             <v-pagination v-model="page" :length="pageCount"></v-pagination>
           </div>
         </v-card-text>
@@ -60,9 +60,20 @@
 <script lang="ts" src="./component-picker.component.ts"></script>
 
 <style>
+.pagination-sticky {
+  position: sticky;
+  bottom: 0;
+}
+
 .component-picker {
   width: 50%;
   right: 0;
   left: auto;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .component-picker {
+    width: 100%;
+  }
 }
 </style>
