@@ -1,6 +1,7 @@
 package com.configme;
 
 import com.configme.config.ApplicationProperties;
+import com.configme.service.AWSS3Service;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -10,6 +11,8 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
@@ -25,6 +28,9 @@ public class ConfigmeApp {
     private static final Logger log = LoggerFactory.getLogger(ConfigmeApp.class);
 
     private final Environment env;
+
+    @Autowired
+    private AWSS3Service awss3service;
 
     public ConfigmeApp(Environment env) {
         this.env = env;
@@ -55,6 +61,13 @@ public class ConfigmeApp {
             log.error(
                 "You have misconfigured your application! It should not " + "run with both the 'dev' and 'cloud' profiles at the same time."
             );
+        }
+
+        if (awss3service.doesBucketExist()) {
+            log.info("S3 bucket present");
+        } else {
+            log.error("S3 bucket is misconfigured, please set aws.bucketname in application-*.yml");
+            awss3service.printAllBuckets();
         }
     }
 
