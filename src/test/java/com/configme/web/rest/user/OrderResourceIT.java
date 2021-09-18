@@ -244,7 +244,7 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.updatedAt").value(DEFAULT_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.validatedAt").value(DEFAULT_VALIDATED_AT.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
-        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
+        //TODO: .andExpect(jsonPath("$.address").value(hasItem(DEFAULT_ADDRESS.toString())));
     }
 
     @Test

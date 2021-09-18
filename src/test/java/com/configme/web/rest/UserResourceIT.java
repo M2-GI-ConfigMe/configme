@@ -46,8 +46,8 @@ class UserResourceIT {
     private static final String DEFAULT_PASSWORD = "passjohndoe1";
     private static final String UPDATED_PASSWORD = "passjhipster1";
 
-    private static final String DEFAULT_EMAIL = "johndoe@localhost";
-    private static final String UPDATED_EMAIL = "jhipster@localhost";
+    private static final String DEFAULT_EMAIL = "johndoe@localhost.fr";
+    private static final String UPDATED_EMAIL = "jhipster@localhost.fr";
 
     private static final String DEFAULT_FIRSTNAME = "john";
     private static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
@@ -230,6 +230,7 @@ class UserResourceIT {
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
+    //TODO: add Address
     @Test
     @Transactional
     void getAllUsers() throws Exception {
@@ -245,34 +246,34 @@ class UserResourceIT {
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].birthdate").value(hasItem(DEFAULT_BIRTHDATE.toString())))
-            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            // .andExpect(jsonPath("$.[*].address",).value(hasItem(DEFAULT_ADDRESS)))
             .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
             .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
     }
 
-    // @Test
-    // @Transactional
-    // void getUser() throws Exception {
-    //     // Initialize the database
-    //     userRepository.saveAndFlush(user);
+    @Test
+    @Transactional
+    void getUser() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
 
-    //     assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNull();
+        assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNull();
 
-    //     // Get the user
-    //     restUserMockMvc
-    //         .perform(get("/api/admin/users/{email}", user.getEmail()))
-    //         .andExpect(status().isOk())
-    //         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-    //         .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
-    //         .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
-    //         .andExpect(jsonPath("$.email").value(user.getEmail()))
-    //         .andExpect(jsonPath("$.birthdate").value(DEFAULT_BIRTHDATE))
-    //         .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
-    //         .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGEURL))
-    //         .andExpect(jsonPath("$.langKey").value(DEFAULT_LANGKEY));
+        // Get the user
+        restUserMockMvc
+            .perform(get("/api/admin/users/{email}", user.getEmail()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
+            .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
+            .andExpect(jsonPath("$.email").value(user.getEmail()))
+            .andExpect(jsonPath("$.birthdate").value(DEFAULT_BIRTHDATE.toString()))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
+            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGEURL))
+            .andExpect(jsonPath("$.langKey").value(DEFAULT_LANGKEY));
 
-    //     assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNotNull();
-    // }
+        assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNotNull();
+    }
 
     @Test
     @Transactional
@@ -280,130 +281,131 @@ class UserResourceIT {
         restUserMockMvc.perform(get("/api/admin/users/unknown")).andExpect(status().isNotFound());
     }
 
-    // @Test
-    // @Transactional
-    // void updateUser() throws Exception {
-    //     // Initialize the database
-    //     userRepository.saveAndFlush(user);
-    //     int databaseSizeBeforeUpdate = userRepository.findAll().size();
+    @Test
+    @Transactional
+    void updateUser() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+        int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
-    //     // Update the user
-    //     User updatedUser = userRepository.findById(user.getId()).get();
+        // Update the user
+        User updatedUser = userRepository.findById(user.getId()).get();
 
-    //     ManagedUserVM managedUserVM = new ManagedUserVM();
-    //     managedUserVM.setId(updatedUser.getId());
-    //     managedUserVM.setEmail(updatedUser.getEmail());
-    //     managedUserVM.setPassword(UPDATED_PASSWORD);
-    //     managedUserVM.setFirstName(UPDATED_FIRSTNAME);
-    //     managedUserVM.setLastName(UPDATED_LASTNAME);
-    //     managedUserVM.setBirthdate(UPDATED_BIRTHDATE);
-    //     managedUserVM.setAddress(UPDATED_ADDRESS);
-    //     managedUserVM.setActivated(updatedUser.isActivated());
-    //     managedUserVM.setImageUrl(UPDATED_IMAGEURL);
-    //     managedUserVM.setLangKey(UPDATED_LANGKEY);
-    //     managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
-    //     managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
-    //     managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
-    //     managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
-    //     managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        ManagedUserVM managedUserVM = new ManagedUserVM();
+        managedUserVM.setId(updatedUser.getId());
+        managedUserVM.setEmail(updatedUser.getEmail());
+        managedUserVM.setPassword(UPDATED_PASSWORD);
+        managedUserVM.setFirstName(UPDATED_FIRSTNAME);
+        managedUserVM.setLastName(UPDATED_LASTNAME);
+        managedUserVM.setBirthdate(UPDATED_BIRTHDATE);
+        managedUserVM.setAddress(UPDATED_ADDRESS);
+        managedUserVM.setActivated(updatedUser.isActivated());
+        managedUserVM.setImageUrl(UPDATED_IMAGEURL);
+        managedUserVM.setLangKey(UPDATED_LANGKEY);
+        managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
+        managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
+        managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
+        managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-    //     restUserMockMvc
-    //         .perform(
-    //             put("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
-    //         )
-    //         .andExpect(status().isOk());
+        restUserMockMvc
+            .perform(
+                put("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
+            )
+            .andExpect(status().isOk());
 
-    //     // Validate the User in the database
-    //     assertPersistedUsers(
-    //         users -> {
-    //             assertThat(users).hasSize(databaseSizeBeforeUpdate);
-    //             User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().get();
-    //             assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
-    //             assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
-    //             assertThat(testUser.getBirthdate()).isEqualTo(UPDATED_BIRTHDATE);
-    //             assertThat(testUser.getAddress()).isEqualTo(UPDATED_ADDRESS);
-    //             assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
-    //             assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
-    //         }
-    //     );
-    // }
+        // Validate the User in the database
+        assertPersistedUsers(
+            users -> {
+                assertThat(users).hasSize(databaseSizeBeforeUpdate);
+                User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().get();
+                assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
+                assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
+                assertThat(testUser.getBirthdate()).isEqualTo(UPDATED_BIRTHDATE);
+                assertThat(testUser.getAddress()).isEqualTo(UPDATED_ADDRESS);
+                assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
+                assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+            }
+        );
+    }
 
-    // @Test
-    // @Transactional
-    // void updateUserExistingEmail() throws Exception {
-    //     // Initialize the database with 2 users
-    //     userRepository.saveAndFlush(user);
+    @Test
+    @Transactional
+    void updateUserExistingEmail() throws Exception {
+        // Initialize the database with 2 users
+        userRepository.saveAndFlush(user);
 
-    //     User anotherUser = new User();
-    //     anotherUser.setEmail("jhipster@localhost");
-    //     anotherUser.setPassword(RandomStringUtils.random(59)+"5");
-    //     anotherUser.setFirstName("java");
-    //     anotherUser.setLastName("hipster");
-    //     anotherUser.setBirthdate(LocalDate.of(2002,02,02));
-    //     anotherUser.setAddress(Address.of("java", "hipster", "5", "Rue de l'oublie", "Ville", "zip"));
-    //     anotherUser.setActivated(true);
-    //     anotherUser.setImageUrl("");
-    //     anotherUser.setLangKey("en");
-    //     userRepository.saveAndFlush(anotherUser);
+        User anotherUser = new User();
+        anotherUser.setEmail("jhipster@localhost");
+        anotherUser.setPassword(RandomStringUtils.random(59) + "5");
+        anotherUser.setFirstName("java");
+        anotherUser.setLastName("hipster");
+        anotherUser.setBirthdate(LocalDate.of(2002, 02, 02));
+        anotherUser.setAddress(Address.of("java", "hipster", "5", "Rue de l'oublie", "Ville", "zip"));
+        anotherUser.setActivated(true);
+        anotherUser.setImageUrl("");
+        anotherUser.setLangKey("en");
+        userRepository.saveAndFlush(anotherUser);
 
-    //     // Update the user
-    //     User updatedUser = userRepository.findById(user.getId()).get();
+        // Update the user
+        User updatedUser = userRepository.findById(user.getId()).get();
 
-    //     ManagedUserVM managedUserVM = new ManagedUserVM();
-    //     managedUserVM.setId(updatedUser.getId());
-    //     managedUserVM.setEmail("jhipster@localhost"); // this email should already be used by anotherUser
-    //     managedUserVM.setPassword(updatedUser.getPassword());
-    //     managedUserVM.setFirstName(updatedUser.getFirstName());
-    //     managedUserVM.setLastName(updatedUser.getLastName());
-    //     managedUserVM.setBirthdate(updatedUser.getBirthdate());
-    //     managedUserVM.setAddress(updatedUser.getAddress());
-    //     managedUserVM.setActivated(updatedUser.isActivated());
-    //     managedUserVM.setImageUrl(updatedUser.getImageUrl());
-    //     managedUserVM.setLangKey(updatedUser.getLangKey());
-    //     managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
-    //     managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
-    //     managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
-    //     managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
-    //     managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        ManagedUserVM managedUserVM = new ManagedUserVM();
+        managedUserVM.setId(updatedUser.getId());
+        managedUserVM.setEmail("jhipster@localhost"); // this email should already be used by anotherUser
+        managedUserVM.setPassword(updatedUser.getPassword());
+        managedUserVM.setFirstName(updatedUser.getFirstName());
+        managedUserVM.setLastName(updatedUser.getLastName());
+        managedUserVM.setBirthdate(updatedUser.getBirthdate());
+        managedUserVM.setAddress(updatedUser.getAddress());
+        managedUserVM.setActivated(updatedUser.isActivated());
+        managedUserVM.setImageUrl(updatedUser.getImageUrl());
+        managedUserVM.setLangKey(updatedUser.getLangKey());
+        managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
+        managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
+        managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
+        managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-    //     restUserMockMvc
-    //         .perform(
-    //             put("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
-    //         )
-    //         .andExpect(status().isBadRequest());
-    // }
+        restUserMockMvc
+            .perform(
+                put("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
+            )
+            .andExpect(status().isBadRequest());
+    }
 
-    // @Test
-    // @Transactional
-    // void deleteUser() throws Exception {
-    //     // Initialize the database
-    //     userRepository.saveAndFlush(user);
-    //     int databaseSizeBeforeDelete = userRepository.findAll().size();
+    @Test
+    @Transactional
+    @WithMockUser(DEFAULT_EMAIL)
+    void deleteConnectedUser() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+        int databaseSizeBeforeDelete = userRepository.findAll().size();
 
-    //     // Delete the user
-    //     restUserMockMvc
-    //         .perform(delete("/api/admin/users/{email}", user.getEmail()).accept(MediaType.APPLICATION_JSON))
-    //         .andExpect(status().isNoContent());
+        // Delete the user
+        restUserMockMvc
+            .perform(delete("/api/users/{id}", user.getId()).accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
 
-    //     assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNull();
+        assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNull();
 
-    //     // Validate the database is empty
-    //     assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeDelete - 1));
-    // }
+        // Validate the database is empty
+        assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeDelete - 1));
+    }
 
-    // @Test
-    // void testUserEquals() throws Exception {
-    //     TestUtil.equalsVerifier(User.class);
-    //     User user1 = new User();
-    //     user1.setId(DEFAULT_ID);
-    //     User user2 = new User();
-    //     user2.setId(user1.getId());
-    //     assertThat(user1).isEqualTo(user2);
-    //     user2.setId(2L);
-    //     assertThat(user1).isNotEqualTo(user2);
-    //     user1.setId(null);
-    //     assertThat(user1).isNotEqualTo(user2);
-    // }
+    @Test
+    void testUserEquals() throws Exception {
+        TestUtil.equalsVerifier(User.class);
+        User user1 = new User();
+        user1.setId(DEFAULT_ID);
+        User user2 = new User();
+        user2.setId(user1.getId());
+        assertThat(user1).isEqualTo(user2);
+        user2.setId(2L);
+        assertThat(user1).isNotEqualTo(user2);
+        user1.setId(null);
+        assertThat(user1).isNotEqualTo(user2);
+    }
 
     @Test
     void testUserDTOtoUser() {

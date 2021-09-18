@@ -151,18 +151,18 @@ class GpuResourceITUser implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(gpu.getId().intValue())))
-            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
-            .andExpect(jsonPath("$.[*].memory").value(hasItem(DEFAULT_MEMORY)))
-            .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
-            .andExpect(jsonPath("$.[*].clockSpeed").value(hasItem(DEFAULT_CLOCK_SPEED)))
-            .andExpect(jsonPath("$.[*].lithography").value(hasItem(DEFAULT_LITHOGRAPHY)))
-            .andExpect(jsonPath("$.[*].output").value(hasItem(DEFAULT_OUTPUT)))
-            .andExpect(jsonPath("$.[*].inputPower").value(hasItem(DEFAULT_INPUT_POWER)))
-            .andExpect(jsonPath("$.[*].bus").value(hasItem(DEFAULT_BUS.toString())))
-            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
-            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
-            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(gpu.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].memory").value(hasItem(DEFAULT_MEMORY)))
+            .andExpect(jsonPath("$.content.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
+            .andExpect(jsonPath("$.content.[*].clockSpeed").value(hasItem(DEFAULT_CLOCK_SPEED)))
+            .andExpect(jsonPath("$.content.[*].lithography").value(hasItem(DEFAULT_LITHOGRAPHY)))
+            .andExpect(jsonPath("$.content.[*].output").value(hasItem(DEFAULT_OUTPUT)))
+            .andExpect(jsonPath("$.content.[*].inputPower").value(hasItem(DEFAULT_INPUT_POWER)))
+            .andExpect(jsonPath("$.content.[*].bus").value(hasItem(DEFAULT_BUS.toString())))
+            .andExpect(jsonPath("$.content.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.content.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.content.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
         getAllProductAssertProductField(action);
     }

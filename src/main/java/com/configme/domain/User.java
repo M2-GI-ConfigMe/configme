@@ -252,8 +252,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
             "email='" + email + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", birthdate='" + birthdate.toString() + '\'' +
-            ", address='" + address.toString() + '\'' +
+            ", birthdate='" + birthdate + '\'' +
+            ", address='" + address + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +

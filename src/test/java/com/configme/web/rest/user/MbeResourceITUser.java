@@ -163,18 +163,18 @@ class MbeResourceITUser implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(mbe.getId().intValue())))
-            .andExpect(jsonPath("$.[*].socketCpu").value(hasItem(DEFAULT_SOCKET_CPU.toString())))
-            .andExpect(jsonPath("$.[*].ramType").value(hasItem(DEFAULT_RAM_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
-            .andExpect(jsonPath("$.[*].ramSizeMax").value(hasItem(DEFAULT_RAM_SIZE_MAX.doubleValue())))
-            .andExpect(jsonPath("$.[*].pciOutputs").value(hasItem(DEFAULT_PCI_OUTPUTS)))
-            .andExpect(jsonPath("$.[*].displayOutput").value(hasItem(DEFAULT_DISPLAY_OUTPUT)))
-            .andExpect(jsonPath("$.[*].storageOutput").value(hasItem(DEFAULT_STORAGE_OUTPUT)))
-            .andExpect(jsonPath("$.[*].insideIO").value(hasItem(DEFAULT_INSIDE_IO)))
-            .andExpect(jsonPath("$.[*].backPanelOutput").value(hasItem(DEFAULT_BACK_PANEL_OUTPUT)))
-            .andExpect(jsonPath("$.[*].bios").value(hasItem(DEFAULT_BIOS)))
-            .andExpect(jsonPath("$.[*].format").value(hasItem(DEFAULT_FORMAT.toString())));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(mbe.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].socketCpu").value(hasItem(DEFAULT_SOCKET_CPU.toString())))
+            .andExpect(jsonPath("$.content.[*].ramType").value(hasItem(DEFAULT_RAM_TYPE.toString())))
+            .andExpect(jsonPath("$.content.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].ramSizeMax").value(hasItem(DEFAULT_RAM_SIZE_MAX.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].pciOutputs").value(hasItem(DEFAULT_PCI_OUTPUTS)))
+            .andExpect(jsonPath("$.content.[*].displayOutput").value(hasItem(DEFAULT_DISPLAY_OUTPUT)))
+            .andExpect(jsonPath("$.content.[*].storageOutput").value(hasItem(DEFAULT_STORAGE_OUTPUT)))
+            .andExpect(jsonPath("$.content.[*].insideIO").value(hasItem(DEFAULT_INSIDE_IO)))
+            .andExpect(jsonPath("$.content.[*].backPanelOutput").value(hasItem(DEFAULT_BACK_PANEL_OUTPUT)))
+            .andExpect(jsonPath("$.content.[*].bios").value(hasItem(DEFAULT_BIOS)))
+            .andExpect(jsonPath("$.content.[*].format").value(hasItem(DEFAULT_FORMAT.toString())));
 
         getAllProductAssertProductField(action);
     }
