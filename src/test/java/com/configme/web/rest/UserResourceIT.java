@@ -58,7 +58,7 @@ class UserResourceIT {
     private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(1999, 9, 9);
     private static final LocalDate UPDATED_BIRTHDATE = LocalDate.of(2000, 9, 9);
 
-    private static final Address DEFAULT_ADDRESS = Address.of("john", "doe", "5", "Rue de l'exmple", "Grenoble", "38000");
+    private static final Address DEFAULT_ADDRESS = Address.of("john", "doe", "0", "Rue de l'exmple", "Grenoble", "38000");
     private static final Address UPDATED_ADDRESS = Address.of(
         "JhipsterFirstName",
         "jhipsterLastName",
@@ -131,124 +131,124 @@ class UserResourceIT {
         user = initTestUser(userRepository, em);
     }
 
-    // @Test
-    // @Transactional
-    // void createUser() throws Exception {
-    //     int databaseSizeBeforeCreate = userRepository.findAll().size();
+    @Test
+    @Transactional
+    void createUser() throws Exception {
+        int databaseSizeBeforeCreate = userRepository.findAll().size();
 
-    //     // Create the User
-    //     ManagedUserVM managedUserVM = new ManagedUserVM();
-    //     managedUserVM.setEmail(DEFAULT_EMAIL);
-    //     managedUserVM.setPassword(DEFAULT_PASSWORD);
-    //     managedUserVM.setFirstName(DEFAULT_FIRSTNAME);
-    //     managedUserVM.setLastName(DEFAULT_LASTNAME);
-    //     managedUserVM.setBirthdate(DEFAULT_BIRTHDATE);
-    //     managedUserVM.setAddress(DEFAULT_ADDRESS);
-    //     managedUserVM.setActivated(true);
-    //     managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
-    //     managedUserVM.setLangKey(DEFAULT_LANGKEY);
-    //     managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        // Create the User
+        ManagedUserVM managedUserVM = new ManagedUserVM();
+        managedUserVM.setEmail(DEFAULT_EMAIL);
+        managedUserVM.setPassword(DEFAULT_PASSWORD);
+        managedUserVM.setFirstName(DEFAULT_FIRSTNAME);
+        managedUserVM.setLastName(DEFAULT_LASTNAME);
+        managedUserVM.setBirthdate(DEFAULT_BIRTHDATE);
+        managedUserVM.setAddress(DEFAULT_ADDRESS);
+        managedUserVM.setActivated(true);
+        managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
+        managedUserVM.setLangKey(DEFAULT_LANGKEY);
+        managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-    //     restUserMockMvc
-    //         .perform(
-    //             post("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
-    //         )
-    //         .andExpect(status().isCreated());
+        restUserMockMvc
+            .perform(
+                post("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
+            )
+            .andExpect(status().isCreated());
 
-    //     // Validate the User in the database
-    //     assertPersistedUsers(
-    //         users -> {
-    //             assertThat(users).hasSize(databaseSizeBeforeCreate + 1);
-    //             User testUser = users.get(users.size() - 1);
-    //             assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
-    //             assertThat(testUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
-    //             assertThat(testUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
-    //             assertThat(testUser.getBirthdate()).isEqualTo(DEFAULT_BIRTHDATE);
-    //             assertThat(testUser.getAddress()).isEqualTo(DEFAULT_ADDRESS);
-    //             assertThat(testUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
-    //             assertThat(testUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
-    //         }
-    //     );
-    // }
+        // Validate the User in the database
+        assertPersistedUsers(
+            users -> {
+                assertThat(users).hasSize(databaseSizeBeforeCreate + 1);
+                User testUser = users.get(users.size() - 1);
+                assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
+                assertThat(testUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
+                assertThat(testUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
+                assertThat(testUser.getBirthdate()).isEqualTo(DEFAULT_BIRTHDATE);
+                assertThat(testUser.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+                assertThat(testUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
+                assertThat(testUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+            }
+        );
+    }
 
-    // @Test
-    // @Transactional
-    // void createUserWithExistingId() throws Exception {
-    //     int databaseSizeBeforeCreate = userRepository.findAll().size();
+    @Test
+    @Transactional
+    void createUserWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = userRepository.findAll().size();
 
-    //     ManagedUserVM managedUserVM = new ManagedUserVM();
-    //     managedUserVM.setId(DEFAULT_ID);
-    //     managedUserVM.setEmail(DEFAULT_EMAIL);
-    //     managedUserVM.setPassword(DEFAULT_PASSWORD);
-    //     managedUserVM.setFirstName(DEFAULT_FIRSTNAME);
-    //     managedUserVM.setLastName(DEFAULT_LASTNAME);
-    //     managedUserVM.setBirthdate(DEFAULT_BIRTHDATE);
-    //     managedUserVM.setAddress(DEFAULT_ADDRESS);
-    //     managedUserVM.setActivated(true);
-    //     managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
-    //     managedUserVM.setLangKey(DEFAULT_LANGKEY);
-    //     managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        ManagedUserVM managedUserVM = new ManagedUserVM();
+        managedUserVM.setId(DEFAULT_ID);
+        managedUserVM.setEmail(DEFAULT_EMAIL);
+        managedUserVM.setPassword(DEFAULT_PASSWORD);
+        managedUserVM.setFirstName(DEFAULT_FIRSTNAME);
+        managedUserVM.setLastName(DEFAULT_LASTNAME);
+        managedUserVM.setBirthdate(DEFAULT_BIRTHDATE);
+        managedUserVM.setAddress(DEFAULT_ADDRESS);
+        managedUserVM.setActivated(true);
+        managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
+        managedUserVM.setLangKey(DEFAULT_LANGKEY);
+        managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-    //     // An entity with an existing ID cannot be created, so this API call must fail
-    //     restUserMockMvc
-    //         .perform(
-    //             post("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
-    //         )
-    //         .andExpect(status().isBadRequest());
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restUserMockMvc
+            .perform(
+                post("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
+            )
+            .andExpect(status().isBadRequest());
 
-    //     // Validate the User in the database
-    //     assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
-    // }
+        // Validate the User in the database
+        assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
+    }
 
-    // @Test
-    // @Transactional
-    // void createUserWithExistingEmail() throws Exception {
-    //     // Initialize the database
-    //     userRepository.saveAndFlush(user);
-    //     int databaseSizeBeforeCreate = userRepository.findAll().size();
+    @Test
+    @Transactional
+    void createUserWithExistingEmail() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+        int databaseSizeBeforeCreate = userRepository.findAll().size();
 
-    //     ManagedUserVM managedUserVM = new ManagedUserVM();
-    //     managedUserVM.setEmail(DEFAULT_EMAIL); // this email should already be used
-    //     managedUserVM.setPassword(DEFAULT_PASSWORD);
-    //     managedUserVM.setFirstName(DEFAULT_FIRSTNAME);
-    //     managedUserVM.setLastName(DEFAULT_LASTNAME);
-    //     managedUserVM.setBirthdate(DEFAULT_BIRTHDATE);
-    //     managedUserVM.setAddress(UPDATED_ADDRESS);
-    //     managedUserVM.setActivated(true);
-    //     managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
-    //     managedUserVM.setLangKey(DEFAULT_LANGKEY);
-    //     managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        ManagedUserVM managedUserVM = new ManagedUserVM();
+        managedUserVM.setEmail(DEFAULT_EMAIL); // this email should already be used
+        managedUserVM.setPassword(DEFAULT_PASSWORD);
+        managedUserVM.setFirstName(DEFAULT_FIRSTNAME);
+        managedUserVM.setLastName(DEFAULT_LASTNAME);
+        managedUserVM.setBirthdate(DEFAULT_BIRTHDATE);
+        managedUserVM.setAddress(UPDATED_ADDRESS);
+        managedUserVM.setActivated(true);
+        managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
+        managedUserVM.setLangKey(DEFAULT_LANGKEY);
+        managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-    //     // Create the User
-    //     restUserMockMvc
-    //         .perform(
-    //             post("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
-    //         )
-    //         .andExpect(status().isBadRequest());
+        // Create the User
+        restUserMockMvc
+            .perform(
+                post("/api/admin/users").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(managedUserVM))
+            )
+            .andExpect(status().isBadRequest());
 
-    //     // Validate the User in the database
-    //     assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
-    // }
+        // Validate the User in the database
+        assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
+    }
 
-    // @Test
-    // @Transactional
-    // void getAllUsers() throws Exception {
-    //     // Initialize the database
-    //     userRepository.saveAndFlush(user);
+    @Test
+    @Transactional
+    void getAllUsers() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
 
-    //     // Get all the users
-    //     restUserMockMvc
-    //         .perform(get("/api/admin/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
-    //         .andExpect(status().isOk())
-    //         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-    //         .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRSTNAME)))
-    //         .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
-    //         .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-    //         .andExpect(jsonPath("$.[*].birthdate").value(hasItem(DEFAULT_BIRTHDATE)))
-    //         .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
-    //         .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
-    //         .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
-    // }
+        // Get all the users
+        restUserMockMvc
+            .perform(get("/api/admin/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRSTNAME)))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].birthdate").value(hasItem(DEFAULT_BIRTHDATE.toString())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
+            .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
+    }
 
     // @Test
     // @Transactional
