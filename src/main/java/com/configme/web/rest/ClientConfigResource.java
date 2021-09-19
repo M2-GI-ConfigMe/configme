@@ -69,7 +69,8 @@ public class ClientConfigResource {
             .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
         User owner = clientConfig.getUser();
         boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
-        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+
+        if (!isAdmin && (owner == null || !user.getId().equals(owner.getId()))) {
             throw new AccessDeniedException("User is not authorized");
         }
 
@@ -119,7 +120,7 @@ public class ClientConfigResource {
             .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
         User owner = c.getUser();
         boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
-        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+        if (!isAdmin && (owner == null || !user.getId().equals(owner.getId()))) {
             throw new AccessDeniedException("User is not authorized");
         }
 
@@ -165,7 +166,7 @@ public class ClientConfigResource {
             .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
         User owner = c.getUser();
         boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
-        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+        if (!isAdmin && (owner == null || !user.getId().equals(owner.getId()))) {
             throw new AccessDeniedException("User is not authorized");
         }
 
@@ -268,7 +269,7 @@ public class ClientConfigResource {
             .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
         User owner = clientConfig.getUser();
         boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
-        if (!isAdmin && owner != null && user.getId() != owner.getId()) {
+        if (!isAdmin && (owner == null || !user.getId().equals(owner.getId()))) {
             throw new AccessDeniedException("User is not authorized");
         }
 
