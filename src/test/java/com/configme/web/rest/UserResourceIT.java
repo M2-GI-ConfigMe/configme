@@ -376,15 +376,15 @@ class UserResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser(DEFAULT_EMAIL)
-    void deleteConnectedUser() throws Exception {
+    @WithMockUser(authorities = "ROLE_ADMIN")
+    void deleteUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
         int databaseSizeBeforeDelete = userRepository.findAll().size();
 
         // Delete the user
         restUserMockMvc
-            .perform(delete("/api/users/{id}", user.getId()).accept(MediaType.APPLICATION_JSON))
+            .perform(delete("/api/admin/users/{email}", user.getEmail()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNull();
@@ -396,9 +396,9 @@ class UserResourceIT {
     @Test
     void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(User.class);
-        User user1 = new User();
+        User user1 = createEntity(em);
         user1.setId(DEFAULT_ID);
-        User user2 = new User();
+        User user2 = createEntity(em);
         user2.setId(user1.getId());
         assertThat(user1).isEqualTo(user2);
         user2.setId(2L);
