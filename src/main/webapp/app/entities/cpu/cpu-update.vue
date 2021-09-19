@@ -15,72 +15,74 @@
             <input type="text" class="form-control" id="id" name="id" v-model="cpu.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="computer-case-name">Nom</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="cpu-name">Nom</label>
             <input
               type="text"
               class="form-control"
               name="name"
-              id="computer-case-name"
+              id="cpu-name"
               data-cy="name"
               :class="{ valid: !$v.cpu.name.$invalid, invalid: $v.cpu.name.$invalid }"
               v-model="$v.cpu.name.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="computer-case-price">Prix</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="cpu-price">Prix</label>
             <input
               type="text"
               class="form-control"
               name="price"
-              id="computer-case-price"
+              id="cpu-price"
               data-cy="price"
               :class="{ valid: !$v.cpu.price.$invalid, invalid: $v.cpu.price.$invalid }"
               v-model="$v.cpu.price.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="computer-case-discount">Réduction</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="cpu-discount">Réduction</label>
             <input
               type="text"
               class="form-control"
               name="discount"
-              id="computer-case-discount"
+              id="cpu-discount"
               data-cy="discount"
               :class="{ valid: !$v.cpu.discount.$invalid, invalid: $v.cpu.discount.$invalid }"
               v-model="$v.cpu.discount.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="computer-case-stock">Stock</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="cpu-stock">Stock</label>
             <input
               type="text"
               class="form-control"
               name="stock"
-              id="computer-case-stock"
+              id="cpu-stock"
               data-cy="stock"
               :class="{ valid: !$v.cpu.stock.$invalid, invalid: $v.cpu.stock.$invalid }"
               v-model="$v.cpu.stock.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="cpu-img">Image</label>
             <input
-              type="text"
+              type="file"
               class="form-control"
               name="img"
-              id="computer-case-img"
+              id="cpu-img"
+              ref="img"
               data-cy="img"
+              accept="image/*"
+              v-on:change="onImageSelected()"
               :class="{ valid: !$v.cpu.img.$invalid, invalid: $v.cpu.img.$invalid }"
-              v-model="$v.cpu.img.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="computer-case-brand">Marque</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="cpu-brand">Marque</label>
             <input
               type="text"
               class="form-control"
               name="brand"
-              id="computer-case-brand"
+              id="cpu-brand"
               data-cy="brand"
               :class="{ valid: !$v.cpu.brand.$invalid, invalid: $v.cpu.brand.$invalid }"
               v-model="$v.cpu.brand.$model"

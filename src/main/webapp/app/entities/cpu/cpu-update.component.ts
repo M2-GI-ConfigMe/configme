@@ -144,6 +144,13 @@ export default class CpuUpdate extends Vue {
       });
   }
 
+  public onImageSelected(): void {
+    const formData = new FormData();
+    const img_file = this.$refs.img.files[0];
+    formData.append('file', img_file);
+    this.cpuService().updateImg(this.cpu, formData);
+  }
+
   public previousState(): void {
     this.$router.go(-1);
   }

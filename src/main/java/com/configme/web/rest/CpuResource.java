@@ -2,7 +2,11 @@ package com.configme.web.rest;
 
 import com.configme.domain.Cpu;
 import com.configme.repository.CpuRepository;
+import com.configme.service.AWSS3Service;
 import com.configme.web.rest.errors.BadRequestAlertException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -10,13 +14,18 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.spring.web.json.Json;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -40,6 +49,9 @@ public class CpuResource {
     public CpuResource(CpuRepository cpuRepository) {
         this.cpuRepository = cpuRepository;
     }
+
+    @Autowired
+    private AWSS3Service awss3Service;
 
     /**
      * {@code POST  /cpus} : Create a new cpu.
@@ -93,6 +105,52 @@ public class CpuResource {
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cpu.getId().toString()))
             .body(result);
+    }
+
+    /**
+     * {@code PUT  /cpus/id/image} : Updates an existing cpu image
+     *
+     * @param id the id of the cpu.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the image AWSS3 url,
+     * or with status {@code 400 (Bad Request)} if the cpu is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the cpu image couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws IOException
+     */
+    @PutMapping(path = "/cpus/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<String> updateCpuImg(
+        @PathVariable(value = "id", required = false) final Long id,
+        @RequestParam(value = "file") MultipartFile file
+    ) throws URISyntaxException, IOException {
+        log.debug("REST request to update Cpu image : {}, {}", id, file);
+
+        final String orig_img_name = file.getOriginalFilename();
+        final String img_type = file.getContentType();
+        log.info(orig_img_name);
+        log.info(img_type);
+
+        /* create file in tmp folder with unique name */
+        File convFile = File.createTempFile(RandomStringUtils.random(8), orig_img_name);
+        convFile.createNewFile();
+        convFile.deleteOnExit();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        /* Do some  verifications before upload here? */
+        awss3Service.upload(orig_img_name, convFile);
+        /* Get url from AWS S3 bucket */
+        log.info(awss3Service.getUrl(orig_img_name).toString());
+
+        if (!cpuRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename"))
+            .body("{\"url\":\"" + awss3Service.getUrl(orig_img_name).toString() + "\"}");
     }
 
     /**

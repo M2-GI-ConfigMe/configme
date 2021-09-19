@@ -70,6 +70,19 @@ export default class CpuService {
     });
   }
 
+  public updateImg(entity: ICpu, img: FormData): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      axios
+        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   public partialUpdate(entity: ICpu): Promise<ICpu> {
     return new Promise<ICpu>((resolve, reject) => {
       axios
