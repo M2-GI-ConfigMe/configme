@@ -29,6 +29,7 @@ class DomainUserDetailsServiceIT {
     private static final String USER_THREE_EMAIL = "test-user-three@localhost";
 
     private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(1999, 9, 9);
+    private static final Address DEFAULT_ADDRESS = Address.of("userOne", "doe", "5", "Rue de l'exmple", "Grenoble", "38000");
 
     @Autowired
     private UserRepository userRepository;
@@ -44,7 +45,7 @@ class DomainUserDetailsServiceIT {
         userOne.setLastName("doe");
         userOne.setPassword(RandomStringUtils.random(59) + "5");
         userOne.setBirthdate(DEFAULT_BIRTHDATE);
-        userOne.setAddress(Address.of("userOne", "doe", "5", "Rue de l'exmple", "Grenoble", "38000"));
+        userOne.setAddress(DEFAULT_ADDRESS);
         userOne.setActivated(true);
         userOne.setLangKey("en");
         userRepository.save(userOne);
@@ -55,7 +56,7 @@ class DomainUserDetailsServiceIT {
         userTwo.setLastName("doe");
         userTwo.setPassword(RandomStringUtils.random(59) + "5");
         userTwo.setBirthdate(DEFAULT_BIRTHDATE);
-        userTwo.setAddress(Address.of("userTwo", "doe", "5", "Rue de l'exmple", "Grenoble", "38000"));
+        userTwo.setAddress(DEFAULT_ADDRESS);
         userTwo.setActivated(true);
         userTwo.setLangKey("en");
         userRepository.save(userTwo);
@@ -66,7 +67,7 @@ class DomainUserDetailsServiceIT {
         userThree.setLastName("doe");
         userThree.setPassword(RandomStringUtils.random(59) + "5");
         userThree.setBirthdate(DEFAULT_BIRTHDATE);
-        userThree.setAddress(Address.of("userThree", "doe", "5", "Rue de l'exmple", "Grenoble", "38000"));
+        userThree.setAddress(DEFAULT_ADDRESS);
         userThree.setActivated(false);
         userThree.setLangKey("en");
         userRepository.save(userThree);
@@ -85,7 +86,7 @@ class DomainUserDetailsServiceIT {
         assertThat(userDetails).isNotNull();
         assertThat(userDetails.getUsername()).isEqualTo(USER_TWO_EMAIL);
     }
-    //Tous nos utilisateurs sont activé par défaut, ce test n'est donc pas valable
+    // TODO: Tous nos utilisateurs sont activé par défaut, ce test n'est donc pas valable
     // @Test
     // void assertThatUserNotActivatedExceptionIsThrownForNotActivatedUsers() {
     //     assertThatExceptionOfType(UserNotActivatedException.class)

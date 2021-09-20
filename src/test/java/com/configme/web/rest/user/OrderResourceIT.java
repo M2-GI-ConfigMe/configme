@@ -46,7 +46,7 @@ class OrderResourceIT {
     private static final OrderStatus DEFAULT_STATUS = OrderStatus.CART;
     private static final OrderStatus UPDATED_STATUS = OrderStatus.PROCESSING;
 
-    private static final Address DEFAULT_ADDRESS = Address.of("first_name", "last_name", "0", "rue exemple", "grenboble", "38000");
+    private static final Address DEFAULT_ADDRESS = Address.of("first_name", "last_name", "0", "rue exemple", "grenoble", "38000");
     private static final Address UPDATED_ADDRESS = Address.of("first_name_bis", "last_name_bis", "0", "rue exemple", "chambery", "73000");
 
     private static final String ENTITY_API_URL = "/api/orders";
@@ -224,8 +224,14 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
             .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(DEFAULT_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].validatedAt").value(hasItem(DEFAULT_VALIDATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
-        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].deliveryAddress.zipCode").value(hasItem(DEFAULT_ADDRESS.getZipCode())))
+            .andExpect(jsonPath("$.[*].deliveryAddress.city").value(hasItem(DEFAULT_ADDRESS.getCity())))
+            .andExpect(jsonPath("$.[*].deliveryAddress.streetNumber").value(hasItem(DEFAULT_ADDRESS.getStreetNumber())))
+            .andExpect(jsonPath("$.[*].deliveryAddress.streetName").value(hasItem(DEFAULT_ADDRESS.getStreetName())))
+            .andExpect(jsonPath("$.[*].deliveryAddress.complementary").value(hasItem(DEFAULT_ADDRESS.getComplementary())))
+            .andExpect(jsonPath("$.[*].deliveryAddress.firstName").value(hasItem(DEFAULT_ADDRESS.getFirstName())))
+            .andExpect(jsonPath("$.[*].deliveryAddress.lastName").value(hasItem(DEFAULT_ADDRESS.getLastName())));
     }
 
     @Test
@@ -243,8 +249,14 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
             .andExpect(jsonPath("$.updatedAt").value(DEFAULT_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.validatedAt").value(DEFAULT_VALIDATED_AT.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
-        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.deliveryAddress.zipCode").value(DEFAULT_ADDRESS.getZipCode()))
+            .andExpect(jsonPath("$.deliveryAddress.city").value(DEFAULT_ADDRESS.getCity()))
+            .andExpect(jsonPath("$.deliveryAddress.streetNumber").value(DEFAULT_ADDRESS.getStreetNumber()))
+            .andExpect(jsonPath("$.deliveryAddress.streetName").value(DEFAULT_ADDRESS.getStreetName()))
+            .andExpect(jsonPath("$.deliveryAddress.complementary").value(DEFAULT_ADDRESS.getComplementary()))
+            .andExpect(jsonPath("$.deliveryAddress.firstName").value(DEFAULT_ADDRESS.getFirstName()))
+            .andExpect(jsonPath("$.deliveryAddress.lastName").value(DEFAULT_ADDRESS.getLastName()));
     }
 
     @Test
@@ -366,12 +378,9 @@ class OrderResourceIT {
             .status(UPDATED_STATUS)
             .deliveryAddress(UPDATED_ADDRESS);
 
+        byte[] oui = TestUtil.convertObjectToJsonBytes(partialUpdatedOrder);
         restOrderMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedOrder.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedOrder))
-            )
+            .perform(patch(ENTITY_API_URL_ID, partialUpdatedOrder.getId()).contentType("application/merge-patch+json").content(oui))
             .andExpect(status().isOk());
 
         // Validate the Order in the database
@@ -382,7 +391,7 @@ class OrderResourceIT {
         assertThat(testOrder.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
         assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
         assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
-        //TODO : assertThat(testOrder.getDeliveryAddress()).isEqualTo(UPDATED_ADDRESS);
+        //TODO: assertThat(testOrder.getDeliveryAddress()).isEqualTo(UPDATED_ADDRESS);
     }
 
     @Test
