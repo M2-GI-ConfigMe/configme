@@ -81,6 +81,7 @@ export default class CpuUpdate extends Vue {
   public cpu: ICpu = new Cpu();
   public isSaving = false;
   public currentLanguage = '';
+  public image;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -134,6 +135,17 @@ export default class CpuUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    this.cpuService().updateImg(this.cpu, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
   }
 
   public retrieveCpu(cpuId): void {
@@ -142,13 +154,6 @@ export default class CpuUpdate extends Vue {
       .then(res => {
         this.cpu = res;
       });
-  }
-
-  public onImageSelected(): void {
-    const formData = new FormData();
-    const img_file = this.$refs.img.files[0];
-    formData.append('file', img_file);
-    this.cpuService().updateImg(this.cpu, formData);
   }
 
   public previousState(): void {

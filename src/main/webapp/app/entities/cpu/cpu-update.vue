@@ -64,16 +64,15 @@
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="cpu-img">Image</label>
-            <input
+            <v-file-input
               type="file"
               class="form-control"
               name="img"
               id="cpu-img"
               ref="img"
-              data-cy="img"
               accept="image/*"
-              v-on:change="onImageSelected()"
               :class="{ valid: !$v.cpu.img.$invalid, invalid: $v.cpu.img.$invalid }"
+              @change="selectFile"
             />
           </div>
           <div class="form-group">
