@@ -10,7 +10,7 @@
           <v-spacer></v-spacer>
           <v-toolbar-items> </v-toolbar-items>
         </v-toolbar>
-        <v-card-text class="flex-grow-1 d-flex flex-column px-0">
+        <v-card-text class="flex-grow-1 d-flex flex-column px-0 pb-0">
           <v-data-table
             :headers="headers"
             :items="data.objects"
@@ -47,7 +47,7 @@
             <template v-slot:item.capacity="{ item }"> {{ item.capacity }}Go </template>
             <template v-slot:item.power="{ item }"> {{ item.power }}W </template>
           </v-data-table>
-          <div class="text-center pt-2 pagination-sticky">
+          <div class="text-center pagination-sticky" style="background-color: #f9f9f9">
             <v-pagination v-model="page" :length="pageCount"></v-pagination>
           </div>
         </v-card-text>
