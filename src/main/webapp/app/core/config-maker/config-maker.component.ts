@@ -87,6 +87,10 @@ export default class ConfigMaker extends Vue {
     return this.selectedConfigIndex == -1 ? this.defaultConfig : this.clientConfigs[this.selectedConfigIndex];
   }
 
+  created() {
+    if (this.authenticated) this.retrieveUserConfigs();
+  }
+
   public openDialog(endpoint) {
     this.endpoint = endpoint;
     this.componentPickerDialog = true;
@@ -137,7 +141,7 @@ export default class ConfigMaker extends Vue {
         .create(config)
         .then(res => {
           this.clientConfigs.push(res);
-          this.selectedConfigIndex = this.clientConfigs.length;
+          this.selectedConfigIndex = this.clientConfigs.length - 1;
           this.$root.$bvToast.toast('Config créée !', {
             toaster: 'b-toaster-top-center',
             variant: 'success',

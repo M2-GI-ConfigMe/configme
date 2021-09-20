@@ -1,7 +1,7 @@
 <template>
   <div class>
     <v-app-bar app class="px-15">
-      <v-toolbar-title class="font-weight-bold">
+      <v-toolbar-title class="font-weight-bold" @click="$vuetify.goTo('#home', {})">
         <router-link to="/" tag="span" style="color: #2196f3; cursor: pointer; font-size: 1.5em">
           {{ appTitle }}
         </router-link>

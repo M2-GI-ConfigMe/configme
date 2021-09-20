@@ -127,11 +127,11 @@ public class HardDriveResourceITUser implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(hardDrive.getId().intValue())))
-            .andExpect(jsonPath("$.[*].capacity").value(hasItem(DEFAULT_CAPACITY)))
-            .andExpect(jsonPath("$.[*].speedWrite").value(hasItem(DEFAULT_SPEED_WRITE.doubleValue())))
-            .andExpect(jsonPath("$.[*].speedRead").value(hasItem(DEFAULT_SPEED_READ.doubleValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(hardDrive.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].capacity").value(hasItem(DEFAULT_CAPACITY)))
+            .andExpect(jsonPath("$.content.[*].speedWrite").value(hasItem(DEFAULT_SPEED_WRITE.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].speedRead").value(hasItem(DEFAULT_SPEED_READ.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
 
         getAllProductAssertProductField(action);
     }

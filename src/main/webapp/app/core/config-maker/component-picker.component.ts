@@ -1,6 +1,7 @@
 import Component from 'vue-class-component';
 import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
 import axios from 'axios';
+import { throws } from 'assert';
 
 const baseApiUrl = 'api/';
 
@@ -16,8 +17,32 @@ export default class ComponentPicker extends Vue {
       headers: [
         {
           text: 'Nom',
-          align: 'start',
           value: 'name',
+        },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Socket',
+          value: 'socketCpu',
+        },
+        {
+          text: 'Ram Type',
+          value: 'ramType',
+        },
+        {
+          text: 'Format',
+          value: 'format',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
         },
       ],
     },
@@ -30,6 +55,31 @@ export default class ComponentPicker extends Vue {
           align: 'start',
           value: 'name',
         },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Socket',
+          value: 'socketType',
+        },
+        {
+          text: 'Ventirad inclu',
+          value: 'hasVentirad',
+        },
+        {
+          text: 'GPU inclu',
+          value: 'hasGpu',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
+        },
       ],
     },
     ventirad: {
@@ -40,6 +90,24 @@ export default class ComponentPicker extends Vue {
           text: 'Nom',
           align: 'start',
           value: 'name',
+        },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Pâte thermique inclue',
+          value: 'hasThermalPaste',
+          align: 'start',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
         },
       ],
     },
@@ -52,6 +120,27 @@ export default class ComponentPicker extends Vue {
           align: 'start',
           value: 'name',
         },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Fréquence',
+          value: 'frequency',
+        },
+        {
+          text: 'Quantité',
+          value: 'quantity',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
+        },
       ],
     },
     gpu: {
@@ -62,6 +151,23 @@ export default class ComponentPicker extends Vue {
           text: 'Nom',
           align: 'start',
           value: 'name',
+        },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Mémoire',
+          value: 'memory',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
         },
       ],
     },
@@ -74,6 +180,27 @@ export default class ComponentPicker extends Vue {
           align: 'start',
           value: 'name',
         },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Modularité',
+          value: 'modularityType',
+        },
+        {
+          text: 'Puissance',
+          value: 'power',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
+        },
       ],
     },
     computerCase: {
@@ -84,6 +211,27 @@ export default class ComponentPicker extends Vue {
           text: 'Nom',
           align: 'start',
           value: 'name',
+        },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Type',
+          value: 'type',
+        },
+        {
+          text: 'Formats',
+          value: 'formats',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
         },
       ],
     },
@@ -96,6 +244,27 @@ export default class ComponentPicker extends Vue {
           align: 'start',
           value: 'name',
         },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Capacité',
+          value: 'capacity',
+        },
+        {
+          text: 'Type',
+          value: 'type',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
+        },
       ],
     },
     hd2: {
@@ -107,14 +276,44 @@ export default class ComponentPicker extends Vue {
           align: 'start',
           value: 'name',
         },
+        {
+          text: 'Marque',
+          value: 'brand',
+        },
+        {
+          text: 'Capacité',
+          value: 'capacity',
+        },
+        {
+          text: 'Type',
+          value: 'type',
+        },
+        {
+          text: 'Prix',
+          value: 'price',
+        },
+        {
+          text: 'Stock',
+          value: 'stock',
+          align: 'start',
+        },
       ],
     },
   };
+
+  public page = 1;
+  public pageCount = 1;
 
   public data = {
     objects: [],
     priceMax: 1000,
     priceMin: 0,
+  };
+
+  public options = {
+    itemsPerPage: 15,
+    sortBy: [],
+    sortDesc: [],
   };
 
   public get currentComponent(): any {
@@ -137,15 +336,30 @@ export default class ComponentPicker extends Vue {
     return this.data.objects.length;
   }
 
-  public options = {};
   public loading = false;
 
   @Watch('currentEndpoint')
-  onAuthenticatedChanged(value: string, oldValue: string) {
+  onEndpointUpdate(value: string, oldValue: string) {
     if (value != '') {
       this.data.objects = [];
+      this.options = {
+        itemsPerPage: 15,
+        sortBy: [],
+        sortDesc: [],
+      };
+      this.page = 1;
       this.retrieveComponents();
     }
+  }
+
+  @Watch('page')
+  onPageChange(v, oldV) {
+    if (v != oldV) this.retrieveComponents();
+  }
+
+  @Watch('options')
+  onOptionsUpdate(value: any, oldValue: any) {
+    if (value && oldValue) this.retrieveComponents();
   }
 
   public handleRowClick(value) {
@@ -154,19 +368,30 @@ export default class ComponentPicker extends Vue {
 
   private retrieveComponents() {
     this.loading = true;
-    return new Promise<any>((resolve, reject) => {
-      axios
-        .get(baseApiUrl + this.currentEndpoint)
-        .then(res => {
-          this.data.objects = res.data;
-        })
-        .catch(err => {
-          console.log('Erreur lors du fetch des données');
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    });
+    axios
+      .get(
+        baseApiUrl + this.currentEndpoint,
+        this.options
+          ? {
+              params: {
+                page: this.page,
+                itemsPerPage: this.options.itemsPerPage,
+                sortBy: this.options.sortBy[0],
+                sortDesc: this.options.sortDesc[0],
+              },
+            }
+          : null
+      )
+      .then(res => {
+        this.data.objects = res.data.content;
+        this.pageCount = res.data.totalPages;
+      })
+      .catch(err => {
+        console.log('Erreur lors du fetch des données');
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   public get show(): boolean {

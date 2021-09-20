@@ -278,20 +278,20 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(computerCase.getId().intValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            //            .andExpect(jsonPath("$.[*].formats").value(Matchers.containsInAnyOrder(DEFAULT_FORMATS)))
-            .andExpect(jsonPath("$.[*].sizeMaxGpu").value(hasItem(DEFAULT_SIZE_MAX_GPU)))
-            .andExpect(jsonPath("$.[*].sizeMaxVentirad").value(hasItem(DEFAULT_SIZE_MAX_VENTIRAD)))
-            .andExpect(jsonPath("$.[*].sizeMaxPsu").value(hasItem(DEFAULT_SIZE_MAX_PSU)))
-            .andExpect(jsonPath("$.[*].hardDriveSlots").value(hasItem(DEFAULT_HARD_DRIVE_SLOTS)))
-            .andExpect(jsonPath("$.[*].frontPanelOutputs").value(hasItem(DEFAULT_FRONT_PANEL_OUTPUTS)))
-            .andExpect(jsonPath("$.[*].fanIncluded").value(hasItem(DEFAULT_FAN_INCLUDED)))
-            .andExpect(jsonPath("$.[*].fanSlotsAvailable").value(hasItem(DEFAULT_FAN_SLOTS_AVAILABLE)))
-            .andExpect(jsonPath("$.[*].watercoolingCompatibility").value(hasItem(DEFAULT_WATERCOOLING_COMPATIBILITY)))
-            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
-            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
-            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(computerCase.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            //            .andExpect(jsonPath("$.content.[*].formats").value(Matchers.containsInAnyOrder(DEFAULT_FORMATS)))
+            .andExpect(jsonPath("$.content.[*].sizeMaxGpu").value(hasItem(DEFAULT_SIZE_MAX_GPU)))
+            .andExpect(jsonPath("$.content.[*].sizeMaxVentirad").value(hasItem(DEFAULT_SIZE_MAX_VENTIRAD)))
+            .andExpect(jsonPath("$.content.[*].sizeMaxPsu").value(hasItem(DEFAULT_SIZE_MAX_PSU)))
+            .andExpect(jsonPath("$.content.[*].hardDriveSlots").value(hasItem(DEFAULT_HARD_DRIVE_SLOTS)))
+            .andExpect(jsonPath("$.content.[*].frontPanelOutputs").value(hasItem(DEFAULT_FRONT_PANEL_OUTPUTS)))
+            .andExpect(jsonPath("$.content.[*].fanIncluded").value(hasItem(DEFAULT_FAN_INCLUDED)))
+            .andExpect(jsonPath("$.content.[*].fanSlotsAvailable").value(hasItem(DEFAULT_FAN_SLOTS_AVAILABLE)))
+            .andExpect(jsonPath("$.content.[*].watercoolingCompatibility").value(hasItem(DEFAULT_WATERCOOLING_COMPATIBILITY)))
+            .andExpect(jsonPath("$.content.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.content.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.content.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
         getAllProductAssertProductField(action);
     }

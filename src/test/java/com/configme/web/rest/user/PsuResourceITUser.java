@@ -138,13 +138,13 @@ public class PsuResourceITUser implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(psu.getId().intValue())))
-            .andExpect(jsonPath("$.[*].power").value(hasItem(DEFAULT_POWER)))
-            .andExpect(jsonPath("$.[*].certification").value(hasItem(DEFAULT_CERTIFICATION)))
-            .andExpect(jsonPath("$.[*].modularity").value(hasItem(DEFAULT_MODULARITY.toString())))
-            .andExpect(jsonPath("$.[*].nbSata").value(hasItem(DEFAULT_NB_SATA)))
-            .andExpect(jsonPath("$.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
-            .andExpect(jsonPath("$.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(psu.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].power").value(hasItem(DEFAULT_POWER)))
+            .andExpect(jsonPath("$.content.[*].certification").value(hasItem(DEFAULT_CERTIFICATION)))
+            .andExpect(jsonPath("$.content.[*].modularity").value(hasItem(DEFAULT_MODULARITY.toString())))
+            .andExpect(jsonPath("$.content.[*].nbSata").value(hasItem(DEFAULT_NB_SATA)))
+            .andExpect(jsonPath("$.content.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
+            .andExpect(jsonPath("$.content.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
 
         getAllProductAssertProductField(action);
     }

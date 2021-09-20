@@ -164,14 +164,14 @@ public interface ProductResourceIT {
 
     default void getAllProductAssertProductField(ResultActions mockMvc) throws Exception {
         mockMvc
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].discount").value(hasItem(DEFAULT_DISCOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].stock").value(hasItem(DEFAULT_STOCK)))
-            .andExpect(jsonPath("$.[*].img").value(hasItem(DEFAULT_IMG)))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC)))
-            .andExpect(jsonPath("$.[*].brand").value(hasItem(DEFAULT_BRAND)))
-            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.content.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.content.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].discount").value(hasItem(DEFAULT_DISCOUNT.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].stock").value(hasItem(DEFAULT_STOCK)))
+            .andExpect(jsonPath("$.content.[*].img").value(hasItem(DEFAULT_IMG)))
+            .andExpect(jsonPath("$.content.[*].desc").value(hasItem(DEFAULT_DESC)))
+            .andExpect(jsonPath("$.content.[*].brand").value(hasItem(DEFAULT_BRAND)))
+            .andExpect(jsonPath("$.content.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())));
     }
 
     default void getProductAssertProductField(ResultActions mockMvc) throws Exception {

@@ -126,13 +126,13 @@ public class VentiradResourceITUser implements ProductResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(ventirad.getId().intValue())))
-            .andExpect(jsonPath("$.[*].rangeFanSpeed").value(hasItem(DEFAULT_RANGE_FAN_SPEED)))
-            .andExpect(jsonPath("$.[*].noise").value(hasItem(DEFAULT_NOISE)))
-            .andExpect(jsonPath("$.[*].hasThermalPaste").value(hasItem(DEFAULT_HAS_THERMAL_PASTE.booleanValue())))
-            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
-            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
-            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(ventirad.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].rangeFanSpeed").value(hasItem(DEFAULT_RANGE_FAN_SPEED)))
+            .andExpect(jsonPath("$.content.[*].noise").value(hasItem(DEFAULT_NOISE)))
+            .andExpect(jsonPath("$.content.[*].hasThermalPaste").value(hasItem(DEFAULT_HAS_THERMAL_PASTE.booleanValue())))
+            .andExpect(jsonPath("$.content.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.content.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.content.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
         getAllProductAssertProductField(action);
     }

@@ -21,6 +21,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+    'vue/valid-v-slot': ['error', { allowModifiers: true }],
   },
   ignorePatterns: ['**/src/main docker/**/*.js'],
 };

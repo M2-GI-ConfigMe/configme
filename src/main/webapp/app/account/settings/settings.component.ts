@@ -74,6 +74,9 @@ export default class Settings extends Vue {
         this.error = null;
         this.success = 'OK';
         this.errorEmailExists = null;
+        setTimeout(() => {
+          this.success = null;
+        }, 2000);
       })
       .catch(error => {
         this.success = null;

@@ -48,7 +48,7 @@ class OrderResourceIT {
     private static final OrderStatus DEFAULT_STATUS = OrderStatus.CART;
     private static final OrderStatus UPDATED_STATUS = OrderStatus.PROCESSING;
 
-    private static final Address DEFAULT_ADDRESS = Address.of("first_name", "last_name", "0", "rue exemple", "grenboble", "38000");
+    private static final Address DEFAULT_ADDRESS = Address.of("first_name", "last_name", "0", "rue exemple", "grenoble", "38000");
     private static final Address UPDATED_ADDRESS = Address.of("first_name_bis", "last_name_bis", "0", "rue exemple", "chambery", "73000");
 
     private static final String ENTITY_API_URL = "/api/orders";
