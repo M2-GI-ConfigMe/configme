@@ -1,7 +1,5 @@
 package com.configme.web.rest.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -10,8 +8,11 @@ import com.configme.domain.ClientConfig;
 import com.configme.domain.Order;
 import com.configme.domain.OrderLine;
 import com.configme.repository.OrderLineRepository;
+import com.configme.repository.OrderRepository;
+import com.configme.repository.UserRepository;
+import com.configme.web.rest.OrderLineResource;
 import com.configme.web.rest.TestUtil;
-import java.util.List;
+import com.configme.web.rest.UserAuthenticator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
@@ -42,12 +43,21 @@ class OrderLineResourceIT {
     private OrderLineRepository orderLineRepository;
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
     private MockMvc restOrderLineMockMvc;
 
     private OrderLine orderLine;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserAuthenticator userAuthenticator;
 
     /**
      * Create an entity for this test.
@@ -60,7 +70,7 @@ class OrderLineResourceIT {
         // Add required entity
         ClientConfig clientConfig;
         if (TestUtil.findAll(em, ClientConfig.class).isEmpty()) {
-            clientConfig = ClientConfigResourceIT.createEntity(em);
+            clientConfig = ClientConfigResourceIT.createEntity();
             em.persist(clientConfig);
             em.flush();
         } else {
@@ -70,7 +80,8 @@ class OrderLineResourceIT {
         // Add required entity
         Order order;
         if (TestUtil.findAll(em, Order.class).isEmpty()) {
-            order = OrderResourceIT.createEntity(em);
+            order = OrderResourceIT.createEntity();
+            em.persist(order.getBuyer());
             em.persist(order);
             em.flush();
         } else {
@@ -91,7 +102,7 @@ class OrderLineResourceIT {
         // Add required entity
         ClientConfig clientConfig;
         if (TestUtil.findAll(em, ClientConfig.class).isEmpty()) {
-            clientConfig = ClientConfigResourceIT.createUpdatedEntity(em);
+            clientConfig = ClientConfigResourceIT.createUpdatedEntity();
             em.persist(clientConfig);
             em.flush();
         } else {
@@ -101,7 +112,7 @@ class OrderLineResourceIT {
         // Add required entity
         Order order;
         if (TestUtil.findAll(em, Order.class).isEmpty()) {
-            order = OrderResourceIT.createUpdatedEntity(em);
+            order = OrderResourceIT.createUpdatedEntity();
             em.persist(order);
             em.flush();
         } else {
@@ -123,30 +134,7 @@ class OrderLineResourceIT {
         // Create the OrderLine
         restOrderLineMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(orderLine)))
-            .andExpect(status().isCreated());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeCreate + 1);
-        OrderLine testOrderLine = orderLineList.get(orderLineList.size() - 1);
-    }
-
-    @Test
-    @Transactional
-    void createOrderLineWithExistingId() throws Exception {
-        // Create the OrderLine with an existing ID
-        orderLine.setId(1L);
-
-        int databaseSizeBeforeCreate = orderLineRepository.findAll().size();
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restOrderLineMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(orderLine)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeCreate);
+            .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -156,11 +144,7 @@ class OrderLineResourceIT {
         orderLineRepository.saveAndFlush(orderLine);
 
         // Get all the orderLineList
-        restOrderLineMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(orderLine.getId().intValue())));
+        restOrderLineMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc")).andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -170,18 +154,7 @@ class OrderLineResourceIT {
         orderLineRepository.saveAndFlush(orderLine);
 
         // Get the orderLine
-        restOrderLineMockMvc
-            .perform(get(ENTITY_API_URL_ID, orderLine.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(orderLine.getId().intValue()));
-    }
-
-    @Test
-    @Transactional
-    void getNonExistingOrderLine() throws Exception {
-        // Get the orderLine
-        restOrderLineMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+        restOrderLineMockMvc.perform(get(ENTITY_API_URL_ID, orderLine.getId())).andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -203,68 +176,7 @@ class OrderLineResourceIT {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(updatedOrderLine))
             )
-            .andExpect(status().isOk());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
-        OrderLine testOrderLine = orderLineList.get(orderLineList.size() - 1);
-    }
-
-    @Test
-    @Transactional
-    void putNonExistingOrderLine() throws Exception {
-        int databaseSizeBeforeUpdate = orderLineRepository.findAll().size();
-        orderLine.setId(count.incrementAndGet());
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restOrderLineMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, orderLine.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(orderLine))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithIdMismatchOrderLine() throws Exception {
-        int databaseSizeBeforeUpdate = orderLineRepository.findAll().size();
-        orderLine.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderLineMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(orderLine))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithMissingIdPathParamOrderLine() throws Exception {
-        int databaseSizeBeforeUpdate = orderLineRepository.findAll().size();
-        orderLine.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderLineMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(orderLine)))
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
+            .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -285,96 +197,7 @@ class OrderLineResourceIT {
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(partialUpdatedOrderLine))
             )
-            .andExpect(status().isOk());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
-        OrderLine testOrderLine = orderLineList.get(orderLineList.size() - 1);
-    }
-
-    @Test
-    @Transactional
-    void fullUpdateOrderLineWithPatch() throws Exception {
-        // Initialize the database
-        orderLineRepository.saveAndFlush(orderLine);
-
-        int databaseSizeBeforeUpdate = orderLineRepository.findAll().size();
-
-        // Update the orderLine using partial update
-        OrderLine partialUpdatedOrderLine = new OrderLine();
-        partialUpdatedOrderLine.setId(orderLine.getId());
-
-        restOrderLineMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedOrderLine.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedOrderLine))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
-        OrderLine testOrderLine = orderLineList.get(orderLineList.size() - 1);
-    }
-
-    @Test
-    @Transactional
-    void patchNonExistingOrderLine() throws Exception {
-        int databaseSizeBeforeUpdate = orderLineRepository.findAll().size();
-        orderLine.setId(count.incrementAndGet());
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restOrderLineMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, orderLine.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(orderLine))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithIdMismatchOrderLine() throws Exception {
-        int databaseSizeBeforeUpdate = orderLineRepository.findAll().size();
-        orderLine.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderLineMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(orderLine))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithMissingIdPathParamOrderLine() throws Exception {
-        int databaseSizeBeforeUpdate = orderLineRepository.findAll().size();
-        orderLine.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderLineMockMvc
-            .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(orderLine))
-            )
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the OrderLine in the database
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeUpdate);
+            .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -387,11 +210,11 @@ class OrderLineResourceIT {
 
         // Delete the orderLine
         restOrderLineMockMvc
-            .perform(delete(ENTITY_API_URL_ID, orderLine.getId()).accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
-
-        // Validate the database contains one less item
-        List<OrderLine> orderLineList = orderLineRepository.findAll();
-        assertThat(orderLineList).hasSize(databaseSizeBeforeDelete - 1);
+            .perform(
+                delete(ENTITY_API_URL_ID, orderLine.getId())
+                    .header("Authorization", userAuthenticator.getBearer("monuser@mail", "password"))
+                    .accept(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().is4xxClientError());
     }
 }

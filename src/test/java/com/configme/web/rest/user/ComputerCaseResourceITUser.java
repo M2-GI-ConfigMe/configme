@@ -11,7 +11,10 @@ import com.configme.domain.Dimension;
 import com.configme.domain.enumeration.CaseType;
 import com.configme.domain.enumeration.FormatType;
 import com.configme.repository.ComputerCaseRepository;
+import com.configme.web.rest.ComputerCaseResource;
 import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.ProductResourceIT;
+import com.configme.web.rest.TestUtil;
 import com.configme.web.rest.TestUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class ComputerCaseResourceITUser implements ProductResourceIT {
+public class ComputerCaseResourceITUser implements ProductResourceIT {
 
     private static final CaseType DEFAULT_TYPE = CaseType.PETITE;
     private static final CaseType UPDATED_TYPE = CaseType.MOYENNE;
@@ -101,7 +104,7 @@ class ComputerCaseResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ComputerCase createEntity(EntityManager em) {
+    public static ComputerCase createEntity() {
         ComputerCase computerCase = new ComputerCase()
             .type(DEFAULT_TYPE)
             .formats(DEFAULT_FORMATS)
@@ -125,7 +128,7 @@ class ComputerCaseResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ComputerCase createUpdatedEntity(EntityManager em) {
+    public static ComputerCase createUpdatedEntity() {
         ComputerCase computerCase = new ComputerCase()
             .type(UPDATED_TYPE)
             .formats(UPDATED_FORMATS)
@@ -145,7 +148,7 @@ class ComputerCaseResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        computerCase = createEntity(em);
+        computerCase = createEntity();
     }
 
     @Test

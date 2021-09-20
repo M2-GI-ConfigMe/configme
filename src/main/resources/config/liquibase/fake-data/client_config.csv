@@ -1,11 +1,11 @@
-id;tags;name;description;is_comlete;research_key;cpu_price;gpu_price;ram_1_price;ram_2_price;psu_price;computer_case_price;ventirad_price;hd_1_price;hd_2_price;user_id
-1;Gloves;revolutionary Centre didactic;invoice invoice;false;Granite;53923;46601;10346;82773;10494;22365;16136;33123;3687;2
-2;Savings;Sports Computer;Books ADP invoice;true;synergize;25070;76556;58407;29272;60224;68138;22556;92696;11323;2
-3;Fish Gorgeous;Franche-Comté;online UAE mobile;false;Clothing;22990;5802;59605;15247;89910;5192;11619;88702;80313;1
-4;generate Towels;Awesome;Unbranded networks HDD;false;connecting hybrid;5775;26100;31827;37065;30123;78208;93525;84498;70612;1
-5;Producteur;red hard;Haute-Normandie Frozen Sausages;true;Brazilian B2C;37718;38706;7401;35546;6990;7797;43569;9043;2140;1
-6;Berkshire Aquitaine Cuban;deposit Frozen;Slovaquie Account;false;Developpeur;36422;92223;89312;67217;113;99597;46213;43010;54176;1
-7;Avon User-centric Generic;Picardie;SQL;true;ADP mesh withdrawal;10196;59244;38113;62122;80277;53829;57912;51693;50065;1
-8;c Refined e-services;GB innovative reboot;metrics;false;des;18456;47116;31947;17840;55204;4223;36798;10730;11819;1
-9;Tools drive Cotton;de Sports back-end;client-driven;true;bluetooth Toys Aquitaine;85974;94615;26705;78294;1713;45988;18994;58213;60105;1
-10;deposit;Sausages Chair Technicien;multi-byte digital payment;true;copy;13299;14680;80215;66971;42507;89958;44776;48366;99482;1
+id;tags;name;description;is_comlete;research_key;cpu_price;gpu_price;ram_1_price;ram_2_price;psu_price;computer_case_price;ventirad_price;hd_1_price;hd_2_price;user_id;cpu_id;gpu_id;computer_case_id;ventirad_id;ram1_id;ram2_id;hd1_id;hd2_id;mbe_id;psu_id;mbe_price
+1;Gloves;revolutionary Centre didactic;invoice invoice;false;Granite;53923;46601;10346;82773;10494;22365;16136;33123;3687;2;71;11;1;61;51;51;21;21;31;41;10346
+2;Savings;Sports Computer;Books ADP invoice;true;synergize;25070;76556;58407;29272;60224;68138;22556;92696;11323;2;72;12;2;62;52;52;22;22;32;42;58407
+3;Fish Gorgeous;Franche-Comté;online UAE mobile;false;Clothing;22990;5802;59605;15247;89910;5192;11619;88702;80313;1;73;13;3;63;53;53;23;23;33;43;59605
+4;generate Towels;Awesome;Unbranded networks HDD;false;connecting hybrid;5775;26100;31827;37065;30123;78208;93525;84498;70612;1;74;14;4;64;54;54;24;24;34;44;31827
+5;"";"";Haute-Normandie Frozen Sausages;true;Brazilian B2C;37718;38706;7401;35546;6990;7797;43569;9043;2140;NULL;75;15;5;65;55;55;25;25;35;45;7401
+6;"";"";Slovaquie Account;false;Developpeur;36422;92223;89312;67217;113;99597;46213;43010;54176;NULL;76;16;6;66;56;56;26;26;36;46;89312
+7;"";"";SQL;true;ADP mesh withdrawal;10196;59244;38113;62122;80277;53829;57912;51693;50065;NULL;77;17;7;67;57;57;27;27;37;47;38113
+8;"";"";metrics;false;des;18456;47116;31947;17840;55204;4223;36798;10730;11819;NULL;78;18;8;68;58;58;28;28;38;48;31947
+9;"";"";client-driven;true;bluetooth Toys Aquitaine;85974;94615;26705;78294;1713;45988;18994;58213;60105;NULL;79;19;9;69;59;59;29;29;39;49;26705
+10;"";"";multi-byte digital payment;true;copy;13299;14680;80215;66971;42507;89958;44776;48366;99482;NULL;80;20;10;70;60;60;30;30;40;50;80215

@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
 @IntegrationTest
-class UserResourceIT {
+public class UserResourceIT {
 
     private static final Long DEFAULT_ID = 1L;
 
@@ -102,7 +102,7 @@ class UserResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which has a required relationship to the User entity.
      */
-    public static User createEntity(EntityManager em) {
+    public static User createEntity() {
         User user = new User();
         user.setPassword(RandomStringUtils.random(59) + "5");
         user.setActivated(true);
@@ -121,7 +121,7 @@ class UserResourceIT {
      * Setups the database with one user.
      */
     public static User initTestUser(UserRepository userRepository, EntityManager em) {
-        User user = createEntity(em);
+        User user = createEntity();
         user.setEmail(DEFAULT_EMAIL);
         return user;
     }
@@ -396,9 +396,9 @@ class UserResourceIT {
     @Test
     void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(User.class);
-        User user1 = createEntity(em);
+        User user1 = createEntity();
         user1.setId(DEFAULT_ID);
-        User user2 = createEntity(em);
+        User user2 = createEntity();
         user2.setId(user1.getId());
         assertThat(user1).isEqualTo(user2);
         user2.setId(2L);

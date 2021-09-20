@@ -185,4 +185,17 @@ public class Address implements Serializable {
 
         return toReturn;
     }
+
+    public Address clone() {
+        Address clone = new Address();
+        clone.setComplementary(this.complementary);
+        clone.setZipCode(this.zipCode);
+        clone.setStreetNumber(this.streetNumber);
+        clone.setStreetName(this.streetNumber);
+        clone.setCity(this.city);
+        clone.setLastName(this.lastName);
+        clone.setFirstName(this.firstName);
+
+        return clone;
+    }
 }
