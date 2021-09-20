@@ -56,7 +56,7 @@ export default class HardDrive extends Vue {
       .retrieve()
       .then(
         res => {
-          this.hardDrives = res.data;
+          this.hardDrives = res.data.content;
           this.isFetching = false;
         },
         err => {

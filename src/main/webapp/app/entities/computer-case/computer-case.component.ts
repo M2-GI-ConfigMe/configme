@@ -56,7 +56,7 @@ export default class ComputerCase extends Vue {
       .retrieve()
       .then(
         res => {
-          this.computerCases = res.data;
+          this.computerCases = res.data.content.content;
           this.isFetching = false;
         },
         err => {
