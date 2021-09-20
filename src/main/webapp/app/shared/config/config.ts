@@ -49,6 +49,7 @@ import Vue2Filters from 'vue2-filters';
 import * as filters from '@/shared/date/filters';
 import { accountStore } from '@/shared/config/store/account-store';
 import { translationStore } from '@/shared/config/store/translation-store';
+import { cartStore } from '@/shared/config/store/cart-store';
 
 const dateTimeFormats: DateTimeFormats = {
   fr: {
@@ -144,6 +145,7 @@ export function initVueXStore(vue) {
     modules: {
       accountStore,
       translationStore,
+      cartStore,
     },
   });
 }

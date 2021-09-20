@@ -1,11 +1,11 @@
-id;created_at;updated_at;validated_at;status
-1;2021-09-09;2021-09-10;2021-09-09;PAYED
-2;2021-09-09;2021-09-09;2021-09-09;PAYED
-3;2021-09-10;2021-09-09;2021-09-09;PAYED
-4;2021-09-09;2021-09-09;2021-09-10;PAYED
-5;2021-09-10;2021-09-09;2021-09-10;FAILED
-6;2021-09-09;2021-09-09;2021-09-09;PROCESSING
-7;2021-09-09;2021-09-09;2021-09-09;PROCESSING
-8;2021-09-09;2021-09-09;2021-09-09;PROCESSING
-9;2021-09-10;2021-09-09;2021-09-09;PROCESSING
-10;2021-09-09;2021-09-10;2021-09-09;PROCESSING
+id;created_at;updated_at;validated_at;status;zip_code;city;street_number;street_name;complementary;first_name;last_name;user_id
+1;2021-09-09;2021-09-10;2021-09-09;PAYED;7105;West Bathildefurt;5;Constant Saint-Dominique;bypassing;Gaston;Carre;2
+2;2021-09-09;2021-09-09;2021-09-09;PAYED;89669;Lake Éleuthère;Advanced;Lopez de Nesle;navigating;Marie;Sanchez;2
+3;2021-09-10;2021-09-09;2021-09-09;PAYED;47699;Chambéry;Lilangeni c Home;Rosalie Saint-Dominique;experiences bypassing needs-based;Xavière;Giraud;2
+4;2021-09-09;2021-09-09;2021-09-10;PAYED;39341;Valérystad;program transmit HTTP;Morin Joubert;alarm Dinar Bacon;Pénélope;Perrin;2
+5;2021-09-10;2021-09-09;2021-09-10;FAILED;38621;Lake Constancemouth;COM;Lopez d'Assas;Cambridgeshire;Jason;Laurent;2
+6;2021-09-09;2021-09-09;2021-09-09;PAYED;39643;Béziers;Gold;Amalthée Saint-Séverin;Computers CSS;Hervé;Roussel;2
+7;2021-09-09;2021-09-09;2021-09-09;PAYED;47699;Chambéry;Lilangeni c Home;Rosalie Saint-Dominique;experiences bypassing needs-based;Xavière;Giraud;2
+8;2021-09-09;2021-09-09;2021-09-09;PAYED;09937;Lacroixstad;calculating calculate multi-tasking;Chevalier Zadkine;disintermediate Architecte Gloves;Cassandre;Fournier;2
+9;2021-09-10;2021-09-09;2021-09-09;PAYED;87293;Saint-Pierre;Fresh state Savings;Longin du Faubourg Saint-Honoré;parse Luxembourg;Argine;Fernandez;2
+10;2021-09-09;2021-09-10;2021-09-09;CART;31812;South Oger;grow orchid Leone;Mathieu de l'Odéon;Guilder;Gustave;Dupuy;2

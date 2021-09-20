@@ -1,8 +1,10 @@
 package com.configme.domain;
 
 import com.configme.domain.enumeration.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -31,8 +33,7 @@ public class Order implements Serializable {
     @Column(name = "updated_at", nullable = false)
     private LocalDate updatedAt;
 
-    @NotNull
-    @Column(name = "validated_at", nullable = false)
+    @Column(name = "validated_at")
     private LocalDate validatedAt;
 
     @NotNull
@@ -40,9 +41,16 @@ public class Order implements Serializable {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Embedded
     private Address deliveryAddress;
+
+    @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+    private Set<OrderLine> lines;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @NotNull
+    private User buyer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -151,6 +159,28 @@ public class Order implements Serializable {
             ", updatedAt='" + getUpdatedAt() + "'" +
             ", validatedAt='" + getValidatedAt() + "'" +
             ", status='" + getStatus() + "'" +
+            ", deliveryAddress='" + getDeliveryAddress() + "'" +
             "}";
+    }
+
+    public Set<OrderLine> getLines() {
+        return lines;
+    }
+
+    public void setLines(Set<OrderLine> lines) {
+        this.lines = lines;
+    }
+
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
+    public Order buyer(User buyer) {
+        this.buyer = buyer;
+        return this;
     }
 }

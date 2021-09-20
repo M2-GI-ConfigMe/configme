@@ -5,16 +5,10 @@
       <navbar></navbar>
     </div>
     <div style="padding-top: 64px; height: 100%; background: #f9f9f9">
-      <router-view></router-view>
-      <b-modal id="login-page" hide-footer lazy>
-        <span slot="modal-title" id="login-title">Se connecter</span>
-        <login-form></login-form>
-      </b-modal>
+      <router-view style="min-height: 100%"></router-view>
 
-      <b-modal id="register-page" hide-footer lazy>
-        <span slot="modal-title" id="login-title">S'enregister</span>
-        <register-form></register-form>
-      </b-modal>
+      <login-form :show="showLogin" @close="showLogin = false"></login-form>
+      <register-form :show="showRegister" @close="showRegister = false"></register-form>
 
       <jhi-footer></jhi-footer>
     </div>

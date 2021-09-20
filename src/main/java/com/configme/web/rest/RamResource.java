@@ -13,6 +13,9 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -183,9 +186,14 @@ public class RamResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rams in body.
      */
     @GetMapping("/rams")
-    public List<Ram> getAllRams() {
-        log.debug("REST request to get all Rams");
-        return ramRepository.findAll();
+    public Page<Ram> getAllRams(
+        @RequestParam(name = "page", defaultValue = "1") int page,
+        @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
+        @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+    ) {
+        log.debug("REST request to get all Mbes");
+        return ramRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
     }
 
     /**

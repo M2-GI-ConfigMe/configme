@@ -51,6 +51,9 @@ public class ClientConfig implements Serializable {
     @Column(name = "psu_price")
     private Float psuPrice;
 
+    @Column(name = "mbe_price")
+    private Float mbePrice;
+
     @Column(name = "computer_case_price")
     private Float computerCasePrice;
 
@@ -66,37 +69,34 @@ public class ClientConfig implements Serializable {
     @ManyToOne
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Cpu cpu;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "dimension" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Gpu gpu;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Psu psu;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "dimension" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Ventirad ventirad;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Mbe mbe;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "dimension" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ComputerCase computerCase;
 
-    @ManyToOne
-    private HardDrive deadMemory1;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private HardDrive hd1;
 
-    @ManyToOne
-    private HardDrive deadMemory2;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private HardDrive hd2;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Ram ram1;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Ram ram2;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -373,30 +373,30 @@ public class ClientConfig implements Serializable {
         this.computerCase = computerCase;
     }
 
-    public HardDrive getDeadMemory1() {
-        return this.deadMemory1;
+    public HardDrive getHd1() {
+        return this.hd1;
     }
 
-    public ClientConfig deadMemory1(HardDrive hardDrive) {
-        this.setDeadMemory1(hardDrive);
+    public ClientConfig hd1(HardDrive hardDrive) {
+        this.setHd1(hardDrive);
         return this;
     }
 
-    public void setDeadMemory1(HardDrive hardDrive) {
-        this.deadMemory1 = hardDrive;
+    public void setHd1(HardDrive hardDrive) {
+        this.hd1 = hardDrive;
     }
 
-    public HardDrive getDeadMemory2() {
-        return this.deadMemory2;
+    public HardDrive getHd2() {
+        return this.hd2;
     }
 
-    public ClientConfig deadMemory2(HardDrive hardDrive) {
-        this.setDeadMemory2(hardDrive);
+    public ClientConfig hd2(HardDrive hardDrive) {
+        this.setHd2(hardDrive);
         return this;
     }
 
-    public void setDeadMemory2(HardDrive hardDrive) {
-        this.deadMemory2 = hardDrive;
+    public void setHd2(HardDrive hardDrive) {
+        this.hd2 = hardDrive;
     }
 
     public Ram getRam1() {
@@ -419,6 +419,14 @@ public class ClientConfig implements Serializable {
     public ClientConfig ram2(Ram ram) {
         this.setRam2(ram);
         return this;
+    }
+
+    public Float getMbePrice() {
+        return mbePrice;
+    }
+
+    public void setMbePrice(Float mbePrice) {
+        this.mbePrice = mbePrice;
     }
 
     public void setRam2(Ram ram) {

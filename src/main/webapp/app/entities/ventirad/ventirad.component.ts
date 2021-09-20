@@ -56,7 +56,7 @@ export default class Ventirad extends Vue {
       .retrieve()
       .then(
         res => {
-          this.ventirads = res.data;
+          this.ventirads = res.data.content;
           this.isFetching = false;
         },
         err => {

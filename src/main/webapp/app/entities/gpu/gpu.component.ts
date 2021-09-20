@@ -56,7 +56,7 @@ export default class Gpu extends Vue {
       .retrieve()
       .then(
         res => {
-          this.gpus = res.data;
+          this.gpus = res.data.content;
           this.isFetching = false;
         },
         err => {

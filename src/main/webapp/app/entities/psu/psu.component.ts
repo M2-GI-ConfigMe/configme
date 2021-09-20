@@ -56,7 +56,7 @@ export default class Psu extends Vue {
       .retrieve()
       .then(
         res => {
-          this.psus = res.data;
+          this.psus = res.data.content;
           this.isFetching = false;
         },
         err => {

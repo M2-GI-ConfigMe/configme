@@ -84,38 +84,40 @@ class AccountResourceIT {
             .andExpect(content().string(TEST_USER_EMAIL));
     }
 
-    // Il fait des comparaisons d'objets et pas de valeurs (pour les dates notamment)
-    // @Test
-    // void testGetExistingAccount() throws Exception {
-    //     Set<String> authorities = new HashSet<>();
-    //     authorities.add(AuthoritiesConstants.ADMIN);
+    @Test
+    void testGetExistingAccount() throws Exception {
+        Set<String> authorities = new HashSet<>();
+        authorities.add(AuthoritiesConstants.ADMIN);
 
-    //     AdminUserDTO user = new AdminUserDTO();
-    //     user.setEmail(TEST_USER_EMAIL);
-    //     user.setFirstName("test-get-existing-account");
-    //     user.setLastName("lastname");
+        AdminUserDTO user = new AdminUserDTO();
+        user.setEmail(TEST_USER_EMAIL);
+        user.setFirstName("test-get-existing-account");
+        user.setLastName("lastname");
 
-    //     user.setBirthdate(DEFAULT_BIRTHDATE);
-    //     user.setAddress(Address.of("test-get-existing-account", "lastname", "5", "Rue de l'exmple", "Grenoble", "38000"));
+        user.setBirthdate(DEFAULT_BIRTHDATE);
+        user.setAddress(Address.of("test-get-existing-account", "lastname", "5", "Rue de l'exmple", "Grenoble", "38000"));
 
-    //     user.setImageUrl("http://placehold.it/50x50");
-    //     user.setLangKey("en");
-    //     user.setAuthorities(authorities);
-    //     userService.createUser(user);
+        user.setImageUrl("http://placehold.it/50x50");
+        user.setLangKey("en");
+        user.setAuthorities(authorities);
+        userService.createUser(user);
 
-    //     restAccountMockMvc
-    //         .perform(get("/api/account").accept(MediaType.APPLICATION_JSON))
-    //         .andExpect(status().isOk())
-    //         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-    //         .andExpect(jsonPath("$.email").value(TEST_USER_EMAIL))
-    //         .andExpect(jsonPath("$.firstName").value("test-get-existing-account"))
-    //         .andExpect(jsonPath("$.lastName").value("lastname"))
-    //         .andExpect(jsonPath("$.birthdate").value(DEFAULT_BIRTHDATE))
-    //         .andExpect(jsonPath("$.address").value(Address.of("test-get-existing-account", "lastname", "5", "Rue de l'exmple", "Grenoble", "38000")))
-    //         .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
-    //         .andExpect(jsonPath("$.langKey").value("en"))
-    //         .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
-    // }
+        restAccountMockMvc
+            .perform(get("/api/account").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.email").value(TEST_USER_EMAIL))
+            .andExpect(jsonPath("$.firstName").value("test-get-existing-account"))
+            .andExpect(jsonPath("$.lastName").value("lastname"))
+            .andExpect(jsonPath("$.birthdate").value(DEFAULT_BIRTHDATE.toString()))
+            .andExpect(
+                jsonPath("$.address")
+                    .value(Address.of("test-get-existing-account", "lastname", "5", "Rue de l'exmple", "Grenoble", "38000"))
+            )
+            .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
+            .andExpect(jsonPath("$.langKey").value("en"))
+            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
+    }
 
     @Test
     void testGetUnknownAccount() throws Exception {
@@ -312,9 +314,9 @@ class AccountResourceIT {
     // @WithMockUser("save-account")
     // void testSaveAccount() throws Exception {
     //     User user = new User();
+    //     user.setEmail("save-account@example.com");
     //     user.setFirstName("save-account");
     //     user.setLastName("lastname");
-    //     user.setEmail("save-account@example.com");
     //     user.setPassword(RandomStringUtils.random(59)+"5");
     //     user.setActivated(true);
 
@@ -332,9 +334,9 @@ class AccountResourceIT {
     //     userDTO.setAddress(Address.of("firstname", "lastName", "5", "Rue de l'exmple", "Grenoble", "38000"));
 
     //     userDTO.setActivated(false);
-    //     userDTO.setImageUrl("http://placehold.it/50x50");
-    //     userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
-    //     userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
+    //     // userDTO.setImageUrl("http://placehold.it/50x50");
+    //     // userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
+    //     // userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
 
     //     restAccountMockMvc
     //         .perform(post("/api/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO)))
@@ -344,11 +346,13 @@ class AccountResourceIT {
     //     assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
     //     assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
     //     assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
-    //     assertThat(updatedUser.getLangKey()).isEqualTo(userDTO.getLangKey());
+    //     // assertThat(updatedUser.getLangKey()).isEqualTo(userDTO.getLangKey());
     //     assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
-    //     assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
+    //     // assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
+    //     assertThat(updatedUser.getBirthdate()).isEqualTo(userDTO.getBirthdate());
+    //     assertThat(updatedUser.getAddress()).isEqualTo(userDTO.getAddress());
     //     assertThat(updatedUser.isActivated()).isTrue();
-    //     assertThat(updatedUser.getAuthorities()).isEmpty();
+    //     // assertThat(updatedUser.getAuthorities()).isEmpty();
     // }
 
     @Test

@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class RamResourceITUser implements ProductResourceIT {
+public class RamResourceITUser implements ProductResourceIT {
 
     private static final RamType DEFAULT_TYPE = RamType.DDR3;
     private static final RamType UPDATED_TYPE = RamType.DDR4;
@@ -71,7 +71,7 @@ class RamResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ram createEntity(EntityManager em) {
+    public static Ram createEntity() {
         Ram ram = new Ram()
             .type(DEFAULT_TYPE)
             .frequency(DEFAULT_FREQUENCY)
@@ -89,7 +89,7 @@ class RamResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ram createUpdatedEntity(EntityManager em) {
+    public static Ram createUpdatedEntity() {
         Ram ram = new Ram()
             .type(UPDATED_TYPE)
             .frequency(UPDATED_FREQUENCY)
@@ -103,7 +103,7 @@ class RamResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        ram = createEntity(em);
+        ram = createEntity();
     }
 
     @Test
@@ -131,12 +131,12 @@ class RamResourceITUser implements ProductResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(ram.getId().intValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
-            .andExpect(jsonPath("$.[*].unitSize").value(hasItem(DEFAULT_UNIT_SIZE)))
-            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
-            .andExpect(jsonPath("$.[*].cas").value(hasItem(DEFAULT_CAS)));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(ram.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.content.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].unitSize").value(hasItem(DEFAULT_UNIT_SIZE)))
+            .andExpect(jsonPath("$.content.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
+            .andExpect(jsonPath("$.content.[*].cas").value(hasItem(DEFAULT_CAS)));
 
         getAllProductAssertProductField(action);
     }

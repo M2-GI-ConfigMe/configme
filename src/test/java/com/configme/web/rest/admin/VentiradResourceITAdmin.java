@@ -70,7 +70,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ventirad createEntity(EntityManager em) {
+    public static Ventirad createEntity() {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(DEFAULT_RANGE_FAN_SPEED)
             .noise(DEFAULT_NOISE)
@@ -87,7 +87,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ventirad createUpdatedEntity(EntityManager em) {
+    public static Ventirad createUpdatedEntity() {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(UPDATED_RANGE_FAN_SPEED)
             .noise(UPDATED_NOISE)
@@ -98,7 +98,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        ventirad = createEntity(em);
+        ventirad = createEntity();
     }
 
     @Test
@@ -186,13 +186,13 @@ class VentiradResourceITAdmin implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(ventirad.getId().intValue())))
-            .andExpect(jsonPath("$.[*].rangeFanSpeed").value(hasItem(DEFAULT_RANGE_FAN_SPEED)))
-            .andExpect(jsonPath("$.[*].noise").value(hasItem(DEFAULT_NOISE)))
-            .andExpect(jsonPath("$.[*].hasThermalPaste").value(hasItem(DEFAULT_HAS_THERMAL_PASTE.booleanValue())))
-            .andExpect(jsonPath("$.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
-            .andExpect(jsonPath("$.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
-            .andExpect(jsonPath("$.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(ventirad.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].rangeFanSpeed").value(hasItem(DEFAULT_RANGE_FAN_SPEED)))
+            .andExpect(jsonPath("$.content.[*].noise").value(hasItem(DEFAULT_NOISE)))
+            .andExpect(jsonPath("$.content.[*].hasThermalPaste").value(hasItem(DEFAULT_HAS_THERMAL_PASTE.booleanValue())))
+            .andExpect(jsonPath("$.content.[*].dimension.height").value(hasItem(DEFAULT_DIMENSION.getHeight())))
+            .andExpect(jsonPath("$.content.[*].dimension.width").value(hasItem(DEFAULT_DIMENSION.getWidth())))
+            .andExpect(jsonPath("$.content.[*].dimension.length").value(hasItem(DEFAULT_DIMENSION.getLength())));
 
         getAllProductAssertProductField(action);
     }
@@ -472,7 +472,7 @@ class VentiradResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

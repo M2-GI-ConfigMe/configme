@@ -76,7 +76,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Psu createEntity(EntityManager em) {
+    public static Psu createEntity() {
         Psu psu = new Psu()
             .power(DEFAULT_POWER)
             .certification(DEFAULT_CERTIFICATION)
@@ -95,7 +95,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Psu createUpdatedEntity(EntityManager em) {
+    public static Psu createUpdatedEntity() {
         Psu psu = new Psu()
             .power(UPDATED_POWER)
             .certification(UPDATED_CERTIFICATION)
@@ -110,7 +110,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        psu = createEntity(em);
+        psu = createEntity();
     }
 
     @Test
@@ -251,13 +251,13 @@ class PsuResourceITAdmin implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(psu.getId().intValue())))
-            .andExpect(jsonPath("$.[*].power").value(hasItem(DEFAULT_POWER)))
-            .andExpect(jsonPath("$.[*].certification").value(hasItem(DEFAULT_CERTIFICATION)))
-            .andExpect(jsonPath("$.[*].modularity").value(hasItem(DEFAULT_MODULARITY.toString())))
-            .andExpect(jsonPath("$.[*].nbSata").value(hasItem(DEFAULT_NB_SATA)))
-            .andExpect(jsonPath("$.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
-            .andExpect(jsonPath("$.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(psu.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].power").value(hasItem(DEFAULT_POWER)))
+            .andExpect(jsonPath("$.content.[*].certification").value(hasItem(DEFAULT_CERTIFICATION)))
+            .andExpect(jsonPath("$.content.[*].modularity").value(hasItem(DEFAULT_MODULARITY.toString())))
+            .andExpect(jsonPath("$.content.[*].nbSata").value(hasItem(DEFAULT_NB_SATA)))
+            .andExpect(jsonPath("$.content.[*].nbPciE").value(hasItem(DEFAULT_NB_PCI_E)))
+            .andExpect(jsonPath("$.content.[*].outputs").value(hasItem(DEFAULT_OUTPUTS)));
 
         getAllProductAssertProductField(action);
     }
@@ -547,7 +547,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

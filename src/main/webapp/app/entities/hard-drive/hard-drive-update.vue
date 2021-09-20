@@ -3,9 +3,9 @@
     <div class="col-8">
       <form name="editForm" role="form" novalidate v-on:submit.prevent="save()">
         <h2
-          id="configmeApp.hardDrive.home.createOrEditLabel"
+          id="configmeApp.hd.home.createOrEditLabel"
           data-cy="HardDriveCreateUpdateHeading"
-          v-text="$t('configmeApp.hardDrive.home.createOrEditLabel')"
+          v-text="$t('configmeApp.hd.home.createOrEditLabel')"
         >
           Create or edit a HardDrive
         </h2>
@@ -87,7 +87,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.hardDrive.capacity')" for="hard-drive-capacity">Capacity</label>
+            <label class="form-control-label" v-text="$t('configmeApp.hd.capacity')" for="hard-drive-capacity">Capacity</label>
             <input
               type="number"
               class="form-control"
@@ -108,9 +108,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.hardDrive.speedWrite')" for="hard-drive-speedWrite"
-              >Speed Write</label
-            >
+            <label class="form-control-label" v-text="$t('configmeApp.hd.speedWrite')" for="hard-drive-speedWrite">Speed Write</label>
             <input
               type="number"
               class="form-control"
@@ -131,7 +129,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.hardDrive.speedRead')" for="hard-drive-speedRead">Speed Read</label>
+            <label class="form-control-label" v-text="$t('configmeApp.hd.speedRead')" for="hard-drive-speedRead">Speed Read</label>
             <input
               type="number"
               class="form-control"
@@ -152,7 +150,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.hardDrive.type')" for="hard-drive-type">Type</label>
+            <label class="form-control-label" v-text="$t('configmeApp.hd.type')" for="hard-drive-type">Type</label>
             <select
               class="form-control"
               name="type"

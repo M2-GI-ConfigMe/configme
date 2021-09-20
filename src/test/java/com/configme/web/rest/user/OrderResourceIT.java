@@ -1,15 +1,18 @@
 package com.configme.web.rest.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.configme.IntegrationTest;
+import com.configme.domain.Address;
 import com.configme.domain.Order;
 import com.configme.domain.enumeration.OrderStatus;
 import com.configme.repository.OrderRepository;
+import com.configme.repository.UserRepository;
+import com.configme.web.rest.OrderResource;
 import com.configme.web.rest.TestUtil;
+import com.configme.web.rest.UserResourceIT;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -45,6 +48,9 @@ class OrderResourceIT {
     private static final OrderStatus DEFAULT_STATUS = OrderStatus.CART;
     private static final OrderStatus UPDATED_STATUS = OrderStatus.PROCESSING;
 
+    private static final Address DEFAULT_ADDRESS = Address.of("first_name", "last_name", "0", "rue exemple", "grenoble", "38000");
+    private static final Address UPDATED_ADDRESS = Address.of("first_name_bis", "last_name_bis", "0", "rue exemple", "chambery", "73000");
+
     private static final String ENTITY_API_URL = "/api/orders";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -53,6 +59,9 @@ class OrderResourceIT {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private EntityManager em;
@@ -68,12 +77,14 @@ class OrderResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Order createEntity(EntityManager em) {
+    public static Order createEntity() {
         Order order = new Order()
             .createdAt(DEFAULT_CREATED_AT)
             .updatedAt(DEFAULT_UPDATED_AT)
             .validatedAt(DEFAULT_VALIDATED_AT)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .deliveryAddress(DEFAULT_ADDRESS)
+            .buyer(UserResourceIT.createEntity());
         return order;
     }
 
@@ -83,123 +94,21 @@ class OrderResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Order createUpdatedEntity(EntityManager em) {
+    public static Order createUpdatedEntity() {
         Order order = new Order()
             .createdAt(UPDATED_CREATED_AT)
             .updatedAt(UPDATED_UPDATED_AT)
             .validatedAt(UPDATED_VALIDATED_AT)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .deliveryAddress(UPDATED_ADDRESS)
+            .buyer(UserResourceIT.createEntity());
         return order;
     }
 
     @BeforeEach
     public void initTest() {
-        order = createEntity(em);
-    }
-
-    @Test
-    @Transactional
-    void createOrder() throws Exception {
-        int databaseSizeBeforeCreate = orderRepository.findAll().size();
-        // Create the Order
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isCreated());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeCreate + 1);
-        Order testOrder = orderList.get(orderList.size() - 1);
-        assertThat(testOrder.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
-        assertThat(testOrder.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
-        assertThat(testOrder.getValidatedAt()).isEqualTo(DEFAULT_VALIDATED_AT);
-        assertThat(testOrder.getStatus()).isEqualTo(DEFAULT_STATUS);
-    }
-
-    @Test
-    @Transactional
-    void createOrderWithExistingId() throws Exception {
-        // Create the Order with an existing ID
-        order.setId(1L);
-
-        int databaseSizeBeforeCreate = orderRepository.findAll().size();
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = orderRepository.findAll().size();
-        // set the field null
-        order.setCreatedAt(null);
-
-        // Create the Order, which fails.
-
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkUpdatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = orderRepository.findAll().size();
-        // set the field null
-        order.setUpdatedAt(null);
-
-        // Create the Order, which fails.
-
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkValidatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = orderRepository.findAll().size();
-        // set the field null
-        order.setValidatedAt(null);
-
-        // Create the Order, which fails.
-
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = orderRepository.findAll().size();
-        // set the field null
-        order.setStatus(null);
-
-        // Create the Order, which fails.
-
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeTest);
+        order = createEntity();
+        userRepository.saveAndFlush(order.getBuyer());
     }
 
     @Test
@@ -209,15 +118,8 @@ class OrderResourceIT {
         orderRepository.saveAndFlush(order);
 
         // Get all the orderList
-        restOrderMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(order.getId().intValue())))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(DEFAULT_UPDATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].validatedAt").value(hasItem(DEFAULT_VALIDATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+        restOrderMockMvc.perform(get(ENTITY_API_URL + "?sort=id,desc")).andExpect(status().is4xxClientError());
+        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
     }
 
     @Test
@@ -227,54 +129,14 @@ class OrderResourceIT {
         orderRepository.saveAndFlush(order);
 
         // Get the order
-        restOrderMockMvc
-            .perform(get(ENTITY_API_URL_ID, order.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(order.getId().intValue()))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
-            .andExpect(jsonPath("$.updatedAt").value(DEFAULT_UPDATED_AT.toString()))
-            .andExpect(jsonPath("$.validatedAt").value(DEFAULT_VALIDATED_AT.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+        restOrderMockMvc.perform(get(ENTITY_API_URL_ID, order.getId())).andExpect(status().is4xxClientError());
     }
 
     @Test
     @Transactional
     void getNonExistingOrder() throws Exception {
         // Get the order
-        restOrderMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    void putNewOrder() throws Exception {
-        // Initialize the database
-        orderRepository.saveAndFlush(order);
-
-        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
-
-        // Update the order
-        Order updatedOrder = orderRepository.findById(order.getId()).get();
-        // Disconnect from session so that the updates on updatedOrder are not directly saved in db
-        em.detach(updatedOrder);
-        updatedOrder.createdAt(UPDATED_CREATED_AT).updatedAt(UPDATED_UPDATED_AT).validatedAt(UPDATED_VALIDATED_AT).status(UPDATED_STATUS);
-
-        restOrderMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, updatedOrder.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedOrder))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-        Order testOrder = orderList.get(orderList.size() - 1);
-        assertThat(testOrder.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testOrder.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
-        assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
-        assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
+        restOrderMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -290,47 +152,7 @@ class OrderResourceIT {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(order))
             )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithIdMismatchOrder() throws Exception {
-        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
-        order.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(order))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithMissingIdPathParamOrder() throws Exception {
-        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
-        order.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
+            .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -345,7 +167,11 @@ class OrderResourceIT {
         Order partialUpdatedOrder = new Order();
         partialUpdatedOrder.setId(order.getId());
 
-        partialUpdatedOrder.createdAt(UPDATED_CREATED_AT).validatedAt(UPDATED_VALIDATED_AT).status(UPDATED_STATUS);
+        partialUpdatedOrder
+            .createdAt(UPDATED_CREATED_AT)
+            .validatedAt(UPDATED_VALIDATED_AT)
+            .status(UPDATED_STATUS)
+            .deliveryAddress(UPDATED_ADDRESS);
 
         restOrderMockMvc
             .perform(
@@ -353,16 +179,7 @@ class OrderResourceIT {
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(partialUpdatedOrder))
             )
-            .andExpect(status().isOk());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-        Order testOrder = orderList.get(orderList.size() - 1);
-        assertThat(testOrder.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testOrder.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
-        assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
-        assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
+            .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -381,7 +198,8 @@ class OrderResourceIT {
             .createdAt(UPDATED_CREATED_AT)
             .updatedAt(UPDATED_UPDATED_AT)
             .validatedAt(UPDATED_VALIDATED_AT)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .deliveryAddress(DEFAULT_ADDRESS);
 
         restOrderMockMvc
             .perform(
@@ -389,72 +207,7 @@ class OrderResourceIT {
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(partialUpdatedOrder))
             )
-            .andExpect(status().isOk());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-        Order testOrder = orderList.get(orderList.size() - 1);
-        assertThat(testOrder.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testOrder.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
-        assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
-        assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
-    }
-
-    @Test
-    @Transactional
-    void patchNonExistingOrder() throws Exception {
-        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
-        order.setId(count.incrementAndGet());
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restOrderMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, order.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(order))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithIdMismatchOrder() throws Exception {
-        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
-        order.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(order))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithMissingIdPathParamOrder() throws Exception {
-        int databaseSizeBeforeUpdate = orderRepository.findAll().size();
-        order.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restOrderMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the Order in the database
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeUpdate);
+            .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -468,10 +221,10 @@ class OrderResourceIT {
         // Delete the order
         restOrderMockMvc
             .perform(delete(ENTITY_API_URL_ID, order.getId()).accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
+            .andExpect(status().is4xxClientError());
 
         // Validate the database contains one less item
         List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeDelete - 1);
+        assertThat(orderList).hasSize(databaseSizeBeforeDelete);
     }
 }

@@ -1,25 +1,38 @@
 import { email, maxLength, minLength, required } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import { EMAIL_ALREADY_USED_TYPE } from '@/constants';
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Inject, Component } from 'vue-property-decorator';
+import AccountService from '@/account/account.service';
 
 const validations = {
   settingsAccount: {
-    firstName: {
-      required,
-      minLength: minLength(1),
-      maxLength: maxLength(50),
-    },
-    lastName: {
-      required,
-      minLength: minLength(1),
-      maxLength: maxLength(50),
-    },
     email: {
       required,
       email,
-      minLength: minLength(5),
-      maxLength: maxLength(254),
+    },
+    firstName: {
+      required,
+    },
+    lastName: {
+      required,
+    },
+    birthdate: {
+      required,
+    },
+    address: {
+      streetNumber: {
+        required,
+      },
+      streetName: {
+        required,
+      },
+      city: {
+        required,
+      },
+      zipCode: {
+        required,
+      },
+      required,
     },
   },
 };
@@ -28,6 +41,25 @@ const validations = {
   validations,
 })
 export default class Settings extends Vue {
+  @Inject('accountService') private accountService: () => AccountService;
+
+  //Form gestion
+  public rules = {
+    requiredField: [v => !!v || 'Champs obligatoire'],
+    emailRules: [v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail non valide'],
+    firstNameRules: [],
+    lastNameRules: [],
+    birthdateRules: [],
+    streetNumberRules: [],
+    streetNameRules: [],
+    cityRules: [],
+    zipCodeRules: [],
+  };
+
+  public isValid = false;
+
+  public dialog = false;
+
   public success: string = null;
   public error: string = null;
   public errorEmailExists: string = null;
@@ -42,6 +74,9 @@ export default class Settings extends Vue {
         this.error = null;
         this.success = 'OK';
         this.errorEmailExists = null;
+        setTimeout(() => {
+          this.success = null;
+        }, 2000);
       })
       .catch(error => {
         this.success = null;
@@ -59,5 +94,10 @@ export default class Settings extends Vue {
 
   public get username(): string {
     return this.$store.getters.account ? this.$store.getters.account.login : '';
+  }
+
+  public deleteAccount(): void {
+    const idStocked: string = this.$store.getters.account.id;
+    this.accountService().deleteUser(idStocked);
   }
 }
