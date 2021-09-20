@@ -1,6 +1,6 @@
 {
   "configmeApp": {
-    "hardDrive": {
+    "hd": {
       "home": {
         "title": "HardDrives",
         "refreshListLabel": "Actualiser la liste",
