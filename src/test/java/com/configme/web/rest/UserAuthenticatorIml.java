@@ -29,7 +29,7 @@ public class UserAuthenticatorIml implements UserAuthenticator {
 
     private User user;
 
-    private User createUser() {
+    private User createUser(String username) {
         Address adress = new Address();
         adress.setCity("fsdf");
         adress.setFirstName("fsdf");
@@ -44,7 +44,7 @@ public class UserAuthenticatorIml implements UserAuthenticator {
         User user = new User();
         user.setBirthdate(LocalDate.now());
         user.setActivated(true);
-        user.setEmail("user@mail");
+        user.setEmail(username);
         user.setPassword(passwordEncoder.encode("password"));
         user.setImageUrl("fsddf");
         user.setAddress(adress);
@@ -64,7 +64,30 @@ public class UserAuthenticatorIml implements UserAuthenticator {
     }
 
     public String getBearer(String username, String password) throws Exception {
-        user = createUser();
+        user = createUser(username);
+        userRepository.saveAndFlush(user);
+
+        String json = "{\"username\":\"" + username + "\", \"password\":\"" + password + "\"}";
+
+        MvcResult result = mock
+            .perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(json))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+        response = response.replace("{\"id_token\":\"", "");
+        String token = response.replace("\"}", "");
+
+        return "Bearer " + token;
+    }
+
+    public String getBearerForAdmin(String username, String password) throws Exception {
+        user = createUser(username);
+        Set<Authority> authorityList = user.getAuthorities();
+        Authority aut = new Authority();
+        aut.setName("ROLE_ADMIN");
+        authorityList.add(aut);
+        user.setAuthorities(authorityList);
         userRepository.saveAndFlush(user);
 
         String json = "{\"username\":\"" + username + "\", \"password\":\"" + password + "\"}";

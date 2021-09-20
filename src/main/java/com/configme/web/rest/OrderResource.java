@@ -12,8 +12,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -106,7 +104,7 @@ public class OrderResource {
         }
 
         User user = this.userService.getUserWithAuthorities().get();
-        if (!user.getId().equals(order.getBuyer().getId())) throw new AccessDeniedException("403 returned");
+        if (!user.getId().equals(order.getBuyer().getId()) && !user.isAdmin()) throw new AccessDeniedException("403 returned");
 
         Order result = orderRepository.save(order);
 
@@ -232,7 +230,8 @@ public class OrderResource {
         Order order = orderRepository.findById(id).get();
 
         User user = this.userService.getUserWithAuthorities().get();
-        if (!user.getId().equals(order.getBuyer().getId())) throw new AccessDeniedException("403 returned");
+
+        if (!user.getId().equals(order.getBuyer().getId()) && !user.isAdmin()) throw new AccessDeniedException("403 returned");
 
         this.orderHandler.validateOrder(order);
 

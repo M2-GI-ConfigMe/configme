@@ -231,6 +231,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.clientConfigs.add(clientConfig);
     }
 
+    public boolean isAdmin() {
+        return this.getAuthorities().stream().anyMatch(a -> a.getName().equals("ROLE_ADMIN"));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -84,9 +84,6 @@ public class ClientConfigResourceIT {
     private ClientConfigRepository clientConfigRepository;
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     private MockMvc restClientConfigMockMvc;
 
     private ClientConfig clientConfig;
@@ -97,7 +94,7 @@ public class ClientConfigResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ClientConfig createEntity(EntityManager em) {
+    public static ClientConfig createEntity() {
         ClientConfig clientConfig = new ClientConfig()
             .tags(DEFAULT_TAGS)
             .name(DEFAULT_NAME)
@@ -122,7 +119,7 @@ public class ClientConfigResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ClientConfig createUpdatedEntity(EntityManager em) {
+    public static ClientConfig createUpdatedEntity() {
         ClientConfig clientConfig = new ClientConfig()
             .tags(UPDATED_TAGS)
             .name(UPDATED_NAME)
@@ -143,7 +140,7 @@ public class ClientConfigResourceIT {
 
     @BeforeEach
     public void initTest() {
-        clientConfig = createEntity(em);
+        clientConfig = createEntity();
     }
 
     /*

@@ -111,7 +111,9 @@ public class OrderLineResource {
         }
         User user = userService.getUserWithAuthorities().get();
 
-        if (orderLine.getOrder().getBuyer().getId() != user.getId()) throw new AccessDeniedException("403 returned");
+        if (!orderLine.getOrder().getBuyer().getId().equals(user.getId()) && !user.isAdmin()) throw new AccessDeniedException(
+            "403 returned"
+        );
 
         OrderLine result = orderLineRepository.save(orderLine);
         return ResponseEntity
@@ -206,9 +208,13 @@ public class OrderLineResource {
 
         orderLine = orderLineRepository.findById(id).get();
 
-        if (orderLine.getOrder().getBuyer().getId() != user.getId()) throw new AccessDeniedException("403 returned");
+        if (!orderLine.getOrder().getBuyer().getId().equals(user.getId()) && !user.isAdmin()) throw new AccessDeniedException(
+            "403 not allowed"
+        );
 
         log.debug("REST request to delete OrderLine : {}", id);
+
+        this.entityManager.refresh(orderLine.getOrder());
 
         if (orderLine.getOrder().getLines().size() == 1) {
             this.orderRepository.deleteById(orderLine.getOrder().getId());

@@ -178,4 +178,9 @@ public class Order implements Serializable {
     public void setBuyer(User buyer) {
         this.buyer = buyer;
     }
+
+    public Order buyer(User buyer) {
+        this.buyer = buyer;
+        return this;
+    }
 }
