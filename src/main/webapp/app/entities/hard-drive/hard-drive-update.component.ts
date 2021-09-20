@@ -85,7 +85,7 @@ export default class HardDriveUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = this.$t('configmeApp.hardDrive.updated', { param: param.id });
+          const message = this.$t('configmeApp.hd.updated', { param: param.id });
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -101,7 +101,7 @@ export default class HardDriveUpdate extends Vue {
         .then(param => {
           this.isSaving = false;
           this.$router.go(-1);
-          const message = this.$t('configmeApp.hardDrive.created', { param: param.id });
+          const message = this.$t('configmeApp.hd.created', { param: param.id });
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',

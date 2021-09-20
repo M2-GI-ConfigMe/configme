@@ -56,7 +56,7 @@ export default class Mbe extends Vue {
       .retrieve()
       .then(
         res => {
-          this.mbes = res.data;
+          this.mbes = res.data.content;
           this.isFetching = false;
         },
         err => {

@@ -1,10 +1,17 @@
 <template>
   <v-menu v-model="showCart" :close-on-content-click="false" offset-y min-width="300" max-width="300" max-height="500">
     <template v-slot:activator="{ on: menu, attrs }">
-      <v-badge color="primary" :value="cart.length > 0" offset-x="20" offset-y="20" :content="cart.length" class="font-weight-bold">
+      <v-badge color="primary" :value="cart.length > 0" offset-x="30" offset-y="20" :content="cart.length" class="font-weight-bold">
         <v-tooltip bottom :value="showTooltip" close-delay="10" :color="showTooltip ? 'success' : 'transparent'">
           <template v-slot:activator="{ on: tooltip }">
-            <v-btn :color="showCart ? 'primary' : 'black'" v-bind="{ ...attrs }" v-on="{ ...menu, ...tooltip }" id="cartbtn" icon>
+            <v-btn
+              :color="showCart ? 'primary' : 'black'"
+              v-bind="{ ...attrs }"
+              v-on="{ ...menu, ...tooltip }"
+              id="cartbtn"
+              icon
+              class="mr-2"
+            >
               <v-icon>mdi-cart</v-icon>
             </v-btn>
           </template>

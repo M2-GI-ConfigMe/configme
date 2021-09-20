@@ -3,7 +3,7 @@
     <div class="col-8">
       <div v-if="hardDrive">
         <h2 class="jh-entity-heading titre-container-entity" data-cy="hardDriveDetailsHeading">
-          <div><span v-text="$t('configmeApp.hardDrive.detail.title')">ComputerCase</span> {{ hardDrive.id }}</div>
+          <div><span v-text="$t('configmeApp.hd.detail.title')">ComputerCase</span> {{ hardDrive.id }}</div>
           <div>
             <button class="btn btn-danger btn-sm deactivated" v-on:click="setActive(hardDrive, true)" v-if="!hardDrive.isActive">
               Activer
@@ -49,25 +49,25 @@
             <span>{{ hardDrive.brand }}</span>
           </dd>
           <dt>
-            <span v-text="$t('configmeApp.hardDrive.capacity')">Capacity</span>
+            <span v-text="$t('configmeApp.hd.capacity')">Capacity</span>
           </dt>
           <dd>
             <span>{{ hardDrive.capacity }}</span>
           </dd>
           <dt>
-            <span v-text="$t('configmeApp.hardDrive.speedWrite')">Speed Write</span>
+            <span v-text="$t('configmeApp.hd.speedWrite')">Speed Write</span>
           </dt>
           <dd>
             <span>{{ hardDrive.speedWrite }}</span>
           </dd>
           <dt>
-            <span v-text="$t('configmeApp.hardDrive.speedRead')">Speed Read</span>
+            <span v-text="$t('configmeApp.hd.speedRead')">Speed Read</span>
           </dt>
           <dd>
             <span>{{ hardDrive.speedRead }}</span>
           </dd>
           <dt>
-            <span v-text="$t('configmeApp.hardDrive.type')">Type</span>
+            <span v-text="$t('configmeApp.hd.type')">Type</span>
           </dt>
           <dd>
             <span v-text="$t('configmeApp.MemoryType.' + hardDrive.type)">{{ hardDrive.type }}</span>
