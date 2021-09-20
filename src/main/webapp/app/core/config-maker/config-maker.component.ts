@@ -198,7 +198,6 @@ export default class ConfigMaker extends Vue {
   }
 
   public handlePicked(value) {
-    this.componentPickerDialog = false;
     this.selectedConfig[this.endpoint] = value;
   }
 

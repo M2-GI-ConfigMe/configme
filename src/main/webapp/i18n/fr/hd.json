@@ -18,7 +18,7 @@
         "title": "Hard Drive"
       },
       "id": "ID",
-      "capacity": "Capacité Go",
+      "capacity": "Capacité",
       "speedWrite": "Vitesse de lecture",
       "speedRead": "Vitesse d'écriture",
       "type": "Type"

@@ -80,7 +80,7 @@ export default class HardDrive extends Vue {
     this.hardDriveService()
       .delete(this.removeId)
       .then(() => {
-        const message = this.$t('configmeApp.hardDrive.deleted', { param: this.removeId });
+        const message = this.$t('configmeApp.hd.deleted', { param: this.removeId });
         this.$bvToast.toast(message.toString(), {
           toaster: 'b-toaster-bottom-right',
           title: 'Info',
