@@ -49,8 +49,8 @@
             <th scope="row"><span v-text="$t('configmeApp.clientConfig.ventirad')">Ventirad</span></th>
             <th scope="row"><span v-text="$t('configmeApp.clientConfig.mbe')">Mbe</span></th>
             <th scope="row"><span v-text="$t('configmeApp.clientConfig.computerCase')">Computer Case</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.clientConfig.deadMemory1')">Dead Memory 1</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.clientConfig.deadMemory2')">Dead Memory 2</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.clientConfig.hd1')">Hard Drive 1</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.clientConfig.hd2')">Hard Drive 2</span></th>
             <th scope="row"><span v-text="$t('configmeApp.clientConfig.ram1')">Ram 1</span></th>
             <th scope="row"><span v-text="$t('configmeApp.clientConfig.ram2')">Ram 2</span></th>
             <th scope="row"></th>
@@ -112,16 +112,16 @@
               </div>
             </td>
             <td>
-              <div v-if="clientConfig.deadMemory1">
-                <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.deadMemory1.id } }">{{
-                  clientConfig.deadMemory1.id
+              <div v-if="clientConfig.hd1">
+                <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.hd1.id } }">{{
+                  clientConfig.hd1.id
                 }}</router-link>
               </div>
             </td>
             <td>
-              <div v-if="clientConfig.deadMemory2">
-                <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.deadMemory2.id } }">{{
-                  clientConfig.deadMemory2.id
+              <div v-if="clientConfig.hd2">
+                <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.hd2.id } }">{{
+                  clientConfig.hd2.id
                 }}</router-link>
               </div>
             </td>

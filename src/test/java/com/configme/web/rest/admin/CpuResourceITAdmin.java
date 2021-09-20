@@ -94,7 +94,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Cpu createEntity(EntityManager em) {
+    public static Cpu createEntity() {
         Cpu cpu = new Cpu()
             .frequency(DEFAULT_FREQUENCY)
             .cacheL1(DEFAULT_CACHE_L_1)
@@ -119,7 +119,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Cpu createUpdatedEntity(EntityManager em) {
+    public static Cpu createUpdatedEntity() {
         Cpu cpu = new Cpu()
             .frequency(UPDATED_FREQUENCY)
             .cacheL1(UPDATED_CACHE_L_1)
@@ -140,7 +140,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        cpu = createEntity(em);
+        cpu = createEntity();
     }
 
     @Test
@@ -699,7 +699,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

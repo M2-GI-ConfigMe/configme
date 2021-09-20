@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class HardDriveResourceITUser implements ProductResourceIT {
+public class HardDriveResourceITUser implements ProductResourceIT {
 
     private static final Integer DEFAULT_CAPACITY = 1;
     private static final Integer UPDATED_CAPACITY = 2;
@@ -68,7 +68,7 @@ class HardDriveResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HardDrive createEntity(EntityManager em) {
+    public static HardDrive createEntity() {
         HardDrive hardDrive = new HardDrive()
             .capacity(DEFAULT_CAPACITY)
             .speedWrite(DEFAULT_SPEED_WRITE)
@@ -85,7 +85,7 @@ class HardDriveResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HardDrive createUpdatedEntity(EntityManager em) {
+    public static HardDrive createUpdatedEntity() {
         HardDrive hardDrive = new HardDrive()
             .capacity(UPDATED_CAPACITY)
             .speedWrite(UPDATED_SPEED_WRITE)
@@ -98,7 +98,7 @@ class HardDriveResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        hardDrive = createEntity(em);
+        hardDrive = createEntity();
     }
 
     @Test

@@ -302,23 +302,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.clientConfig.deadMemory1')" for="client-config-deadMemory1"
-              >Dead Memory 1</label
-            >
-            <select
-              class="form-control"
-              id="client-config-deadMemory1"
-              data-cy="deadMemory1"
-              name="deadMemory1"
-              v-model="clientConfig.deadMemory1"
-            >
+            <label class="form-control-label" v-text="$t('configmeApp.clientConfig.hd1')" for="client-config-hd1">Hard Drive 1</label>
+            <select class="form-control" id="client-config-hd1" data-cy="hd1" name="hd1" v-model="clientConfig.hd1">
               <option v-bind:value="null"></option>
               <option
-                v-bind:value="
-                  clientConfig.deadMemory1 && hardDriveOption.id === clientConfig.deadMemory1.id
-                    ? clientConfig.deadMemory1
-                    : hardDriveOption
-                "
+                v-bind:value="clientConfig.hd1 && hardDriveOption.id === clientConfig.hd1.id ? clientConfig.hd1 : hardDriveOption"
                 v-for="hardDriveOption in hardDrives"
                 :key="hardDriveOption.id"
               >
@@ -327,23 +315,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.clientConfig.deadMemory2')" for="client-config-deadMemory2"
-              >Dead Memory 2</label
-            >
-            <select
-              class="form-control"
-              id="client-config-deadMemory2"
-              data-cy="deadMemory2"
-              name="deadMemory2"
-              v-model="clientConfig.deadMemory2"
-            >
+            <label class="form-control-label" v-text="$t('configmeApp.clientConfig.hd2')" for="client-config-hd2">Hard Drive 2</label>
+            <select class="form-control" id="client-config-hd2" data-cy="hd2" name="hd2" v-model="clientConfig.hd2">
               <option v-bind:value="null"></option>
               <option
-                v-bind:value="
-                  clientConfig.deadMemory2 && hardDriveOption.id === clientConfig.deadMemory2.id
-                    ? clientConfig.deadMemory2
-                    : hardDriveOption
-                "
+                v-bind:value="clientConfig.hd2 && hardDriveOption.id === clientConfig.hd2.id ? clientConfig.hd2 : hardDriveOption"
                 v-for="hardDriveOption in hardDrives"
                 :key="hardDriveOption.id"
               >

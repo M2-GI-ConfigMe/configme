@@ -73,7 +73,7 @@ class RamResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ram createEntity(EntityManager em) {
+    public static Ram createEntity() {
         Ram ram = new Ram()
             .type(DEFAULT_TYPE)
             .frequency(DEFAULT_FREQUENCY)
@@ -91,7 +91,7 @@ class RamResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ram createUpdatedEntity(EntityManager em) {
+    public static Ram createUpdatedEntity() {
         Ram ram = new Ram()
             .type(UPDATED_TYPE)
             .frequency(UPDATED_FREQUENCY)
@@ -105,7 +105,7 @@ class RamResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        ram = createEntity(em);
+        ram = createEntity();
     }
 
     @Test
@@ -528,7 +528,7 @@ class RamResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }
