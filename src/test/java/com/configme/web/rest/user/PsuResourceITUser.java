@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class PsuResourceITUser implements ProductResourceIT {
+public class PsuResourceITUser implements ProductResourceIT {
 
     private static final Integer DEFAULT_POWER = 1;
     private static final Integer UPDATED_POWER = 2;
@@ -75,7 +75,7 @@ class PsuResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Psu createEntity(EntityManager em) {
+    public static Psu createEntity() {
         Psu psu = new Psu()
             .power(DEFAULT_POWER)
             .certification(DEFAULT_CERTIFICATION)
@@ -94,7 +94,7 @@ class PsuResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Psu createUpdatedEntity(EntityManager em) {
+    public static Psu createUpdatedEntity() {
         Psu psu = new Psu()
             .power(UPDATED_POWER)
             .certification(UPDATED_CERTIFICATION)
@@ -109,7 +109,7 @@ class PsuResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        psu = createEntity(em);
+        psu = createEntity();
     }
 
     @Test

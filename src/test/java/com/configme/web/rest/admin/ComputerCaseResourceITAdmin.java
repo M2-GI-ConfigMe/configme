@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +47,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
             add(FormatType.FLEX_ATX);
         }
     };
+
     private static final List<FormatType> UPDATED_FORMATS = new ArrayList<>() {
         {
             add(FormatType.FLEX_ATX);
@@ -105,7 +105,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ComputerCase createEntity(EntityManager em) {
+    public static ComputerCase createEntity() {
         ComputerCase computerCase = new ComputerCase()
             .type(DEFAULT_TYPE)
             .formats(DEFAULT_FORMATS)
@@ -129,7 +129,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ComputerCase createUpdatedEntity(EntityManager em) {
+    public static ComputerCase createUpdatedEntity() {
         ComputerCase computerCase = new ComputerCase()
             .type(UPDATED_TYPE)
             .formats(UPDATED_FORMATS)
@@ -149,7 +149,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        computerCase = createEntity(em);
+        computerCase = createEntity();
     }
 
     @Test
@@ -625,7 +625,7 @@ class ComputerCaseResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

@@ -28,8 +28,8 @@ export default class ConfigMaker extends Vue {
     computerCase: null,
     ram1: null,
     ram2: null,
-    deadMemory1: null,
-    deadMemory2: null,
+    hd1: null,
+    hd2: null,
     psu: null,
     ventirad: null,
   };
@@ -62,11 +62,11 @@ export default class ConfigMaker extends Vue {
       displayName: 'gpu',
     },
     {
-      key: 'deadMemory1',
+      key: 'hd1',
       displayName: 'Stockage 1',
     },
     {
-      key: 'deadMemory2',
+      key: 'hd2',
       displayName: 'Stockage 2',
     },
     {
@@ -210,8 +210,8 @@ export default class ConfigMaker extends Vue {
       (this.selectedConfig.cpu ? this.selectedConfig.cpu.price : 0) +
       (this.selectedConfig.psu ? this.selectedConfig.psu.price : 0) +
       (this.selectedConfig.ventirad ? this.selectedConfig.ventirad.price : 0) +
-      (this.selectedConfig.deadMemory1 ? this.selectedConfig.deadMemory1.price : 0) +
-      (this.selectedConfig.deadMemory2 ? this.selectedConfig.deadMemory2.price : 0)
+      (this.selectedConfig.hd1 ? this.selectedConfig.hd1.price : 0) +
+      (this.selectedConfig.hd2 ? this.selectedConfig.hd2.price : 0)
     );
   }
 
@@ -253,7 +253,7 @@ export default class ConfigMaker extends Vue {
       this.selectedConfig.ventirad &&
       this.selectedConfig.ram1 &&
       this.selectedConfig.computerCase &&
-      (this.selectedConfig.deadMemory1 != null || this.selectedConfig.deadMemory2 != null)
+      (this.selectedConfig.hd1 != null || this.selectedConfig.hd2 != null)
     );
   }
 
@@ -266,8 +266,8 @@ export default class ConfigMaker extends Vue {
       !config.ram1 &&
       !config.ventirad &&
       !config.computerCase &&
-      !config.deadMemory1 &&
-      !config.deadMemory2
+      !config.hd1 &&
+      !config.hd2
     );
   }
 

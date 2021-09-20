@@ -183,17 +183,18 @@ public class UserResource {
         log.debug("REST request to get User : {}", email);
         return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByEmail(email).map(AdminUserDTO::new));
     }
-    // /**
-    //  * {@code DELETE /admin/users/:email} : delete the "email" User.
-    //  *
-    //  * @param email the email of the user to delete.
-    //  * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-    //  */
-    // @DeleteMapping("/users/{email}")
-    // @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    // public ResponseEntity<Void> deleteUser(@PathVariable @Pattern(regexp = Constants.EMAIL_REGEX) String email) {
-    //     log.debug("REST request to delete User: {}", email);
-    //     userService.deleteUser(email);
-    //     return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", email)).build();
-    // }
+
+    /**
+     * {@code DELETE /admin/users/:email} : delete the "email" User.
+     *
+     * @param email the email of the user to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/users/{email}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Void> deleteUser(@PathVariable @Pattern(regexp = Constants.EMAIL_REGEX) String email) {
+        log.debug("REST request to delete User: {}", email);
+        userService.deleteUser(email);
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", email)).build();
+    }
 }

@@ -76,7 +76,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Psu createEntity(EntityManager em) {
+    public static Psu createEntity() {
         Psu psu = new Psu()
             .power(DEFAULT_POWER)
             .certification(DEFAULT_CERTIFICATION)
@@ -95,7 +95,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Psu createUpdatedEntity(EntityManager em) {
+    public static Psu createUpdatedEntity() {
         Psu psu = new Psu()
             .power(UPDATED_POWER)
             .certification(UPDATED_CERTIFICATION)
@@ -110,7 +110,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        psu = createEntity(em);
+        psu = createEntity();
     }
 
     @Test
@@ -547,7 +547,7 @@ class PsuResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

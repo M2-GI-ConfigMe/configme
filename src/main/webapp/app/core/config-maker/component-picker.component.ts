@@ -239,7 +239,7 @@ export default class ComponentPicker extends Vue {
         },
       ],
     },
-    deadMemory1: {
+    hd1: {
       displayName: 'Stockage',
       apiEndpoint: 'hard-drives',
       headers: [
@@ -271,7 +271,7 @@ export default class ComponentPicker extends Vue {
         },
       ],
     },
-    deadMemory2: {
+    hd2: {
       displayName: 'Stockage',
       apiEndpoint: 'hard-drives',
       headers: [

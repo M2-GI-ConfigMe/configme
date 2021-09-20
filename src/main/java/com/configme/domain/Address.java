@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 @Embeddable
 public class Address implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    // private static final long serialVersionUID = 1L;
 
     @NotNull
     private String zipCode;
@@ -135,7 +135,22 @@ public class Address implements Serializable {
             return false;
         }
         Address a = (Address) o;
-        return a.getCity().equals(this.city);
+        //Si les deux sont nuls, alors ils sont égaux
+        //Si l'un des deux n'est pas nul alors ils ne sont pas égaux
+        //Si les deux sont non nuls alors la valeur est ré-évaluée juste après
+        Boolean complementaryEquals = (this.complementary == null) && (a.getComplementary() == null);
+        if (this.complementary != null && a.getComplementary() != null) {
+            complementaryEquals = a.getComplementary().equals(this.complementary);
+        }
+        return (
+            a.getZipCode().equals(this.zipCode) &&
+            a.getCity().equals(this.city) &&
+            a.getStreetNumber().equals(this.streetNumber) &&
+            a.getStreetName().equals(this.streetName) &&
+            complementaryEquals &&
+            a.getFirstName().equals(this.firstName) &&
+            a.getLastName().equals(this.lastName)
+        );
     }
 
     @Override
@@ -148,13 +163,13 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return "Address{" +
-            "zipCode='" + getZipCode() + "'" +
-            ", city='" + getCity() + "'" +
-            ", streetNumber='" + getStreetNumber() + "'" +
-            ", streetName='" + getStreetName() + "'" +
-            ", complementary='" + getComplementary() + "'" +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
+            "zipCode='" + getZipCode() + '\'' +
+            ", city='" + getCity() + '\'' +
+            ", streetNumber='" + getStreetNumber() + '\'' +
+            ", streetName='" + getStreetName() + '\'' +
+            ", complementary='" + getComplementary() + '\'' +
+            ", firstName='" + getFirstName() + '\'' +
+            ", lastName='" + getLastName() + '\'' +
             "}";
     }
 
@@ -169,5 +184,18 @@ public class Address implements Serializable {
         toReturn.setZipCode(zipCode);
 
         return toReturn;
+    }
+
+    public Address clone() {
+        Address clone = new Address();
+        clone.setComplementary(this.complementary);
+        clone.setZipCode(this.zipCode);
+        clone.setStreetNumber(this.streetNumber);
+        clone.setStreetName(this.streetNumber);
+        clone.setCity(this.city);
+        clone.setLastName(this.lastName);
+        clone.setFirstName(this.firstName);
+
+        return clone;
     }
 }

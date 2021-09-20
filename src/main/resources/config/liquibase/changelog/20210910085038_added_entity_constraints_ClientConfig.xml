@@ -44,15 +44,15 @@
                                  referencedColumnNames="id"
                                  referencedTableName="computer_case"/>
 
-        <addForeignKeyConstraint baseColumnNames="dead_memory1_id"
+        <addForeignKeyConstraint baseColumnNames="hd1_id"
                                  baseTableName="client_config"
-                                 constraintName="fk_client_config__dead_memory1_id"
+                                 constraintName="fk_client_config__hd1_id"
                                  referencedColumnNames="id"
                                  referencedTableName="hard_drive"/>
 
-        <addForeignKeyConstraint baseColumnNames="dead_memory2_id"
+        <addForeignKeyConstraint baseColumnNames="hd2_id"
                                  baseTableName="client_config"
-                                 constraintName="fk_client_config__dead_memory2_id"
+                                 constraintName="fk_client_config__hd2_id"
                                  referencedColumnNames="id"
                                  referencedTableName="hard_drive"/>
 

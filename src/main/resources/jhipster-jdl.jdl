@@ -218,8 +218,8 @@ relationship ManyToOne {
 	ClientConfig {computerCase} to ComputerCase
 	OrderLine{config required} to ClientConfig
     OrderLine{order required} to Order
-	ClientConfig {deadMemory1} to HardDrive
-	ClientConfig {deadMemory2} to HardDrive
+	ClientConfig {hd1} to HardDrive
+	ClientConfig {hd2} to HardDrive
 	ClientConfig {ram1} to Ram
 	ClientConfig {ram2} to Ram
 }

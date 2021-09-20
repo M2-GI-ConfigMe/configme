@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(roles = { "USER" })
-class CpuResourceITUser implements ProductResourceIT {
+public class CpuResourceITUser implements ProductResourceIT {
 
     private static final Float DEFAULT_FREQUENCY = 1F;
     private static final Float UPDATED_FREQUENCY = 2F;
@@ -92,7 +92,7 @@ class CpuResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Cpu createEntity(EntityManager em) {
+    public static Cpu createEntity() {
         Cpu cpu = new Cpu()
             .frequency(DEFAULT_FREQUENCY)
             .cacheL1(DEFAULT_CACHE_L_1)
@@ -117,7 +117,7 @@ class CpuResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Cpu createUpdatedEntity(EntityManager em) {
+    public static Cpu createUpdatedEntity() {
         Cpu cpu = new Cpu()
             .frequency(UPDATED_FREQUENCY)
             .cacheL1(UPDATED_CACHE_L_1)
@@ -138,7 +138,7 @@ class CpuResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        cpu = createEntity(em);
+        cpu = createEntity();
     }
 
     @Test

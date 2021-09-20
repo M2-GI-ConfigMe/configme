@@ -11,6 +11,7 @@ import com.configme.domain.enumeration.FormatType;
 import com.configme.domain.enumeration.RamType;
 import com.configme.domain.enumeration.SocketType;
 import com.configme.repository.MbeRepository;
+import com.configme.web.rest.MbeResource;
 import com.configme.web.rest.ProductResourceIT;
 import com.configme.web.rest.TestUtil;
 import java.util.List;
@@ -90,7 +91,7 @@ class MbeResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Mbe createEntity(EntityManager em) {
+    public static Mbe createEntity() {
         Mbe mbe = new Mbe()
             .socketCpu(DEFAULT_SOCKET_CPU)
             .ramType(DEFAULT_RAM_TYPE)
@@ -114,7 +115,7 @@ class MbeResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Mbe createUpdatedEntity(EntityManager em) {
+    public static Mbe createUpdatedEntity() {
         Mbe mbe = new Mbe()
             .socketCpu(UPDATED_SOCKET_CPU)
             .ramType(UPDATED_RAM_TYPE)
@@ -134,7 +135,7 @@ class MbeResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        mbe = createEntity(em);
+        mbe = createEntity();
     }
 
     @Test

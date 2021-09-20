@@ -94,7 +94,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Set<ClientConfig> clientConfigs = new HashSet<>();
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "jhi_user_authority",
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
@@ -103,6 +103,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST)
+    private Set<Order> orders;
 
     public Long getId() {
         return id;
@@ -228,6 +231,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.clientConfigs.add(clientConfig);
     }
 
+    public boolean isAdmin() {
+        return this.getAuthorities().stream().anyMatch(a -> a.getName().equals("ROLE_ADMIN"));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -237,6 +244,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
             return false;
         }
         return id != null && id.equals(((User) o).id);
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
@@ -252,8 +267,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
             "email='" + email + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", birthdate='" + birthdate.toString() + '\'' +
-            // ", address='" + address.toString() + '\'' +
+            ", birthdate='" + birthdate + '\'' +
+            ", address='" + address + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +

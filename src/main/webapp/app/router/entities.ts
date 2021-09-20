@@ -17,6 +17,8 @@ const ProductDetails = () => import('@/entities/product/product-details.vue');
 // prettier-ignore
 const Order = () => import('@/entities/order/order.vue');
 // prettier-ignore
+const OrderCartProcess = () => import('@/entities/order/order-cart-process.vue');
+// prettier-ignore
 const OrderUpdate = () => import('@/entities/order/order-update.vue');
 // prettier-ignore
 const OrderDetails = () => import('@/entities/order/order-details.vue');
@@ -136,6 +138,12 @@ export default [
     name: 'Order',
     component: Order,
     meta: { authorities: [Authority.ADMIN] },
+  },
+  {
+    path: '/order/cart',
+    name: 'Order',
+    component: OrderCartProcess,
+    meta: { authorities: [Authority.USER] },
   },
   {
     path: '/order/new',

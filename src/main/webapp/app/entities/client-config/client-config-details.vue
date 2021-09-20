@@ -143,22 +143,22 @@
             </div>
           </dd>
           <dt>
-            <span v-text="$t('configmeApp.clientConfig.deadMemory1')">Dead Memory 1</span>
+            <span v-text="$t('configmeApp.clientConfig.hd1')">Hard Drive 1</span>
           </dt>
           <dd>
-            <div v-if="clientConfig.deadMemory1">
-              <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.deadMemory1.id } }">{{
-                clientConfig.deadMemory1.id
+            <div v-if="clientConfig.hd1">
+              <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.hd1.id } }">{{
+                clientConfig.hd1.id
               }}</router-link>
             </div>
           </dd>
           <dt>
-            <span v-text="$t('configmeApp.clientConfig.deadMemory2')">Dead Memory 2</span>
+            <span v-text="$t('configmeApp.clientConfig.hd2')">Hard Drive 2</span>
           </dt>
           <dd>
-            <div v-if="clientConfig.deadMemory2">
-              <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.deadMemory2.id } }">{{
-                clientConfig.deadMemory2.id
+            <div v-if="clientConfig.hd2">
+              <router-link :to="{ name: 'HardDriveView', params: { hardDriveId: clientConfig.hd2.id } }">{{
+                clientConfig.hd2.id
               }}</router-link>
             </div>
           </dd>

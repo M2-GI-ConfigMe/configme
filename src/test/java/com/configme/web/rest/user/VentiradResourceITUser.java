@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class VentiradResourceITUser implements ProductResourceIT {
+public class VentiradResourceITUser implements ProductResourceIT {
 
     private static final String DEFAULT_RANGE_FAN_SPEED = "AAAAAAAAAA";
     private static final String UPDATED_RANGE_FAN_SPEED = "BBBBBBBBBB";
@@ -68,7 +68,7 @@ class VentiradResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ventirad createEntity(EntityManager em) {
+    public static Ventirad createEntity() {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(DEFAULT_RANGE_FAN_SPEED)
             .noise(DEFAULT_NOISE)
@@ -85,7 +85,7 @@ class VentiradResourceITUser implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Ventirad createUpdatedEntity(EntityManager em) {
+    public static Ventirad createUpdatedEntity() {
         Ventirad ventirad = new Ventirad()
             .rangeFanSpeed(UPDATED_RANGE_FAN_SPEED)
             .noise(UPDATED_NOISE)
@@ -98,7 +98,7 @@ class VentiradResourceITUser implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        ventirad = createEntity(em);
+        ventirad = createEntity();
     }
 
     @Test

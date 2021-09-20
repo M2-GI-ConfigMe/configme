@@ -35,6 +35,9 @@
             <column name="gpu_price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
+            <column name="mbe_price" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
             <column name="ram_1_price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
@@ -77,10 +80,10 @@
             <column name="computer_case_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="dead_memory1_id" type="bigint">
+            <column name="hd1_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="dead_memory2_id" type="bigint">
+            <column name="hd2_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="ram1_id" type="bigint">
@@ -123,6 +126,18 @@
             <column name="ventirad_price" type="numeric"/>
             <column name="hd_1_price" type="numeric"/>
             <column name="hd_2_price" type="numeric"/>
+            <column name="user_id" type="numeric"/>
+            <column name="cpu_id" type="numeric"/>
+            <column name="gpu_id" type="numeric"/>
+            <column name="computerCase_id" type="numeric"/>
+            <column name="ventirad_id" type="numeric"/>
+            <column name="ram1_id" type="numeric"/>
+            <column name="ram2_id" type="numeric"/>
+            <column name="hd1_id" type="numeric"/>
+            <column name="hd2_id" type="numeric"/>
+            <column name="mbe_id" type="numeric"/>
+            <column name="psu_id" type="numeric"/>
+            <column name="mbe_price" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
