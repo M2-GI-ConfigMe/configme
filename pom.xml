@@ -86,6 +86,9 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         
         <sonar-maven-plugin.version>3.9.0.2155</sonar-maven-plugin.version>
+
+        <sonar.organization>m2-gi-configme</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <!-- jhipster-needle-maven-property -->
     </properties>
 
