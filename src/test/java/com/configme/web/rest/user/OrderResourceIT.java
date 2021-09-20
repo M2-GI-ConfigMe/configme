@@ -224,8 +224,14 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
             .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(DEFAULT_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].validatedAt").value(hasItem(DEFAULT_VALIDATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
-        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].address.zipCode").value(hasItem(DEFAULT_ADDRESS.getZipCode())))
+            .andExpect(jsonPath("$.[*].address.city").value(hasItem(DEFAULT_ADDRESS.getCity())))
+            .andExpect(jsonPath("$.[*].address.streetNumber").value(hasItem(DEFAULT_ADDRESS.getStreetNumber())))
+            .andExpect(jsonPath("$.[*].address.streetName").value(hasItem(DEFAULT_ADDRESS.getStreetName())))
+            .andExpect(jsonPath("$.[*].address.complementary").value(hasItem(DEFAULT_ADDRESS.getComplementary())))
+            .andExpect(jsonPath("$.[*].address.firstName").value(hasItem(DEFAULT_ADDRESS.getFirstName())))
+            .andExpect(jsonPath("$.[*].address.lastName").value(hasItem(DEFAULT_ADDRESS.getLastName())));
     }
 
     @Test
@@ -243,8 +249,14 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
             .andExpect(jsonPath("$.updatedAt").value(DEFAULT_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.validatedAt").value(DEFAULT_VALIDATED_AT.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
-        //TODO: .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.[*].address.zipCode").value(hasItem(DEFAULT_ADDRESS.getZipCode())))
+            .andExpect(jsonPath("$.[*].address.city").value(hasItem(DEFAULT_ADDRESS.getCity())))
+            .andExpect(jsonPath("$.[*].address.streetNumber").value(hasItem(DEFAULT_ADDRESS.getStreetNumber())))
+            .andExpect(jsonPath("$.[*].address.streetName").value(hasItem(DEFAULT_ADDRESS.getStreetName())))
+            .andExpect(jsonPath("$.[*].address.complementary").value(hasItem(DEFAULT_ADDRESS.getComplementary())))
+            .andExpect(jsonPath("$.[*].address.firstName").value(hasItem(DEFAULT_ADDRESS.getFirstName())))
+            .andExpect(jsonPath("$.[*].address.lastName").value(hasItem(DEFAULT_ADDRESS.getLastName())));
     }
 
     @Test
@@ -420,7 +432,7 @@ class OrderResourceIT {
         assertThat(testOrder.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
         assertThat(testOrder.getValidatedAt()).isEqualTo(UPDATED_VALIDATED_AT);
         assertThat(testOrder.getStatus()).isEqualTo(UPDATED_STATUS);
-        //TODO : assertThat(testOrder.getDeliveryAddress())).isEqualTo(UPDATED_ADDRESS);
+        //TODO: assertThat(testOrder.getDeliveryAddress()).isEqualTo(UPDATED_ADDRESS);
     }
 
     @Test
