@@ -70,6 +70,19 @@ export default class PsuService {
     });
   }
 
+  public updateImg(entity: IPsu, img: FormData): Promise<IPsu> {
+    return new Promise<IPsu>((resolve, reject) => {
+      axios
+        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   public partialUpdate(entity: IPsu): Promise<IPsu> {
     return new Promise<IPsu>((resolve, reject) => {
       axios

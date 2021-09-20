@@ -70,6 +70,19 @@ export default class MbeService {
     });
   }
 
+  public updateImg(entity: IMbe, img: FormData): Promise<IMbe> {
+    return new Promise<IMbe>((resolve, reject) => {
+      axios
+        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   public partialUpdate(entity: IMbe): Promise<IMbe> {
     return new Promise<IMbe>((resolve, reject) => {
       axios

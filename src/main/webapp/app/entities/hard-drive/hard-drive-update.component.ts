@@ -58,6 +58,7 @@ export default class HardDriveUpdate extends Vue {
   public hardDrive: IHardDrive = new HardDrive();
   public isSaving = false;
   public currentLanguage = '';
+  public image;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -111,6 +112,17 @@ export default class HardDriveUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    this.hardDriveService().updateImg(this.hardDrive, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
   }
 
   public retrieveHardDrive(hardDriveId): void {

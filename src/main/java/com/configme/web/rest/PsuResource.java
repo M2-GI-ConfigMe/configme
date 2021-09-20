@@ -2,7 +2,9 @@ package com.configme.web.rest;
 
 import com.configme.domain.Psu;
 import com.configme.repository.PsuRepository;
+import com.configme.service.ImageService;
 import com.configme.web.rest.errors.BadRequestAlertException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -12,11 +14,14 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -40,6 +45,9 @@ public class PsuResource {
     public PsuResource(PsuRepository psuRepository) {
         this.psuRepository = psuRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /psus} : Create a new psu.
@@ -93,6 +101,37 @@ public class PsuResource {
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, psu.getId().toString()))
             .body(result);
+    }
+
+    /**
+     * {@code PUT  /psus/id/image} : Updates an existing psu image
+     * @param id the psu id.
+     * @param file the image file to set.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated psu,
+     * or with status {@code 400 (Bad Request)} if the psu is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the psu image couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws IOException if temp file creation failed in imageService.
+     */
+    @PutMapping(path = "/psus/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Psu> updatePsuImg(
+        @PathVariable(value = "id", required = false) final Long id,
+        @RequestParam(value = "file") MultipartFile file
+    ) throws URISyntaxException, IOException {
+        log.debug("REST request to update Psu image : {}, {}", id, file);
+
+        final String url = imageService.uploadImage(file, ENTITY_NAME);
+
+        if (!psuRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Psu psu = psuRepository.getOne(id);
+        psu.setImg(url);
+        Psu result = psuRepository.save(psu);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename")).body(result);
     }
 
     /**

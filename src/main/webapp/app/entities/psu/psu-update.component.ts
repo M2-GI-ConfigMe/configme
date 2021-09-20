@@ -64,6 +64,7 @@ export default class PsuUpdate extends Vue {
   public psu: IPsu = new Psu();
   public isSaving = false;
   public currentLanguage = '';
+  public image;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -117,6 +118,17 @@ export default class PsuUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    this.psuService().updateImg(this.psu, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
   }
 
   public retrievePsu(psuId): void {

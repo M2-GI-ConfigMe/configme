@@ -70,6 +70,19 @@ export default class ComputerCaseService {
     });
   }
 
+  public updateImg(entity: IComputerCase, img: FormData): Promise<IComputerCase> {
+    return new Promise<IComputerCase>((resolve, reject) => {
+      axios
+        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   public partialUpdate(entity: IComputerCase): Promise<IComputerCase> {
     return new Promise<IComputerCase>((resolve, reject) => {
       axios

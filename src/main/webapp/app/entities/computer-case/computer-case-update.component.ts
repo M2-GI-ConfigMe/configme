@@ -87,6 +87,7 @@ export default class ComputerCaseUpdate extends Vue {
 
   public isSaving = false;
   public currentLanguage = '';
+  public image;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -142,6 +143,17 @@ export default class ComputerCaseUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    this.computerCaseService().updateImg(this.computerCase, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
   }
 
   public retrieveComputerCase(computerCaseId): void {

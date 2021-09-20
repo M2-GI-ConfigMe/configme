@@ -87,9 +87,9 @@ const validations: any = {
 export default class GpuUpdate extends Vue {
   @Inject('gpuService') private gpuService: () => GpuService;
   public gpu: IGpu = new Gpu();
-
   public isSaving = false;
   public currentLanguage = '';
+  public image;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -144,8 +144,18 @@ export default class GpuUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
   }
 
+  public onImageSelected(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    this.gpuService().updateImg(this.gpu, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+  }
   public retrieveGpu(gpuId): void {
     this.gpuService()
       .find(gpuId)

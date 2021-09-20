@@ -63,15 +63,16 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
-            <input
-              type="text"
+            <label class="form-control-label" v-text="$t('configmeApp.product.computerCase')" for="computer-case-img">Image</label>
+            <v-file-input
+              type="file"
               class="form-control"
               name="img"
               id="computer-case-img"
-              data-cy="img"
-              :class="{ valid: !$v.computerCase.img.$invalid, invalid: $v.computerCase.img.$invalid }"
-              v-model="$v.computerCase.img.$model"
+              ref="img"
+              accept="image/*"
+              :class="{ valid: !$v.computerCase.img.$invalid, invalid: $v.computeCase.img.$invalid }"
+              @change="selectFile"
             />
           </div>
           <div class="form-group">

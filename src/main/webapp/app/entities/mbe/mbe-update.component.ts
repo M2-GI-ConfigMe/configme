@@ -70,6 +70,7 @@ export default class MbeUpdate extends Vue {
   public mbe: IMbe = new Mbe();
   public isSaving = false;
   public currentLanguage = '';
+  public image;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -123,8 +124,18 @@ export default class MbeUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
   }
 
+  public onImageSelected(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    this.mbeService().updateImg(this.mbe, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+  }
   public retrieveMbe(mbeId): void {
     this.mbeService()
       .find(mbeId)

@@ -106,11 +106,12 @@ public class CpuResource {
     /**
      * {@code PUT  /cpus/id/image} : Updates an existing cpu image
      * @param id the cpu id.
+     * @param file the image file to set.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated cpu,
      * or with status {@code 400 (Bad Request)} if the cpu is not valid,
      * or with status {@code 500 (Internal Server Error)} if the cpu image couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
-     * @throws IOException
+     * @throws IOException if temp file creation failed in imageService.
      */
     @PutMapping(path = "/cpus/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

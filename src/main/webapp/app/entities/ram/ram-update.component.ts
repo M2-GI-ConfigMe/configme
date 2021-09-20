@@ -68,7 +68,7 @@ export default class RamUpdate extends Vue {
   public ram: IRam = new Ram();
   public isSaving = false;
   public currentLanguage = '';
-
+  public image;
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (to.params.ramId) {
@@ -121,6 +121,17 @@ export default class RamUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    this.ramService().updateImg(this.ram, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
   }
 
   public retrieveRam(ramId): void {
