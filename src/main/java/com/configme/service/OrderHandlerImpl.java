@@ -11,8 +11,11 @@ import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class OrderHandlerImpl implements OrderHandler {
@@ -45,9 +48,16 @@ public class OrderHandlerImpl implements OrderHandler {
     private MbeRepository mbeRepository;
 
     @Autowired
-    private EntityManager em;
+    private UserRepository userRepository;
 
     public Order createOrderFromCart(CartDTO[] cart, User user) {
+        if (userRepository.haveOrderProcessing(user)) throw new ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Un panier est déjà en cours de traintement"
+        );
+
+        if (userRepository.haveCart(user)) orderRepository.deleteById(userRepository.getCartId(user));
+
         Order order = new Order();
 
         order.setStatus(OrderStatus.CART);
@@ -91,14 +101,14 @@ public class OrderHandlerImpl implements OrderHandler {
             config.setComputerCase(computerCase);
             config.setComputerCasePrice(computerCase.getPrice());
         }
-        if (cartLine.getDeadMemory1Id() != null && hardDriveRepository.findById(cartLine.getDeadMemory1Id()).isPresent()) {
-            HardDrive hd1 = hardDriveRepository.findById(cartLine.getDeadMemory1Id()).get();
-            config.setDeadMemory1(hd1);
+        if (cartLine.getHd1Id() != null && hardDriveRepository.findById(cartLine.getHd1Id()).isPresent()) {
+            HardDrive hd1 = hardDriveRepository.findById(cartLine.getHd1Id()).get();
+            config.setHd1(hd1);
             config.setHd1Price(hd1.getPrice());
         }
-        if (cartLine.getDeadMemory2Id() != null && hardDriveRepository.findById(cartLine.getDeadMemory2Id()).isPresent()) {
-            HardDrive hd2 = hardDriveRepository.findById(cartLine.getDeadMemory2Id()).get();
-            config.setDeadMemory2(hd2);
+        if (cartLine.getHd2Id() != null && hardDriveRepository.findById(cartLine.getHd2Id()).isPresent()) {
+            HardDrive hd2 = hardDriveRepository.findById(cartLine.getHd2Id()).get();
+            config.setHd2(hd2);
             config.setHd2Price(hd2.getPrice());
         }
         if (cartLine.getRam1Id() != null && ramRepository.findById(cartLine.getRam1Id()).isPresent()) {
@@ -141,8 +151,8 @@ public class OrderHandlerImpl implements OrderHandler {
             if (config.getGpu() != null) config.getGpu().setStock(config.getGpu().getStock() - 1);
             if (config.getComputerCase() != null) config.getComputerCase().setStock(config.getComputerCase().getStock() - 1);
             if (config.getMbe() != null) config.getMbe().setStock(config.getMbe().getStock() - 1);
-            if (config.getDeadMemory1() != null) config.getDeadMemory1().setStock(config.getDeadMemory1().getStock() - 1);
-            if (config.getDeadMemory2() != null) config.getDeadMemory2().setStock(config.getDeadMemory2().getStock() - 1);
+            if (config.getHd1() != null) config.getHd1().setStock(config.getHd1().getStock() - 1);
+            if (config.getHd2() != null) config.getHd2().setStock(config.getHd2().getStock() - 1);
             if (config.getRam1() != null) config.getRam1().setStock(config.getRam1().getStock() - 1);
             if (config.getRam2() != null) config.getRam2().setStock(config.getRam2().getStock() - 1);
             if (config.getVentirad() != null) config.getVentirad().setStock(config.getVentirad().getStock() - 1);

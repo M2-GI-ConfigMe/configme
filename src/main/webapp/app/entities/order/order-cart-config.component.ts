@@ -25,8 +25,8 @@ export default class OrderCartConfig extends Vue {
     if (config.ventirad) products.push({ product: config.ventirad, price: config.ventiradPrice, productName: 'ventirad' });
     if (config.ram1) products.push({ product: config.ram1, price: config.ram1Price, productName: 'ram1' });
     if (config.ram2) products.push({ product: config.ram2, price: config.ram2Price, productName: 'ram2' });
-    if (config.deadMemory1) products.push({ product: config.deadMemory1, price: config.hd1Price, productName: 'deadMemory1' });
-    if (config.deadMemory2) products.push({ product: config.deadMemory2, price: config.hd2Price, productName: 'deadMemory2' });
+    if (config.hd1) products.push({ product: config.hd1, price: config.hd1Price, productName: 'hd1' });
+    if (config.hd2) products.push({ product: config.hd2, price: config.hd2Price, productName: 'hd2' });
     if (config.mbe) products.push({ product: config.mbe, price: config.cpuPrice, productName: 'mbe' });
     if (config.psu) products.push({ product: config.psu, price: config.psuPrice, productName: 'psu' });
 
@@ -41,8 +41,8 @@ export default class OrderCartConfig extends Vue {
     if (window.confirm('Voulez vous vraiment retirer cet article du panier ? \n Article: ' + productLine.product.name)) {
       this.config[productLine.productName] = null;
 
-      if (productLine.productName == 'deadMemory1') this.config.hd1Price = 0;
-      else if (productLine.productName == 'deadMemory2') this.config.hd2Price = 0;
+      if (productLine.productName == 'hd1') this.config.hd1Price = 0;
+      else if (productLine.productName == 'hd2') this.config.hd2Price = 0;
       else this.config[productLine.productName + 'Price'] = 0;
 
       this.configService()

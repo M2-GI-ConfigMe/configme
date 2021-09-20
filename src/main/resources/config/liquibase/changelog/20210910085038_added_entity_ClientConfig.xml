@@ -80,10 +80,10 @@
             <column name="computer_case_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="dead_memory1_id" type="bigint">
+            <column name="hd1_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="dead_memory2_id" type="bigint">
+            <column name="hd2_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="ram1_id" type="bigint">
@@ -133,8 +133,8 @@
             <column name="ventirad_id" type="numeric"/>
             <column name="ram1_id" type="numeric"/>
             <column name="ram2_id" type="numeric"/>
-            <column name="deadMemory1_id" type="numeric"/>
-            <column name="deadMemory2_id" type="numeric"/>
+            <column name="hd1_id" type="numeric"/>
+            <column name="hd2_id" type="numeric"/>
             <column name="mbe_id" type="numeric"/>
             <column name="psu_id" type="numeric"/>
             <column name="mbe_price" type="numeric"/>

@@ -98,8 +98,8 @@ public class PaymentIT {
             cartLine.setComputerCaseId(computerCate.getId());
             cartLine.setCpuId(cpu.getId());
             cartLine.setGpuId(gpu.getId());
-            cartLine.setDeadMemory1Id(hd1.getId());
-            cartLine.setDeadMemory2Id(hd2.getId());
+            cartLine.setHd1Id(hd1.getId());
+            cartLine.setHd2Id(hd2.getId());
             cartLine.setRam1Id(ram.getId());
             cartLine.setVentiradId(ventirad.getId());
             cartLine.setPsuId(psu.getId());

@@ -3,14 +3,14 @@ left to right direction
 
 package "Store" {
     class Product {
-        {field} name : String 
-        {field} price : Float  
+        {field} name : String
+        {field} price : Float
         {field} discount : Float
-        {field} stock : Integer 
-        {field} img : String 
-        {field} desc : String 
-        {field} brand : String 
-        {field} isActive : Boolean 
+        {field} stock : Integer
+        {field} img : String
+        {field} desc : String
+        {field} brand : String
+        {field} isActive : Boolean
     }
 
     enum TagType {
@@ -21,29 +21,29 @@ package "Store" {
     }
 
     class Cpu {
-        {field} frequency : Float 
-        {field} cacheL1 : Integer 
-        {field} cacheL2 : Integer 
-        {field} cacheL3 : Integer 
-        {field} nbHeart : Integer 
+        {field} frequency : Float
+        {field} cacheL1 : Integer
+        {field} cacheL2 : Integer
+        {field} cacheL3 : Integer
+        {field} nbHeart : Integer
         {field} nbThread : Integer
-        {field} hasVentirad : Boolean 
-        {field} socketType : SocketType 
-        {field} lithography : Integer 
-        {field} ramFrequencyMax : Float 
-        {field} consumption : Int 
-        {field} hasGpu : Boolean 
+        {field} hasVentirad : Boolean
+        {field} socketType : SocketType
+        {field} lithography : Integer
+        {field} ramFrequencyMax : Float
+        {field} consumption : Int
+        {field} hasGpu : Boolean
     }
 
     class Gpu {
-        {field} frequency : Float 
-        {field} memory : Integer 
-        {field} consumption : Integer 
-        {field} clockSpeed : Integer 
-        {field} lithography : Integer 
-        {field} output : String 
-        {field} inputPower : String 
-        {field} bus : BusType 
+        {field} frequency : Float
+        {field} memory : Integer
+        {field} consumption : Integer
+        {field} clockSpeed : Integer
+        {field} lithography : Integer
+        {field} output : String
+        {field} inputPower : String
+        {field} bus : BusType
     }
 
     enum BusType {
@@ -57,10 +57,10 @@ package "Store" {
     }
 
     class HardDrive {
-        {field} size : Integer 
-        {field} speedWrite : Float 
-        {field} speedRead : Float 
-        {field} type : MemoryType 
+        {field} size : Integer
+        {field} speedWrite : Float
+        {field} speedRead : Float
+        {field} type : MemoryType
     }
 
     enum MemoryType {
@@ -70,12 +70,12 @@ package "Store" {
     }
 
     class Ram {
-        {field} speed : Integer 
-        {field} type : RamType 
-        {field} frequency : Float 
-        {field} unitSize : Integer 
-        {field} quantity : Integer 
-        {field} cas : String 
+        {field} speed : Integer
+        {field} type : RamType
+        {field} frequency : Float
+        {field} unitSize : Integer
+        {field} quantity : Integer
+        {field} cas : String
     }
 
     enum RamType {
@@ -85,12 +85,12 @@ package "Store" {
     }
 
     class Psu {
-        {field} power : Integer 
+        {field} power : Integer
         {field} certification : String
-        {field} modularity : ModularityType 
-        {field} nbSata : Integer 
-        {field} nbPciE : Integer 
-        {field} outputs : String 
+        {field} modularity : ModularityType
+        {field} nbSata : Integer
+        {field} nbPciE : Integer
+        {field} outputs : String
     }
 
     enum ModularityType {
@@ -101,15 +101,15 @@ package "Store" {
 
     class Ventirad {
         {field} sockets : Array
-        {field} rangeFanSpeed : String 
+        {field} rangeFanSpeed : String
         {field} noise : Integer
-        {field} hasThermalPaste : Boolean 
+        {field} hasThermalPaste : Boolean
     }
 
     class Dimension {
-        {field} height : Integer 
-        {field} width : Integer 
-        {field} length : Integer 
+        {field} height : Integer
+        {field} width : Integer
+        {field} length : Integer
     }
 
     enum SocketType {
@@ -117,22 +117,22 @@ package "Store" {
         TR4,
         LGA_1150,
         LGA_1151,
-        LGA_2066, 
+        LGA_2066,
         LGA_1200
     }
 
     class Mbe {
-        {field} socketCpu : SocketType 
-        {field} ramType : RamType 
-        {field} ramFrequencyMax : Float 
-        {field} ramSizeMax : Float 
-        {field} pciOutputs : String 
+        {field} socketCpu : SocketType
+        {field} ramType : RamType
+        {field} ramFrequencyMax : Float
+        {field} ramSizeMax : Float
+        {field} pciOutputs : String
         {field} displayOutput : String
         {field} storageOutput : String
         {field} insideIO : String
         {field} backPanelOutput : String
         {field} bios : String
-        {field} format : FormatType 
+        {field} format : FormatType
     }
 
     enum FormatType {
@@ -145,11 +145,11 @@ package "Store" {
     }
 
     class Case {
-        {field} type : CaseType 
+        {field} type : CaseType
         {field} formats : Array
-        {field} sizeMaxGpu : Integer 
-        {field} sizeMaxVentirad : Integer 
-        {field} sizeMaxPsu : Integer 
+        {field} sizeMaxGpu : Integer
+        {field} sizeMaxVentirad : Integer
+        {field} sizeMaxPsu : Integer
         {field} hardDriveSlots : String
         {field} frontPanelOutputs : String
         {field} fanIncluded : String
@@ -166,24 +166,24 @@ package "Store" {
 
 package Users {
     class User {
-        {field} firstName : String 
-        {field} lastName : String 
+        {field} firstName : String
+        {field} lastName : String
         {field} mail : String
-        {field} password : String 
-        {field} isAdmin : Boolean  
+        {field} password : String
+        {field} isAdmin : Boolean
         {field} birthDate : LocalDate
-        {field} isActive : Boolean 
+        {field} isActive : Boolean
         //stripeId String for later: stripe payment
     }
 
     class Address {
-        {field} zipCode : String 
-        {field} city : String 
-        {field} streetNumber : String 
-        {field} streetName : String 
+        {field} zipCode : String
+        {field} city : String
+        {field} streetNumber : String
+        {field} streetName : String
         {field} complementary : String
-        {field} firstName : String 
-        {field} lastName : String 
+        {field} firstName : String
+        {field} lastName : String
     }
 
 }
@@ -191,11 +191,11 @@ package Users {
 package Sale {
 
     class Order {
-        {field} createdAt : LocalDate 
-        {field} updatedAt : LocalDate 
-        {field} validatedAt : LocalDate 
-        {field} status : OrderStatus 
-        
+        {field} createdAt : LocalDate
+        {field} updatedAt : LocalDate
+        {field} validatedAt : LocalDate
+        {field} status : OrderStatus
+
         //sessionId String for later: stripe payment
     }
 
@@ -232,7 +232,7 @@ Order "Many" --o "One" User : buyer
 
 Config "Many" --o "One" Cpu : cpu
 
-Config " " --o "One" Gpu : gpu 
+Config " " --o "One" Gpu : gpu
 
 Config " " --o "One" Psu : psu
 
@@ -248,7 +248,7 @@ OrderLine "Many" --* "One" Order : order
 
 Config " " o--o "Many" Ram : rams
 
-Config " " o--o "Many" HardDrive : deadMemorys
+Config " " o--o "Many" HardDrive : hds
 
 
 

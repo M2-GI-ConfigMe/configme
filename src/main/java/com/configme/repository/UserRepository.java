@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -33,4 +36,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
     Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
+
+    @Query("select case when count(o) = 1 then true else false end from Order o where o.buyer = :user and o.status = 'PROCESSING'")
+    boolean haveOrderProcessing(@Param("user") User user);
+
+    @Query("select case when count(o) = 1 then true else false end from Order o where o.buyer = :user and o.status = 'CART'")
+    boolean haveCart(@Param("user") User user);
+
+    @Query("select o.id from Order o where o.buyer = :user and o.status = 'CART'")
+    Long getCartId(@Param("user") User user);
 }

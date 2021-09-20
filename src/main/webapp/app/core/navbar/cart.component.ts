@@ -10,7 +10,7 @@ export default class Cart extends Vue {
   public showCart = false;
   public showTooltip = false;
 
-  public components = ['computerCase', 'mbe', 'cpu', 'ram1', 'ram2', 'ventirad', 'psu', 'gpu', 'deadMemory1', 'deadMemory2'];
+  public components = ['computerCase', 'mbe', 'cpu', 'ram1', 'ram2', 'ventirad', 'psu', 'gpu', 'hd1', 'hd2'];
 
   public get cart(): any {
     const configs = this.$store.getters.cart;
@@ -82,8 +82,8 @@ export default class Cart extends Vue {
       (config.cpu ? config.cpu.price : 0) +
       (config.psu ? config.psu.price : 0) +
       (config.ventirad ? config.ventirad.price : 0) +
-      (config.deadMemory1 ? config.deadMemory1.price : 0) +
-      (config.deadMemory2 ? config.deadMemory2.price : 0)
+      (config.hd1 ? config.hd1.price : 0) +
+      (config.hd2 ? config.hd2.price : 0)
     );
   }
 }

@@ -24,8 +24,8 @@ export default class OrderCartRecap extends Vue {
     if (config.ventirad) price += config.ventiradPrice;
     if (config.ram1) price += config.ram1Price;
     if (config.ram2) price += config.ram2Price;
-    if (config.deadMemory1) price += config.hd1Price;
-    if (config.deadMemory2) price += config.hd2Price;
+    if (config.hd1) price += config.hd1Price;
+    if (config.hd2) price += config.hd2Price;
     if (config.mbe) price += config.cpuPrice;
     if (config.psu) price += config.psuPrice;
 

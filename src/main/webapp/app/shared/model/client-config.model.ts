@@ -30,8 +30,8 @@ export interface IClientConfig {
   ventirad?: IVentirad | null;
   mbe?: IMbe | null;
   computerCase?: IComputerCase | null;
-  deadMemory1?: IHardDrive | null;
-  deadMemory2?: IHardDrive | null;
+  hd1?: IHardDrive | null;
+  hd2?: IHardDrive | null;
   ram1?: IRam | null;
   ram2?: IRam | null;
   user?: IUser | null;
@@ -60,8 +60,8 @@ export class ClientConfig implements IClientConfig {
     public ventirad?: IVentirad | null,
     public mbe?: IMbe | null,
     public computerCase?: IComputerCase | null,
-    public deadMemory1?: IHardDrive | null,
-    public deadMemory2?: IHardDrive | null,
+    public hd1?: IHardDrive | null,
+    public hd2?: IHardDrive | null,
     public ram1?: IRam | null,
     public ram2?: IRam | null
   ) {
