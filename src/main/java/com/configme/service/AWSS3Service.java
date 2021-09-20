@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,8 +30,7 @@ public class AWSS3Service {
     private AmazonS3 s3client;
     private TransferManager tansfermanager;
 
-    @Value("${aws.bucketname}")
-    private String bucketName;
+    private String bucketName = "monmegabucketconfigme";
 
     private final Logger log = LoggerFactory.getLogger(AWSS3Service.class);
 
