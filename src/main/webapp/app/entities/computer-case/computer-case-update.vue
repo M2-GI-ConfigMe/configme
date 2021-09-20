@@ -71,7 +71,7 @@
               id="computer-case-img"
               ref="img"
               accept="image/*"
-              :class="{ valid: !$v.computerCase.img.$invalid, invalid: $v.computeCase.img.$invalid }"
+              :class="{ valid: !$v.computerCase.img.$invalid, invalid: $v.computerCase.img.$invalid }"
               @change="selectFile"
             />
           </div>
