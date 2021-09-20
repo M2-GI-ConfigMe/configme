@@ -17,6 +17,8 @@ export default class OrderCartProcess extends Vue {
 
   private cart = null;
 
+  private errorMessage = '';
+
   public created() {
     this.retrieveCart();
   }
@@ -53,14 +55,33 @@ export default class OrderCartProcess extends Vue {
       })
       .catch(error => {
         if (error.response.status == 400) {
-          let stock = {};
-          let quantityRequired = {};
-          // this.cart.forEach(cartLine => {
-          //
-          // });
-
+          this.checkStock();
           this.state = 1;
         }
       });
+  }
+
+  public checkStock() {
+    let message = '';
+    let stock = {};
+    let quantityRequired = {};
+    this.cart.lines.forEach(cartLine => {
+      let config = cartLine.config;
+      Object.keys(config).forEach(key => {
+        if (typeof config[key] === 'object' && config[key] != null && key != 'user') {
+          if (quantityRequired[config[key].name] != undefined) quantityRequired[config[key].name]++;
+          else quantityRequired[config[key].name] = 1;
+
+          if (stock[config[key].name] == undefined) stock[config[key].name] = config[key].stock;
+        }
+      });
+    });
+
+    Object.keys(quantityRequired).forEach(key => {
+      if (stock[key] < quantityRequired[key])
+        message += (message.length ? '\n' : '') + 'Le produit ' + key + " n'a plus que " + stock[key] + ' exemplaire(s) en stock';
+    });
+
+    this.errorMessage = message;
   }
 }

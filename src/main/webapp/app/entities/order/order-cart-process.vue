@@ -9,6 +9,9 @@
     </v-stepper-header>
     <v-stepper-items>
       <v-stepper-content step="1" class="child-visible text-right">
+        <v-alert color="red lighten-2" dark class="text-left" v-if="errorMessage.length">
+          {{ errorMessage }}
+        </v-alert>
         <order-cart-recap v-if="cart" :cart="cart" @configUpdated="retrieveCart()"></order-cart-recap>
         <v-btn color="primary" @click="goToDeliveryAddress"> Valider </v-btn>
       </v-stepper-content>
