@@ -46,8 +46,8 @@ class UserResourceIT {
     private static final String DEFAULT_PASSWORD = "passjohndoe1";
     private static final String UPDATED_PASSWORD = "passjhipster1";
 
-    private static final String DEFAULT_EMAIL = "johndoe@localhost";
-    private static final String UPDATED_EMAIL = "jhipster@localhost";
+    private static final String DEFAULT_EMAIL = "johndoe@localhost.fr";
+    private static final String UPDATED_EMAIL = "jhipster@localhost.fr";
 
     private static final String DEFAULT_FIRSTNAME = "john";
     private static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
@@ -380,38 +380,38 @@ class UserResourceIT {
             .andExpect(status().isBadRequest());
     }
 
-    // @Test
-    // @Transactional
-    // @WithMockUser(authorities = "ROLE_ADMIN")
-    // void deleteUser() throws Exception {
-    //     // Initialize the database
-    //     userRepository.saveAndFlush(user);
-    //     int databaseSizeBeforeDelete = userRepository.findAll().size();
+    @Test
+    @Transactional
+    @WithMockUser(authorities = "ROLE_ADMIN")
+    void deleteUser() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+        int databaseSizeBeforeDelete = userRepository.findAll().size();
 
-    //     // Delete the user
-    //     restUserMockMvc
-    //         .perform(delete("/api/admin/users/{email}", user.getEmail()).accept(MediaType.APPLICATION_JSON))
-    //         .andExpect(status().isNoContent());
+        // Delete the user
+        restUserMockMvc
+            .perform(delete("/api/admin/users/{email}", user.getEmail()).accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
 
-    //     assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNull();
+        assertThat(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).get(user.getEmail())).isNull();
 
-    //     // Validate the database is empty
-    //     assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeDelete - 1));
-    // }
+        // Validate the database is empty
+        assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeDelete - 1));
+    }
 
-    // @Test
-    // void testUserEquals() throws Exception {
-    //     TestUtil.equalsVerifier(User.class);
-    //     User user1 = new User();
-    //     user1.setId(DEFAULT_ID);
-    //     User user2 = new User();
-    //     user2.setId(user1.getId());
-    //     assertThat(user1).isEqualTo(user2);
-    //     user2.setId(2L);
-    //     assertThat(user1).isNotEqualTo(user2);
-    //     user1.setId(null);
-    //     assertThat(user1).isNotEqualTo(user2);
-    // }
+    @Test
+    void testUserEquals() throws Exception {
+        TestUtil.equalsVerifier(User.class);
+        User user1 = createEntity(em);
+        user1.setId(DEFAULT_ID);
+        User user2 = createEntity(em);
+        user2.setId(user1.getId());
+        assertThat(user1).isEqualTo(user2);
+        user2.setId(2L);
+        assertThat(user1).isNotEqualTo(user2);
+        user1.setId(null);
+        assertThat(user1).isNotEqualTo(user2);
+    }
 
     @Test
     void testUserDTOtoUser() {
