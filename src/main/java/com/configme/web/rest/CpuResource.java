@@ -119,7 +119,7 @@ public class CpuResource {
      */
     @PutMapping(path = "/cpus/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> updateCpuImg(
+    public ResponseEntity<Cpu> updateCpuImg(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestParam(value = "file") MultipartFile file
     ) throws URISyntaxException, IOException {
@@ -141,16 +141,23 @@ public class CpuResource {
         /* Do some  verifications before upload here? */
         awss3Service.upload(orig_img_name, convFile);
         /* Get url from AWS S3 bucket */
-        log.info(awss3Service.getUrl(orig_img_name).toString());
+        final String url = awss3Service.getUrl(orig_img_name).toString();
+        log.info(url);
 
         if (!cpuRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename"))
-            .body("{\"url\":\"" + awss3Service.getUrl(orig_img_name).toString() + "\"}");
+        if (url.isEmpty()) {
+            throw new BadRequestAlertException("Url is empty", ENTITY_NAME, "imageUploadFailed");
+        }
+
+        Cpu cpu = cpuRepository.getOne(id);
+        cpu.setImg(url);
+
+        Cpu result = cpuRepository.save(cpu);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename")).body(result);
     }
 
     /**
