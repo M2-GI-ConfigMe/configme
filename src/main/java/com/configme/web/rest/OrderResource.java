@@ -1,6 +1,7 @@
 package com.configme.web.rest;
 
 import com.configme.domain.Order;
+import com.configme.domain.User;
 import com.configme.repository.OrderRepository;
 import com.configme.service.OrderHandler;
 import com.configme.service.UserService;
@@ -11,12 +12,15 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -86,7 +90,7 @@ public class OrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/orders/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<Order> updateOrder(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Order order)
         throws URISyntaxException {
         log.debug("REST request to update Order : {}, {}", id, order);
@@ -101,7 +105,11 @@ public class OrderResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        User user = this.userService.getUserWithAuthorities().get();
+        if (!user.getId().equals(order.getBuyer().getId())) throw new AccessDeniedException("403 returned");
+
         Order result = orderRepository.save(order);
+
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, order.getId().toString()))
@@ -203,6 +211,35 @@ public class OrderResource {
         log.debug("REST request to get Order : {}", id);
         Optional<Order> order = orderRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(order);
+    }
+
+    /**
+     * {@code PUT  /orders/:id} : Updates an existing order.
+     *
+     * @param id the id of the order to save.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated order,
+     * or with status {@code 400 (Bad Request)} if the order is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the order couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/orders/{id}/pay")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseEntity<Order> payOrder(@PathVariable(value = "id", required = false) final Long id) throws Exception {
+        if (!orderRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Order order = orderRepository.findById(id).get();
+
+        User user = this.userService.getUserWithAuthorities().get();
+        if (!user.getId().equals(order.getBuyer().getId())) throw new AccessDeniedException("403 returned");
+
+        this.orderHandler.validateOrder(order);
+
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, order.getId().toString()))
+            .body(order);
     }
 
     /**

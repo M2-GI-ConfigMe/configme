@@ -35,6 +35,9 @@
             <column name="gpu_price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
+            <column name="mbe_price" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
             <column name="ram_1_price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
@@ -134,6 +137,7 @@
             <column name="deadMemory2_id" type="numeric"/>
             <column name="mbe_id" type="numeric"/>
             <column name="psu_id" type="numeric"/>
+            <column name="mbe_price" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

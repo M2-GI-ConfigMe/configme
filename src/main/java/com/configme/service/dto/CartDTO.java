@@ -1,24 +1,26 @@
 package com.configme.service.dto;
 
-import com.configme.domain.*;
-
 public class CartDTO {
 
     private Long cpuId;
 
     private Long gpuId;
 
-    private Long ramId;
+    private Long ram1Id;
+
+    private Long ram2Id;
 
     private Long psuId;
+
+    private Long mbeId;
 
     private Long computerCaseId;
 
     private Long ventiradId;
 
-    private Long hd1Id;
+    private Long deadMemory1Id;
 
-    private Long hd2Id;
+    private Long deadMemory2Id;
 
     public Long getCpuId() {
         return cpuId;
@@ -36,12 +38,20 @@ public class CartDTO {
         this.gpuId = gpuId;
     }
 
-    public Long getRamId() {
-        return ramId;
+    public Long getRam1Id() {
+        return ram1Id;
     }
 
-    public void setRamId(Long ramId) {
-        this.ramId = ramId;
+    public void setRam1Id(Long ramId) {
+        this.ram1Id = ramId;
+    }
+
+    public Long getRam2Id() {
+        return ram2Id;
+    }
+
+    public void setRam2Id(Long ramId) {
+        this.ram2Id = ramId;
     }
 
     public Long getPsuId() {
@@ -68,19 +78,27 @@ public class CartDTO {
         this.ventiradId = ventiradId;
     }
 
-    public Long getHd1Id() {
-        return hd1Id;
+    public Long getDeadMemory1Id() {
+        return deadMemory1Id;
     }
 
-    public void setHd1Id(Long hd1Id) {
-        this.hd1Id = hd1Id;
+    public void setDeadMemory1Id(Long deadMemory1Id) {
+        this.deadMemory1Id = deadMemory1Id;
     }
 
-    public Long getHd2Id() {
-        return hd2Id;
+    public Long getDeadMemory2Id() {
+        return deadMemory2Id;
     }
 
-    public void setHd2Id(Long hd2Id) {
-        this.hd2Id = hd2Id;
+    public void setDeadMemory2Id(Long deadMemory2Id) {
+        this.deadMemory2Id = deadMemory2Id;
+    }
+
+    public Long getMbeId() {
+        return mbeId;
+    }
+
+    public void setMbeId(Long mbeId) {
+        this.mbeId = mbeId;
     }
 }

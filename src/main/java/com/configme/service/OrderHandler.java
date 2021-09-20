@@ -6,4 +6,6 @@ import com.configme.service.dto.CartDTO;
 
 public interface OrderHandler {
     Order createOrderFromCart(CartDTO[] cart, User user);
+
+    void validateOrder(Order order);
 }

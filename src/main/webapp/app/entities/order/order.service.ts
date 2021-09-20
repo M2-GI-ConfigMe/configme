@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { IOrder } from '@/shared/model/order.model';
+import { rejects } from 'assert';
 
 const baseApiUrl = 'api/orders';
 
@@ -53,6 +54,19 @@ export default class OrderService {
         })
         .catch(err => {
           reject(err);
+        });
+    });
+  }
+
+  public pay(entity: IOrder): Promise<IOrder> {
+    return new Promise<IOrder>((resolve, reject) => {
+      axios
+        .post(`${baseApiUrl}/${entity.id}/pay`)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(error => {
+          reject(error);
         });
     });
   }

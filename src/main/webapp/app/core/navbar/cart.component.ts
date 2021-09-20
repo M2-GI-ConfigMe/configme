@@ -54,15 +54,11 @@ export default class Cart extends Vue {
       formattedCart.push(formattedConfig);
     });
 
-    /*
-            Remove from comments once back is ready.
-
-            this.orderService()
-                .create(formattedCart)
-                .then(() => {
-                    this.$router.to(PUT THE PAYMENT RECAP ROUTE HERE tg cléo)
-                });
-        */
+    this.orderService()
+      .create(formattedCart)
+      .then(() => {
+        this.$router.push('/order/cart');
+      });
   }
 
   public get totalPrice() {

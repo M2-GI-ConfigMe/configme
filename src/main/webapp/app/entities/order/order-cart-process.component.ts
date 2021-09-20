@@ -13,7 +13,7 @@ import OrderCartAddress from '@/entities/order/order-cart-address.vue';
 export default class OrderCartProcess extends Vue {
   @Inject('orderService') private orderService: () => OrderService;
 
-  public state = 1;
+  public state = 3;
 
   private cart = null;
 
@@ -38,6 +38,29 @@ export default class OrderCartProcess extends Vue {
       .update(this.cart)
       .then(() => {
         this.state = 3;
+      });
+  }
+
+  public comeBack(state) {
+    if (this.state > state) this.state = state;
+  }
+
+  public pay() {
+    this.orderService()
+      .pay(this.cart)
+      .then(() => {
+        this.$router.push('/');
+      })
+      .catch(error => {
+        if (error.response.status == 400) {
+          let stock = {};
+          let quantityRequired = {};
+          // this.cart.forEach(cartLine => {
+          //
+          // });
+
+          this.state = 1;
+        }
       });
   }
 }

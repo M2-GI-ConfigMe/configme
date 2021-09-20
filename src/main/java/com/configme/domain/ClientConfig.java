@@ -51,6 +51,9 @@ public class ClientConfig implements Serializable {
     @Column(name = "psu_price")
     private Float psuPrice;
 
+    @Column(name = "mbe_price")
+    private Float mbePrice;
+
     @Column(name = "computer_case_price")
     private Float computerCasePrice;
 
@@ -416,6 +419,14 @@ public class ClientConfig implements Serializable {
     public ClientConfig ram2(Ram ram) {
         this.setRam2(ram);
         return this;
+    }
+
+    public Float getMbePrice() {
+        return mbePrice;
+    }
+
+    public void setMbePrice(Float mbePrice) {
+        this.mbePrice = mbePrice;
     }
 
     public void setRam2(Ram ram) {

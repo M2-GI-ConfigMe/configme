@@ -14,7 +14,6 @@ export default class OrderCartConfig extends Vue {
 
   public created() {
     this.config = this.orderLine.config;
-    console.log(this.config);
   }
 
   public get products() {
