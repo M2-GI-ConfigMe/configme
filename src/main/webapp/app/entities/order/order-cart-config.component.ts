@@ -17,8 +17,8 @@ export default class OrderCartConfig extends Vue {
   }
 
   public get products() {
-    let config = this.config;
-    let products = [];
+    const config = this.config;
+    const products = [];
     if (config.cpu) products.push({ product: config.cpu, price: config.cpuPrice, productName: 'cpu' });
     if (config.gpu) products.push({ product: config.gpu, price: config.gpuPrice, productName: 'gpu' });
     if (config.computerCase) products.push({ product: config.computerCase, price: config.computerCasePrice, productName: 'computerCase' });

@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @Service
 public class UserAuthenticatorIml implements UserAuthenticator {
 
-    @Autowired
+    @Autowired(required = false)
     private MockMvc mock;
 
     @Autowired

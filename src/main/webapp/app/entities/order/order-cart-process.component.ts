@@ -63,10 +63,10 @@ export default class OrderCartProcess extends Vue {
 
   public checkStock() {
     let message = '';
-    let stock = {};
-    let quantityRequired = {};
+    const stock = {};
+    const quantityRequired = {};
     this.cart.lines.forEach(cartLine => {
-      let config = cartLine.config;
+      const config = cartLine.config;
       Object.keys(config).forEach(key => {
         if (typeof config[key] === 'object' && config[key] != null && key != 'user') {
           if (quantityRequired[config[key].name] != undefined) quantityRequired[config[key].name]++;

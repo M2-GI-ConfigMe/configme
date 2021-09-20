@@ -396,9 +396,9 @@ public class UserResourceIT {
     @Test
     void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(User.class);
-        User user1 = createEntity(em);
+        User user1 = createEntity();
         user1.setId(DEFAULT_ID);
-        User user2 = createEntity(em);
+        User user2 = createEntity();
         user2.setId(user1.getId());
         assertThat(user1).isEqualTo(user2);
         user2.setId(2L);
