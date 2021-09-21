@@ -9,7 +9,7 @@
       ></order-cart-config>
     </div>
     <div class="order-cart-recap-configs-price-container">
-      <span class="order-cart-recap-configs-price">Total: {{ globalPrice }} €</span>
+      <span class="order-cart-recap-configs-price px-4 font-weight-bold text-h4 text-dark">Total: {{ globalPrice }} €</span>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@
 .order-cart-recap-configs-container {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding: 20px;
 }
 
