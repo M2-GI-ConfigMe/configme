@@ -98,9 +98,11 @@ public class OrderLineResource {
         @Valid @RequestBody OrderLine orderLine
     ) throws URISyntaxException {
         log.debug("REST request to update OrderLine : {}, {}", id, orderLine);
+
         if (orderLine.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
         if (!Objects.equals(id, orderLine.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
@@ -108,7 +110,14 @@ public class OrderLineResource {
         if (!orderLineRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-        User user = userService.getUserWithAuthorities().get();
+
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+
+        if (!optionalUser.isPresent()) {
+            throw new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound");
+        }
+
+        User user = optionalUser.get();
 
         if (!orderLine.getOrder().getBuyer().getId().equals(user.getId()) && !user.isAdmin()) throw new AccessDeniedException(
             "403 returned"
@@ -200,12 +209,23 @@ public class OrderLineResource {
     @DeleteMapping("/order-lines/{id}")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<Void> deleteOrderLine(@PathVariable Long id) {
-        User user = userService.getUserWithAuthorities().get();
-        OrderLine orderLine;
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+
+        if (!optionalUser.isPresent()) {
+            throw new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound");
+        }
+
+        User user = optionalUser.get();
 
         if (!orderLineRepository.existsById(id)) throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnotfound");
 
-        orderLine = orderLineRepository.findById(id).get();
+        Optional<OrderLine> optionalOrderLine = orderLineRepository.findById(id);
+
+        if (!optionalOrderLine.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnotfound");
+        }
+
+        OrderLine orderLine = optionalOrderLine.get();
 
         if (!orderLine.getOrder().getBuyer().getId().equals(user.getId()) && !user.isAdmin()) throw new AccessDeniedException(
             "403 not allowed"

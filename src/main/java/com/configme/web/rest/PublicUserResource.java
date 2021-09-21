@@ -94,15 +94,22 @@ public class PublicUserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         log.debug("REST request to delete User-id: {}", id);
         log.debug("Is present : " + userService.getUserWithAuthorities().isPresent());
-        Optional<User> connectedUser = userService.getUserWithAuthorities();
 
-        Long userId = connectedUser.get().getId();
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+
+        if (!optionalUser.isPresent()) {
+            throw new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound");
+        }
+
+        User user = optionalUser.get();
+
+        Long userId = user.getId();
 
         if (!Objects.equals(id, userId)) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        String userEmail = connectedUser.get().getEmail();
+        String userEmail = user.getEmail();
 
         userService.deleteUser(userEmail);
 

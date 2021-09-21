@@ -10,9 +10,9 @@
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-center">Produit</th>
-              <th class="text-center">Prix</th>
-              <th class="text-center" style="width: 10%">Actions</th>
+              <th scope="desc" class="text-center">Produit</th>
+              <th scope="desc" class="text-center">Prix</th>
+              <th scope="desc" class="text-center" style="width: 10%">Actions</th>
             </tr>
           </thead>
           <tbody>
