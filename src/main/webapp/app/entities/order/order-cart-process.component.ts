@@ -13,7 +13,7 @@ import OrderCartAddress from '@/entities/order/order-cart-address.vue';
 export default class OrderCartProcess extends Vue {
   @Inject('orderService') private orderService: () => OrderService;
 
-  public state = 3;
+  public state = 1;
 
   private cart = null;
 

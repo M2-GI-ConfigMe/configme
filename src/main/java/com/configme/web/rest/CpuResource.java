@@ -1,7 +1,9 @@
 package com.configme.web.rest;
 
 import com.configme.domain.Cpu;
+import com.configme.domain.Mbe;
 import com.configme.repository.CpuRepository;
+import com.configme.repository.MbeRepository;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,7 +42,10 @@ public class CpuResource {
 
     private final CpuRepository cpuRepository;
 
-    public CpuResource(CpuRepository cpuRepository) {
+    private final MbeRepository mbeRepository;
+
+    public CpuResource(CpuRepository cpuRepository, MbeRepository mbeRepository) {
+        this.mbeRepository = mbeRepository;
         this.cpuRepository = cpuRepository;
     }
 
@@ -211,10 +216,17 @@ public class CpuResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId
     ) {
+        Mbe mbe = null;
+        if (this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
         log.debug("REST request to get all Mbes");
-        return cpuRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+        return cpuRepository.findByCompatibility(
+            mbe,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
+        //        return cpuRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
     }
 
     /**

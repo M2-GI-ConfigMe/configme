@@ -161,6 +161,7 @@
       :componentName="endpoint"
       @close="componentPickerDialog = false"
       @picked="handlePicked"
+      :config="selectedConfig"
     ></component-picker>
   </v-container>
 </template>

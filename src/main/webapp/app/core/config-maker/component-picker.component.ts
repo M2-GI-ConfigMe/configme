@@ -2,6 +2,7 @@ import Component from 'vue-class-component';
 import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
 import axios from 'axios';
 import { throws } from 'assert';
+import { IClientConfig } from '@/shared/model/client-config.model';
 
 const baseApiUrl = 'api/';
 
@@ -9,6 +10,7 @@ const baseApiUrl = 'api/';
 export default class ComponentPicker extends Vue {
   @Prop({ required: true }) activated: boolean;
   @Prop({ required: true }) componentName: string;
+  @Prop() config: IClientConfig;
 
   private componentTableInfo = {
     mbe: {
@@ -374,10 +376,13 @@ export default class ComponentPicker extends Vue {
         this.options
           ? {
               params: {
-                page: this.page,
-                itemsPerPage: this.options.itemsPerPage,
-                sortBy: this.options.sortBy[0],
-                sortDesc: this.options.sortDesc[0],
+                ...{
+                  page: this.page,
+                  itemsPerPage: this.options.itemsPerPage,
+                  sortBy: this.options.sortBy[0],
+                  sortDesc: this.options.sortDesc[0],
+                },
+                ...this.query,
               },
             }
           : null
@@ -400,5 +405,17 @@ export default class ComponentPicker extends Vue {
 
   public set show(v) {
     this.$emit('close');
+  }
+
+  public get query() {
+    const query = {};
+    const components = ['cpu', 'gpu', 'psu', 'ram1', 'ram2', 'h1', 'hd2', 'ventirad', 'computerCase', 'mbe'];
+    components.forEach(component => {
+      if (this.config[component] != null) {
+        query[component + 'Id'] = this.config[component].id;
+      }
+    });
+
+    return query;
   }
 }
