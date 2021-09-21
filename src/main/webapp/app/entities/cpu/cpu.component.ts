@@ -56,7 +56,7 @@ export default class Cpu extends Vue {
       .retrieve()
       .then(
         res => {
-          this.cpus = res.data;
+          this.cpus = res.data.content;
           this.isFetching = false;
         },
         err => {

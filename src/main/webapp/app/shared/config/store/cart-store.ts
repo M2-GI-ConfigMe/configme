@@ -1,3 +1,4 @@
+import { stat } from 'fs';
 import { Module } from 'vuex';
 
 export const cartStore: Module<any, any> = {
@@ -14,6 +15,10 @@ export const cartStore: Module<any, any> = {
     },
     removeFromCart(state, index) {
       state.cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
+    emptyCart(state) {
+      state.cart = [];
       localStorage.setItem('cart', JSON.stringify(state.cart));
     },
   },

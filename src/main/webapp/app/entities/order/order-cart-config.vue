@@ -5,7 +5,7 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </div>
-    <v-card-text style="padding: 0 !important; z-index: 5; position: relative">
+    <v-card-text style="padding: 0 !important; position: relative">
       <v-simple-table>
         <template v-slot:default>
           <thead>

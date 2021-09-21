@@ -1,11 +1,11 @@
 <template>
   <div>
     <h2 id="page-heading" data-cy="HardDriveHeading">
-      <span v-text="$t('configmeApp.hardDrive.home.title')" id="hard-drive-heading">Hard Drives</span>
+      <span v-text="$t('configmeApp.hd.home.title')" id="hard-drive-heading">Hard Drives</span>
       <div class="d-flex justify-content-end">
         <button class="btn btn-info mr-2" v-on:click="handleSyncList" :disabled="isFetching">
           <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon>
-          <span v-text="$t('configmeApp.hardDrive.home.refreshListLabel')">Refresh List</span>
+          <span v-text="$t('configmeApp.hd.home.refreshListLabel')">Refresh List</span>
         </button>
         <router-link :to="{ name: 'HardDriveCreate' }" custom v-slot="{ navigate }">
           <button
@@ -15,14 +15,14 @@
             class="btn btn-primary jh-create-entity create-hard-drive"
           >
             <font-awesome-icon icon="plus"></font-awesome-icon>
-            <span v-text="$t('configmeApp.hardDrive.home.createLabel')"> Create a new Hard Drive </span>
+            <span v-text="$t('configmeApp.hd.home.createLabel')"> Create a new Hard Drive </span>
           </button>
         </router-link>
       </div>
     </h2>
     <br />
     <div class="alert alert-warning" v-if="!isFetching && hardDrives && hardDrives.length === 0">
-      <span v-text="$t('configmeApp.hardDrive.home.notFound')">No hardDrives found</span>
+      <span v-text="$t('configmeApp.hd.home.notFound')">No hardDrives found</span>
     </div>
     <div class="table-responsive" v-if="hardDrives && hardDrives.length > 0">
       <table class="table table-striped" aria-describedby="hardDrives">
@@ -36,10 +36,10 @@
             <th scope="row"><span v-text="$t('configmeApp.product.img')">Img</span></th>
             <th scope="row"><span v-text="$t('configmeApp.product.brand')">Brand</span></th>
             <th scope="row"><span v-text="$t('configmeApp.product.isActive')">Is Active</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.hardDrive.capacity')">Capacity</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.hardDrive.speedWrite')">Speed Write</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.hardDrive.speedRead')">Speed Read</span></th>
-            <th scope="row"><span v-text="$t('configmeApp.hardDrive.type')">Type</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.hd.capacity')">Capacity</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.hd.speedWrite')">Speed Write</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.hd.speedRead')">Speed Read</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.hd.type')">Type</span></th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -96,12 +96,12 @@
     </div>
     <b-modal ref="removeEntity" id="removeEntity">
       <span slot="modal-title"
-        ><span id="configmeApp.hardDrive.delete.question" data-cy="hardDriveDeleteDialogHeading" v-text="$t('entity.delete.title')"
+        ><span id="configmeApp.hd.delete.question" data-cy="hardDriveDeleteDialogHeading" v-text="$t('entity.delete.title')"
           >Confirm delete operation</span
         ></span
       >
       <div class="modal-body">
-        <p id="jhi-delete-hardDrive-heading" v-text="$t('configmeApp.hardDrive.delete.question', { id: removeId })">
+        <p id="jhi-delete-hardDrive-heading" v-text="$t('configmeApp.hd.delete.question', { id: removeId })">
           Are you sure you want to delete this Hard Drive?
         </p>
       </div>
