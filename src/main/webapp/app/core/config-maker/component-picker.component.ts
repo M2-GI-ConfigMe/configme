@@ -1,7 +1,6 @@
 import Component from 'vue-class-component';
 import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
 import axios from 'axios';
-import { throws } from 'assert';
 
 const baseApiUrl = 'api/';
 
