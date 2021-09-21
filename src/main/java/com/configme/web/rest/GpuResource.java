@@ -1,7 +1,11 @@
 package com.configme.web.rest;
 
+import com.configme.domain.ComputerCase;
 import com.configme.domain.Gpu;
+import com.configme.domain.Mbe;
+import com.configme.repository.ComputerCaseRepository;
 import com.configme.repository.GpuRepository;
+import com.configme.repository.MbeRepository;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -34,14 +38,18 @@ public class GpuResource {
     private final Logger log = LoggerFactory.getLogger(GpuResource.class);
 
     private static final String ENTITY_NAME = "gpu";
+    private final ComputerCaseRepository computerCaseRepository;
+    private final MbeRepository mbeRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final GpuRepository gpuRepository;
 
-    public GpuResource(GpuRepository gpuRepository) {
+    public GpuResource(GpuRepository gpuRepository, MbeRepository mbeRepository, ComputerCaseRepository computerCaseRepository) {
         this.gpuRepository = gpuRepository;
+        this.computerCaseRepository = computerCaseRepository;
+        this.mbeRepository = mbeRepository;
     }
 
     /**
@@ -202,10 +210,22 @@ public class GpuResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId
     ) {
         log.debug("REST request to get all Mbes");
-        return gpuRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+
+        ComputerCase computerCase = null;
+        if (computerCaseId != null && this.computerCaseRepository.existsById(computerCaseId)) computerCase =
+            this.computerCaseRepository.getOne(computerCaseId);
+
+        //        Mbe mbe = null;
+        //        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.getOne(mbeId);
+
+        return gpuRepository.findByCompatibility(
+            computerCase,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
     }
 
     /**
@@ -217,6 +237,7 @@ public class GpuResource {
     @GetMapping("/gpus/{id}")
     public ResponseEntity<Gpu> getGpu(@PathVariable Long id) {
         log.debug("REST request to get Gpu : {}", id);
+
         Optional<Gpu> gpu = gpuRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(gpu);
     }

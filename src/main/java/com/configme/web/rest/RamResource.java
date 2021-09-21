@@ -1,11 +1,12 @@
 package com.configme.web.rest;
 
+import com.configme.domain.Mbe;
 import com.configme.domain.Ram;
+import com.configme.repository.MbeRepository;
 import com.configme.repository.RamRepository;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -34,13 +35,15 @@ public class RamResource {
     private final Logger log = LoggerFactory.getLogger(RamResource.class);
 
     private static final String ENTITY_NAME = "ram";
+    private final MbeRepository mbeRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final RamRepository ramRepository;
 
-    public RamResource(RamRepository ramRepository) {
+    public RamResource(RamRepository ramRepository, MbeRepository mbeRepository) {
+        this.mbeRepository = mbeRepository;
         this.ramRepository = ramRepository;
     }
 
@@ -190,10 +193,18 @@ public class RamResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId
     ) {
+        Mbe mbe = null;
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.getOne(mbeId);
+
         log.debug("REST request to get all Mbes");
-        return ramRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+
+        return ramRepository.findByCompatibility(
+            mbe,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
     }
 
     /**

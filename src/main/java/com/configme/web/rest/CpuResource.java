@@ -221,6 +221,7 @@ public class CpuResource {
     ) {
         Mbe mbe = null;
         if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
+
         log.debug("REST request to get all Mbes");
         return cpuRepository.findByCompatibility(
             mbe,

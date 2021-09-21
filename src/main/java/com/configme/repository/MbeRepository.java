@@ -13,10 +13,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface MbeRepository extends JpaRepository<Mbe, Long> {
-    //     +
-    //         "AND (:gpu is null or  m.sizeMaxGpu > (:#{ #gpu == null ? 0 : #gpu.dimension.height})) " +
-    //         "AND (:mbe is null or (:#{ #mbe == null ? null : #mbe.format} MEMBER OF m.formats))
-
     @Query(
         value = "SELECT m FROM Mbe m WHERE " +
         "(:ventirad is null or m.socketCpu in :#{ #ventirad == null ? null : #ventirad.sockets }) " +
