@@ -23,7 +23,8 @@
       "modularity": "Modularité",
       "nbSata": "Nombre de sortie Sata",
       "nbPciE": "Nombre de sortie PciExpress",
-      "outputs": "Outputs"
+      "outputs": "Outputs",
+      "dimension": "Dimension"
     }
   }
 }

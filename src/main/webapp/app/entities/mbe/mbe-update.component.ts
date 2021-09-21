@@ -4,6 +4,8 @@ import { required, decimal, minValue, maxValue, numeric } from 'vuelidate/lib/va
 
 import { IMbe, Mbe } from '@/shared/model/mbe.model';
 import MbeService from './mbe.service';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   mbe: {
@@ -67,9 +69,11 @@ const validations: any = {
 })
 export default class MbeUpdate extends Vue {
   @Inject('mbeService') private mbeService: () => MbeService;
+  @Inject('productService') private productService: () => ProductService;
   public mbe: IMbe = new Mbe();
   public isSaving = false;
   public currentLanguage = '';
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -96,8 +100,14 @@ export default class MbeUpdate extends Vue {
         .update(this.mbe)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.mbe.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -111,9 +121,16 @@ export default class MbeUpdate extends Vue {
       this.mbeService()
         .create(this.mbe)
         .then(param => {
+          this.mbe.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.mbe.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -123,6 +140,18 @@ export default class MbeUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): Promise<IProduct> {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    return this.productService().updateImg(this.mbe, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+    this.mbe.img = 'updated';
   }
 
   public retrieveMbe(mbeId): void {

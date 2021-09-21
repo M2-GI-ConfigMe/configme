@@ -44,6 +44,9 @@ public class Psu extends Product implements Serializable {
     @Column(name = "outputs", nullable = false)
     private String outputs;
 
+    @Embedded
+    private Dimension dimension;
+
     public Integer getPower() {
         return this.power;
     }
@@ -122,6 +125,19 @@ public class Psu extends Product implements Serializable {
         this.outputs = outputs;
     }
 
+    public Dimension getDimension() {
+        return this.dimension;
+    }
+
+    public Psu dimension(Dimension dimension) {
+        this.setDimension(dimension);
+        return this;
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -152,6 +168,7 @@ public class Psu extends Product implements Serializable {
             ", nbSata=" + getNbSata() +
             ", nbPciE=" + getNbPciE() +
             ", outputs='" + getOutputs() + "'" +
+            ", dimension='" + getDimension() + "'" +
             "}";
     }
 }

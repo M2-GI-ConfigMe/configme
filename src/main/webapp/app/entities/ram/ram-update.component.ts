@@ -4,6 +4,8 @@ import { numeric, required, decimal, minValue, maxValue } from 'vuelidate/lib/va
 
 import { IRam, Ram } from '@/shared/model/ram.model';
 import RamService from './ram.service';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   ram: {
@@ -65,9 +67,11 @@ const validations: any = {
 })
 export default class RamUpdate extends Vue {
   @Inject('ramService') private ramService: () => RamService;
+  @Inject('productService') private productService: () => ProductService;
   public ram: IRam = new Ram();
   public isSaving = false;
   public currentLanguage = '';
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -94,8 +98,14 @@ export default class RamUpdate extends Vue {
         .update(this.ram)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.ram.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -109,9 +119,16 @@ export default class RamUpdate extends Vue {
       this.ramService()
         .create(this.ram)
         .then(param => {
+          this.ram.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.ram.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -121,6 +138,18 @@ export default class RamUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): Promise<IProduct> {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    return this.productService().updateImg(this.ram, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+    this.ram.img = 'updated';
   }
 
   public retrieveRam(ramId): void {

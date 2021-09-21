@@ -4,6 +4,8 @@ import { decimal, required, numeric, minValue, maxValue } from 'vuelidate/lib/va
 
 import { ICpu, Cpu } from '@/shared/model/cpu.model';
 import CpuService from './cpu.service';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   cpu: {
@@ -78,9 +80,11 @@ const validations: any = {
 })
 export default class CpuUpdate extends Vue {
   @Inject('cpuService') private cpuService: () => CpuService;
+  @Inject('productService') private productService: () => ProductService;
   public cpu: ICpu = new Cpu();
   public isSaving = false;
   public currentLanguage = '';
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -107,8 +111,14 @@ export default class CpuUpdate extends Vue {
         .update(this.cpu)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.cpu.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -122,9 +132,16 @@ export default class CpuUpdate extends Vue {
       this.cpuService()
         .create(this.cpu)
         .then(param => {
+          this.cpu.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.cpu.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -134,6 +151,17 @@ export default class CpuUpdate extends Vue {
           });
         });
     }
+  }
+
+  public onImageSelected(): Promise<IProduct> {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    return this.productService().updateImg(this.cpu, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+    this.cpu.img = 'updated';
   }
 
   public retrieveCpu(cpuId): void {
