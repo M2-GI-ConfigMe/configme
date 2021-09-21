@@ -1,7 +1,7 @@
 package com.configme.web.rest;
 
-import com.configme.domain.Mbe;
-import com.configme.repository.MbeRepository;
+import com.configme.domain.*;
+import com.configme.repository.*;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -34,14 +34,27 @@ public class MbeResource {
     private final Logger log = LoggerFactory.getLogger(MbeResource.class);
 
     private static final String ENTITY_NAME = "mbe";
+    private final ComputerCaseRepository computerCaseRepository;
+    private final VentiradRepository ventiradRepository;
+    private final CpuRepository cpuRepository;
+    private final RamRepository ramRepository;
+    private final MbeRepository mbeRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final MbeRepository mbeRepository;
-
-    public MbeResource(MbeRepository mbeRepository) {
+    public MbeResource(
+        ComputerCaseRepository computerCaseRepository,
+        MbeRepository mbeRepository,
+        CpuRepository cpuRepository,
+        VentiradRepository ventiradRepository,
+        RamRepository ramRepository
+    ) {
+        this.computerCaseRepository = computerCaseRepository;
         this.mbeRepository = mbeRepository;
+        this.cpuRepository = cpuRepository;
+        this.ventiradRepository = ventiradRepository;
+        this.ramRepository = ramRepository;
     }
 
     /**
@@ -208,10 +221,39 @@ public class MbeResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "cpuId", required = false) Long cpuId,
+        @RequestParam(name = "ram1Id", required = false) Long ramId,
+        @RequestParam(name = "ventiradId", required = false) Long ventiradId,
+        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId
     ) {
         log.debug("REST request to get all Mbes");
-        return mbeRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+
+        Cpu cpu = null;
+        if (cpuId != null && this.cpuRepository.existsById(cpuId)) cpu = this.cpuRepository.findById(cpuId).get();
+
+        Ventirad ventirad = null;
+        if (ventiradId != null && this.ventiradRepository.existsById(ventiradId)) ventirad =
+            this.ventiradRepository.findById(ventiradId).get();
+
+        Ram ram = null;
+        if (ramId != null && this.ramRepository.existsById(ramId)) ram = this.ramRepository.findById(ramId).get();
+
+        ComputerCase computerCase = null;
+        if (computerCaseId != null && this.computerCaseRepository.existsById(computerCaseId)) computerCase =
+            this.computerCaseRepository.findById(computerCaseId).get();
+
+        System.out.println(ram);
+        System.out.println(ramId);
+
+        return mbeRepository.findByCompatibility(
+            cpu,
+            ram,
+            ventirad,
+            computerCase,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
+        //        return mbeRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
     }
 
     /**

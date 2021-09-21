@@ -283,4 +283,9 @@ export default class ConfigMaker extends Vue {
         this.isFetching = false;
       });
   }
+
+  public close() {
+    this.componentPickerDialog = false;
+    this.endpoint = '';
+  }
 }

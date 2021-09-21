@@ -159,7 +159,7 @@
     <component-picker
       :activated="componentPickerDialog"
       :componentName="endpoint"
-      @close="componentPickerDialog = false"
+      @close="close()"
       @picked="handlePicked"
       :config="selectedConfig"
     ></component-picker>

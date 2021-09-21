@@ -25,7 +25,7 @@ public class ComputerCase extends Product implements Serializable {
     @Column(name = "type", nullable = false)
     private CaseType type;
 
-    @ElementCollection(targetClass = FormatType.class)
+    @ElementCollection(targetClass = FormatType.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "computer_case_formats", joinColumns = @JoinColumn(name = "computer_case_id", referencedColumnName = "id"))
     @Enumerated(EnumType.STRING)
     private Collection<FormatType> formats;

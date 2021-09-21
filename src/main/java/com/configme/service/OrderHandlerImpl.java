@@ -20,35 +20,49 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class OrderHandlerImpl implements OrderHandler {
 
-    @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
     private CpuRepository cpuRepository;
 
-    @Autowired
     private GpuRepository gpuRepository;
 
-    @Autowired
     private RamRepository ramRepository;
 
-    @Autowired
     private PsuRepository psuRepository;
 
-    @Autowired
     private ComputerCaseRepository computerCaseRepository;
 
-    @Autowired
     private HardDriveRepository hardDriveRepository;
 
-    @Autowired
     private VentiradRepository ventiradRepository;
 
-    @Autowired
     private MbeRepository mbeRepository;
 
-    @Autowired
     private UserRepository userRepository;
+
+    public OrderHandlerImpl(
+        OrderRepository orderRepository,
+        CpuRepository cpuRepository,
+        GpuRepository gpuRepository,
+        RamRepository ramRepository,
+        PsuRepository psuRepository,
+        ComputerCaseRepository computerCaseRepository,
+        HardDriveRepository hardDriveRepository,
+        VentiradRepository ventiradRepository,
+        MbeRepository mbeRepository,
+        UserRepository userRepository
+    ) {
+        this.orderRepository = orderRepository;
+        this.cpuRepository = cpuRepository;
+        this.gpuRepository = gpuRepository;
+        this.ramRepository = ramRepository;
+        this.psuRepository = psuRepository;
+        this.computerCaseRepository = computerCaseRepository;
+        this.hardDriveRepository = hardDriveRepository;
+        this.ventiradRepository = ventiradRepository;
+        this.mbeRepository = mbeRepository;
+        this.userRepository = userRepository;
+    }
 
     public Order createOrderFromCart(CartDTO[] cart, User user) {
         if (userRepository.haveOrderProcessing(user)) throw new ResponseStatusException(

@@ -22,7 +22,6 @@
             class="elevation-0 flex-grow-1"
             @click:row="handleRowClick"
             hide-default-footer
-            @page-count="pageCount = $event"
           >
             <template v-slot:item.stock="{ item }"><v-badge :color="item.stock > 0 ? 'success' : 'dark'"></v-badge></template>
 

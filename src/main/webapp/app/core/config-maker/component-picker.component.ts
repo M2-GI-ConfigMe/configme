@@ -305,6 +305,7 @@ export default class ComponentPicker extends Vue {
 
   public page = 1;
   public pageCount = 1;
+  private firstRetrive = false;
 
   public data = {
     objects: [],
@@ -341,8 +342,8 @@ export default class ComponentPicker extends Vue {
   public loading = false;
 
   @Watch('currentEndpoint')
-  onEndpointUpdate(value: string, oldValue: string) {
-    if (value != '') {
+  onEndpointUpdate(value: string) {
+    if (value != '' && value != undefined) {
       this.data.objects = [];
       this.options = {
         itemsPerPage: 15,
@@ -350,19 +351,31 @@ export default class ComponentPicker extends Vue {
         sortDesc: [],
       };
       this.page = 1;
+      this.firstRetrive = false;
       this.retrieveComponents();
     }
   }
 
   @Watch('page')
-  onPageChange(v, oldV) {
-    if (v != oldV) this.retrieveComponents();
+  onPageChange() {
+    if (this.firstRetrive) this.retrieveComponents();
+  }
+
+  @Watch('pageCount')
+  onPageCountChange() {
+    console.log(this.pageCount);
   }
 
   @Watch('options')
-  onOptionsUpdate(value: any, oldValue: any) {
-    if (value && oldValue) this.retrieveComponents();
+  onOptionsUpdate(v) {
+    if (this.firstRetrive) this.retrieveComponents();
   }
+
+  // @Watch('config')
+  // onConfigsUpdate(v) {
+  //   this.firstRetrive = false
+  //   this.retrieveComponents();
+  // }
 
   public handleRowClick(value) {
     this.$emit('picked', value);
@@ -390,6 +403,7 @@ export default class ComponentPicker extends Vue {
       .then(res => {
         this.data.objects = res.data.content;
         this.pageCount = res.data.totalPages;
+        if (!this.firstRetrive) this.firstRetrive = true;
       })
       .catch(err => {
         console.log('Erreur lors du fetch des données');

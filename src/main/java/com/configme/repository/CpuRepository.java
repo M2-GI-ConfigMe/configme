@@ -2,6 +2,7 @@ package com.configme.repository;
 
 import com.configme.domain.Cpu;
 import com.configme.domain.Mbe;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -14,6 +15,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CpuRepository extends JpaRepository<Cpu, Long> {
-    //    @Query("select c from Cpu c where (:mbe is null or c.socketType = :mbe.socketCpu)")
-    //    Page<Cpu> findByCompatibility(@Param("mbe") Mbe mbe, Pageable pageable);
+    @Query(value = "SELECT c FROM Cpu c WHERE (:mbe is null or ( c.socketType = :#{ #mbe == null ? null : (#mbe.socketCpu)}))")
+    Page<Cpu> findByCompatibility(@Param("mbe") Mbe mbe, Pageable pageable);
 }

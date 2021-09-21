@@ -1,11 +1,11 @@
 id;frequency;cache_l_1;cache_l_2;cache_l_3;nb_heart;nb_thread;has_ventirad;socket_type;lithography;ram_frequency_max;consumption;has_gpu;name;price;discount;stock;img;jhi_desc;brand;is_active
-71;63340;10337;97530;85637;86065;69536;true;TR4;50002;90790;25677;false;Steel11;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-72;79785;62249;76265;70689;15058;78473;true;LGA_1151;64624;79444;95027;true;Steel12;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-73;22939;19529;67694;43761;75446;36526;false;LGA_2066;23481;93477;90896;true;Steel13;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-74;55788;56633;43248;28122;79353;72963;true;LGA_1200;7425;76296;22833;false;Steel14;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-75;65094;33595;65269;15742;72980;66159;true;TR4;11988;94671;8427;false;Steel15;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-76;30410;39656;78402;90530;11985;56104;true;TR4;35942;96024;35790;false;Steel16;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-77;34524;27976;80672;55034;70432;33666;true;LGA_1151;34740;26794;4533;false;Steel17;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-78;97890;26301;32476;81928;14175;97435;true;LGA_1151;73783;99594;67969;false;Steel18;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-79;6571;62003;27334;37021;60130;50334;false;LGA_1150;4965;38631;35898;false;Steel19;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-80;48704;70475;36396;18480;61530;16719;true;AM4;65851;41515;48704;false;Steel20;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+71;63340;10337;97530;85637;86065;3;true;TR4;50002;90790;25677;false;Steel11;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+72;79785;62249;76265;70689;15058;3;true;LGA_1151;64624;79444;95027;true;Steel12;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+73;22939;19529;67694;43761;75446;3;false;LGA_2066;23481;93477;90896;true;Steel13;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+74;55788;56633;43248;28122;79353;3;true;LGA_1200;7425;76296;22833;false;Steel14;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+75;65094;33595;65269;15742;72980;3;true;TR4;11988;94671;8427;false;Steel15;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+76;30410;39656;78402;90530;11985;3;true;TR4;35942;96024;35790;false;Steel16;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+77;34524;27976;80672;55034;70432;3;true;LGA_1151;34740;26794;4533;false;Steel17;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+78;97890;26301;32476;81928;14175;3;true;LGA_1151;73783;99594;67969;false;Steel18;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+79;6571;62003;27334;37021;60130;3;false;LGA_1150;4965;38631;35898;false;Steel19;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+80;48704;70475;36396;18480;61530;3;true;AM4;65851;41515;48704;false;Steel20;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false

@@ -220,7 +220,7 @@ public class CpuResource {
         @RequestParam(name = "mbeId", required = false) Long mbeId
     ) {
         Mbe mbe = null;
-        if (this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
         log.debug("REST request to get all Mbes");
         return cpuRepository.findByCompatibility(
             mbe,
