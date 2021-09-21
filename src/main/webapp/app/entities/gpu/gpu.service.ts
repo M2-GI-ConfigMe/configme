@@ -70,19 +70,6 @@ export default class GpuService {
     });
   }
 
-  public updateImg(entity: IGpu, img: FormData): Promise<IGpu> {
-    return new Promise<IGpu>((resolve, reject) => {
-      axios
-        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
-  }
-
   public partialUpdate(entity: IGpu): Promise<IGpu> {
     return new Promise<IGpu>((resolve, reject) => {
       axios

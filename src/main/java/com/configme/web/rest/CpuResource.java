@@ -104,37 +104,6 @@ public class CpuResource {
     }
 
     /**
-     * {@code PUT  /cpus/id/image} : Updates an existing cpu image
-     * @param id the cpu id.
-     * @param file the image file to set.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated cpu,
-     * or with status {@code 400 (Bad Request)} if the cpu is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the cpu image couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     * @throws IOException if temp file creation failed in imageService.
-     */
-    @PutMapping(path = "/cpus/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Cpu> updateCpuImg(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestParam(value = "file") MultipartFile file
-    ) throws URISyntaxException, IOException {
-        log.debug("REST request to update Cpu image : {}, {}", id, file);
-
-        final String url = imageService.uploadImage(file, ENTITY_NAME);
-
-        if (!cpuRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Cpu cpu = cpuRepository.getOne(id);
-        cpu.setImg(url);
-        Cpu result = cpuRepository.save(cpu);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename")).body(result);
-    }
-
-    /**
      * {@code PATCH  /cpus/:id} : Partial updates given fields of an existing cpu, field will ignore if it is null
      *
      * @param id the id of the cpu to save.

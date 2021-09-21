@@ -1,5 +1,6 @@
 package com.configme.service;
 
+import com.configme.domain.Product;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class ImageService {
     @Autowired
     private AWSS3Service awss3Service;
 
-    public String uploadImage(MultipartFile file, String ENTITY_NAME) throws IOException {
+    public void uploadImage(Product product, MultipartFile file) throws IOException {
         final String orig_img_name = file.getOriginalFilename();
 
         /* create file in tmp folder with unique name */
@@ -32,9 +33,9 @@ public class ImageService {
         final String url = awss3Service.getUrl(orig_img_name).toString();
 
         if (url.isEmpty()) {
-            throw new MalformedURLException("Url is empty:" + ENTITY_NAME + " seems like image upload failed");
+            throw new MalformedURLException("Url is empty:" + product.getClass().toString() + " seems like image upload failed");
         }
 
-        return url;
+        product.setImg(url);
     }
 }

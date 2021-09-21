@@ -70,19 +70,6 @@ export default class VentiradService {
     });
   }
 
-  public updateImg(entity: IVentirad, img: FormData): Promise<IVentirad> {
-    return new Promise<IVentirad>((resolve, reject) => {
-      axios
-        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
-  }
-
   public partialUpdate(entity: IVentirad): Promise<IVentirad> {
     return new Promise<IVentirad>((resolve, reject) => {
       axios

@@ -4,6 +4,8 @@ import { numeric, required, minValue, decimal, maxValue } from 'vuelidate/lib/va
 
 import { IPsu, Psu } from '@/shared/model/psu.model';
 import PsuService from './psu.service';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   psu: {
@@ -61,10 +63,11 @@ const validations: any = {
 })
 export default class PsuUpdate extends Vue {
   @Inject('psuService') private psuService: () => PsuService;
+  @Inject('productService') private productService: () => ProductService;
   public psu: IPsu = new Psu();
   public isSaving = false;
   public currentLanguage = '';
-  public image;
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -91,8 +94,14 @@ export default class PsuUpdate extends Vue {
         .update(this.psu)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.psu.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -106,9 +115,16 @@ export default class PsuUpdate extends Vue {
       this.psuService()
         .create(this.psu)
         .then(param => {
+          this.psu.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.psu.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -121,14 +137,15 @@ export default class PsuUpdate extends Vue {
     if (this.image != null) this.onImageSelected();
   }
 
-  public onImageSelected(): void {
+  public onImageSelected(): Promise<IProduct> {
     const formData = new FormData();
     formData.append('file', this.image);
-    this.psuService().updateImg(this.psu, formData);
+    return this.productService().updateImg(this.psu, formData);
   }
 
   public selectFile(file) {
     this.image = file;
+    this.psu.img = 'updated';
   }
 
   public retrievePsu(psuId): void {

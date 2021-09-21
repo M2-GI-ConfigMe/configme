@@ -104,37 +104,6 @@ public class RamResource {
     }
 
     /**
-     * {@code PUT  /rams/id/image} : Updates an existing ram image
-     * @param id the ram id.
-     * @param file the image file to set.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated ram,
-     * or with status {@code 400 (Bad Request)} if the ram is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the ram image couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     * @throws IOException if temp file creation failed in imageService.
-     */
-    @PutMapping(path = "/rams/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Ram> updateRamImg(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestParam(value = "file") MultipartFile file
-    ) throws URISyntaxException, IOException {
-        log.debug("REST request to update Ram image : {}, {}", id, file);
-
-        final String url = imageService.uploadImage(file, ENTITY_NAME);
-
-        if (!ramRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Ram ram = ramRepository.getOne(id);
-        ram.setImg(url);
-        Ram result = ramRepository.save(ram);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename")).body(result);
-    }
-
-    /**
      * {@code PATCH  /rams/:id} : Partial updates given fields of an existing ram, field will ignore if it is null
      *
      * @param id the id of the ram to save.

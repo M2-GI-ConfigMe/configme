@@ -104,37 +104,6 @@ public class GpuResource {
     }
 
     /**
-     * {@code PUT  /gpus/id/image} : Updates an existing gpu image
-     * @param id the gpu id.
-     * @param file the image file to set.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated gpu,
-     * or with status {@code 400 (Bad Request)} if the gpu is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the gpu image couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     * @throws IOException if temp file creation failed in imageService.
-     */
-    @PutMapping(path = "/gpus/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Gpu> updateGpuImg(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestParam(value = "file") MultipartFile file
-    ) throws URISyntaxException, IOException {
-        log.debug("REST request to update Gpu image : {}, {}", id, file);
-
-        final String url = imageService.uploadImage(file, ENTITY_NAME);
-
-        if (!gpuRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Gpu gpu = gpuRepository.getOne(id);
-        gpu.setImg(url);
-        Gpu result = gpuRepository.save(gpu);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename")).body(result);
-    }
-
-    /**
      * {@code PATCH  /gpus/:id} : Partial updates given fields of an existing gpu, field will ignore if it is null
      *
      * @param id the id of the gpu to save.

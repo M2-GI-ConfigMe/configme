@@ -106,37 +106,6 @@ public class HardDriveResource {
     }
 
     /**
-     * {@code PUT  /hard-drives/id/image} : Updates an existing hard-drive image
-     * @param id the hard-drive id.
-     * @param file the image file to set.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated hard-drive,
-     * or with status {@code 400 (Bad Request)} if the hard-drive is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the hard-drive image couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     * @throws IOException if temp file creation failed in imageService.
-     */
-    @PutMapping(path = "/hard-drives/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<HardDrive> updateHardDriveImg(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestParam(value = "file") MultipartFile file
-    ) throws URISyntaxException, IOException {
-        log.debug("REST request to update HardDrive image : {}, {}", id, file);
-
-        final String url = imageService.uploadImage(file, ENTITY_NAME);
-
-        if (!hardDriveRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        HardDrive hardDrive = hardDriveRepository.getOne(id);
-        hardDrive.setImg(url);
-        HardDrive result = hardDriveRepository.save(hardDrive);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename")).body(result);
-    }
-
-    /**
      * {@code PATCH  /hard-drives/:id} : Partial updates given fields of an existing hardDrive, field will ignore if it is null
      *
      * @param id the id of the hardDrive to save.

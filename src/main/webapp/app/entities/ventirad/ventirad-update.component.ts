@@ -5,6 +5,8 @@ import { decimal, maxValue, minValue, numeric, required } from 'vuelidate/lib/va
 import { IVentirad, Ventirad } from '@/shared/model/ventirad.model';
 import { SocketType } from '@/shared/model/enumerations/socket-type.model';
 import VentiradService from './ventirad.service';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   ventirad: {
@@ -65,6 +67,7 @@ const validations: any = {
 })
 export default class VentiradUpdate extends Vue {
   @Inject('ventiradService') private ventiradService: () => VentiradService;
+  @Inject('productService') private productService: () => ProductService;
   public ventirad: IVentirad = new Ventirad();
 
   public isSaving = false;
@@ -72,7 +75,7 @@ export default class VentiradUpdate extends Vue {
 
   public socketTypes = SocketType;
   public sockets = [];
-  public image;
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -101,8 +104,14 @@ export default class VentiradUpdate extends Vue {
         .update(this.ventirad)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.ventirad.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -116,9 +125,16 @@ export default class VentiradUpdate extends Vue {
       this.ventiradService()
         .create(this.ventirad)
         .then(param => {
+          this.ventirad.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.ventirad.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -131,14 +147,15 @@ export default class VentiradUpdate extends Vue {
     if (this.image != null) this.onImageSelected();
   }
 
-  public onImageSelected(): void {
+  public onImageSelected(): Promise<IProduct> {
     const formData = new FormData();
     formData.append('file', this.image);
-    this.ventiradService().updateImg(this.ventirad, formData);
+    return this.productService().updateImg(this.ventirad, formData);
   }
 
   public selectFile(file) {
     this.image = file;
+    this.ventirad.img = 'updated';
   }
 
   public retrieveVentirad(ventiradId): void {

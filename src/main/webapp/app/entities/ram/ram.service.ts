@@ -70,19 +70,6 @@ export default class RamService {
     });
   }
 
-  public updateImg(entity: IRam, img: FormData): Promise<IRam> {
-    return new Promise<IRam>((resolve, reject) => {
-      axios
-        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
-  }
-
   public partialUpdate(entity: IRam): Promise<IRam> {
     return new Promise<IRam>((resolve, reject) => {
       axios

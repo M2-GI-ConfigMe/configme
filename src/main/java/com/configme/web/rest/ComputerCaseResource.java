@@ -106,37 +106,6 @@ public class ComputerCaseResource {
     }
 
     /**
-     * {@code PUT  /computer-cases/id/image} : Updates an existing computerCase image
-     * @param id the computerCase id.
-     * @param file the image file to set.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated computerCase,
-     * or with status {@code 400 (Bad Request)} if the computerCase is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the computerCase image couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     * @throws IOException if temp file creation failed in imageService.
-     */
-    @PutMapping(path = "/computer-cases/{id}/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ComputerCase> updateComputerCaseImg(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestParam(value = "file") MultipartFile file
-    ) throws URISyntaxException, IOException {
-        log.debug("REST request to update ComputerCase image : {}, {}", id, file);
-
-        final String url = imageService.uploadImage(file, ENTITY_NAME);
-
-        if (!computerCaseRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        ComputerCase computerCase = computerCaseRepository.getOne(id);
-        computerCase.setImg(url);
-        ComputerCase result = computerCaseRepository.save(computerCase);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "filename")).body(result);
-    }
-
-    /**
      * {@code PATCH  /computer-cases/:id} : Partial updates given fields of an existing computerCase, field will ignore if it is null
      *
      * @param id the id of the computerCase to save.
