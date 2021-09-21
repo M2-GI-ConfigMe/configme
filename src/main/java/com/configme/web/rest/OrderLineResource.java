@@ -1,6 +1,5 @@
 package com.configme.web.rest;
 
-import com.configme.domain.Order;
 import com.configme.domain.OrderLine;
 import com.configme.domain.User;
 import com.configme.repository.OrderLineRepository;

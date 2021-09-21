@@ -15,72 +15,73 @@
             <input type="text" class="form-control" id="id" name="id" v-model="hardDrive.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="computer-case-name">Nom</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="hard-drive-name">Nom</label>
             <input
               type="text"
               class="form-control"
               name="name"
-              id="computer-case-name"
+              id="hard-drive-name"
               data-cy="name"
               :class="{ valid: !$v.hardDrive.name.$invalid, invalid: $v.hardDrive.name.$invalid }"
               v-model="$v.hardDrive.name.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="computer-case-price">Prix</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="hard-drive-price">Prix</label>
             <input
               type="text"
               class="form-control"
               name="price"
-              id="computer-case-price"
+              id="hard-drive-price"
               data-cy="price"
               :class="{ valid: !$v.hardDrive.price.$invalid, invalid: $v.hardDrive.price.$invalid }"
               v-model="$v.hardDrive.price.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="computer-case-discount">Réduction</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="hard-drive-discount">Réduction</label>
             <input
               type="text"
               class="form-control"
               name="discount"
-              id="computer-case-discount"
+              id="hard-drive-discount"
               data-cy="discount"
               :class="{ valid: !$v.hardDrive.discount.$invalid, invalid: $v.hardDrive.discount.$invalid }"
               v-model="$v.hardDrive.discount.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="computer-case-stock">Stock</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="hard-drive-stock">Stock</label>
             <input
               type="text"
               class="form-control"
               name="stock"
-              id="computer-case-stock"
+              id="hard-drive-stock"
               data-cy="stock"
               :class="{ valid: !$v.hardDrive.stock.$invalid, invalid: $v.hardDrive.stock.$invalid }"
               v-model="$v.hardDrive.stock.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
-            <input
-              type="text"
+            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="hard-drive-img">Image</label>
+            <v-file-input
+              type="file"
               class="form-control"
               name="img"
-              id="computer-case-img"
-              data-cy="img"
+              id="hard-drive-img"
+              ref="img"
+              accept="image/*"
               :class="{ valid: !$v.hardDrive.img.$invalid, invalid: $v.hardDrive.img.$invalid }"
-              v-model="$v.hardDrive.img.$model"
+              @change="selectFile"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="computer-case-brand">Marque</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="hard-drive-brand">Marque</label>
             <input
               type="text"
               class="form-control"
               name="brand"
-              id="computer-case-brand"
+              id="hard-drive-brand"
               data-cy="brand"
               :class="{ valid: !$v.hardDrive.brand.$invalid, invalid: $v.hardDrive.brand.$invalid }"
               v-model="$v.hardDrive.brand.$model"

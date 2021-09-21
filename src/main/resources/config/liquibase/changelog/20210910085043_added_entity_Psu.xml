@@ -32,6 +32,15 @@
             <column name="outputs" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="width" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="height" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="length" type="integer">
+                <constraints nullable="true"/>
+            </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_product__name_psu" />
             </column>
