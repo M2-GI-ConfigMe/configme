@@ -4,6 +4,8 @@ import { numeric, required, decimal, minValue, maxValue } from 'vuelidate/lib/va
 
 import { IHardDrive, HardDrive } from '@/shared/model/hard-drive.model';
 import HardDriveService from './hard-drive.service';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   hardDrive: {
@@ -55,9 +57,11 @@ const validations: any = {
 })
 export default class HardDriveUpdate extends Vue {
   @Inject('hardDriveService') private hardDriveService: () => HardDriveService;
+  @Inject('productService') private productService: () => ProductService;
   public hardDrive: IHardDrive = new HardDrive();
   public isSaving = false;
   public currentLanguage = '';
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -84,8 +88,14 @@ export default class HardDriveUpdate extends Vue {
         .update(this.hardDrive)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
-          const message = this.$t('configmeApp.hd.updated', { param: param.id });
+          const message = this.$t('configmeApp.hardDrive.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -99,9 +109,16 @@ export default class HardDriveUpdate extends Vue {
       this.hardDriveService()
         .create(this.hardDrive)
         .then(param => {
+          this.hardDrive.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
-          const message = this.$t('configmeApp.hd.created', { param: param.id });
+          const message = this.$t('configmeApp.hardDrive.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -111,6 +128,18 @@ export default class HardDriveUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): Promise<IProduct> {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    return this.productService().updateImg(this.hardDrive, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+    this.hardDrive.img = 'updated';
   }
 
   public retrieveHardDrive(hardDriveId): void {
