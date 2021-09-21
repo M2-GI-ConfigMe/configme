@@ -1,3 +1,5 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=M2-GI-ConfigMe_configme&metric=alert_status)](https://sonarcloud.io/dashboard?id=M2-GI-ConfigMe_configme)
+
 # configme
 
 This application was generated using JHipster 7.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.1.0](https://www.jhipster.tech/documentation-archive/v7.1.0).
