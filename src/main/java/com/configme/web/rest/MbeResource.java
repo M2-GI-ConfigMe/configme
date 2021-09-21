@@ -2,16 +2,17 @@ package com.configme.web.rest;
 
 import com.configme.domain.Mbe;
 import com.configme.repository.MbeRepository;
+import com.configme.service.ImageService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,6 +44,9 @@ public class MbeResource {
     public MbeResource(MbeRepository mbeRepository) {
         this.mbeRepository = mbeRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /mbes} : Create a new mbe.

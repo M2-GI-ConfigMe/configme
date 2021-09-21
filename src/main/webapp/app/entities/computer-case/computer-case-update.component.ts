@@ -7,6 +7,8 @@ import ComputerCaseService from './computer-case.service';
 import { FormatType } from '@/shared/model/enumerations/format-type.model';
 import { data } from 'autoprefixer';
 import { Dimension } from '@/shared/model/dimension.model';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   computerCase: {
@@ -80,6 +82,7 @@ const validations: any = {
 })
 export default class ComputerCaseUpdate extends Vue {
   @Inject('computerCaseService') private computerCaseService: () => ComputerCaseService;
+  @Inject('productService') private productService: () => ProductService;
   public computerCase: IComputerCase = new ComputerCase();
 
   public formatTypes = FormatType;
@@ -87,6 +90,7 @@ export default class ComputerCaseUpdate extends Vue {
 
   public isSaving = false;
   public currentLanguage = '';
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -115,8 +119,14 @@ export default class ComputerCaseUpdate extends Vue {
         .update(this.computerCase)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.computerCase.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -130,9 +140,16 @@ export default class ComputerCaseUpdate extends Vue {
       this.computerCaseService()
         .create(this.computerCase)
         .then(param => {
+          this.computerCase.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.computerCase.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -142,6 +159,18 @@ export default class ComputerCaseUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
+  }
+
+  public onImageSelected(): Promise<IProduct> {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    return this.productService().updateImg(this.computerCase, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+    this.computerCase.img = 'updated';
   }
 
   public retrieveComputerCase(computerCaseId): void {
