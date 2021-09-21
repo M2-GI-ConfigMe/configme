@@ -44,8 +44,8 @@ class MbeResourceITUser implements ProductResourceIT {
     private static final Float DEFAULT_RAM_FREQUENCY_MAX = 1F;
     private static final Float UPDATED_RAM_FREQUENCY_MAX = 2F;
 
-    private static final Float DEFAULT_RAM_SIZE_MAX = 1F;
-    private static final Float UPDATED_RAM_SIZE_MAX = 2F;
+    private static final Integer DEFAULT_RAM_SIZE_MAX = 1;
+    private static final Integer UPDATED_RAM_SIZE_MAX = 2;
 
     private static final String DEFAULT_PCI_OUTPUTS = "AAAAAAAAAA";
     private static final String UPDATED_PCI_OUTPUTS = "BBBBBBBBBB";

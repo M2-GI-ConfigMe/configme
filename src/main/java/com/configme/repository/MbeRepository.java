@@ -17,7 +17,7 @@ public interface MbeRepository extends JpaRepository<Mbe, Long> {
         value = "SELECT m FROM Mbe m WHERE " +
         "(:ventirad is null or m.socketCpu in :#{ #ventirad == null ? null : #ventirad.sockets }) " +
         "AND (:cpu is null or m.socketCpu = :#{ #cpu == null ? null : #cpu.socketType }) " +
-        "AND (:ram is null or m.ramSizeMax >= :#{ #ram == null ? new Float(0) : new Float(#ram.unitSize * #ram.quantity) }) " +
+        "AND (:ram is null or m.ramSizeMax >= :#{ #ram == null ? 0: #ram.unitSize * #ram.quantity }) " +
         "AND (:ram is null or m.ramType = :#{ #ram == null ? null : #ram.type }) " +
         "AND (:computerCase is null or m.format in :#{ #computerCase == null ? null : #computerCase.formats }) "
     )
