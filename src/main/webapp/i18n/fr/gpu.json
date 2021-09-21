@@ -18,7 +18,7 @@
         "title": "Gpu"
       },
       "id": "ID",
-      "frequency": "Frequence MHz",
+      "frequency": "Fréquence",
       "memory": "Mémoire",
       "consumption": "Consommation",
       "clockSpeed": "Frequence de l'horloge MHz",

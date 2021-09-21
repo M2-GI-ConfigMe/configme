@@ -157,42 +157,42 @@ export default class ClientConfigUpdate extends Vue {
     this.cpuService()
       .retrieve()
       .then(res => {
-        this.cpus = res.data;
+        this.cpus = res.data.content;
       });
     this.gpuService()
       .retrieve()
       .then(res => {
-        this.gpus = res.data;
+        this.gpus = res.data.content;
       });
     this.psuService()
       .retrieve()
       .then(res => {
-        this.psus = res.data;
+        this.psus = res.data.content;
       });
     this.ventiradService()
       .retrieve()
       .then(res => {
-        this.ventirads = res.data;
+        this.ventirads = res.data.content;
       });
     this.mbeService()
       .retrieve()
       .then(res => {
-        this.mbes = res.data;
+        this.mbes = res.data.content;
       });
     this.computerCaseService()
       .retrieve()
       .then(res => {
-        this.computerCases = res.data;
+        this.computerCases = res.data.content;
       });
     this.hardDriveService()
       .retrieve()
       .then(res => {
-        this.hardDrives = res.data;
+        this.hardDrives = res.data.content;
       });
     this.ramService()
       .retrieve()
       .then(res => {
-        this.rams = res.data;
+        this.rams = res.data.content;
       });
   }
 }

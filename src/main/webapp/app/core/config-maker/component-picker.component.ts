@@ -1,11 +1,15 @@
 import Component from 'vue-class-component';
 import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
 import axios from 'axios';
-import { throws } from 'assert';
+import ComponentDetails from './component-details.vue';
 
 const baseApiUrl = 'api/';
 
-@Component({})
+@Component({
+  components: {
+    ComponentDetails,
+  },
+})
 export default class ComponentPicker extends Vue {
   @Prop({ required: true }) activated: boolean;
   @Prop({ required: true }) componentName: string;
@@ -325,7 +329,17 @@ export default class ComponentPicker extends Vue {
   }
 
   public get headers() {
-    return !this.currentComponent ? undefined : this.currentComponent.headers;
+    if (!this.currentComponent) return undefined;
+
+    const headersClone = JSON.parse(JSON.stringify(this.currentComponent.headers));
+    if (!this.mobile)
+      headersClone.push({
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+      });
+
+    return headersClone;
   }
 
   public get displayName() {
@@ -337,6 +351,22 @@ export default class ComponentPicker extends Vue {
   }
 
   public loading = false;
+
+  public componentInfo = null;
+
+  public getInfo(item) {
+    this.componentInfo = item;
+  }
+
+  private isMounted = false;
+
+  mounted() {
+    this.isMounted = true;
+  }
+
+  public get mobile() {
+    return this.isMounted && ['xs', 'sm'].includes(this.$vuetify.breakpoint.name);
+  }
 
   @Watch('currentEndpoint')
   onEndpointUpdate(value: string, oldValue: string) {
@@ -359,11 +389,13 @@ export default class ComponentPicker extends Vue {
 
   @Watch('options')
   onOptionsUpdate(value: any, oldValue: any) {
-    if (value && oldValue) this.retrieveComponents();
+    if (value != oldValue) this.retrieveComponents();
   }
 
   public handleRowClick(value) {
+    this.componentInfo = null;
     this.$emit('picked', value);
+    this.close();
   }
 
   private retrieveComponents() {
@@ -399,6 +431,21 @@ export default class ComponentPicker extends Vue {
   }
 
   public set show(v) {
-    this.$emit('close');
+    if (!v) {
+      this.componentInfo = null;
+      this.$emit('close');
+    }
+  }
+
+  public outsideClick(e) {
+    const target = e.target;
+    let parent = target.parentElement;
+    while (parent != null && !parent.classList.contains('component-details')) parent = parent.parentElement;
+
+    if (parent == null) this.close();
+  }
+
+  private close() {
+    this.show = false;
   }
 }

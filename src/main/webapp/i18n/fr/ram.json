@@ -20,8 +20,8 @@
       "id": "ID",
       "speed": "Speed",
       "type": "Type",
-      "frequency": "Frequency MHz",
-      "unitSize": "Taille d'une barrette",
+      "frequency": "Fréquence",
+      "unitSize": "Capacité d'une barrette",
       "quantity": "Nombre de barrettes",
       "cas": "Cas"
     }
