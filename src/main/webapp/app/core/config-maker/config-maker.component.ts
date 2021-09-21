@@ -274,7 +274,7 @@ export default class ConfigMaker extends Vue {
   private retrieveUserConfigs() {
     this.isFetching = true;
     this.userOAuth2Service()
-      .configs()
+      .configs(this.$store.getters.account.id)
       .then(async res => {
         this.clientConfigs = res.data;
       })

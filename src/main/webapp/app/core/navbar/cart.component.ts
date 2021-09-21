@@ -23,7 +23,7 @@ export default class Cart extends Vue {
 
   @Watch('cart')
   onCartUpdate(value, oldValue) {
-    if (value.length > oldValue.length) {
+    if (value.length > 0 && !this.showCart) {
       this.showTooltip = true;
       setTimeout(() => {
         this.showTooltip = false;
