@@ -206,6 +206,51 @@
               </small>
             </div>
           </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')"> height</label>
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-height"
+              data-cy="height"
+              :class="{
+                valid: !$v.psu.dimension.height.$invalid,
+                invalid: $v.psu.dimension.height.$invalid,
+              }"
+              v-model="$v.psu.dimension.height.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.width')"> width</label>
+            <input
+              type="text"
+              class="form-control"
+              name="width"
+              id="computer-case-width"
+              data-cy="width"
+              :class="{
+                valid: !$v.psu.dimension.width.$invalid,
+                invalid: $v.psu.dimension.width.$invalid,
+              }"
+              v-model="$v.psu.dimension.width.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.length')"> length</label>
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-length"
+              data-cy="length"
+              :class="{
+                valid: !$v.psu.dimension.length.$invalid,
+                invalid: $v.psu.dimension.length.$invalid,
+              }"
+              v-model="$v.psu.dimension.length.$model"
+            />
+          </div>
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" v-on:click="previousState()">

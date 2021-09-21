@@ -38,17 +38,14 @@ const validations: any = {
     },
     dimension: {
       height: {
-        required,
         numeric,
         min: minValue(0),
       },
       width: {
-        required,
         numeric,
         min: minValue(0),
       },
       length: {
-        required,
         numeric,
         min: minValue(0),
       },
