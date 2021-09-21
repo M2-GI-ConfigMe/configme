@@ -1,7 +1,7 @@
 <template>
   <v-container style="height: calc(100vh - 64px)" class="pt-10">
     <v-row>
-      <v-col cols="3">
+      <v-col sm="12" lg="3">
         <v-card elevation="1">
           <v-navigation-drawer floating permanent width="100%">
             <template v-slot:prepend>
