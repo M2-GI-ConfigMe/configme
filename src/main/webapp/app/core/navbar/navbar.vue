@@ -6,7 +6,6 @@
           {{ appTitle }}
         </router-link>
       </v-toolbar-title>
-      <router-link to="/order/cart" tag="span" style="color: #2196f3; cursor: pointer; font-size: 1.5em"> order </router-link>
       <v-spacer></v-spacer>
       <cart></cart>
       <v-btn color="primary" large elevation="0" v-on:click="openLogin()" v-if="!authenticated" class="ml-2"> Connexion </v-btn>
@@ -14,8 +13,8 @@
         text
         v-if="authenticated"
         v-on:click="$router.push('/account/settings')"
-        :color="$route.path == '/account/settings' ? 'primary' : ''"
-        :class="$route.path == '/account/settings' ? 'font-weight-bold' : ''"
+        :color="$route.path.includes('/account/') ? 'primary' : ''"
+        :class="$route.path.includes('/account/') ? 'font-weight-bold' : ''"
       >
         <v-icon class="mr-1">mdi-account</v-icon>Mon Compte
       </v-btn>
@@ -36,7 +35,7 @@
             v-for="(item, index) in entitiesItems"
             :key="index"
             @click="$router.push(item.path)"
-            :class="item.path === $route.path ? 'primary text-whiteg' : ''"
+            :class="item.path === $route.path ? 'primary text-white' : ''"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>

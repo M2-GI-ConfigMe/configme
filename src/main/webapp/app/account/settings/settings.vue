@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters>
-    <div class="col-md-8 toastify-container">
+    <div class="col toastify-container">
       <v-card>
         <v-card-title class="font-weight-bold"> Mes Informations </v-card-title>
         <v-card-text>
@@ -27,78 +27,90 @@
             </div>
             <div class="form-group">
               <v-row v-bind:no-gutters="true">
-                <v-text-field
-                  v-model="$v.settingsAccount.firstName.$model"
-                  :rules="rules.firstNameRules.concat(rules.requiredField)"
-                  label="Prénom"
-                  placeholder="François"
-                  hide-details="auto"
-                  outlined
-                  required
-                >
-                </v-text-field>
-                <v-text-field
-                  class="ml-4"
-                  v-model="$v.settingsAccount.lastName.$model"
-                  :rules="rules.lastNameRules.concat(rules.requiredField)"
-                  label="Nom"
-                  placeholder="Dupont"
-                  hide-details="auto"
-                  outlined
-                  required
-                >
-                </v-text-field>
+                <v-col>
+                  <v-text-field
+                    v-model="$v.settingsAccount.firstName.$model"
+                    :rules="rules.firstNameRules.concat(rules.requiredField)"
+                    label="Prénom"
+                    placeholder="François"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="ml-4"
+                    v-model="$v.settingsAccount.lastName.$model"
+                    :rules="rules.lastNameRules.concat(rules.requiredField)"
+                    label="Nom"
+                    placeholder="Dupont"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
               </v-row>
             </div>
             <div class="form-group">
               <v-row v-bind:no-gutters="true">
-                <v-text-field
-                  v-model="$v.settingsAccount.address.streetNumber.$model"
-                  :rules="rules.streetNumberRules.concat(rules.requiredField)"
-                  label="N° de Rue"
-                  placeholder="5"
-                  hide-details="auto"
-                  outlined
-                  required
-                >
-                </v-text-field>
-                <v-text-field
-                  class="ml-4"
-                  v-model="$v.settingsAccount.address.streetName.$model"
-                  :rules="rules.streetNameRules.concat(rules.requiredField)"
-                  label="Rue"
-                  placeholder="Rue de l'exemple"
-                  hide-details="auto"
-                  outlined
-                  required
-                >
-                </v-text-field>
+                <v-col cols="3">
+                  <v-text-field
+                    v-model="$v.settingsAccount.address.streetNumber.$model"
+                    :rules="rules.streetNumberRules.concat(rules.requiredField)"
+                    label="N° de Rue"
+                    placeholder="5"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="ml-4"
+                    v-model="$v.settingsAccount.address.streetName.$model"
+                    :rules="rules.streetNameRules.concat(rules.requiredField)"
+                    label="Rue"
+                    placeholder="Rue de l'exemple"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
               </v-row>
             </div>
 
             <div class="form-group">
               <v-row v-bind:no-gutters="true">
-                <v-text-field
-                  v-model="$v.settingsAccount.address.city.$model"
-                  :rules="rules.cityRules.concat(rules.requiredField)"
-                  label="Ville"
-                  placeholder="Grenoble"
-                  hide-details="auto"
-                  outlined
-                  required
-                >
-                </v-text-field>
-                <v-text-field
-                  class="ml-4"
-                  v-model="$v.settingsAccount.address.zipCode.$model"
-                  :rules="rules.zipCodeRules.concat(rules.requiredField)"
-                  label="Code postal"
-                  placeholder="38000"
-                  hide-details="auto"
-                  outlined
-                  required
-                >
-                </v-text-field>
+                <v-col>
+                  <v-text-field
+                    v-model="$v.settingsAccount.address.city.$model"
+                    :rules="rules.cityRules.concat(rules.requiredField)"
+                    label="Ville"
+                    placeholder="Grenoble"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="ml-4"
+                    v-model="$v.settingsAccount.address.zipCode.$model"
+                    :rules="rules.zipCodeRules.concat(rules.requiredField)"
+                    label="Code postal"
+                    placeholder="38000"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
               </v-row>
             </div>
             <!-- <div class="form-group" v-if="languages && Object.keys(languages).length > 1">

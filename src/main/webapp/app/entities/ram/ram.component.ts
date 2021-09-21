@@ -56,7 +56,7 @@ export default class Ram extends Vue {
       .retrieve()
       .then(
         res => {
-          this.rams = res.data;
+          this.rams = res.data.content;
           this.isFetching = false;
         },
         err => {

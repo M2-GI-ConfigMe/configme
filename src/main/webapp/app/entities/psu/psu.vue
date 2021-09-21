@@ -37,6 +37,7 @@
             <th scope="row"><span v-text="$t('configmeApp.psu.nbSata')">Nb Sata</span></th>
             <th scope="row"><span v-text="$t('configmeApp.psu.nbPciE')">Nb Pci E</span></th>
             <th scope="row"><span v-text="$t('configmeApp.psu.outputs')">Outputs</span></th>
+            <th scope="row"><span v-text="$t('configmeApp.psu.dimension') + ' (L, l, H)'">Dimension</span></th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -61,6 +62,7 @@
             <td>{{ psu.nbSata }}</td>
             <td>{{ psu.nbPciE }}</td>
             <td>{{ psu.outputs }}</td>
+            <td>{{ psu.dimension.length }}mm, {{ psu.dimension.width }}mm, {{ psu.dimension.height }}mm</td>
             <td class="text-right">
               <div class="btn-group">
                 <router-link :to="{ name: 'PsuView', params: { psuId: psu.id } }" custom v-slot="{ navigate }">

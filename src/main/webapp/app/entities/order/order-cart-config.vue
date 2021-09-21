@@ -5,14 +5,14 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </div>
-    <v-card-text style="padding: 0 !important; z-index: 5; position: relative">
+    <v-card-text style="padding: 0 !important; position: relative">
       <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-center">Produit</th>
-              <th class="text-center">Prix</th>
-              <th class="text-center" style="width: 10%">Actions</th>
+              <th scope="desc" class="text-center">Produit</th>
+              <th scope="desc" class="text-center">Prix</th>
+              <th scope="desc" class="text-center" style="width: 10%">Actions</th>
             </tr>
           </thead>
           <tbody>

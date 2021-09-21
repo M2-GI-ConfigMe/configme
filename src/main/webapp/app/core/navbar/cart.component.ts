@@ -1,5 +1,6 @@
 import LoginService from '@/account/login.service';
 import OrderService from '@/entities/order/order.service';
+import { off } from 'process';
 import { Component, Inject, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component
@@ -22,10 +23,12 @@ export default class Cart extends Vue {
 
   @Watch('cart')
   onCartUpdate(value, oldValue) {
-    this.showTooltip = true;
-    setTimeout(() => {
-      this.showTooltip = false;
-    }, 2000);
+    if (value.length > 0 && !this.showCart) {
+      this.showTooltip = true;
+      setTimeout(() => {
+        this.showTooltip = false;
+      }, 2000);
+    }
   }
 
   public openLogin(): void {

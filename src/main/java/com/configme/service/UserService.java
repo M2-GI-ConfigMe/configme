@@ -33,6 +33,8 @@ import tech.jhipster.security.RandomUtil;
 @Transactional
 public class UserService {
 
+    private static final String CHAR_TO_REPLACE = "[\n\r\t]";
+
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
@@ -55,7 +57,9 @@ public class UserService {
         this.cacheManager = cacheManager;
     }
 
-    public Optional<User> activateRegistration(String key) {
+    public Optional<User> activateRegistration(String paramKey) {
+        String key = paramKey.replaceAll(CHAR_TO_REPLACE, "_");
+
         log.debug("Activating user for activation key {}", key);
         return userRepository
             .findOneByActivationKey(key)
@@ -71,7 +75,9 @@ public class UserService {
             );
     }
 
-    public Optional<User> completePasswordReset(String newPassword, String key) {
+    public Optional<User> completePasswordReset(String newPassword, String paramKey) {
+        String key = paramKey.replaceAll(CHAR_TO_REPLACE, "_");
+
         log.debug("Reset user password for reset key {}", key);
         return userRepository
             .findOneByResetKey(key)
@@ -136,7 +142,10 @@ public class UserService {
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
-        log.debug("Created Information for User: {}", newUser);
+
+        String newUserEmail = newUser.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+
+        log.debug("Created Information for User: {}", newUserEmail);
         return newUser;
     }
 
@@ -182,7 +191,10 @@ public class UserService {
         }
         userRepository.save(user);
         this.clearUserCaches(user);
-        log.debug("Created Information for User: {}", user);
+
+        String userEmail = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+
+        log.debug("Created Information for User: {}", userEmail);
         return user;
     }
 
@@ -220,7 +232,10 @@ public class UserService {
                         .map(Optional::get)
                         .forEach(managedAuthorities::add);
                     this.clearUserCaches(user);
-                    log.debug("Changed Information for User: {}", user);
+
+                    String userEmail = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+
+                    log.debug("Changed Information for User: {}", userEmail);
                     return user;
                 }
             )
@@ -234,7 +249,10 @@ public class UserService {
                 user -> {
                     userRepository.delete(user);
                     this.clearUserCaches(user);
-                    log.debug("Deleted User: {}", user);
+
+                    String userEmail = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+
+                    log.debug("Deleted User: {}", userEmail);
                 }
             );
     }
@@ -247,6 +265,8 @@ public class UserService {
      * @param email     email id of user.
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
+     * @param birthdate birthdate of user.
+     * @param address   address of user.
      */
     public void updateUser(
         String email,
@@ -270,7 +290,10 @@ public class UserService {
                     user.setLangKey(langKey);
                     user.setImageUrl(imageUrl);
                     this.clearUserCaches(user);
-                    log.debug("Changed Information for User: {}", user);
+
+                    String userEmail = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+
+                    log.debug("Changed Information for User: {}", userEmail);
                 }
             );
     }
@@ -289,7 +312,10 @@ public class UserService {
                     String encryptedPassword = passwordEncoder.encode(newPassword);
                     user.setPassword(encryptedPassword);
                     this.clearUserCaches(user);
-                    log.debug("Changed password for User: {}", user);
+
+                    String userEmail = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+
+                    log.debug("Changed password for User: {}", userEmail);
                 }
             );
     }
@@ -325,7 +351,9 @@ public class UserService {
             .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
             .forEach(
                 user -> {
-                    log.debug("Deleting not activated user {}", user.getEmail());
+                    String userEmail = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+
+                    log.debug("Deleting not activated user {}", userEmail);
                     userRepository.delete(user);
                     this.clearUserCaches(user);
                 }

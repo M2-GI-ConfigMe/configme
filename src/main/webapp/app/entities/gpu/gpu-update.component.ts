@@ -4,6 +4,8 @@ import { decimal, required, numeric, minValue, maxValue } from 'vuelidate/lib/va
 
 import { IGpu, Gpu } from '@/shared/model/gpu.model';
 import GpuService from './gpu.service';
+import ProductService from '../product/product.service';
+import { IProduct } from '@/shared/model/product.model';
 
 const validations: any = {
   gpu: {
@@ -38,17 +40,14 @@ const validations: any = {
     },
     dimension: {
       height: {
-        required,
         numeric,
         min: minValue(0),
       },
       width: {
-        required,
         numeric,
         min: minValue(0),
       },
       length: {
-        required,
         numeric,
         min: minValue(0),
       },
@@ -86,10 +85,11 @@ const validations: any = {
 })
 export default class GpuUpdate extends Vue {
   @Inject('gpuService') private gpuService: () => GpuService;
+  @Inject('productService') private productService: () => ProductService;
   public gpu: IGpu = new Gpu();
-
   public isSaving = false;
   public currentLanguage = '';
+  public image = null;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -117,8 +117,14 @@ export default class GpuUpdate extends Vue {
         .update(this.gpu)
         .then(param => {
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.gpu.updated', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           return this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Info',
@@ -132,9 +138,16 @@ export default class GpuUpdate extends Vue {
       this.gpuService()
         .create(this.gpu)
         .then(param => {
+          this.gpu.id = param.id;
           this.isSaving = false;
-          this.$router.go(-1);
           const message = this.$t('configmeApp.gpu.created', { param: param.id });
+          if (this.image != null) {
+            this.onImageSelected().then(() => {
+              this.$router.go(-1);
+            });
+          } else {
+            this.$router.go(-1);
+          }
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
@@ -144,8 +157,19 @@ export default class GpuUpdate extends Vue {
           });
         });
     }
+    if (this.image != null) this.onImageSelected();
   }
 
+  public onImageSelected(): Promise<IProduct> {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    return this.productService().updateImg(this.gpu, formData);
+  }
+
+  public selectFile(file) {
+    this.image = file;
+    this.gpu.img = 'updated';
+  }
   public retrieveGpu(gpuId): void {
     this.gpuService()
       .find(gpuId)

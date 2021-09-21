@@ -1,17 +1,20 @@
 package com.configme.web.rest;
 
 import com.configme.domain.*;
+import com.configme.domain.Mbe;
 import com.configme.repository.*;
+import com.configme.repository.MbeRepository;
+import com.configme.service.ImageService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -56,6 +59,9 @@ public class MbeResource {
         this.ventiradRepository = ventiradRepository;
         this.ramRepository = ramRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /mbes} : Create a new mbe.
@@ -214,6 +220,10 @@ public class MbeResource {
     /**
      * {@code GET  /mbes} : get all the mbes.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of mbes in body.
      */
     @GetMapping("/mbes")

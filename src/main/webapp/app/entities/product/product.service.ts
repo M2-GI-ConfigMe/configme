@@ -70,6 +70,19 @@ export default class ProductService {
     });
   }
 
+  public updateImg(entity: IProduct, img: FormData): Promise<IProduct> {
+    return new Promise<IProduct>((resolve, reject) => {
+      axios
+        .put(`${baseApiUrl}/${entity.id}/image`, img, { headers: { 'Content-Type': 'multipart/form-data', name: 'file' } })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   public partialUpdate(entity: IProduct): Promise<IProduct> {
     return new Promise<IProduct>((resolve, reject) => {
       axios

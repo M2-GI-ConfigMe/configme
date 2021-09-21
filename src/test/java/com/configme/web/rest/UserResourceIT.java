@@ -58,7 +58,8 @@ public class UserResourceIT {
     private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(1999, 9, 9);
     private static final LocalDate UPDATED_BIRTHDATE = LocalDate.of(2000, 9, 9);
 
-    private static final Address DEFAULT_ADDRESS = Address.of("john", "doe", "0", "Rue de l'exmple", "Grenoble", "38000");
+    private static final Address DEFAULT_ADDRESS = Address.of("john", "doe", "5", "Rue de l'exmple", "Grenoble", "38000");
+
     private static final Address UPDATED_ADDRESS = Address.of(
         "JhipsterFirstName",
         "jhipsterLastName",
@@ -230,7 +231,6 @@ public class UserResourceIT {
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
-    //TODO: add Address
     @Test
     @Transactional
     void getAllUsers() throws Exception {
@@ -246,7 +246,13 @@ public class UserResourceIT {
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].birthdate").value(hasItem(DEFAULT_BIRTHDATE.toString())))
-            // .andExpect(jsonPath("$.[*].address",).value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].address.zipCode").value(hasItem(DEFAULT_ADDRESS.getZipCode())))
+            .andExpect(jsonPath("$.[*].address.city").value(hasItem(DEFAULT_ADDRESS.getCity())))
+            .andExpect(jsonPath("$.[*].address.streetNumber").value(hasItem(DEFAULT_ADDRESS.getStreetNumber())))
+            .andExpect(jsonPath("$.[*].address.streetName").value(hasItem(DEFAULT_ADDRESS.getStreetName())))
+            .andExpect(jsonPath("$.[*].address.complementary").value(hasItem(DEFAULT_ADDRESS.getComplementary())))
+            .andExpect(jsonPath("$.[*].address.firstName").value(hasItem(DEFAULT_ADDRESS.getFirstName())))
+            .andExpect(jsonPath("$.[*].address.lastName").value(hasItem(DEFAULT_ADDRESS.getLastName())))
             .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
             .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
     }

@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
 });
 
 /* tslint:disable */
-new Vue({
+const vue = new Vue({
   el: '#app',
   components: { App },
   template: '<App/>',

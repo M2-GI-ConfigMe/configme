@@ -1,8 +1,12 @@
 package com.configme.web.rest;
 
 import com.configme.domain.*;
+import com.configme.domain.ComputerCase;
 import com.configme.repository.*;
+import com.configme.repository.ComputerCaseRepository;
+import com.configme.service.ImageService;
 import com.configme.web.rest.errors.BadRequestAlertException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -12,14 +16,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -54,6 +61,9 @@ public class ComputerCaseResource {
         this.gpuRepository = gpuRepository;
         this.ventiradRepository = ventiradRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /computer-cases} : Create a new computerCase.
@@ -216,6 +226,10 @@ public class ComputerCaseResource {
     /**
      * {@code GET  /computer-cases} : get all the computerCases.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of computerCases in body.
      */
     @GetMapping("/computer-cases")

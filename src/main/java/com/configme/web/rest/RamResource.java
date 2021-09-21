@@ -4,6 +4,7 @@ import com.configme.domain.Mbe;
 import com.configme.domain.Ram;
 import com.configme.repository.MbeRepository;
 import com.configme.repository.RamRepository;
+import com.configme.service.ImageService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +48,9 @@ public class RamResource {
         this.mbeRepository = mbeRepository;
         this.ramRepository = ramRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /rams} : Create a new ram.
@@ -186,6 +191,10 @@ public class RamResource {
     /**
      * {@code GET  /rams} : get all the rams.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rams in body.
      */
     @GetMapping("/rams")

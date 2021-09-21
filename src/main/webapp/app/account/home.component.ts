@@ -25,7 +25,7 @@ export default class AccountHome extends Vue {
   }
 
   public get avatarName() {
-    return this.$store.getters.account.firstName[0] + ' ' + this.$store.getters.account.lastName[0];
+    return this.$store.getters.account.firstName[0] + this.$store.getters.account.lastName[0];
   }
 
   public get username() {

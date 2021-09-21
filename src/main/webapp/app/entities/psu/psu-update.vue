@@ -15,72 +15,73 @@
             <input type="text" class="form-control" id="id" name="id" v-model="psu.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="computer-case-name">Nom</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="psu-name">Nom</label>
             <input
               type="text"
               class="form-control"
               name="name"
-              id="computer-case-name"
+              id="psu-name"
               data-cy="name"
               :class="{ valid: !$v.psu.name.$invalid, invalid: $v.psu.name.$invalid }"
               v-model="$v.psu.name.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="computer-case-price">Prix</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="psu-price">Prix</label>
             <input
               type="text"
               class="form-control"
               name="price"
-              id="computer-case-price"
+              id="psu-price"
               data-cy="price"
               :class="{ valid: !$v.psu.price.$invalid, invalid: $v.psu.price.$invalid }"
               v-model="$v.psu.price.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="computer-case-discount">Réduction</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="psu-discount">Réduction</label>
             <input
               type="text"
               class="form-control"
               name="discount"
-              id="computer-case-discount"
+              id="psu-discount"
               data-cy="discount"
               :class="{ valid: !$v.psu.discount.$invalid, invalid: $v.psu.discount.$invalid }"
               v-model="$v.psu.discount.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="computer-case-stock">Stock</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="psu-stock">Stock</label>
             <input
               type="text"
               class="form-control"
               name="stock"
-              id="computer-case-stock"
+              id="psu-stock"
               data-cy="stock"
               :class="{ valid: !$v.psu.stock.$invalid, invalid: $v.psu.stock.$invalid }"
               v-model="$v.psu.stock.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
-            <input
-              type="text"
+            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="psu-img">Image</label>
+            <v-file-input
+              type="file"
               class="form-control"
               name="img"
-              id="computer-case-img"
-              data-cy="img"
+              id="psu-img"
+              ref="img"
+              accept="image/*"
               :class="{ valid: !$v.psu.img.$invalid, invalid: $v.psu.img.$invalid }"
-              v-model="$v.psu.img.$model"
+              @change="selectFile"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="computer-case-brand">Marque</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="psu-brand">Marque</label>
             <input
               type="text"
               class="form-control"
               name="brand"
-              id="computer-case-brand"
+              id="psu-brand"
               data-cy="brand"
               :class="{ valid: !$v.psu.brand.$invalid, invalid: $v.psu.brand.$invalid }"
               v-model="$v.psu.brand.$model"
@@ -205,6 +206,51 @@
                 This field is required.
               </small>
             </div>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')"> height</label>
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-height"
+              data-cy="height"
+              :class="{
+                valid: !$v.psu.dimension.height.$invalid,
+                invalid: $v.psu.dimension.height.$invalid,
+              }"
+              v-model="$v.psu.dimension.height.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.width')"> width</label>
+            <input
+              type="text"
+              class="form-control"
+              name="width"
+              id="computer-case-width"
+              data-cy="width"
+              :class="{
+                valid: !$v.psu.dimension.width.$invalid,
+                invalid: $v.psu.dimension.width.$invalid,
+              }"
+              v-model="$v.psu.dimension.width.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.length')"> length</label>
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              id="computer-case-length"
+              data-cy="length"
+              :class="{
+                valid: !$v.psu.dimension.length.$invalid,
+                invalid: $v.psu.dimension.length.$invalid,
+              }"
+              v-model="$v.psu.dimension.length.$model"
+            />
           </div>
         </div>
         <div>

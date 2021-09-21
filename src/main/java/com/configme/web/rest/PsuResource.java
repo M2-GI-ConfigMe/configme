@@ -2,16 +2,17 @@ package com.configme.web.rest;
 
 import com.configme.domain.Psu;
 import com.configme.repository.PsuRepository;
+import com.configme.service.ImageService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,6 +44,9 @@ public class PsuResource {
     public PsuResource(PsuRepository psuRepository) {
         this.psuRepository = psuRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /psus} : Create a new psu.
@@ -186,6 +190,10 @@ public class PsuResource {
     /**
      * {@code GET  /psus} : get all the psus.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of psus in body.
      */
     @GetMapping("/psus")

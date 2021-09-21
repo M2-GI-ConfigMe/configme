@@ -15,79 +15,80 @@
             <input type="text" class="form-control" id="id" name="id" v-model="ram.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="computer-case-name">Nom</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.name')" for="ram-name">Nom</label>
             <input
               type="text"
               class="form-control"
               name="name"
-              id="computer-case-name"
+              id="ram-name"
               data-cy="name"
               :class="{ valid: !$v.ram.name.$invalid, invalid: $v.ram.name.$invalid }"
               v-model="$v.ram.name.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="computer-case-price">Prix</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.price')" for="ram-price">Prix</label>
             <input
               type="text"
               class="form-control"
               name="price"
-              id="computer-case-price"
+              id="ram-price"
               data-cy="price"
               :class="{ valid: !$v.ram.price.$invalid, invalid: $v.ram.price.$invalid }"
               v-model="$v.ram.price.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="computer-case-discount">Réduction</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.discount')" for="ram-discount">Réduction</label>
             <input
               type="text"
               class="form-control"
               name="discount"
-              id="computer-case-discount"
+              id="ram-discount"
               data-cy="discount"
               :class="{ valid: !$v.ram.discount.$invalid, invalid: $v.ram.discount.$invalid }"
               v-model="$v.ram.discount.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="computer-case-stock">Stock</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.stock')" for="ram-stock">Stock</label>
             <input
               type="text"
               class="form-control"
               name="stock"
-              id="computer-case-stock"
+              id="ram-stock"
               data-cy="stock"
               :class="{ valid: !$v.ram.stock.$invalid, invalid: $v.ram.stock.$invalid }"
               v-model="$v.ram.stock.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="computer-case-img">Image</label>
-            <input
-              type="text"
+            <label class="form-control-label" v-text="$t('configmeApp.product.img')" for="ram-img">Image</label>
+            <v-file-input
+              type="file"
               class="form-control"
               name="img"
-              id="computer-case-img"
-              data-cy="img"
+              id="ram-img"
+              ref="img"
+              accept="image/*"
               :class="{ valid: !$v.ram.img.$invalid, invalid: $v.ram.img.$invalid }"
-              v-model="$v.ram.img.$model"
+              @change="selectFile"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="computer-case-brand">Marque</label>
+            <label class="form-control-label" v-text="$t('configmeApp.product.brand')" for="ram-brand">Marque</label>
             <input
               type="text"
               class="form-control"
               name="brand"
-              id="computer-case-brand"
+              id="ram-brand"
               data-cy="brand"
               :class="{ valid: !$v.ram.brand.$invalid, invalid: $v.ram.brand.$invalid }"
               v-model="$v.ram.brand.$model"
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.ram.speed')" for="ram-speed">Speed</label>
+            <label class="form-control-label" v-text="$t('configmeApp.ram.speed')" for="ram-speed">Vitesse</label>
             <input
               type="number"
               class="form-control"
@@ -95,7 +96,7 @@
               id="ram-speed"
               data-cy="speed"
               :class="{ valid: !$v.ram.speed.$invalid, invalid: $v.ram.speed.$invalid }"
-              v-model.number="$v.ram.speed.$model"
+              v-model="$v.ram.speed.$model"
               required
             />
             <div v-if="$v.ram.speed.$anyDirty && $v.ram.speed.$invalid">

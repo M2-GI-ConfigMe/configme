@@ -1,16 +1,25 @@
 <template>
   <div>
-    <v-dialog v-model="show" fullscreen transition="slide-x-reverse-transition" content-class="component-picker" @click:outside.stop>
+    <v-dialog
+      persistent
+      no-click-animation
+      @click:outside="outsideClick"
+      v-model="show"
+      fullscreen
+      transition="slide-x-reverse-transition"
+      content-class="component-picker"
+      @click:outside.stop
+    >
       <v-card class="d-flex flex-column">
-        <v-toolbar dark color="primary" max-height="64" style="position: sticky; top: 0">
-          <v-btn icon dark @click="activated = false">
+        <v-toolbar dark color="primary" max-height="64" style="position: sticky; top: 0; z-index: 99">
+          <v-btn icon dark @click="show = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>{{ this.displayName }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items> </v-toolbar-items>
         </v-toolbar>
-        <v-card-text class="flex-grow-1 d-flex flex-column px-0">
+        <v-card-text class="flex-grow-1 d-flex flex-column px-0 pb-0">
           <v-data-table
             :headers="headers"
             :items="data.objects"
@@ -21,6 +30,7 @@
             loading-text="Chargement des données depuis le fin fond de l'univers..."
             class="elevation-0 flex-grow-1"
             @click:row="handleRowClick"
+            :item-key="'classsss'"
             hide-default-footer
           >
             <template v-slot:item.stock="{ item }"><v-badge :color="item.stock > 0 ? 'success' : 'dark'"></v-badge></template>
@@ -45,13 +55,31 @@
             <template v-slot:item.memory="{ item }"> {{ item.memory }}Go </template>
             <template v-slot:item.capacity="{ item }"> {{ item.capacity }}Go </template>
             <template v-slot:item.power="{ item }"> {{ item.power }}W </template>
+
+            <template v-slot:item.actions="{ item }">
+              <v-tooltip>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon :on="on" v-bind="attrs" @click.stop="getInfo(item)" small>
+                    <v-icon small>mdi-help</v-icon>
+                  </v-btn>
+                </template>
+                <span>Plus d'infos</span>
+              </v-tooltip>
+            </template>
           </v-data-table>
-          <div class="text-center pt-2 pagination-sticky">
+          <div class="text-center pagination-sticky" style="background-color: #f9f9f9">
             <v-pagination v-model="page" :length="pageCount"></v-pagination>
           </div>
         </v-card-text>
       </v-card>
     </v-dialog>
+    <div class="component-details pa-8" v-if="componentInfo" @click.stop>
+      <component-details
+        :component="show && componentInfo"
+        :componentName="componentName"
+        @close="componentInfo = null"
+      ></component-details>
+    </div>
     <v-overlay :value="show"> </v-overlay>
   </div>
 </template>
@@ -59,6 +87,15 @@
 <script lang="ts" src="./component-picker.component.ts"></script>
 
 <style>
+.component-details {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 50%;
+  height: 100%;
+}
+
 .pagination-sticky {
   position: sticky;
   bottom: 0;

@@ -111,9 +111,17 @@ public class ClientConfigResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        //Si on retire la ligne ça marche pas
         clientConfigRepository.findAll();
 
-        ClientConfig c = clientConfigRepository.findById(id).get();
+        Optional<ClientConfig> optionalClientConfig = clientConfigRepository.findById(id);
+
+        if (!optionalClientConfig.isPresent()) {
+            throw new BadRequestAlertException("Client not found", ENTITY_NAME, "clientnotfound");
+        }
+
+        ClientConfig c = optionalClientConfig.get();
+
         AdminUserDTO user = userService
             .getUserWithAuthorities()
             .map(AdminUserDTO::new)
@@ -159,7 +167,14 @@ public class ClientConfigResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ClientConfig c = clientConfigRepository.findById(id).get();
+        Optional<ClientConfig> optionalClientConfig = clientConfigRepository.findById(id);
+
+        if (!optionalClientConfig.isPresent()) {
+            throw new BadRequestAlertException("Client not found", ENTITY_NAME, "clientnotfound");
+        }
+
+        ClientConfig c = optionalClientConfig.get();
+
         AdminUserDTO user = userService
             .getUserWithAuthorities()
             .map(AdminUserDTO::new)
@@ -262,7 +277,14 @@ public class ClientConfigResource {
     public ResponseEntity<Void> deleteClientConfig(@PathVariable Long id) {
         log.debug("REST request to delete ClientConfig : {}", id);
 
-        ClientConfig clientConfig = clientConfigRepository.findById(id).get();
+        Optional<ClientConfig> optionalClientConfig = clientConfigRepository.findById(id);
+
+        if (!optionalClientConfig.isPresent()) {
+            throw new BadRequestAlertException("Client not found", ENTITY_NAME, "clientnotfound");
+        }
+
+        ClientConfig clientConfig = optionalClientConfig.get();
+
         AdminUserDTO user = userService
             .getUserWithAuthorities()
             .map(AdminUserDTO::new)

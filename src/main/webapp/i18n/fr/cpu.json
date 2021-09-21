@@ -24,12 +24,12 @@
       "cacheL3": "Cache L 3",
       "nbHeart": "Nb Coeurs",
       "nbThread": "Nb Threads",
-      "hasVentirad": "Ventirad inclus",
+      "hasVentirad": "Ventirad inclu",
       "socketType": "Socket Type",
       "lithography": "Taille de gravure",
-      "ramFrequencyMax": "Ram Frequency Max MHz",
+      "ramFrequencyMax": "Ram Fréquence Max",
       "consumption": "Consommation",
-      "hasGpu": "Gpu inclus"
+      "hasGpu": "Gpu inclu"
     }
   }
 }
