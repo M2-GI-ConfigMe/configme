@@ -94,7 +94,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Cpu createEntity(EntityManager em) {
+    public static Cpu createEntity() {
         Cpu cpu = new Cpu()
             .frequency(DEFAULT_FREQUENCY)
             .cacheL1(DEFAULT_CACHE_L_1)
@@ -119,7 +119,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Cpu createUpdatedEntity(EntityManager em) {
+    public static Cpu createUpdatedEntity() {
         Cpu cpu = new Cpu()
             .frequency(UPDATED_FREQUENCY)
             .cacheL1(UPDATED_CACHE_L_1)
@@ -140,7 +140,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
 
     @BeforeEach
     public void initTest() {
-        cpu = createEntity(em);
+        cpu = createEntity();
     }
 
     @Test
@@ -355,19 +355,19 @@ class CpuResourceITAdmin implements ProductResourceIT {
         action
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(cpu.getId().intValue())))
-            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
-            .andExpect(jsonPath("$.[*].cacheL1").value(hasItem(DEFAULT_CACHE_L_1)))
-            .andExpect(jsonPath("$.[*].cacheL2").value(hasItem(DEFAULT_CACHE_L_2)))
-            .andExpect(jsonPath("$.[*].cacheL3").value(hasItem(DEFAULT_CACHE_L_3)))
-            .andExpect(jsonPath("$.[*].nbHeart").value(hasItem(DEFAULT_NB_HEART)))
-            .andExpect(jsonPath("$.[*].nbThread").value(hasItem(DEFAULT_NB_THREAD)))
-            .andExpect(jsonPath("$.[*].hasVentirad").value(hasItem(DEFAULT_HAS_VENTIRAD.booleanValue())))
-            .andExpect(jsonPath("$.[*].socketType").value(hasItem(DEFAULT_SOCKET_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].lithography").value(hasItem(DEFAULT_LITHOGRAPHY)))
-            .andExpect(jsonPath("$.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
-            .andExpect(jsonPath("$.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
-            .andExpect(jsonPath("$.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
+            .andExpect(jsonPath("$.content.[*].id").value(hasItem(cpu.getId().intValue())))
+            .andExpect(jsonPath("$.content.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].cacheL1").value(hasItem(DEFAULT_CACHE_L_1)))
+            .andExpect(jsonPath("$.content.[*].cacheL2").value(hasItem(DEFAULT_CACHE_L_2)))
+            .andExpect(jsonPath("$.content.[*].cacheL3").value(hasItem(DEFAULT_CACHE_L_3)))
+            .andExpect(jsonPath("$.content.[*].nbHeart").value(hasItem(DEFAULT_NB_HEART)))
+            .andExpect(jsonPath("$.content.[*].nbThread").value(hasItem(DEFAULT_NB_THREAD)))
+            .andExpect(jsonPath("$.content.[*].hasVentirad").value(hasItem(DEFAULT_HAS_VENTIRAD.booleanValue())))
+            .andExpect(jsonPath("$.content.[*].socketType").value(hasItem(DEFAULT_SOCKET_TYPE.toString())))
+            .andExpect(jsonPath("$.content.[*].lithography").value(hasItem(DEFAULT_LITHOGRAPHY)))
+            .andExpect(jsonPath("$.content.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].consumption").value(hasItem(DEFAULT_CONSUMPTION)))
+            .andExpect(jsonPath("$.content.[*].hasGpu").value(hasItem(DEFAULT_HAS_GPU.booleanValue())));
 
         getAllProductAssertProductField(action);
     }
@@ -699,7 +699,7 @@ class CpuResourceITAdmin implements ProductResourceIT {
     @Test
     @Transactional
     void testProductField(@Autowired ProductRepository productRepository, @Autowired MockMvc mockMvc) throws Exception {
-        Product product = createEntity(em);
+        Product product = createEntity();
         testProductField(productRepository, mockMvc, product, ENTITY_API_URL);
     }
 }

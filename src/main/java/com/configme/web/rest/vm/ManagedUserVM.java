@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
  */
 public class ManagedUserVM extends AdminUserDTO {
 
+    //TODO: Changer pour 8
     public static final int PASSWORD_MIN_LENGTH = 4;
 
     public static final int PASSWORD_MAX_LENGTH = 100;

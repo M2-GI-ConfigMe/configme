@@ -1,163 +1,148 @@
 <template>
-  <v-row justify="center" class="pt-4" style="height: calc(100vh - 64px)" no-gutters>
+  <v-row no-gutters>
     <div class="col-md-8 toastify-container">
-      <h2 v-if="username" id="settings-title">
-        <span v-html="$t('settings.title', { username: username })"
-          >User settings for [<strong>{{ username }}</strong
-          >]</span
-        >
-      </h2>
+      <v-card>
+        <v-card-title class="font-weight-bold"> Mes Informations </v-card-title>
+        <v-card-text>
+          <transition name="slide-x-transition">
+            <v-alert type="success" v-if="success == 'OK'">
+              <strong>Informations sauvegardées !</strong>
+            </v-alert>
+          </transition>
 
-      <div class="alert alert-success" role="alert" v-if="success" v-html="$t('settings.messages.success')">
-        <strong>Settings saved!</strong>
-      </div>
+          <v-form v-model="isValid" @submit.stop.prevent="save()">
+            <!-- <v-form name="form" id="settings-form" role="form"  v-if="settingsAccount" novalidate> -->
+            <div class="form-group">
+              <v-text-field
+                v-model="$v.settingsAccount.email.$model"
+                :rules="rules.emailRules.concat(rules.requiredField)"
+                type="email"
+                label="E-mail"
+                placeholder="template@email.com"
+                hide-details="auto"
+                outlined
+                required
+              >
+              </v-text-field>
+            </div>
+            <div class="form-group">
+              <v-row v-bind:no-gutters="true">
+                <v-col>
+                  <v-text-field
+                    v-model="$v.settingsAccount.firstName.$model"
+                    :rules="rules.firstNameRules.concat(rules.requiredField)"
+                    label="Prénom"
+                    placeholder="François"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="ml-4"
+                    v-model="$v.settingsAccount.lastName.$model"
+                    :rules="rules.lastNameRules.concat(rules.requiredField)"
+                    label="Nom"
+                    placeholder="Dupont"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </div>
+            <div class="form-group">
+              <v-row v-bind:no-gutters="true">
+                <v-col cols="3">
+                  <v-text-field
+                    v-model="$v.settingsAccount.address.streetNumber.$model"
+                    :rules="rules.streetNumberRules.concat(rules.requiredField)"
+                    label="N° de Rue"
+                    placeholder="5"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="ml-4"
+                    v-model="$v.settingsAccount.address.streetName.$model"
+                    :rules="rules.streetNameRules.concat(rules.requiredField)"
+                    label="Rue"
+                    placeholder="Rue de l'exemple"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </div>
 
-      <div class="alert alert-danger" role="alert" v-if="errorEmailExists" v-html="$t('register.messages.error.emailexists')">
-        <strong>Email is already in use!</strong> Please choose another one.
-      </div>
+            <div class="form-group">
+              <v-row v-bind:no-gutters="true">
+                <v-col>
+                  <v-text-field
+                    v-model="$v.settingsAccount.address.city.$model"
+                    :rules="rules.cityRules.concat(rules.requiredField)"
+                    label="Ville"
+                    placeholder="Grenoble"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="ml-4"
+                    v-model="$v.settingsAccount.address.zipCode.$model"
+                    :rules="rules.zipCodeRules.concat(rules.requiredField)"
+                    label="Code postal"
+                    placeholder="38000"
+                    hide-details="auto"
+                    outlined
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+            </div>
+            <!-- <div class="form-group" v-if="languages && Object.keys(languages).length > 1">
+            <label for="langKey" v-text="$t('settings.form.language')">Language</label>
+            <select class="form-control" id="langKey" name="langKey" v-model="settingsAccount.langKey" data-cy="langKey">
+              <option v-for="(language, key) in languages" :value="key" :key="`lang-${key}`">{{ language.name }}</option>
+            </select>
+          </div> -->
+            <v-btn color="primary" :disabled="!isValid" @click="save()">Sauvegarder</v-btn>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-title class="font-weight-bold">Mon Compte</v-card-title>
+        <v-card-text>
+          <v-dialog v-model="dialog" width="400">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="error" v-bind="attrs" v-on="on">Supprimer mon compte</v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="text-h5"> Supprimer </v-card-title>
 
-      <form name="form" id="settings-form" role="form" v-on:submit.prevent="save()" v-if="settingsAccount" novalidate>
-        <div class="form-group">
-          <label class="form-control-label" for="firstName" v-text="$t('settings.form.firstname')">First Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="firstName"
-            name="firstName"
-            v-bind:placeholder="$t('settings.form[\'firstname.placeholder\']')"
-            :class="{ valid: !$v.settingsAccount.firstName.$invalid, invalid: $v.settingsAccount.firstName.$invalid }"
-            v-model="$v.settingsAccount.firstName.$model"
-            minlength="1"
-            maxlength="50"
-            required
-            data-cy="firstname"
-          />
-          <div v-if="$v.settingsAccount.firstName.$anyDirty && $v.settingsAccount.firstName.$invalid">
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.firstName.required"
-              v-text="$t('settings.messages.validate.firstname.required')"
-            >
-              Your first name is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.firstName.minLength"
-              v-text="$t('settings.messages.validate.firstname.minlength')"
-            >
-              Your first name is required to be at least 1 character.
-            </small>
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.firstName.maxLength"
-              v-text="$t('settings.messages.validate.firstname.maxlength')"
-            >
-              Your first name cannot be longer than 50 characters.
-            </small>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-control-label" for="lastName" v-text="$t('settings.form.lastname')">Last Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="lastName"
-            name="lastName"
-            v-bind:placeholder="$t('settings.form[\'lastname.placeholder\']')"
-            :class="{ valid: !$v.settingsAccount.lastName.$invalid, invalid: $v.settingsAccount.lastName.$invalid }"
-            v-model="$v.settingsAccount.lastName.$model"
-            minlength="1"
-            maxlength="50"
-            required
-            data-cy="lastname"
-          />
-          <div v-if="$v.settingsAccount.lastName.$anyDirty && $v.settingsAccount.lastName.$invalid">
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.lastName.required"
-              v-text="$t('settings.messages.validate.lastname.required')"
-            >
-              Your last name is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.lastName.minLength"
-              v-text="$t('settings.messages.validate.lastname.minlength')"
-            >
-              Your last name is required to be at least 1 character.
-            </small>
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.lastName.maxLength"
-              v-text="$t('settings.messages.validate.lastname.maxlength')"
-            >
-              Your last name cannot be longer than 50 characters.
-            </small>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-control-label" for="email" v-text="$t('global.form[\'email.label\']')">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            v-bind:placeholder="$t('global.form[\'email.placeholder\']')"
-            :class="{ valid: !$v.settingsAccount.email.$invalid, invalid: $v.settingsAccount.email.$invalid }"
-            v-model="$v.settingsAccount.email.$model"
-            minlength="5"
-            maxlength="254"
-            email
-            required
-            data-cy="email"
-          />
-          <div v-if="$v.settingsAccount.email.$anyDirty && $v.settingsAccount.email.$invalid">
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.email.required"
-              v-text="$t('global.messages.validate.email.required')"
-            >
-              Your email is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.email.email"
-              v-text="$t('global.messages.validate.email.invalid')"
-            >
-              Your email is invalid.
-            </small>
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.email.minLength"
-              v-text="$t('global.messages.validate.email.minlength')"
-            >
-              Your email is required to be at least 5 characters.
-            </small>
-            <small
-              class="form-text text-danger"
-              v-if="!$v.settingsAccount.email.maxLength"
-              v-text="$t('global.messages.validate.email.maxlength')"
-            >
-              Your email cannot be longer than 100 characters.
-            </small>
-          </div>
-        </div>
-        <div class="form-group" v-if="languages && Object.keys(languages).length > 1">
-          <label for="langKey" v-text="$t('settings.form.language')">Language</label>
-          <select class="form-control" id="langKey" name="langKey" v-model="settingsAccount.langKey" data-cy="langKey">
-            <option v-for="(language, key) in languages" :value="key" :key="`lang-${key}`">{{ language.name }}</option>
-          </select>
-        </div>
-        <button
-          type="submit"
-          :disabled="$v.settingsAccount.$invalid"
-          class="btn btn-primary"
-          v-text="$t('settings.form.button')"
-          data-cy="submit"
-        >
-          Save
-        </button>
-      </form>
+              <v-card-text> Êtes-vous sûr de vouloir supprimer votre compte ? </v-card-text>
+
+              <v-card-actions>
+                <v-btn color="secondary" text @click="dialog = false"> Non </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="error" text @click="deleteAccount()"> Oui </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-card-text>
+      </v-card>
     </div>
   </v-row>
 </template>

@@ -38,8 +38,8 @@
       "ventirad": "Ventirad",
       "mbe": "Mbe",
       "computerCase": "Computer Case",
-      "deadMemory1": "Dead Memory 1",
-      "deadMemory2": "Dead Memory 2",
+      "hd1": "Hard Drive 1",
+      "hd2": "Hard Drive 2",
       "ram1": "Ram 1",
       "ram2": "Ram 2"
     }

@@ -1,3 +1,3 @@
-id;email;password_hash;first_name;last_name;birthdate;image_url;activated;lang_key;created_by;last_modified_by;address_id
-1;admin@localhost;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator_firstName;Administrator_lastName;2021-09-09;;true;fr;system;system;11
-2;user@localhost;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User_firstName;User_lastName;2021-09-09;;true;fr;system;system;12
+id;email;password_hash;first_name;last_name;birthdate;zip_code;city;street_number;street_name;complementary;address_first_name;address_last_name;image_url;activated;lang_key;created_by;last_modified_by
+1;admin@localhost;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator_firstName;Administrator_lastName;2021-09-09;38621;Lake Constancemouth;COM;Lopez d'Assas;;Roussel;lastname;;true;fr;system;system
+2;user@localhost;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User_firstName;User_lastName;2021-09-09;38621;Lake Constanc;COM;Lopez s;Cambri;He;Rous;;true;fr;system;system

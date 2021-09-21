@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { IOrder } from '@/shared/model/order.model';
+import { rejects } from 'assert';
 
 const baseApiUrl = 'api/orders';
 
@@ -44,15 +45,28 @@ export default class OrderService {
     });
   }
 
-  public create(entity: IOrder): Promise<IOrder> {
+  public create(cart: any): Promise<IOrder> {
     return new Promise<IOrder>((resolve, reject) => {
       axios
-        .post(`${baseApiUrl}`, entity)
+        .post(`${baseApiUrl}`, cart)
         .then(res => {
           resolve(res.data);
         })
         .catch(err => {
           reject(err);
+        });
+    });
+  }
+
+  public pay(entity: IOrder): Promise<IOrder> {
+    return new Promise<IOrder>((resolve, reject) => {
+      axios
+        .post(`${baseApiUrl}/${entity.id}/pay`)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(error => {
+          reject(error);
         });
     });
   }
@@ -73,7 +87,20 @@ export default class OrderService {
   public partialUpdate(entity: IOrder): Promise<IOrder> {
     return new Promise<IOrder>((resolve, reject) => {
       axios
-        .patch(`${baseApiUrl}/${entity.id}`, entity)
+        .get(`${baseApiUrl}/${entity.id}`)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
+  public cart(): Promise<IOrder> {
+    return new Promise<IOrder>((resolve, reject) => {
+      axios
+        .get(`/api/order/cart`)
         .then(res => {
           resolve(res.data);
         })

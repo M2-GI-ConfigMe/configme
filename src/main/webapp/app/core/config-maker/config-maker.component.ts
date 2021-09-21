@@ -28,8 +28,8 @@ export default class ConfigMaker extends Vue {
     computerCase: null,
     ram1: null,
     ram2: null,
-    deadMemory1: null,
-    deadMemory2: null,
+    hd1: null,
+    hd2: null,
     psu: null,
     ventirad: null,
   };
@@ -62,11 +62,11 @@ export default class ConfigMaker extends Vue {
       displayName: 'gpu',
     },
     {
-      key: 'deadMemory1',
+      key: 'hd1',
       displayName: 'Stockage 1',
     },
     {
-      key: 'deadMemory2',
+      key: 'hd2',
       displayName: 'Stockage 2',
     },
     {
@@ -87,6 +87,10 @@ export default class ConfigMaker extends Vue {
     return this.selectedConfigIndex == -1 ? this.defaultConfig : this.clientConfigs[this.selectedConfigIndex];
   }
 
+  created() {
+    if (this.authenticated) this.retrieveUserConfigs();
+  }
+
   public openDialog(endpoint) {
     this.endpoint = endpoint;
     this.componentPickerDialog = true;
@@ -101,13 +105,24 @@ export default class ConfigMaker extends Vue {
     this.saveConfig(config);
   }
 
+  public addToCart(config) {
+    if (!this.isEmpty(config)) this.$store.commit('addToCart', config);
+    else
+      this.$root.$bvToast.toast('Votre config est vide !', {
+        toaster: 'b-toaster-top-center',
+        variant: 'danger',
+        solid: true,
+        noCloseButton: true,
+      });
+  }
+
   public saveConfig(config) {
     if (config.id) {
       this.clientConfigService()
         .update(config)
         .then(res => {
           this.$root.$bvToast.toast('Config mise à jour!', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'success',
             solid: true,
             noCloseButton: true,
@@ -115,7 +130,7 @@ export default class ConfigMaker extends Vue {
         })
         .catch(res => {
           this.$root.$bvToast.toast('Erreur lors de la mise à jour', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true,
             noCloseButton: true,
@@ -126,8 +141,9 @@ export default class ConfigMaker extends Vue {
         .create(config)
         .then(res => {
           this.clientConfigs.push(res);
+          this.selectedConfigIndex = this.clientConfigs.length - 1;
           this.$root.$bvToast.toast('Config créée !', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'success',
             solid: true,
             noCloseButton: true,
@@ -135,7 +151,7 @@ export default class ConfigMaker extends Vue {
         })
         .catch(res => {
           this.$root.$bvToast.toast('Erreur lors de la mise à jour', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true,
             noCloseButton: true,
@@ -156,7 +172,7 @@ export default class ConfigMaker extends Vue {
           const newId = this.selectedConfigIndex > 0 ? this.selectedConfigIndex - 1 : -1;
           this.selectedConfigIndex = newId;
           this.$root.$bvToast.toast('Config supprimée !', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'success',
             solid: true,
             noCloseButton: true,
@@ -164,7 +180,7 @@ export default class ConfigMaker extends Vue {
         })
         .catch(res => {
           this.$root.$bvToast.toast('Erreur lors de la mise à jour', {
-            toaster: 'b-toaster-top-right',
+            toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true,
             noCloseButton: true,
@@ -182,7 +198,6 @@ export default class ConfigMaker extends Vue {
   }
 
   public handlePicked(value) {
-    this.componentPickerDialog = false;
     this.selectedConfig[this.endpoint] = value;
   }
 
@@ -195,8 +210,8 @@ export default class ConfigMaker extends Vue {
       (this.selectedConfig.cpu ? this.selectedConfig.cpu.price : 0) +
       (this.selectedConfig.psu ? this.selectedConfig.psu.price : 0) +
       (this.selectedConfig.ventirad ? this.selectedConfig.ventirad.price : 0) +
-      (this.selectedConfig.deadMemory1 ? this.selectedConfig.deadMemory1.price : 0) +
-      (this.selectedConfig.deadMemory2 ? this.selectedConfig.deadMemory2.price : 0)
+      (this.selectedConfig.hd1 ? this.selectedConfig.hd1.price : 0) +
+      (this.selectedConfig.hd2 ? this.selectedConfig.hd2.price : 0)
     );
   }
 
@@ -207,8 +222,10 @@ export default class ConfigMaker extends Vue {
   @Watch('authenticated')
   onAuthenticatedChanged(value: boolean, oldValue: boolean) {
     if (value) this.retrieveUserConfigs();
-    else this.clientConfigs = [];
-    this.selectedConfigIndex = -1;
+    else {
+      this.clientConfigs = [];
+      this.selectedConfigIndex = -1;
+    }
   }
 
   public get username(): string {
@@ -223,10 +240,6 @@ export default class ConfigMaker extends Vue {
     this.accountService().retrieveAccount();
   }
 
-  created() {
-    this.retrieveUserConfigs();
-  }
-
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -237,9 +250,24 @@ export default class ConfigMaker extends Vue {
       this.selectedConfig.cpu &&
       this.selectedConfig.mbe &&
       this.selectedConfig.psu &&
+      this.selectedConfig.ventirad &&
       this.selectedConfig.ram1 &&
       this.selectedConfig.computerCase &&
-      (this.selectedConfig.deadMemory1 != null || this.selectedConfig.deadMemory2 != null)
+      (this.selectedConfig.hd1 != null || this.selectedConfig.hd2 != null)
+    );
+  }
+
+  public isEmpty(config) {
+    return (
+      !config.gpu &&
+      !config.cpu &&
+      !config.mbe &&
+      !config.psu &&
+      !config.ram1 &&
+      !config.ventirad &&
+      !config.computerCase &&
+      !config.hd1 &&
+      !config.hd2
     );
   }
 

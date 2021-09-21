@@ -187,6 +187,10 @@ public abstract class Product implements Serializable {
         return id != null && id.equals(((Product) o).id);
     }
 
+    private String stockMessage() {
+        return this.name + "test";
+    }
+
     @Override
     public int hashCode() {
         // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/

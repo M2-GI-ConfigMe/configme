@@ -50,7 +50,7 @@ describe('Component Tests', () => {
 
     it('Should call load all on init', async () => {
       // GIVEN
-      hardDriveServiceStub.retrieve.resolves({ headers: {}, data: [{ id: 123 }] });
+      hardDriveServiceStub.retrieve.resolves({ headers: {}, data: { content: [{ id: 123 }] } });
 
       // WHEN
       comp.retrieveAllHardDrives();

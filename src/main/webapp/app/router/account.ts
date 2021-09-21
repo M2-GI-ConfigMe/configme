@@ -5,7 +5,9 @@ const Activate = () => import('@/account/activate/activate.vue');
 const ResetPasswordInit = () => import('@/account/reset-password/init/reset-password-init.vue');
 const ResetPasswordFinish = () => import('@/account/reset-password/finish/reset-password-finish.vue');
 const ChangePassword = () => import('@/account/change-password/change-password.vue');
-const Settings = () => import('@/account/settings/settings.vue');
+const AccountSettings = () => import('@/account/settings/settings.vue');
+const AccountHome = () => import('@/account/home.vue');
+const AccountOrders = () => import('@/account/orders/orders.vue');
 
 export default [
   {
@@ -35,9 +37,14 @@ export default [
     meta: { authorities: [Authority.USER] },
   },
   {
-    path: '/account/settings',
+    path: '/account/',
     name: 'Settings',
-    component: Settings,
+    component: AccountHome,
+    redirect: '/account/settings',
     meta: { authorities: [Authority.USER] },
+    children: [
+      { path: 'settings', component: AccountSettings, meta: { authorities: [Authority.USER] } },
+      { path: 'orders', component: AccountOrders, meta: { authorities: [Authority.USER] } },
+    ],
   },
 ];

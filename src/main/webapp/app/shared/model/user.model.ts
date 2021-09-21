@@ -1,4 +1,4 @@
-import { IAddress } from './address.model';
+import { Address, IAddress } from './address.model';
 
 export interface IUser {
   id?: any;
@@ -33,5 +33,7 @@ export class User implements IUser {
     public lastModifiedBy?: string,
     public lastModifiedDate?: Date,
     public password?: string
-  ) {}
+  ) {
+    this.address = new Address();
+  }
 }

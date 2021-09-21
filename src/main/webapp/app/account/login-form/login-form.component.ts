@@ -22,6 +22,7 @@ export default class LoginForm extends Vue {
 
   @Prop({ required: true }) show: boolean;
   public get showDialog(): boolean {
+    this.authenticationError = false;
     return this.show;
   }
   public set showDialog(v) {
@@ -50,7 +51,7 @@ export default class LoginForm extends Vue {
         this.authenticationError = false;
         this.showDialog = false;
         this.$root.$bvToast.toast('Connexion réussie !', {
-          toaster: 'b-toaster-top-right',
+          toaster: 'b-toaster-top-center',
           variant: 'success',
           solid: true,
           noCloseButton: false,
