@@ -1,6 +1,6 @@
 <template>
   <v-container style="height: calc(100vh - 64px)" class="pt-10">
-    <v-row>
+    <v-row class="h-100">
       <v-col sm="12" lg="3">
         <v-card elevation="1">
           <v-navigation-drawer floating permanent width="100%">
@@ -32,7 +32,7 @@
           </v-navigation-drawer>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col cols="6" class="pt-3 d-flex h-100">
         <transition name="slide-x-transition" mode="out-in">
           <router-view></router-view>
         </transition>

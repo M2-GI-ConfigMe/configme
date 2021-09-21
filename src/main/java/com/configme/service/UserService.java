@@ -265,6 +265,8 @@ public class UserService {
      * @param email     email id of user.
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
+     * @param birthdate birthdate of user.
+     * @param address   address of user.
      */
     public void updateUser(
         String email,
