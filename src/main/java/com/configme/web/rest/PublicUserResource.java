@@ -88,9 +88,9 @@ public class PublicUserResource {
     }
 
     /**
-     * {@code GET  /users/{id}/client-configs : get the user's client configs only if the given user is authenticated.
+     * {@code GET  /users/{id}/client-configs } : get the user's client configs only if the given user is authenticated.
      *
-     * @param id id of the user
+     * @param id id of the user.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientConfigs in body.
      */
     @GetMapping("/users/{id}/client-configs")
@@ -112,7 +112,7 @@ public class PublicUserResource {
     /**
      * {@code GET  /users/{id}/orders } : get the given user's orders only if he's authenticated.
      *
-     * @param id id of the user
+     * @param id id of the user.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientConfigs in body.
      */
     @GetMapping("/users/{id}/orders")
