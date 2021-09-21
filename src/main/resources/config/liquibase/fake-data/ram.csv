@@ -1,11 +1,11 @@
 id;type;frequency;unit_size;quantity;cas;name;price;discount;stock;img;jhi_desc;brand;is_active
-51;DDR4;25827;3467;8;Savings Joubert Producteur;Steel61;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-52;DDR4;73421;44377;2;Fundamental Fresh Baby;Steel62;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-53;DDR4;23217;6362;4;Sports;Steel63;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-54;DDR3;57634;90680;6;backing;Steel64;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-55;DDR3;82183;87936;7;Angola leading-edge Bretagne;Steel65;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-56;DDR4;34575;95112;7;Tools Account;Steel66;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-57;DDR3;50552;35394;3;haptic;Steel67;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-58;DDR3;53886;73012;8;action-items Steel;Steel68;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-59;DDR5;27160;17990;7;Ingenieur generating embrace;Steel69;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-60;DDR4;48730;56086;4;real-time;Steel70;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+51;DDR4;2666;4;2;16-18-18;Kingston Fury Beast;69;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/51_FURY_BEAST.jpg;Lot de 2xRAM 4Go Kingston Fury Beast;Kingston;true
+52;DDR4;3200;8;2;16-18-18-36;Crutial Ballistix White;89;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/52_CRUTIAL_WHITE.jpg;Lot de 2xRAM 8Go Crutial Ballistix White;Crutial Ballistix;true
+53;DDR4;3600;8;2;16-18-18-38;Crutial Ballistix Black;89;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/53_CRUTIAL_BLACK.jpg;Lot de 2xRAM 8Go Crutial Ballistix Black;Crutial Ballistix;true
+54;DDR4;4266;8;2;16;G.Skill Rijaws V Noir;129;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/54_RIPJAW_V.jpg;Lot de 2xRAM 8Go G.Skill Ripjaws V Noir;G.Skill;true
+55;DDR4;3600;64;2;18-20-20;Kingston Fury Beast2;259;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/51_FURY_BEAST2.jpg;Lot de 2xRAM 64Go Kingston Fury Beast;Kingston;true
+56;DDR3;2666;4;2;16-18-18;Kingston Fury Beast_B;69;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/51_FURY_BEAST.jpg;Lot de 2xRAM 4Go Kingston Fury Beast;Kingston;true
+57;DDR3;3200;8;2;16-18-18-36;Crutial Ballistix White_B;89;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/52_CRUTIAL_WHITE.jpg;Lot de 2xRAM 8Go Crutial Ballistix White;Crutial Ballistix;true
+58;DDR3;3600;8;2;16-18-18-38;Crutial Ballistix Black_B;89;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/53_CRUTIAL_BLACK.jpg;Lot de 2xRAM 8Go Crutial Ballistix Black;Crutial Ballistix;true
+59;DDR5;4266;8;2;16;G.Skill Rijaws V Noir_B;129;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/54_RIPJAW_V.jpg;Lot de 2xRAM 8Go G.Skill Ripjaws V Noir;G.Skill;true
+60;DDR5;3600;64;2;18-20-20;Kingston Fury Beast2_B;259;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/51_FURY_BEAST2.jpg;Lot de 2xRAM 64Go Kingston Fury Beast;Kingston;true
