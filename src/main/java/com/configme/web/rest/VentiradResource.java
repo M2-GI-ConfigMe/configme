@@ -188,6 +188,10 @@ public class VentiradResource {
     /**
      * {@code GET  /ventirads} : get all the ventirads.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ventirads in body.
      */
     @GetMapping("/ventirads")

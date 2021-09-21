@@ -199,6 +199,10 @@ public class GpuResource {
     /**
      * {@code GET  /gpus} : get all the gpus.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of gpus in body.
      */
     @GetMapping("/gpus")
