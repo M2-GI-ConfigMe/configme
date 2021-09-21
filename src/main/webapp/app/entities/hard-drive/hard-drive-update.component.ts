@@ -119,8 +119,6 @@ export default class HardDriveUpdate extends Vue {
           } else {
             this.$router.go(-1);
           }
-          this.$router.go(-1);
-          const message = this.$t('configmeApp.hd.created', { param: param.id });
           this.$root.$bvToast.toast(message.toString(), {
             toaster: 'b-toaster-bottom-right',
             title: 'Success',
