@@ -1,11 +1,11 @@
-id;power;certification;modularity;nb_sata;nb_pci_e;outputs;name;price;discount;stock;img;jhi_desc;brand;is_active
-41;63144;asynchronous d'Argenteuil;SEMI_MODULAIRE;60008;19268;navigate Vaugirard Analyste;Steel51;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-42;8457;b;MODULAIRE;46963;51977;initiatives Bedfordshire Books;Steel52;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-43;96920;enable de Ergonomic;MODULAIRE;70897;70958;synergize Panoramas;Steel53;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-44;70222;calculate SMS paradigms;NON_MODULAIRE;91323;97820;b generating Account;Steel54;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-45;42551;c Executif;SEMI_MODULAIRE;26605;87602;Ergonomic;Steel55;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-46;47628;Jamaican;NON_MODULAIRE;97254;80218;Rustic;Steel56;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-47;93172;Customer-focused;SEMI_MODULAIRE;7374;20455;Jewelery;Steel57;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-48;69358;Picardie pixel;SEMI_MODULAIRE;7602;69146;c deposit;Steel58;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-49;96862;Bretagne radical Credit;NON_MODULAIRE;60335;89981;redundant Dong Buckinghamshire;Steel59;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-50;51412;Mexican cultivate;MODULAIRE;88736;53810;disintermediate;Steel60;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+id;power;certification;modularity;nb_sata;nb_pci_e;outputs;height;width;length;name;price;discount;stock;img;jhi_desc;brand;is_active
+41;63144;asynchronous d'Argenteuil;SEMI_MODULAIRE;60008;19268;navigate Vaugirard Analyste;12;13;17;Steel51;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+42;8457;b;MODULAIRE;46963;51977;initiatives Bedfordshire Books;12;13;17;Steel52;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+43;96920;enable de Ergonomic;MODULAIRE;70897;70958;synergize Panoramas;12;13;17;Steel53;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+44;70222;calculate SMS paradigms;NON_MODULAIRE;91323;97820;b generating Account;12;13;17;Steel54;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+45;42551;c Executif;SEMI_MODULAIRE;26605;87602;Ergonomic;12;13;17;Steel55;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+46;47628;Jamaican;NON_MODULAIRE;97254;80218;Rustic;12;13;17;Steel56;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+47;93172;Customer-focused;SEMI_MODULAIRE;7374;20455;Jewelery;12;13;17;Steel57;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+48;69358;Picardie pixel;SEMI_MODULAIRE;7602;69146;c deposit;12;13;17;Steel58;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+49;96862;Bretagne radical Credit;NON_MODULAIRE;60335;89981;redundant Dong Buckinghamshire;12;13;17;Steel59;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+50;51412;Mexican cultivate;MODULAIRE;88736;53810;disintermediate;12;13;17;Steel60;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false

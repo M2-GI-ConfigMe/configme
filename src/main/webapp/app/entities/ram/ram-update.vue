@@ -88,7 +88,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.ram.speed')" for="ram-speed">Speed</label>
+            <label class="form-control-label" v-text="$t('configmeApp.ram.speed')" for="ram-speed">Vitesse</label>
             <input
               type="number"
               class="form-control"
@@ -96,7 +96,7 @@
               id="ram-speed"
               data-cy="speed"
               :class="{ valid: !$v.ram.speed.$invalid, invalid: $v.ram.speed.$invalid }"
-              v-model.number="$v.ram.speed.$model"
+              v-model="$v.ram.speed.$model"
               required
             />
             <div v-if="$v.ram.speed.$anyDirty && $v.ram.speed.$invalid">

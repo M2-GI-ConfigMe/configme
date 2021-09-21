@@ -254,9 +254,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')" for="computer-case-height"
-              >Watercooling Compatibility</label
-            >
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')" for="computer-case-height"> height</label>
             <input
               type="text"
               class="form-control"
@@ -271,9 +269,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.dimension.height')" for="computer-case-width"
-              >Watercooling Compatibility</label
-            >
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.width')" for="computer-case-width"> width</label>
             <input
               type="text"
               class="form-control"
@@ -288,9 +284,7 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('configmeApp.dimension.length')" for="computer-case-length"
-              >Watercooling Compatibility</label
-            >
+            <label class="form-control-label" v-text="$t('configmeApp.dimension.length')" for="computer-case-length"> length</label>
             <input
               type="text"
               class="form-control"

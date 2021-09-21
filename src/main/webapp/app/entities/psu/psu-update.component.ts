@@ -30,6 +30,20 @@ const validations: any = {
     outputs: {
       required,
     },
+    dimension: {
+      height: {
+        numeric,
+        min: minValue(0),
+      },
+      width: {
+        numeric,
+        min: minValue(0),
+      },
+      length: {
+        numeric,
+        min: minValue(0),
+      },
+    },
     name: {
       required,
     },

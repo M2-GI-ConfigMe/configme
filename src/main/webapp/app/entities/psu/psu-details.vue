@@ -82,6 +82,26 @@
           <dd>
             <span>{{ psu.outputs }}</span>
           </dd>
+          <template v-if="psu.dimension">
+            <dt>
+              <span v-text="$t('configmeApp.dimension.height')">Height</span>
+            </dt>
+            <dd>
+              <span>{{ psu.dimension.height }} mm</span>
+            </dd>
+            <dt>
+              <span v-text="$t('configmeApp.dimension.width')">Width</span>
+            </dt>
+            <dd>
+              <span>{{ psu.dimension.width }} mm</span>
+            </dd>
+            <dt>
+              <span v-text="$t('configmeApp.dimension.length')">Length</span>
+            </dt>
+            <dd>
+              <span>{{ psu.dimension.length }} mm</span>
+            </dd>
+          </template>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>
