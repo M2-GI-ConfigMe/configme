@@ -30,29 +30,25 @@
                 >
                 </v-text-field>
               </div>
-              <!--          
-              code couleur : 2196F3
-              -->
               <div class="text-right">
                 <v-btn color="primary" class="col-md-4" data-cy="submit" type="submit" @click.stop.prevent="doLogin()">Ok</v-btn>
               </div>
             </v-form>
 
             <p></p>
-            <!-- <div>
-              <b-alert show variant="warning">
+            <div>
+              <v-btn text color="secondary" @click="doRequest()"> Mot de passe oublié </v-btn>
+              <!-- <v-btn text color="secondary" @click="doRequest()">
                 <b-link
                   :to="'/account/reset/request'"
                   class="alert-link"
-                  v-text="$t('login.password.forgot')"
                   data-cy="forgetYourPasswordSelector"
-                  >Did you forget your password?</b-link
+                  >Mot de passe oublié</b-link
                 >
-              </b-alert>
-            </div> -->
+              </v-btn> -->
+            </div>
             <div class="d-flex align-items-center">
               <span class="mr-1">Nouveau sur Config'Me ?</span>
-              <!-- <a href="/register " class="text-decoration-none">S'inscrire</a> -->
               <v-btn text color="primary" @click="doRegister()"> S'inscrire </v-btn>
             </div>
           </div>

@@ -124,6 +124,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-title class="font-weight-bold">Mon Compte</v-card-title>
+        <change-password></change-password>
         <v-card-text>
           <v-dialog v-model="dialog" width="400">
             <template v-slot:activator="{ on, attrs }">

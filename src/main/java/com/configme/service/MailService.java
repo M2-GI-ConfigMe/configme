@@ -87,6 +87,7 @@ public class MailService {
 
     @Async
     public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
+        log.debug(user.getLangKey());
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
         context.setVariable(USER, user);

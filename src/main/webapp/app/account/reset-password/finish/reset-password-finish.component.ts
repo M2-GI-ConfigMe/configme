@@ -7,7 +7,7 @@ const validations = {
   resetAccount: {
     newPassword: {
       required,
-      minLength: minLength(4),
+      minLength: minLength(8),
       maxLength: maxLength(254),
     },
     confirmPassword: {
@@ -26,15 +26,31 @@ export default class ResetPasswordFinish extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
 
+  public rules = {
+    requiredField: [v => !!v || 'Champ obligatoire'],
+    passwordRules: [
+      v => !v || v.length >= 8 || 'Le mot de passe doit faire au moins 8 caractères',
+      v => !v || /\d/.test(v) || 'Le mot de passe doit contenir au moins un chiffre',
+    ],
+    confirmPasswordRules: [v => !v || v === this.resetAccount.newPassword || 'Les mots de passe ne correspondent pas '],
+  };
+
   public doNotMatch: string = null;
   public success: string = null;
   public error: string = null;
+
+  public isValid = false;
+
   public keyMissing: boolean = null;
   public key: any;
+
   public resetAccount: any = {
     newPassword: null,
     confirmPassword: null,
   };
+
+  public showPass = false;
+  public showPass2 = false;
 
   created(): void {
     if (this.$route !== undefined && this.$route.query !== undefined && this.$route.query.key !== undefined) {
