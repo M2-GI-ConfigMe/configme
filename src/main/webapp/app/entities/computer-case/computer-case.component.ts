@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IComputerCase } from '@/shared/model/computer-case.model';
 
@@ -50,10 +50,18 @@ export default class ComputerCase extends Vue {
     this.retrieveAllComputerCases();
   }
 
+  public pageCount = 1;
+  public page = 1;
+
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllComputerCases();
+  }
+
   public retrieveAllComputerCases(): void {
     this.isFetching = true;
     this.computerCaseService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.computerCases = res.data.content;
