@@ -1,8 +1,11 @@
 package com.configme.web.rest;
 
+import com.configme.domain.*;
 import com.configme.domain.ComputerCase;
+import com.configme.repository.*;
 import com.configme.repository.ComputerCaseRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.io.IOException;
 import java.net.URI;
@@ -39,14 +42,28 @@ public class ComputerCaseResource {
     private final Logger log = LoggerFactory.getLogger(ComputerCaseResource.class);
 
     private static final String ENTITY_NAME = "computerCase";
+    private final MbeRepository mbeRepository;
+    private final GpuRepository gpuRepository;
+    private final VentiradRepository ventiradRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final ComputerCaseRepository computerCaseRepository;
 
-    public ComputerCaseResource(ComputerCaseRepository computerCaseRepository) {
+    public ComputerCaseResource(
+        ComputerCaseRepository computerCaseRepository,
+        MbeRepository mbeRepository,
+        GpuRepository gpuRepository,
+        VentiradRepository ventiradRepository,
+        UserService userService
+    ) {
+        this.userService = userService;
         this.computerCaseRepository = computerCaseRepository;
+        this.mbeRepository = mbeRepository;
+        this.gpuRepository = gpuRepository;
+        this.ventiradRepository = ventiradRepository;
     }
 
     @Autowired
@@ -224,10 +241,32 @@ public class ComputerCaseResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId,
+        @RequestParam(name = "ventiradId", required = false) Long ventiradId,
+        @RequestParam(name = "gpuId", required = false) Long gpuId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
+        Mbe mbe = null;
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
+
+        Ventirad ventirad = null;
+        if (ventiradId != null && this.ventiradRepository.existsById(ventiradId)) ventirad =
+            this.ventiradRepository.findById(ventiradId).get();
+
+        Gpu gpu = null;
+        if (gpuId != null && this.gpuRepository.existsById(gpuId)) gpu = this.gpuRepository.findById(gpuId).get();
+
         log.debug("REST request to get all Mbes");
-        return computerCaseRepository.findAll(
+        return computerCaseRepository.findByCompatibility(
+            user,
+            mbe,
+            gpu,
+            ventirad,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

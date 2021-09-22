@@ -46,8 +46,8 @@ class MbeResourceITAdmin implements ProductResourceIT {
     private static final Float DEFAULT_RAM_FREQUENCY_MAX = 1F;
     private static final Float UPDATED_RAM_FREQUENCY_MAX = 2F;
 
-    private static final Float DEFAULT_RAM_SIZE_MAX = 1F;
-    private static final Float UPDATED_RAM_SIZE_MAX = 2F;
+    private static final Integer DEFAULT_RAM_SIZE_MAX = 1;
+    private static final Integer UPDATED_RAM_SIZE_MAX = 2;
 
     private static final String DEFAULT_PCI_OUTPUTS = "AAAAAAAAAA";
     private static final String UPDATED_PCI_OUTPUTS = "BBBBBBBBBB";
@@ -304,7 +304,7 @@ class MbeResourceITAdmin implements ProductResourceIT {
             .andExpect(jsonPath("$.content.[*].socketCpu").value(hasItem(DEFAULT_SOCKET_CPU.toString())))
             .andExpect(jsonPath("$.content.[*].ramType").value(hasItem(DEFAULT_RAM_TYPE.toString())))
             .andExpect(jsonPath("$.content.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
-            .andExpect(jsonPath("$.content.[*].ramSizeMax").value(hasItem(DEFAULT_RAM_SIZE_MAX.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].ramSizeMax").value(hasItem(DEFAULT_RAM_SIZE_MAX)))
             .andExpect(jsonPath("$.content.[*].pciOutputs").value(hasItem(DEFAULT_PCI_OUTPUTS)))
             .andExpect(jsonPath("$.content.[*].displayOutput").value(hasItem(DEFAULT_DISPLAY_OUTPUT)))
             .andExpect(jsonPath("$.content.[*].storageOutput").value(hasItem(DEFAULT_STORAGE_OUTPUT)))

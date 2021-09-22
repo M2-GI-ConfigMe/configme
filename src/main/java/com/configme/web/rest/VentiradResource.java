@@ -1,8 +1,12 @@
 package com.configme.web.rest;
 
+import com.configme.domain.Mbe;
+import com.configme.domain.User;
 import com.configme.domain.Ventirad;
+import com.configme.repository.MbeRepository;
 import com.configme.repository.VentiradRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,13 +39,17 @@ public class VentiradResource {
     private final Logger log = LoggerFactory.getLogger(VentiradResource.class);
 
     private static final String ENTITY_NAME = "ventirad";
+    private final MbeRepository mbeRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final VentiradRepository ventiradRepository;
 
-    public VentiradResource(VentiradRepository ventiradRepository) {
+    public VentiradResource(VentiradRepository ventiradRepository, MbeRepository mbeRepository, UserService userService) {
+        this.userService = userService;
+        this.mbeRepository = mbeRepository;
         this.ventiradRepository = ventiradRepository;
     }
 
@@ -199,10 +207,22 @@ public class VentiradResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
-        log.debug("REST request to get all Mbes");
-        return ventiradRepository.findAll(
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
+        log.debug("REST request to get all Ventirad");
+
+        Mbe mbe = null;
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.getOne(mbeId);
+
+        return ventiradRepository.findByCompatibility(
+            user,
+            mbe,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

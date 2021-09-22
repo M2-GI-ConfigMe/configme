@@ -1,8 +1,12 @@
 package com.configme.web.rest;
 
 import com.configme.domain.Cpu;
+import com.configme.domain.Mbe;
+import com.configme.domain.User;
 import com.configme.repository.CpuRepository;
+import com.configme.repository.MbeRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,13 +39,18 @@ public class CpuResource {
     private final Logger log = LoggerFactory.getLogger(CpuResource.class);
 
     private static final String ENTITY_NAME = "cpu";
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final CpuRepository cpuRepository;
 
-    public CpuResource(CpuRepository cpuRepository) {
+    private final MbeRepository mbeRepository;
+
+    public CpuResource(CpuRepository cpuRepository, MbeRepository mbeRepository, UserService userService) {
+        this.userService = userService;
+        this.mbeRepository = mbeRepository;
         this.cpuRepository = cpuRepository;
     }
 
@@ -212,6 +221,7 @@ public class CpuResource {
      * @param size number of n-uplets per page
      * @param sortBy column to sort by
      * @param sortDesc direction of sort
+     * @param name name to filter by
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cpus in body.
      */
     @GetMapping("/cpus")
@@ -219,10 +229,23 @@ public class CpuResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
+        Mbe mbe = null;
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
+
         log.debug("REST request to get all Mbes");
-        return cpuRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+        return cpuRepository.findByCompatibility(
+            user,
+            mbe,
+            name,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
     }
 
     /**
