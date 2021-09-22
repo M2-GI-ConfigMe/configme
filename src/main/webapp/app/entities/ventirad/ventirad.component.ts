@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IVentirad } from '@/shared/model/ventirad.model';
 
@@ -50,10 +50,18 @@ export default class Ventirad extends Vue {
     this.retrieveAllVentirads();
   }
 
+  public pageCount = 1;
+  public page = 1;
+
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllVentirads();
+  }
+
   public retrieveAllVentirads(): void {
     this.isFetching = true;
     this.ventiradService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.ventirads = res.data.content;

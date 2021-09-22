@@ -118,6 +118,7 @@
         </button>
       </div>
     </b-modal>
+    <v-pagination v-model="page" :length="pageCount"></v-pagination>
   </div>
 </template>
 
