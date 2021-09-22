@@ -131,10 +131,30 @@ public class UserService {
         newUser.setAddress(userDTO.getAddress());
 
         newUser.setImageUrl(userDTO.getImageUrl());
+
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
         newUser.setLangKey(userDTO.getLangKey());
+        log.debug(userDTO.getLangKey());
+        log.debug(newUser.getLangKey());
+
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
+        log.debug("LA LANGUE");
         // new user is not active
-        //newUser.setActivated(false);
-        newUser.setActivated(true); //Le compte est activé par défaut
+        newUser.setActivated(false);
+        // newUser.setActivated(true); //Le compte est activé par défaut
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();

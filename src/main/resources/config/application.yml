@@ -157,7 +157,7 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: configme@localhost
+    from: mathis.perrier73@gmail.com
   api-docs:
     default-include-pattern: ${server.servlet.context-path:}/api/.*
     management-include-pattern: ${server.servlet.context-path:}/management/.*
