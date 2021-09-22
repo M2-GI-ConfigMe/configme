@@ -3,7 +3,7 @@
     <div v-if="cart != null" class="order-cart-recap-configs-container">
       <order-cart-config
         v-for="(line, key) in cart.lines"
-        :key="key"
+        :key="line.id"
         :orderLine="line"
         :index="key"
         @configUpdated="onConfigUpdate"
