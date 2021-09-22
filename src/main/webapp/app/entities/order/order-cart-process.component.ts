@@ -56,6 +56,11 @@ export default class OrderCartProcess extends Vue {
       });
   }
 
+  public onLineRemoved(index) {
+    console.log(index);
+    this.cart.lines.splice(index, 1);
+  }
+
   public comeBack(state) {
     if (this.state > state) this.state = state;
   }

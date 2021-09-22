@@ -30,12 +30,12 @@ export default [
     name: 'ResetPasswordFinish',
     component: ResetPasswordFinish,
   },
-  {
-    path: '/account/password',
-    name: 'ChangePassword',
-    component: ChangePassword,
-    meta: { authorities: [Authority.USER] },
-  },
+  // {
+  //   path: '/account/password',
+  //   name: 'ChangePassword',
+  //   component: ChangePassword,
+  //   meta: { authorities: [Authority.USER] },
+  // },
   {
     path: '/account/',
     name: 'Settings',
@@ -45,6 +45,7 @@ export default [
     children: [
       { path: 'settings', component: AccountSettings, meta: { authorities: [Authority.USER] } },
       { path: 'orders', component: AccountOrders, meta: { authorities: [Authority.USER] } },
+      { path: 'password', component: ChangePassword, meta: { authorities: [Authority.USER] } },
     ],
   },
 ];

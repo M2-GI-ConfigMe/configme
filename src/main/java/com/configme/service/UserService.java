@@ -131,10 +131,11 @@ public class UserService {
         newUser.setAddress(userDTO.getAddress());
 
         newUser.setImageUrl(userDTO.getImageUrl());
+
         newUser.setLangKey(userDTO.getLangKey());
+
         // new user is not active
-        //newUser.setActivated(false);
-        newUser.setActivated(true); //Le compte est activé par défaut
+        newUser.setActivated(false);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();

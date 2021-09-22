@@ -18,10 +18,10 @@ export default class ComputerCaseService {
     });
   }
 
-  public retrieve(): Promise<any> {
+  public retrieve(page?: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(baseApiUrl)
+        .get(baseApiUrl, { params: { page } })
         .then(res => {
           resolve(res);
         })

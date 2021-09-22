@@ -11,7 +11,6 @@
           </transition>
 
           <v-form v-model="isValid" @submit.stop.prevent="save()">
-            <!-- <v-form name="form" id="settings-form" role="form"  v-if="settingsAccount" novalidate> -->
             <div class="form-group">
               <v-text-field
                 v-model="$v.settingsAccount.email.$model"

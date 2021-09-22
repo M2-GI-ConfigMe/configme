@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IMbe } from '@/shared/model/mbe.model';
 
@@ -16,6 +16,9 @@ export default class Mbe extends Vue {
   public mbes: IMbe[] = [];
 
   public isFetching = false;
+
+  public page = 1;
+  public pageCount = 1;
 
   public mounted(): void {
     this.retrieveAllMbes();
@@ -50,13 +53,19 @@ export default class Mbe extends Vue {
     this.retrieveAllMbes();
   }
 
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllMbes();
+  }
+
   public retrieveAllMbes(): void {
     this.isFetching = true;
     this.mbeService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.mbes = res.data.content;
+          this.pageCount = res.data.totalPages;
           this.isFetching = false;
         },
         err => {

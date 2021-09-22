@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IRam } from '@/shared/model/ram.model';
 
@@ -50,10 +50,18 @@ export default class Ram extends Vue {
     this.retrieveAllRams();
   }
 
+  public pageCount = 1;
+  public page = 1;
+
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllRams();
+  }
+
   public retrieveAllRams(): void {
     this.isFetching = true;
     this.ramService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.rams = res.data.content;
