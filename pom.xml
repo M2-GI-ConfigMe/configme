@@ -1124,53 +1124,6 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <!--
-                            This plugin's configuration is used to store Eclipse m2e settings only.
-                            It has no influence on the Maven build itself.
-                            Remove when the m2e plugin can correctly bind to Maven lifecycle
-                        -->
-                        <plugin>
-                            <groupId>org.eclipse.m2e</groupId>
-                            <artifactId>lifecycle-mapping</artifactId>
-                            <version>${lifecycle-mapping.version}</version>
-                            <configuration>
-                                <lifecycleMappingMetadata>
-                                    <pluginExecutions>
-                                        <pluginExecution>
-                                            <pluginExecutionFilter>
-                                                <groupId>org.jacoco</groupId>
-                                                <artifactId>
-                                                    jacoco-maven-plugin
-                                                </artifactId>
-                                                <versionRange>
-                                                    ${jacoco-maven-plugin.version}
-                                                </versionRange>
-                                                <goals>
-                                                    <goal>prepare-agent</goal>
-                                                </goals>
-                                            </pluginExecutionFilter>
-                                            <action>
-                                                <ignore/>
-                                            </action>
-                                        </pluginExecution>
-                                        <pluginExecution>
-                                            <pluginExecutionFilter>
-                                                <groupId>com.github.eirslett</groupId>
-                                                <artifactId>frontend-maven-plugin</artifactId>
-                                                <versionRange>${frontend-maven-plugin.version}</versionRange>
-                                                <goals>
-                                                    <goal>install-node-and-npm</goal>
-                                                    <goal>npm</goal>
-                                                </goals>
-                                            </pluginExecutionFilter>
-                                            <action>
-                                                <ignore/>
-                                            </action>
-                                        </pluginExecution>
-                                    </pluginExecutions>
-                                </lifecycleMappingMetadata>
-                            </configuration>
-                        </plugin>
                     </plugins>
                 </pluginManagement>
             </build>
