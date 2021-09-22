@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters>
-    <div class="col-md-8 toastify-container">
+    <div class="col toastify-container">
       <v-card>
         <v-card-title class="font-weight-bold"> Mes Informations </v-card-title>
         <v-card-text>

@@ -1,9 +1,13 @@
 package com.configme.web.rest;
 
 import com.configme.domain.ClientConfig;
+import com.configme.domain.Order;
 import com.configme.domain.User;
 import com.configme.repository.ClientConfigRepository;
+import com.configme.repository.OrderRepository;
+import com.configme.repository.UserRepository;
 import com.configme.service.UserService;
+import com.configme.service.dto.AdminUserDTO;
 import com.configme.service.dto.UserDTO;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.util.*;
@@ -18,6 +22,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -42,9 +48,12 @@ public class PublicUserResource {
 
     private final ClientConfigRepository clientConfigRepository;
 
-    public PublicUserResource(UserService userService, ClientConfigRepository clientConfigRepository) {
+    private final OrderRepository orderRepository;
+
+    public PublicUserResource(UserService userService, ClientConfigRepository clientConfigRepository, OrderRepository orderRepository) {
         this.userService = userService;
         this.clientConfigRepository = clientConfigRepository;
+        this.orderRepository = orderRepository;
     }
 
     /**
@@ -79,15 +88,47 @@ public class PublicUserResource {
     }
 
     /**
-     * {@code GET  /users/client-configs} : get the authenticated user's client configs
+     * {@code GET  /users/{id}/client-configs } : get the user's client configs only if the given user is authenticated.
      *
+     * @param id id of the user.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientConfigs in body.
      */
-    @GetMapping("/users/client-configs")
-    public List<ClientConfig> getUserClientConfigs(HttpServletRequest request) {
+    @GetMapping("/users/{id}/client-configs")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public List<ClientConfig> getUserClientConfigs(@PathVariable Long id) {
         log.debug("REST request to get authenticated user's ClientConfigs");
-        log.debug("Is present : " + userService.getUserWithAuthorities().isPresent());
-        return clientConfigRepository.findByUser(userService.getUserWithAuthorities());
+
+        Optional<User> user = userService.getUserWithAuthorities();
+
+        boolean isAdmin = user.get().getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
+
+        if (!isAdmin && (!user.get().getId().equals(id))) {
+            throw new AccessDeniedException("User is not authorized");
+        }
+
+        return clientConfigRepository.findByUser(user);
+    }
+
+    /**
+     * {@code GET  /users/{id}/orders } : get the given user's orders only if he's authenticated.
+     *
+     * @param id id of the user.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientConfigs in body.
+     */
+    @GetMapping("/users/{id}/orders")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public List<Order> getUserOrders(@PathVariable Long id) {
+        log.debug("REST request to get authenticated user's orders");
+
+        Optional<User> user = userService.getUserWithAuthorities();
+
+        boolean isAdmin = user.get().getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
+
+        if (!isAdmin && (!user.get().getId().equals(id))) {
+            throw new AccessDeniedException("User is not authorized");
+        }
+
+        return orderRepository.findByBuyer(user);
     }
 
     @DeleteMapping("/users/{id}")

@@ -2,6 +2,8 @@ package com.configme.repository;
 
 import com.configme.domain.Order;
 import com.configme.domain.User;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,4 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("select o from Order o where o.buyer = :user AND o.status = 'CART'")
     Order findOrderInCartByUser(@Param("user") User user);
+
+    @Query("select o from Order o where o.buyer = :user AND o.status != 'CART'")
+    List<Order> findByBuyer(@Param("user") Optional<User> user);
 }

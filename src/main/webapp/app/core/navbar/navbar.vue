@@ -13,8 +13,8 @@
         text
         v-if="authenticated"
         v-on:click="$router.push('/account/settings')"
-        :color="$route.path == '/account/settings' ? 'primary' : ''"
-        :class="$route.path == '/account/settings' ? 'font-weight-bold' : ''"
+        :color="$route.path.includes('/account/') ? 'primary' : ''"
+        :class="$route.path.includes('/account/') ? 'font-weight-bold' : ''"
       >
         <v-icon class="mr-1">mdi-account</v-icon>Mon Compte
       </v-btn>

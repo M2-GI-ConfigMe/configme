@@ -131,7 +131,9 @@ server:
     session:
       cookie:
         http-only: true
-
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 # Properties to be exposed on the /info management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show

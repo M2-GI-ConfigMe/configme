@@ -24,6 +24,7 @@ export interface IClientConfig {
   ventiradPrice?: number | null;
   hd1Price?: number | null;
   hd2Price?: number | null;
+  mbePrice?: number | null;
   cpu?: ICpu | null;
   gpu?: IGpu | null;
   psu?: IPsu | null;
