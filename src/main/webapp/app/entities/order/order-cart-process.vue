@@ -18,7 +18,7 @@
           <v-alert color="red lighten-2" dark class="text-left" v-if="errorMessage.length">
             {{ errorMessage }}
           </v-alert>
-          <order-cart-recap v-if="cart" :cart="cart" @configUpdated="retrieveCart()"></order-cart-recap>
+          <order-cart-recap v-if="cart" :cart="cart" @onLineRemoved="onLineRemoved"></order-cart-recap>
           <div class="px-4">
             <v-btn color="primary" @click="goToDeliveryAddress"> Valider </v-btn>
           </div>

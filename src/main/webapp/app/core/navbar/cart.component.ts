@@ -82,6 +82,7 @@ export default class Cart extends Vue {
       (config.computerCase ? config.computerCase.price : 0) +
       (config.mbe ? config.mbe.price : 0) +
       (config.ram1 ? config.ram1.price : 0) +
+      (config.ram2 ? config.ram2.price : 0) +
       (config.gpu ? config.gpu.price : 0) +
       (config.cpu ? config.cpu.price : 0) +
       (config.psu ? config.psu.price : 0) +

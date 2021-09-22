@@ -6,7 +6,11 @@
     <div>
       <v-list-item two-line>
         <div class="embed-responsive embed-responsive-16by9 w-100">
-          <div class="embed-responsive-item cover-background" :style="{ background: 'url(' + component.img + ')' }"></div>
+          <div
+            class="embed-responsive-item cover-background"
+            :style="{ background: 'url(' + component.img + ')' }"
+            :aria-label="'img ' + component.name"
+          ></div>
         </div>
         <v-list-item-content>
           <v-row>

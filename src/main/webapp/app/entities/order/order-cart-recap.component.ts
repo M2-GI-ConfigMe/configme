@@ -31,4 +31,8 @@ export default class OrderCartRecap extends Vue {
 
     return price;
   }
+
+  public onConfigUpdate(index) {
+    this.$emit('onLineRemoved', index);
+  }
 }
