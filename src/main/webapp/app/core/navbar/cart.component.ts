@@ -60,6 +60,7 @@ export default class Cart extends Vue {
     this.orderService()
       .create(formattedCart)
       .then(() => {
+        this.showCart = false;
         this.$router.push('/order/cart');
       });
   }

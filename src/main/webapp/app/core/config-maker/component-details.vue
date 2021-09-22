@@ -1,11 +1,13 @@
 <template>
-  <v-card class="h-100 d-flex flex-column" style="flex: 1 1 0; overflow-y: hidden">
+  <v-card class="h-100 d-flex flex-column" style="flex: 1 1 0; overflow-y: auto">
     <div class="pt-2 pr-2 text-right">
       <v-btn icon @click="close()"><v-icon>mdi-close</v-icon></v-btn>
     </div>
     <div>
       <v-list-item two-line>
-        <v-img max-height="300" max-width="300" :src="component.url" class="mr-2 mt-2"> </v-img>
+        <div class="embed-responsive embed-responsive-16by9 w-100">
+          <div class="embed-responsive-item cover-background" :style="{ background: 'url(' + component.img + ')' }"></div>
+        </div>
         <v-list-item-content>
           <v-row>
             <v-col>
@@ -19,8 +21,8 @@
         </v-list-item-content>
       </v-list-item>
     </div>
-    <div style="min-height: 0">
-      <v-card-text class="px-0 pb-0 d-flex flex-column h-100" style="min-height: 0">
+    <div>
+      <v-card-text class="px-0 pb-0 d-flex flex-column h-100">
         <span class="ml-2 font-weight-bold text-dark">Informations supplémentaires</span>
         <p class="mt-2 px-4 text-dark">{{ component.desc }}</p>
         <v-divider class="my-0"></v-divider>
@@ -60,3 +62,12 @@
 </template>
 
 <script lang="ts" src="./component-details.component.ts"></script>
+<style scoped>
+.cover-background {
+  background-position: center !important;
+  background-size: contain !important;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 0.25rem;
+  background-repeat: no-repeat !important;
+}
+</style>

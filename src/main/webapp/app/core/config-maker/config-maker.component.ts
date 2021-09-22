@@ -103,6 +103,7 @@ export default class ConfigMaker extends Vue {
       user: this.$store.getters.account,
     };
     this.saveConfig(config);
+    this.formCreateConfig.name = '';
   }
 
   public addToCart(config) {
@@ -150,7 +151,7 @@ export default class ConfigMaker extends Vue {
           });
         })
         .catch(res => {
-          this.$root.$bvToast.toast('Erreur lors de la mise à jour', {
+          this.$root.$bvToast.toast('Erreur lors de la création de la config', {
             toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true,
