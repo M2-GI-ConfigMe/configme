@@ -1107,28 +1107,6 @@
             </dependencies>
         </profile>
         <profile>
-            <!-- This is automatically activated when working in Eclipse -->
-            <id>eclipse</id>
-            <activation>
-                <property>
-                    <name>m2e.version</name>
-                </property>
-            </activation>
-            <dependencies>
-                <!-- The following dependency is added due to issue #9175-->
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-undertow</artifactId>
-                </dependency>
-            </dependencies>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        <profile>
             <id>heroku</id>
             <build>
                 <plugins>
