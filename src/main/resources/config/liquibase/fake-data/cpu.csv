@@ -1,11 +1,11 @@
 id;frequency;cache_l_1;cache_l_2;cache_l_3;nb_heart;nb_thread;has_ventirad;socket_type;lithography;ram_frequency_max;consumption;has_gpu;name;price;discount;stock;img;jhi_desc;brand;is_active
-71;63340;10337;97530;85637;86065;3;true;TR4;50002;90790;25677;false;Steel11;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-72;79785;62249;76265;70689;15058;3;true;LGA_1151;64624;79444;95027;true;Steel12;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-73;22939;19529;67694;43761;75446;3;false;LGA_2066;23481;93477;90896;true;Steel13;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-74;55788;56633;43248;28122;79353;3;true;LGA_1200;7425;76296;22833;false;Steel14;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-75;65094;33595;65269;15742;72980;3;true;TR4;11988;94671;8427;false;Steel15;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-76;30410;39656;78402;90530;11985;3;true;TR4;35942;96024;35790;false;Steel16;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-77;34524;27976;80672;55034;70432;3;true;LGA_1151;34740;26794;4533;false;Steel17;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-78;97890;26301;32476;81928;14175;3;true;LGA_1151;73783;99594;67969;false;Steel18;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-79;6571;62003;27334;37021;60130;3;false;LGA_1150;4965;38631;35898;false;Steel19;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-80;48704;70475;36396;18480;61530;3;true;AM4;65851;41515;48704;false;Steel20;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+71;3300;2;3;4;14;28;false;LGA_2066;14;2933;165;false;Core i9-10940X;970;1;30;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/71_i9-10940X.jpg;Processeur Intel Core i9-10940X;Intel;true
+72;3600;3;4;4;8;16;false;LGA_1200;14;3200;125;true;Core i7-11700K;489;1;40;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/72_i7-11700K.jpg;Processeur Intel® Core™ i7;Intel;true
+73;3900;1;2;3;6;12;false;LGA_1150;14;3200;125;true;Core i5-11600K;299;1;50;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/73_i5-11600K.jpg;Processeur Intel® Core™ i5;Intel;true
+74;3600;1;2;3;4;8;true;LGA_1200;14;2666;65;true;Core i3-10100;134;1;40;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/74_i3-10100.jpg;Processeur Intel® Core™ i3;Intel;true
+75;3700;144;0;0;32;64;false;TR4;7;3200;280;false;Ryzen Threadripper 3970X;2400;1;20;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/75_3970X.jpg;Processeur AMD;AMD;true
+76;3900;20;30;0;12;24;true;AM4;7;3200;105;false;Ryzen 9 3900X;499;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/76_3900X.jpg;Processeur AMD Ryzen;AMD;true
+77;3200;2;3;4;8;16;true;LGA_1151;7;3200;150;false;Ryzen 5 3800X;359;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/77_3800X.jpg;Processeur AMD Ryzen;AMD;true
+78;3700;144;0;0;32;64;false;TR4;7;3200;280;false;Ryzen Threadripper 3970X_B;2400;1;20;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/75_3970X.jpg;Processeur AMD;AMD;true
+79;3900;20;30;0;12;24;true;AM4;7;3200;105;false;Ryzen 9 3900X_B;499;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/76_3900X.jpg;Processeur AMD Ryzen;AMD;true
+80;3200;2;3;4;8;16;true;LGA_1151;7;3200;150;false;Ryzen 5 3800X_B;359;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/77_3800X.jpg;Processeur AMD Ryzen;AMD;true

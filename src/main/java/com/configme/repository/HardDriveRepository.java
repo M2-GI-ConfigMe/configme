@@ -16,6 +16,10 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface HardDriveRepository extends JpaRepository<HardDrive, Long> {
-    @Query(value = "SELECT h FROM HardDrive h WHERE " + "h.isActive = true or true = :#{ #user == null ? false : #user.isAdmin }")
-    Page<HardDrive> findByCompatibility(@Param("user") User user, Pageable pageable);
+    @Query(
+        value = "SELECT h FROM HardDrive h WHERE " +
+        "h.isActive = true or true = :#{ #user == null ? false : #user.isAdmin } " +
+        "AND (lower(h.name) LIKE lower(concat('%',:name,'%')))"
+    )
+    Page<HardDrive> findByCompatibility(@Param("user") User user, @Param("name") String name, Pageable pageable);
 }

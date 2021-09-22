@@ -312,6 +312,21 @@ export default class ComponentPicker extends Vue {
   public pageCount = 1;
   private firstRetrive = false;
 
+  private _nameFilter = '';
+  private timeout = null;
+
+  public get nameFilter() {
+    return this._nameFilter;
+  }
+
+  public set nameFilter(val) {
+    if (this.timeout) clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this._nameFilter = val;
+      this.retrieveComponents();
+    }, 500);
+  }
+
   public data = {
     objects: [],
     priceMax: 1000,
@@ -416,34 +431,36 @@ export default class ComponentPicker extends Vue {
 
   private retrieveComponents() {
     this.loading = true;
-    axios
-      .get(
-        baseApiUrl + this.currentEndpoint,
-        this.options
-          ? {
-              params: {
-                ...{
-                  page: this.page,
-                  itemsPerPage: this.options.itemsPerPage,
-                  sortBy: this.options.sortBy[0],
-                  sortDesc: this.options.sortDesc[0],
+    if (this.currentEndpoint)
+      axios
+        .get(
+          baseApiUrl + this.currentEndpoint,
+          this.options
+            ? {
+                params: {
+                  ...{
+                    page: this.page,
+                    itemsPerPage: this.options.itemsPerPage,
+                    sortBy: this.options.sortBy[0],
+                    sortDesc: this.options.sortDesc[0],
+                  },
+                  ...this.query,
+                  name: this._nameFilter,
                 },
-                ...this.query,
-              },
-            }
-          : null
-      )
-      .then(res => {
-        this.data.objects = res.data.content;
-        this.pageCount = res.data.totalPages;
-        if (!this.firstRetrive) this.firstRetrive = true;
-      })
-      .catch(err => {
-        console.log('Erreur lors du fetch des données');
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+              }
+            : null
+        )
+        .then(res => {
+          this.data.objects = res.data.content;
+          this.pageCount = res.data.totalPages;
+          if (!this.firstRetrive) this.firstRetrive = true;
+        })
+        .catch(err => {
+          console.log('Erreur lors du fetch des données');
+        })
+        .finally(() => {
+          this.loading = false;
+        });
   }
 
   public get show(): boolean {
@@ -479,5 +496,6 @@ export default class ComponentPicker extends Vue {
 
   private close() {
     this.show = false;
+    this.nameFilter = '';
   }
 }

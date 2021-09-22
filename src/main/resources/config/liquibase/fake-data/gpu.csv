@@ -1,11 +1,11 @@
 id;frequency;memory;consumption;clock_speed;lithography;output;input_power;bus;height;width;length;name;price;discount;stock;img;jhi_desc;brand;is_active
-11;28654;80307;11389;53167;12034;Small feed;tan client-driven;PCI_EXPRESS_2;12;13;17;Steel21;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-12;91029;40009;82786;33501;64819;withdrawal withdrawal Configurable;maximize Enhanced Stagiaire;PCI_EXPRESS_3;12;13;17;Steel22;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-13;10443;63742;50813;26238;8127;Chips;Ergonomic;PCI_EXPRESS_1;12;13;17;Steel23;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-14;9311;23353;99185;9422;58539;Superviseur;Hat leading-edge;PCI_EXPRESS_3;12;13;17;Steel24;031485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-15;86352;94030;87576;62929;38292;Fresh Bhutanese;Coordinateur B2C;PCI_EXPRESS_1;12;13;17;Steel25;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-16;76559;14904;5369;27241;62189;Games Unbranded a;deposit b;PCI_EXPRESS_1;12;13;17;Steel26;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-17;97;91197;12989;81487;35026;empower;content-based visualize;PCI_EXPRESS_4;12;13;17;Steel27;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-18;84298;56610;22256;38908;762;indexing magenta;withdrawal Incredible;AGP;12;13;17;Steel28;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-19;75375;38987;40300;48600;56307;Front-line;Awesome Lorraine;AGP;12;13;17;Steel29;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-20;20342;87376;89304;48699;22250;Decentralized Table transmitter;lavender a Manat;PCI_EXPRESS_3;12;13;17;Steel30;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+11;2015;16;900;2015;7;"2x DisplayPort; 1x Hdmi";3 x PCI-E 8 broches;PCI_EXPRESS_4;62;135;320;RX 6900 XT;1300;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/11_RX_6900_XT.jpg;Carte graphique AMD;AMD;true
+12;1365;12;850;1365;8;"3x DisplayPort; 1x Hdmi";3 x PCI-E 8 broches;PCI_EXPRESS_3;61;140;336;RTX 3080 Ti SUPRIM X;1400;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/12_RTX_3080_TI_SUPRIM_X.jpg;Carte graphique NVIDIA;MSI;true
+13;1006;4;300;1600;10;"1xHdmi; 1xDvi; 1x Vga";bus powered;PCI_EXPRESS_1;42;106;148;GT 730;90;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/13_GT_730.jpg;Carte graphique NVIDIA;MSI;true
+14;1189;2;300;1189;14;"1xHdmi; 1xDvi";bus powered;PCI_EXPRESS_3;38;102;147;GT 1030;109;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/14_GT_1030.jpg;Carte graphiqe NVIDIA;MSI;true
+15;2015;16;900;2015;7;"2x DisplayPort; 1x Hdmi";3 x PCI-E 8 broches;PCI_EXPRESS_4;62;135;320;RX 6900 XT_B;1300;0.8;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/11_RX_6900_XT.jpg;Carte graphique AMD;AMD;true
+16;1365;12;850;1365;8;"3x DisplayPort; 1x Hdmi";3 x PCI-E 8 broches;PCI_EXPRESS_3;61;140;336;RTX 3080 Ti SUPRIM X_B;1400;0.8;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/12_RTX_3080_TI_SUPRIM_X.jpg;Carte graphique NVIDIA;MSI;true
+17;1006;4;300;1600;10;"1xHdmi; 1xDvi; 1x Vga";bus powered;PCI_EXPRESS_1;42;106;148;GT 730_B;90;0.8;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/13_GT_730.jpg;Carte graphique NVIDIA;MSI;true
+18;1189;2;300;1189;14;"1xHdmi; 1xDvi";bus powered;PCI_EXPRESS_3;38;102;147;GT 1030_B;109;0.8;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/14_GT_1030.jpg;Carte graphiqe NVIDIA;MSI;true
+19;1006;4;300;1600;10;"1xHdmi; 1xDvi; 1x Vga";bus powered;PCI_EXPRESS_1;42;106;148;GT 730_C;90;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/13_GT_730.jpg;Carte graphique NVIDIA;MSI;true
+20;1189;2;300;1189;14;"1xHdmi; 1xDvi";bus powered;PCI_EXPRESS_3;38;102;147;GT 1030_C;109;1;80;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/14_GT_1030.jpg;Carte graphiqe NVIDIA;MSI;true

@@ -203,7 +203,8 @@ public class HardDriveResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
         User user = null;
         if (userService.getUserWithAuthorities().isPresent()) user = userService.getUserWithAuthorities().get();
@@ -211,6 +212,7 @@ public class HardDriveResource {
         log.debug("REST request to get all Mbes");
         return hardDriveRepository.findByCompatibility(
             user,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

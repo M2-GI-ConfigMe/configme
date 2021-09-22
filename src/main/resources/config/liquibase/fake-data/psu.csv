@@ -1,11 +1,11 @@
 id;power;certification;modularity;nb_sata;nb_pci_e;outputs;height;width;length;name;price;discount;stock;img;jhi_desc;brand;is_active
-41;63144;asynchronous d'Argenteuil;SEMI_MODULAIRE;60008;19268;navigate Vaugirard Analyste;12;13;17;Steel51;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-42;8457;b;MODULAIRE;46963;51977;initiatives Bedfordshire Books;12;13;17;Steel52;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-43;96920;enable de Ergonomic;MODULAIRE;70897;70958;synergize Panoramas;12;13;17;Steel53;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-44;70222;calculate SMS paradigms;NON_MODULAIRE;91323;97820;b generating Account;12;13;17;Steel54;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-45;42551;c Executif;SEMI_MODULAIRE;26605;87602;Ergonomic;12;13;17;Steel55;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-46;47628;Jamaican;NON_MODULAIRE;97254;80218;Rustic;12;13;17;Steel56;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-47;93172;Customer-focused;SEMI_MODULAIRE;7374;20455;Jewelery;12;13;17;Steel57;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-48;69358;Picardie pixel;SEMI_MODULAIRE;7602;69146;c deposit;12;13;17;Steel58;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-49;96862;Bretagne radical Credit;NON_MODULAIRE;60335;89981;redundant Dong Buckinghamshire;12;13;17;Steel59;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-50;51412;Mexican cultivate;MODULAIRE;88736;53810;disintermediate;12;13;17;Steel60;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+41;300;Gold;NON_MODULAIRE;4;1;1 x CM 20+4 broches +  1 x CPU (12V) 4+4 broches;86;150;150;Pure Power 11;89;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/41_PURE_POWER_11.jpg;Alimentation BeQuiet Pure power 11;Be Quiet!;true
+42;500;Gold;SEMI_MODULAIRE;6;2;1 x CM 20+4 broches +  1 x CPU (12V) 4+4 broches;86;140;150;System Power 9;150;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/42_SYSTEM_POWER_9.jpg;Alimentation BeQuiet System power 9;Be Quiet!;true
+43;750;Platinum;MODULAIRE;12;6;1 x CM 20+4 broches +  1 x CPU (12V) 4+4 broches;86;150;175;Dark Power 12;229;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/43_DARK_POWER_12.jpg;Alimentation BeQuiet Dark Power 12;Be Quiet!;true
+44;1200;Platinum;MODULAIRE;20;8;1 x CM 20+4 broches +  2 x CPU (12V) 4+4 broches;86;150;200;HX1200;239;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/44_HX1200.jpg;Alimentation Corsair Hx1200;Corsair;true
+45;850;Platinum;SEMI_MODULAIRE;10;6;1 x CM 20+4 broches +  2 x CPU (12V) 4+4 broches;86;140;150;UG_850G;199;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/45_US_850G.jpg;Alimentation Fox spirit;Fox Spirit;true
+46;350;Bronze;NON_MODULAIRE;4;1;1 x CM 20+4 broches +  2 x CPU (12V) 4+4 broches;86;140;150;VS350;49;1;0;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/46_VS350.jpg;Alimentation Corsair;Corsair;true
+47;650;Bronze;SEMI_MODULAIRE;8;4;1 x CM 20+4 broches +  2 x CPU (12V) 4+4 broches;85;150;140;MarbleBron;60;1;1;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/47_MARBLEBRON.jpg;Alimentation Enemax;Enemax;true
+48;1000;Platinum;MODULAIRE;12;6;1 x CM 20+4 broches +  1 x CPU (12V) 4+4 broches;86;150;175;Dark Power 12_B;239;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/43_DARK_POWER_12.jpg;Alimentation BeQuiet Dark Power 12_B;Be Quiet!;true
+49;500;Gold;SEMI_MODULAIRE;6;2;1 x CM 20+4 broches +  1 x CPU (12V) 4+4 broches;86;140;150;System Power 9_B;129;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/42_SYSTEM_POWER_9.jpg;Alimentation BeQuiet System power 9;Be Quiet!;true
+50;650;Bronze;NON_MODULAIRE;8;4;1 x CM 20+4 broches +  2 x CPU (12V) 4+4 broches;85;150;140;MarbleBron_B;60;1;0;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/47_MARBLEBRON.jpg;Alimentation Enemax;Enemax;true

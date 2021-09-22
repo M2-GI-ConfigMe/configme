@@ -1,11 +1,11 @@
 id;capacity;speed_write;speed_read;type;name;price;discount;stock;img;jhi_desc;brand;is_active
-21;59301;39414;58056;SSD;Steel31;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-22;26808;65657;437;HDD;Steel32;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-23;71442;4000;84373;SSD;Steel33;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-24;89977;53330;78386;HDD;Steel34;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-25;21451;38055;7694;M2;Steel35;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-26;43596;16623;21708;HDD;Steel36;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-27;9531;53452;9696;M2;Steel37;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-28;42172;67940;66020;SSD;Steel38;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-29;95964;72297;32145;M2;Steel39;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
-30;99009;26837;68127;SSD;Steel40;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;false
+21;1000;20;20;HDD;WD Blue;49;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/21_WD_BLUE.jpg;Disque dur Western Digital;Western Digital;true
+22;1000;60;60;HDD;Barracuda;59;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/22_BARRACUDA.jpg;Disque dur Seagate;Seagate;true
+23;3000;60;60;HDD;WD Purple;100;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/23_WD_PURPLE.jpg;Disque dur Western Digital;Western Digital;true
+24;500;530;560;SSD;Ultra 3d;100;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/24_ULTRA_3D.jpg;Disque dur Sandisk;Sandisk;true
+25;500;520;550;M2;860 evo;89;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/25_860_EVO.jpg;Disque dur Samsung;Samsung;true
+26;1000;20;20;HDD;WD Blue_B;49;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/21_WD_BLUE.jpg;Disque dur Western Digital;Western Digital;true
+27;1000;60;60;HDD;Barracuda_B;59;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/22_BARRACUDA.jpg;Disque dur Seagate;Seagate;true
+28;3000;60;60;HDD;WD Purple_B;100;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/23_WD_PURPLE.jpg;Disque dur Western Digital;Western Digital;true
+29;500;530;560;SSD;Ultra 3d_B;100;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/24_ULTRA_3D.jpg;Disque dur Sandisk;Sandisk;true
+30;500;520;550;M2;860 evo_B;89;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/25_860_EVO.jpg;Disque dur Samsung;Samsung;true
