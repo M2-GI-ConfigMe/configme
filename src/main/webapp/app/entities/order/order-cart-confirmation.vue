@@ -1,5 +1,5 @@
 <template>
-  <div class="h-100 px-4 pt-2">
+  <div class="h-100 px-4 pt-2" v-if="order">
     <div class="text-center">
       <span class="text-h3 mb-2 font-weight-bold d-block">Félicitations !</span>
       <v-icon color="success" :size="128">mdi-check-circle</v-icon>

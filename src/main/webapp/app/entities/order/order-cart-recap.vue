@@ -5,7 +5,8 @@
         v-for="(line, key) in cart.lines"
         :key="key"
         :orderLine="line"
-        @configUpdated="$emit('configUpdated')"
+        :index="key"
+        @configUpdated="onConfigUpdate"
       ></order-cart-config>
     </div>
     <div class="order-cart-recap-configs-price-container">
