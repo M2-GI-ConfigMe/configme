@@ -6,10 +6,11 @@ export default class AccountHome extends Vue {
   public routes = [
     { title: 'Mes Commandes', icon: 'mdi-cart', route: 'orders' },
     { title: 'Mes Informations', icon: 'mdi-cog', route: 'settings' },
+    { title: 'Changer mon mot de passe', icon: 'mdi-lock', route: 'password' },
   ];
 
   created() {
-    console.log(this.$store.getters.account);
+    // console.log(this.$store.getters.account);
   }
   public get route() {
     const path = this.$route.path;

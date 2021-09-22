@@ -11,7 +11,6 @@
           </transition>
 
           <v-form v-model="isValid" @submit.stop.prevent="save()">
-            <!-- <v-form name="form" id="settings-form" role="form"  v-if="settingsAccount" novalidate> -->
             <div class="form-group">
               <v-text-field
                 v-model="$v.settingsAccount.email.$model"
@@ -124,7 +123,6 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-title class="font-weight-bold">Mon Compte</v-card-title>
-        <change-password></change-password>
         <v-card-text>
           <v-dialog v-model="dialog" width="400">
             <template v-slot:activator="{ on, attrs }">
