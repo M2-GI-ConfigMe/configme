@@ -1,5 +1,6 @@
 import LoginService from '@/account/login.service';
 import OrderService from '@/entities/order/order.service';
+import { off } from 'process';
 import { Component, Inject, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component
@@ -22,10 +23,12 @@ export default class Cart extends Vue {
 
   @Watch('cart')
   onCartUpdate(value, oldValue) {
-    this.showTooltip = true;
-    setTimeout(() => {
-      this.showTooltip = false;
-    }, 2000);
+    if (value.length > 0 && !this.showCart) {
+      this.showTooltip = true;
+      setTimeout(() => {
+        this.showTooltip = false;
+      }, 2000);
+    }
   }
 
   public openLogin(): void {
@@ -57,6 +60,7 @@ export default class Cart extends Vue {
     this.orderService()
       .create(formattedCart)
       .then(() => {
+        this.showCart = false;
         this.$router.push('/order/cart');
       });
   }
@@ -78,6 +82,7 @@ export default class Cart extends Vue {
       (config.computerCase ? config.computerCase.price : 0) +
       (config.mbe ? config.mbe.price : 0) +
       (config.ram1 ? config.ram1.price : 0) +
+      (config.ram2 ? config.ram2.price : 0) +
       (config.gpu ? config.gpu.price : 0) +
       (config.cpu ? config.cpu.price : 0) +
       (config.psu ? config.psu.price : 0) +

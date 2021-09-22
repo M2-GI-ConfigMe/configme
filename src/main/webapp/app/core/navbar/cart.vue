@@ -57,7 +57,7 @@
         </v-expansion-panels>
         <div v-else class="px-4 py-8 text-center">
           <div>
-            <v-icon x-large>mdi-cart-off</v-icon>
+            <v-icon x-large color="#C0C0C0">mdi-cart-off</v-icon>
           </div>
           <span class="text-caption">Votre panier est vide.</span>
         </div>

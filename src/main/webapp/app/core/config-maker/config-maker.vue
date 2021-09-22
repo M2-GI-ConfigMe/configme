@@ -116,12 +116,13 @@
                   <v-card-title class="mb-2">
                     <span class="text-h5 font-weight-bold">Créer une Config</span>
                   </v-card-title>
-                  <v-form v-model="formCreateValid">
+                  <v-form v-model="formCreateValid" @submit.prevent="createConfig()">
                     <v-card-text class="pb-0">
                       <v-container class="p-0">
                         <v-row no-gutters>
                           <v-col cols="12">
                             <v-text-field
+                              autofocus
                               label="Nom*"
                               placeholder="Ma Config"
                               outlined
@@ -159,8 +160,9 @@
     <component-picker
       :activated="componentPickerDialog"
       :componentName="endpoint"
-      @close="componentPickerDialog = false"
+      @close="close()"
       @picked="handlePicked"
+      :config="selectedConfig"
     ></component-picker>
   </v-container>
 </template>

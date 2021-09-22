@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IPsu } from '@/shared/model/psu.model';
 
@@ -50,10 +50,18 @@ export default class Psu extends Vue {
     this.retrieveAllPsus();
   }
 
+  public pageCount = 1;
+  public page = 1;
+
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllPsus();
+  }
+
   public retrieveAllPsus(): void {
     this.isFetching = true;
     this.psuService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.psus = res.data.content;

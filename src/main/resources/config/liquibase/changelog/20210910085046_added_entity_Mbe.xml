@@ -23,7 +23,7 @@
             <column name="ram_frequency_max" type="${floatType}">
                 <constraints nullable="false" />
             </column>
-            <column name="ram_size_max" type="${floatType}">
+            <column name="ram_size_max" type="integer">
                 <constraints nullable="false" />
             </column>
             <column name="pci_outputs" type="varchar(255)">

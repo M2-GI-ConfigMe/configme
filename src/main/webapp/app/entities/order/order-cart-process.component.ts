@@ -3,11 +3,13 @@ import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
 import OrderCartRecap from './order-cart-recap.vue';
 import OrderService from '@/entities/order/order.service';
 import OrderCartAddress from '@/entities/order/order-cart-address.vue';
+import OrderCartConfirmation from '@/entities/order/order-cart-confirmation.vue';
 
 @Component({
   components: {
     'order-cart-recap': OrderCartRecap,
     'order-cart-address': OrderCartAddress,
+    'order-cart-confirmation': OrderCartConfirmation,
   },
 })
 export default class OrderCartProcess extends Vue {
@@ -19,15 +21,22 @@ export default class OrderCartProcess extends Vue {
 
   private errorMessage = '';
 
+  public confirmedOrder = null;
+  public loading = false;
   public created() {
     this.retrieveCart();
   }
 
   public retrieveCart() {
+    this.loading = true;
     this.orderService()
       .cart()
       .then(res => {
-        this.cart = res;
+        if (res) this.cart = res;
+        else this.$router.push('/');
+      })
+      .finally(() => {
+        this.loading = false;
       });
   }
 
@@ -36,11 +45,23 @@ export default class OrderCartProcess extends Vue {
   }
 
   public goToPayment() {
+    this.loading = true;
     this.orderService()
       .update(this.cart)
       .then(() => {
         this.state = 3;
+      })
+      .finally(() => {
+        this.loading = false;
       });
+  }
+
+  public onLineRemoved(index) {
+    console.log(index);
+    // this.$delete(this.cart.lines, index)
+    console.log(this.cart.lines[index]);
+    // this.cart.lines.splice(index, 1);
+    Vue.delete(this.cart.lines, index);
   }
 
   public comeBack(state) {
@@ -48,16 +69,22 @@ export default class OrderCartProcess extends Vue {
   }
 
   public pay() {
+    this.loading = true;
     this.orderService()
       .pay(this.cart)
-      .then(() => {
-        this.$router.push('/');
+      .then(res => {
+        this.confirmedOrder = res;
+        this.$store.commit('emptyCart');
+        this.state = 4;
       })
       .catch(error => {
         if (error.response.status == 400) {
           this.checkStock();
           this.state = 1;
         }
+      })
+      .finally(() => {
+        this.loading = false;
       });
   }
 

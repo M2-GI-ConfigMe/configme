@@ -6,9 +6,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <!--
-        Added the entity Psu.
-    -->
     <changeSet id="20210910085043-1" author="jhipster">
         <createTable tableName="psu">
             <column name="id" type="bigint">
@@ -31,6 +28,15 @@
             </column>
             <column name="outputs" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+            <column name="width" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="height" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="length" type="integer">
+                <constraints nullable="true"/>
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_product__name_psu" />

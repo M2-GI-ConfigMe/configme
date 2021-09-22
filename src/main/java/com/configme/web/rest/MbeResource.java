@@ -1,17 +1,21 @@
 package com.configme.web.rest;
 
+import com.configme.domain.*;
 import com.configme.domain.Mbe;
+import com.configme.repository.*;
 import com.configme.repository.MbeRepository;
+import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,15 +38,34 @@ public class MbeResource {
     private final Logger log = LoggerFactory.getLogger(MbeResource.class);
 
     private static final String ENTITY_NAME = "mbe";
+    private final ComputerCaseRepository computerCaseRepository;
+    private final VentiradRepository ventiradRepository;
+    private final CpuRepository cpuRepository;
+    private final RamRepository ramRepository;
+    private final MbeRepository mbeRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final MbeRepository mbeRepository;
-
-    public MbeResource(MbeRepository mbeRepository) {
+    public MbeResource(
+        ComputerCaseRepository computerCaseRepository,
+        MbeRepository mbeRepository,
+        CpuRepository cpuRepository,
+        VentiradRepository ventiradRepository,
+        RamRepository ramRepository,
+        UserService userService
+    ) {
+        this.userService = userService;
+        this.computerCaseRepository = computerCaseRepository;
         this.mbeRepository = mbeRepository;
+        this.cpuRepository = cpuRepository;
+        this.ventiradRepository = ventiradRepository;
+        this.ramRepository = ramRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /mbes} : Create a new mbe.
@@ -201,6 +224,10 @@ public class MbeResource {
     /**
      * {@code GET  /mbes} : get all the mbes.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of mbes in body.
      */
     @GetMapping("/mbes")
@@ -208,10 +235,41 @@ public class MbeResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "cpuId", required = false) Long cpuId,
+        @RequestParam(name = "ram1Id", required = false) Long ramId,
+        @RequestParam(name = "ventiradId", required = false) Long ventiradId,
+        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
         log.debug("REST request to get all Mbes");
-        return mbeRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
+        Cpu cpu = null;
+        if (cpuId != null && this.cpuRepository.existsById(cpuId)) cpu = this.cpuRepository.findById(cpuId).get();
+
+        Ventirad ventirad = null;
+        if (ventiradId != null && this.ventiradRepository.existsById(ventiradId)) ventirad =
+            this.ventiradRepository.findById(ventiradId).get();
+
+        Ram ram = null;
+        if (ramId != null && this.ramRepository.existsById(ramId)) ram = this.ramRepository.findById(ramId).get();
+
+        ComputerCase computerCase = null;
+        if (computerCaseId != null && this.computerCaseRepository.existsById(computerCaseId)) computerCase =
+            this.computerCaseRepository.findById(computerCaseId).get();
+
+        return mbeRepository.findByCompatibility(
+            user,
+            cpu,
+            ram,
+            ventirad,
+            computerCase,
+            name,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
     }
 
     /**

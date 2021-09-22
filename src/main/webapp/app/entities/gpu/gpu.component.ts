@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IGpu } from '@/shared/model/gpu.model';
 
@@ -50,10 +50,18 @@ export default class Gpu extends Vue {
     this.retrieveAllGpus();
   }
 
+  public pageCount = 1;
+  public page = 1;
+
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllGpus();
+  }
+
   public retrieveAllGpus(): void {
     this.isFetching = true;
     this.gpuService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.gpus = res.data.content;

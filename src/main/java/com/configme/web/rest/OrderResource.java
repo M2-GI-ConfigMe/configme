@@ -63,7 +63,15 @@ public class OrderResource {
      */
     @PostMapping("/orders")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> createOrder(@Valid @RequestBody CartDTO[] cart) throws URISyntaxException {
+    public ResponseEntity<String> createOrder(@Valid @RequestBody CartDTO[] cart) throws Exception {
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+
+        if (!optionalUser.isPresent()) {
+            throw new BadRequestAlertException("Invalid user", ENTITY_NAME, "usernotfound");
+        }
+
+        User user = optionalUser.get();
+
         return ResponseEntity
             .created(new URI("/api/orders/"))
             .headers(
@@ -71,7 +79,7 @@ public class OrderResource {
                     applicationName,
                     true,
                     ENTITY_NAME,
-                    orderHandler.createOrderFromCart(cart, userService.getUserWithAuthorities().get()).getId().toString()
+                    orderHandler.createOrderFromCart(cart, user).getId().toString()
                 )
             )
             .body("ok");
@@ -103,7 +111,14 @@ public class OrderResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        User user = this.userService.getUserWithAuthorities().get();
+        Optional<User> optionalUser = this.userService.getUserWithAuthorities();
+
+        if (!optionalUser.isPresent()) {
+            throw new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound");
+        }
+
+        User user = optionalUser.get();
+
         if (!user.getId().equals(order.getBuyer().getId()) && !user.isAdmin()) throw new AccessDeniedException("403 returned");
 
         Order result = orderRepository.save(order);
@@ -192,9 +207,16 @@ public class OrderResource {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public Order getOrderInCart() {
         log.debug("REST request to get all Orders");
-        //        System.out.println( "Est présent : " + (userService.getUserWithAuthorities().isPresent() ? "oui" : "non"));
-        return orderRepository.findOrderInCartByUser(userService.getUserWithAuthorities().get());
-        //        return orderRepository.findById(Long.valueOf(1));
+
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+
+        if (!optionalUser.isPresent()) {
+            throw new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound");
+        }
+
+        User user = optionalUser.get();
+
+        return orderRepository.findOrderInCartByUser(user);
     }
 
     /**
@@ -227,9 +249,21 @@ public class OrderResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Order order = orderRepository.findById(id).get();
+        Optional<Order> optionalOrder = orderRepository.findById(id);
 
-        User user = this.userService.getUserWithAuthorities().get();
+        if (!optionalOrder.isPresent()) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Order order = optionalOrder.get();
+
+        Optional<User> optionalUser = this.userService.getUserWithAuthorities();
+
+        if (!optionalUser.isPresent()) {
+            throw new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound");
+        }
+
+        User user = optionalUser.get();
 
         if (!user.getId().equals(order.getBuyer().getId()) && !user.isAdmin()) throw new AccessDeniedException("403 returned");
 

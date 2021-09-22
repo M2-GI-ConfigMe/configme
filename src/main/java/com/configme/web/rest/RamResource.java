@@ -1,17 +1,22 @@
 package com.configme.web.rest;
 
+import com.configme.domain.Mbe;
 import com.configme.domain.Ram;
+import com.configme.domain.User;
+import com.configme.repository.MbeRepository;
 import com.configme.repository.RamRepository;
+import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,15 +39,22 @@ public class RamResource {
     private final Logger log = LoggerFactory.getLogger(RamResource.class);
 
     private static final String ENTITY_NAME = "ram";
+    private final MbeRepository mbeRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final RamRepository ramRepository;
 
-    public RamResource(RamRepository ramRepository) {
+    public RamResource(RamRepository ramRepository, MbeRepository mbeRepository, UserService userService) {
+        this.userService = userService;
+        this.mbeRepository = mbeRepository;
         this.ramRepository = ramRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /rams} : Create a new ram.
@@ -183,6 +195,10 @@ public class RamResource {
     /**
      * {@code GET  /rams} : get all the rams.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rams in body.
      */
     @GetMapping("/rams")
@@ -190,10 +206,24 @@ public class RamResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
+        Mbe mbe = null;
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.getOne(mbeId);
+
         log.debug("REST request to get all Mbes");
-        return ramRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+
+        return ramRepository.findByCompatibility(
+            user,
+            mbe,
+            name,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
     }
 
     /**

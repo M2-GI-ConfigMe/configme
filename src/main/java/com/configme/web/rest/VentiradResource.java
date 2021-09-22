@@ -1,17 +1,22 @@
 package com.configme.web.rest;
 
+import com.configme.domain.Mbe;
+import com.configme.domain.User;
 import com.configme.domain.Ventirad;
+import com.configme.repository.MbeRepository;
 import com.configme.repository.VentiradRepository;
+import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,15 +39,22 @@ public class VentiradResource {
     private final Logger log = LoggerFactory.getLogger(VentiradResource.class);
 
     private static final String ENTITY_NAME = "ventirad";
+    private final MbeRepository mbeRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final VentiradRepository ventiradRepository;
 
-    public VentiradResource(VentiradRepository ventiradRepository) {
+    public VentiradResource(VentiradRepository ventiradRepository, MbeRepository mbeRepository, UserService userService) {
+        this.userService = userService;
+        this.mbeRepository = mbeRepository;
         this.ventiradRepository = ventiradRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /ventirads} : Create a new ventirad.
@@ -184,6 +196,10 @@ public class VentiradResource {
     /**
      * {@code GET  /ventirads} : get all the ventirads.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ventirads in body.
      */
     @GetMapping("/ventirads")
@@ -191,10 +207,22 @@ public class VentiradResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
-        log.debug("REST request to get all Mbes");
-        return ventiradRepository.findAll(
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
+        log.debug("REST request to get all Ventirad");
+
+        Mbe mbe = null;
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.getOne(mbeId);
+
+        return ventiradRepository.findByCompatibility(
+            user,
+            mbe,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

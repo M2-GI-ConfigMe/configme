@@ -2,13 +2,15 @@ import Component from 'vue-class-component';
 import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
 import ClientConfigService from '@/entities/client-config/client-config.service';
 import OrderLineService from '@/entities/order-line/order-line.service';
+import { IOrderLine } from '@/shared/model/order-line.model';
 
 @Component
 export default class OrderCartConfig extends Vue {
   @Inject('clientConfigService') private configService: () => ClientConfigService;
   @Inject('orderLineService') private orderLineService: () => OrderLineService;
 
-  @Prop() private orderLine?: any;
+  @Prop() private orderLine?: IOrderLine;
+  @Prop() private index: number;
 
   private config = null;
 
@@ -27,7 +29,7 @@ export default class OrderCartConfig extends Vue {
     if (config.ram2) products.push({ product: config.ram2, price: config.ram2Price, productName: 'ram2' });
     if (config.hd1) products.push({ product: config.hd1, price: config.hd1Price, productName: 'hd1' });
     if (config.hd2) products.push({ product: config.hd2, price: config.hd2Price, productName: 'hd2' });
-    if (config.mbe) products.push({ product: config.mbe, price: config.cpuPrice, productName: 'mbe' });
+    if (config.mbe) products.push({ product: config.mbe, price: config.mbePrice, productName: 'mbe' });
     if (config.psu) products.push({ product: config.psu, price: config.psuPrice, productName: 'psu' });
 
     return products;
@@ -39,22 +41,30 @@ export default class OrderCartConfig extends Vue {
 
   public removeProduct(productLine) {
     if (window.confirm('Voulez vous vraiment retirer cet article du panier ? \n Article: ' + productLine.product.name)) {
-      this.config[productLine.productName] = null;
-
-      if (productLine.productName == 'hd1') this.config.hd1Price = 0;
-      else if (productLine.productName == 'hd2') this.config.hd2Price = 0;
-      else this.config[productLine.productName + 'Price'] = 0;
+      const oldObject = this.orderLine.config[productLine.productName];
+      const oldPrice = this.orderLine.config[productLine.productName + 'Price'];
+      this.orderLine.config[productLine.productName] = null;
+      this.orderLine.config[productLine.productName + 'Price'] = 0;
 
       this.configService()
-        .update(this.config)
-        .then(res => {
-          this.$emit('configUpdated');
+        .update(this.orderLine.config)
+        .then(() => {
           this.$bvToast.toast('Article: ' + productLine.product.name + ' retiré du panier', {
             toaster: 'b-toaster-top-right',
             title: 'Info',
             variant: 'success',
             solid: true,
             autoHideDelay: 5000,
+          });
+        })
+        .catch(res => {
+          this.orderLine.config[productLine.productName] = oldObject;
+          this.orderLine.config[productLine.productName + 'Price'] = oldPrice;
+          this.$root.$bvToast.toast('Erreur lors de la mise à jour de votre panier', {
+            toaster: 'b-toaster-top-right',
+            variant: 'danger',
+            solid: true,
+            noCloseButton: true,
           });
         });
     }
@@ -65,7 +75,7 @@ export default class OrderCartConfig extends Vue {
       this.orderLineService()
         .delete(this.orderLine.id)
         .then(res => {
-          this.$emit('configUpdated');
+          this.$emit('configUpdated', this.index);
           this.$bvToast.toast('Configuration retiré du panier', {
             toaster: 'b-toaster-top-right',
             title: 'Info',

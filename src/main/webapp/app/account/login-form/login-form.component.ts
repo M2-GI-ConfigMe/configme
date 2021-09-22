@@ -70,4 +70,8 @@ export default class LoginForm extends Vue {
     this.showDialog = false;
     this.registerService().openRegister((<any>this).$root);
   }
+
+  public doRequest(): void {
+    this.$router.push('/account/reset/request', () => {});
+  }
 }

@@ -17,6 +17,14 @@
           </v-btn>
           <v-toolbar-title>{{ this.displayName }}</v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-text-field
+            :bind="nameFilter"
+            v-model="nameFilter"
+            prepend-icon="mdi-magnify"
+            single-line
+            hide-details
+            placeholder="Rechercher par nom"
+          ></v-text-field>
           <v-toolbar-items> </v-toolbar-items>
         </v-toolbar>
         <v-card-text class="flex-grow-1 d-flex flex-column px-0 pb-0">
@@ -32,7 +40,6 @@
             @click:row="handleRowClick"
             :item-key="'classsss'"
             hide-default-footer
-            @page-count="pageCount = $event"
           >
             <template v-slot:item.stock="{ item }"><v-badge :color="item.stock > 0 ? 'success' : 'dark'"></v-badge></template>
 

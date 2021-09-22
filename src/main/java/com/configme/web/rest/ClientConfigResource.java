@@ -99,6 +99,8 @@ public class ClientConfigResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody ClientConfig clientConfig
     ) throws URISyntaxException {
+        System.out.println("teste");
+
         log.debug("REST request to update ClientConfig : {}, {}", id, clientConfig);
         if (clientConfig.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -111,18 +113,41 @@ public class ClientConfigResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        //Si on retire la ligne ça marche pas
         clientConfigRepository.findAll();
 
-        ClientConfig c = clientConfigRepository.findById(id).get();
-        AdminUserDTO user = userService
-            .getUserWithAuthorities()
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
-        User owner = c.getUser();
-        boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
-        if (!isAdmin && (owner == null || !user.getId().equals(owner.getId()))) {
-            throw new AccessDeniedException("User is not authorized");
+        Optional<ClientConfig> optionalClientConfig = clientConfigRepository.findById(id);
+
+        if (!optionalClientConfig.isPresent()) {
+            throw new BadRequestAlertException("Client not found", ENTITY_NAME, "clientnotfound");
         }
+
+        ClientConfig c = optionalClientConfig.get();
+
+        //        AdminUserDTO user = userService
+        //            .getUserWithAuthorities()
+        //            .map(AdminUserDTO::new)
+        //            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
+
+        boolean isAdmin = false;
+
+        User owner = c.getUser();
+
+        User user = null;
+        if (userService.getUserWithAuthorities().isPresent()) {
+            user = userService.getUserWithAuthorities().get();
+            isAdmin = user.isAdmin();
+        } else {
+            System.out.println("User null");
+        }
+
+        if (
+            !isAdmin &&
+            (
+                user == null ||
+                ((owner != null && !user.getId().equals(owner.getId())) && !clientConfigRepository.isBuyer(user, clientConfig))
+            )
+        ) throw new AccessDeniedException("User is not authorized");
 
         ClientConfig result = clientConfigRepository.save(clientConfig);
         return ResponseEntity
@@ -159,7 +184,14 @@ public class ClientConfigResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ClientConfig c = clientConfigRepository.findById(id).get();
+        Optional<ClientConfig> optionalClientConfig = clientConfigRepository.findById(id);
+
+        if (!optionalClientConfig.isPresent()) {
+            throw new BadRequestAlertException("Client not found", ENTITY_NAME, "clientnotfound");
+        }
+
+        ClientConfig c = optionalClientConfig.get();
+
         AdminUserDTO user = userService
             .getUserWithAuthorities()
             .map(AdminUserDTO::new)
@@ -262,7 +294,14 @@ public class ClientConfigResource {
     public ResponseEntity<Void> deleteClientConfig(@PathVariable Long id) {
         log.debug("REST request to delete ClientConfig : {}", id);
 
-        ClientConfig clientConfig = clientConfigRepository.findById(id).get();
+        Optional<ClientConfig> optionalClientConfig = clientConfigRepository.findById(id);
+
+        if (!optionalClientConfig.isPresent()) {
+            throw new BadRequestAlertException("Client not found", ENTITY_NAME, "clientnotfound");
+        }
+
+        ClientConfig clientConfig = optionalClientConfig.get();
+
         AdminUserDTO user = userService
             .getUserWithAuthorities()
             .map(AdminUserDTO::new)

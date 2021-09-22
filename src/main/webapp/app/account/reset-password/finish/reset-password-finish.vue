@@ -27,83 +27,41 @@
         </div>
 
         <div v-if="!keyMissing">
-          <form v-if="!success" name="form" role="form" v-on:submit.prevent="finishReset()">
+          <v-form v-model="isValid" v-on:submit.prevent="finishReset()">
             <div class="form-group">
-              <label class="form-control-label" for="newPassword" v-text="$t('global.form[\'newpassword.label\']')">New password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="newPassword"
-                name="newPassword"
-                v-bind:placeholder="$t('global.form[\'newpassword.placeholder\']')"
-                :class="{ valid: !$v.resetAccount.newPassword.$invalid, invalid: $v.resetAccount.newPassword.$invalid }"
+              <v-text-field
                 v-model="$v.resetAccount.newPassword.$model"
-                minlength="4"
-                maxlength="50"
+                :rules="rules.passwordRules.concat(rules.requiredField)"
+                :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="showPass = !showPass"
+                :type="showPass ? 'text' : 'password'"
+                label="Mot de passe"
+                placeholder="********"
+                hide-details="auto"
+                outlined
                 required
-                data-cy="resetPassword"
-              />
-              <div v-if="$v.resetAccount.newPassword.$anyDirty && $v.resetAccount.newPassword.$invalid">
-                <small
-                  class="form-text text-danger"
-                  v-if="!$v.resetAccount.newPassword.required"
-                  v-text="$t('global.messages.validate.newpassword.required')"
-                >
-                  Your password is required.
-                </small>
-                <small
-                  class="form-text text-danger"
-                  v-if="!$v.resetAccount.newPassword.minLength"
-                  v-text="$t('global.messages.validate.newpassword.minlength')"
-                >
-                  Your password is required to be at least 4 characters.
-                </small>
-                <small
-                  class="form-text text-danger"
-                  v-if="!$v.resetAccount.newPassword.maxLength"
-                  v-text="$t('global.messages.validate.newpassword.maxlength')"
-                >
-                  Your password cannot be longer than 50 characters.
-                </small>
-              </div>
+              >
+              </v-text-field>
             </div>
             <div class="form-group">
-              <label class="form-control-label" for="confirmPassword" v-text="$t('global.form[\'confirmpassword.label\']')"
-                >New password confirmation</label
-              >
-              <input
-                type="password"
-                class="form-control"
-                id="confirmPassword"
-                name="confirmPassword"
-                :class="{ valid: !$v.resetAccount.confirmPassword.$invalid, invalid: $v.resetAccount.confirmPassword.$invalid }"
-                v-bind:placeholder="$t('global.form[\'confirmpassword.placeholder\']')"
+              <v-text-field
                 v-model="$v.resetAccount.confirmPassword.$model"
-                minlength="4"
-                maxlength="50"
+                :rules="rules.confirmPasswordRules.concat(rules.requiredField)"
+                :append-icon="showPass2 ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="showPass2 = !showPass2"
+                :type="showPass2 ? 'text' : 'password'"
+                label="Confirmation de mot de passe"
+                placeholder="********"
+                hide-details="auto"
+                outlined
                 required
-                data-cy="confirmResetPassword"
-              />
-              <div v-if="$v.resetAccount.confirmPassword.$anyDirty && $v.resetAccount.confirmPassword.$invalid">
-                <small
-                  class="form-text text-danger"
-                  v-if="!$v.resetAccount.confirmPassword.sameAsPassword"
-                  v-text="$t('global.messages.error.dontmatch')"
-                >
-                  The password and its confirmation do not match!
-                </small>
-              </div>
+              >
+              </v-text-field>
             </div>
-            <button
-              type="submit"
-              :disabled="$v.resetAccount.$invalid"
-              class="btn btn-primary"
-              v-text="$t('password.form.button')"
-              data-cy="submit"
-            >
-              Save
-            </button>
-          </form>
+            <div class="text-right">
+              <v-btn :disabled="!isValid" @click="finishReset()" color="primary">Sauvegarder</v-btn>
+            </div>
+          </v-form>
         </div>
       </div>
     </div>

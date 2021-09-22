@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { IHardDrive } from '@/shared/model/hard-drive.model';
 
@@ -50,10 +50,18 @@ export default class HardDrive extends Vue {
     this.retrieveAllHardDrives();
   }
 
+  public pageCount = 1;
+  public page = 1;
+
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllHardDrives();
+  }
+
   public retrieveAllHardDrives(): void {
     this.isFetching = true;
     this.hardDriveService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.hardDrives = res.data.content;

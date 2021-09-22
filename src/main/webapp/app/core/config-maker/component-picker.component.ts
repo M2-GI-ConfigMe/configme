@@ -1,6 +1,8 @@
 import Component from 'vue-class-component';
 import { Inject, Vue, Watch, Prop } from 'vue-property-decorator';
 import axios from 'axios';
+import { throws } from 'assert';
+import { IClientConfig } from '@/shared/model/client-config.model';
 import ComponentDetails from './component-details.vue';
 
 const baseApiUrl = 'api/';
@@ -13,6 +15,7 @@ const baseApiUrl = 'api/';
 export default class ComponentPicker extends Vue {
   @Prop({ required: true }) activated: boolean;
   @Prop({ required: true }) componentName: string;
+  @Prop() config: IClientConfig;
 
   private componentTableInfo = {
     mbe: {
@@ -307,6 +310,22 @@ export default class ComponentPicker extends Vue {
 
   public page = 1;
   public pageCount = 1;
+  private firstRetrive = false;
+
+  private _nameFilter = '';
+  private timeout = null;
+
+  public get nameFilter() {
+    return this._nameFilter;
+  }
+
+  public set nameFilter(val) {
+    if (this.timeout) clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this._nameFilter = val;
+      this.retrieveComponents();
+    }, 500);
+  }
 
   public data = {
     objects: [],
@@ -369,8 +388,8 @@ export default class ComponentPicker extends Vue {
   }
 
   @Watch('currentEndpoint')
-  onEndpointUpdate(value: string, oldValue: string) {
-    if (value != '') {
+  onEndpointUpdate(value: string) {
+    if (value != '' && value != undefined) {
       this.data.objects = [];
       this.options = {
         itemsPerPage: 15,
@@ -378,19 +397,31 @@ export default class ComponentPicker extends Vue {
         sortDesc: [],
       };
       this.page = 1;
+      this.firstRetrive = false;
       this.retrieveComponents();
     }
   }
 
   @Watch('page')
-  onPageChange(v, oldV) {
-    if (v != oldV) this.retrieveComponents();
+  onPageChange() {
+    if (this.firstRetrive) this.retrieveComponents();
+  }
+
+  @Watch('pageCount')
+  onPageCountChange() {
+    console.log(this.pageCount);
   }
 
   @Watch('options')
-  onOptionsUpdate(value: any, oldValue: any) {
-    if (value != oldValue) this.retrieveComponents();
+  onOptionsUpdate(v) {
+    if (this.firstRetrive) this.retrieveComponents();
   }
+
+  // @Watch('config')
+  // onConfigsUpdate(v) {
+  //   this.firstRetrive = false
+  //   this.retrieveComponents();
+  // }
 
   public handleRowClick(value) {
     this.componentInfo = null;
@@ -400,30 +431,36 @@ export default class ComponentPicker extends Vue {
 
   private retrieveComponents() {
     this.loading = true;
-    axios
-      .get(
-        baseApiUrl + this.currentEndpoint,
-        this.options
-          ? {
-              params: {
-                page: this.page,
-                itemsPerPage: this.options.itemsPerPage,
-                sortBy: this.options.sortBy[0],
-                sortDesc: this.options.sortDesc[0],
-              },
-            }
-          : null
-      )
-      .then(res => {
-        this.data.objects = res.data.content;
-        this.pageCount = res.data.totalPages;
-      })
-      .catch(err => {
-        console.log('Erreur lors du fetch des données');
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    if (this.currentEndpoint)
+      axios
+        .get(
+          baseApiUrl + this.currentEndpoint,
+          this.options
+            ? {
+                params: {
+                  ...{
+                    page: this.page,
+                    itemsPerPage: this.options.itemsPerPage,
+                    sortBy: this.options.sortBy[0],
+                    sortDesc: this.options.sortDesc[0],
+                  },
+                  ...this.query,
+                  name: this._nameFilter,
+                },
+              }
+            : null
+        )
+        .then(res => {
+          this.data.objects = res.data.content;
+          this.pageCount = res.data.totalPages;
+          if (!this.firstRetrive) this.firstRetrive = true;
+        })
+        .catch(err => {
+          console.log('Erreur lors du fetch des données');
+        })
+        .finally(() => {
+          this.loading = false;
+        });
   }
 
   public get show(): boolean {
@@ -437,6 +474,18 @@ export default class ComponentPicker extends Vue {
     }
   }
 
+  public get query() {
+    const query = {};
+    const components = ['cpu', 'gpu', 'psu', 'ram1', 'ram2', 'h1', 'hd2', 'ventirad', 'computerCase', 'mbe'];
+    components.forEach(component => {
+      if (this.config[component] != null) {
+        query[component + 'Id'] = this.config[component].id;
+      }
+    });
+
+    return query;
+  }
+
   public outsideClick(e) {
     const target = e.target;
     let parent = target.parentElement;
@@ -447,5 +496,6 @@ export default class ComponentPicker extends Vue {
 
   private close() {
     this.show = false;
+    this.nameFilter = '';
   }
 }

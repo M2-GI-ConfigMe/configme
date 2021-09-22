@@ -131,7 +131,9 @@ server:
     session:
       cookie:
         http-only: true
-
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 # Properties to be exposed on the /info management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show
@@ -155,7 +157,7 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: configme@localhost
+    from: mathis.perrier73@gmail.com
   api-docs:
     default-include-pattern: ${server.servlet.context-path:}/api/.*
     management-include-pattern: ${server.servlet.context-path:}/management/.*

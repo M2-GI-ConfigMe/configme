@@ -31,6 +31,8 @@ public class MailService {
 
     private static final String BASE_URL = "baseUrl";
 
+    private static final String CHAR_TO_REPLACE = "[\n\r\t]";
+
     private final JHipsterProperties jHipsterProperties;
 
     private final JavaMailSender javaMailSender;
@@ -52,7 +54,13 @@ public class MailService {
     }
 
     @Async
-    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+    public void sendEmail(String paramTo, String paramSubject, String paramContent, boolean paramIsMultipart, boolean paramIsHtml) {
+        String to = paramTo.replaceAll(CHAR_TO_REPLACE, "_");
+        String subject = paramSubject.replaceAll(CHAR_TO_REPLACE, "_");
+        String content = paramContent.replaceAll(CHAR_TO_REPLACE, "_");
+        Boolean isMultipart = paramIsMultipart;
+        Boolean isHtml = paramIsHtml;
+
         log.debug(
             "Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart,
@@ -79,6 +87,7 @@ public class MailService {
 
     @Async
     public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
+        log.debug(user.getLangKey());
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
         context.setVariable(USER, user);
@@ -90,19 +99,22 @@ public class MailService {
 
     @Async
     public void sendActivationEmail(User user) {
-        log.debug("Sending activation email to '{}'", user.getEmail());
+        String emailUser = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+        log.debug("Sending activation email to '{}'", emailUser);
         sendEmailFromTemplate(user, "mail/activationEmail", "email.activation.title");
     }
 
     @Async
     public void sendCreationEmail(User user) {
-        log.debug("Sending creation email to '{}'", user.getEmail());
+        String emailUser = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+        log.debug("Sending creation email to '{}'", emailUser);
         sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
     }
 
     @Async
     public void sendPasswordResetMail(User user) {
-        log.debug("Sending password reset email to '{}'", user.getEmail());
+        String emailUser = user.getEmail().replaceAll(CHAR_TO_REPLACE, "_");
+        log.debug("Sending password reset email to '{}'", emailUser);
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
     }
 }

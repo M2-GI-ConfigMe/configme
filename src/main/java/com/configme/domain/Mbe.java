@@ -38,7 +38,7 @@ public class Mbe extends Product implements Serializable {
     @NotNull
     @Min(value = 0)
     @Column(name = "ram_size_max", nullable = false)
-    private Float ramSizeMax;
+    private Integer ramSizeMax;
 
     @NotNull
     @Column(name = "pci_outputs", nullable = false)
@@ -103,16 +103,16 @@ public class Mbe extends Product implements Serializable {
         this.ramFrequencyMax = ramFrequencyMax;
     }
 
-    public Float getRamSizeMax() {
+    public Integer getRamSizeMax() {
         return this.ramSizeMax;
     }
 
-    public Mbe ramSizeMax(Float ramSizeMax) {
+    public Mbe ramSizeMax(Integer ramSizeMax) {
         this.ramSizeMax = ramSizeMax;
         return this;
     }
 
-    public void setRamSizeMax(Float ramSizeMax) {
+    public void setRamSizeMax(Integer ramSizeMax) {
         this.ramSizeMax = ramSizeMax;
     }
 

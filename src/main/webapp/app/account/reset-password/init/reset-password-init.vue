@@ -12,64 +12,25 @@
           <p v-text="$t('reset.request.messages.success')">Check your emails for details on how to reset your password.</p>
         </div>
 
-        <form v-if="!success" name="form" role="form" v-on:submit.prevent="requestReset()">
+        <v-form v-model="isValid" v-on:submit.prevent="requestReset()">
           <div class="form-group">
-            <label class="form-control-label" for="email" v-text="$t('global.form[\'email.label\']')">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-              v-bind:placeholder="$t('global.form[\'email.placeholder\']')"
-              :class="{ valid: !$v.resetAccount.email.$invalid, invalid: $v.resetAccount.email.$invalid }"
+            <v-text-field
               v-model="$v.resetAccount.email.$model"
-              minlength="5"
-              maxlength="254"
+              :rules="rules.emailRules.concat(rules.requiredField)"
+              type="email"
+              label="E-mail"
+              placeholder="template@email.com"
+              hide-details="auto"
               email
+              outlined
               required
-              data-cy="emailResetPassword"
-            />
-            <div v-if="$v.resetAccount.email.$anyDirty && $v.resetAccount.email.$invalid">
-              <small
-                class="form-text text-danger"
-                v-if="!$v.resetAccount.email.required"
-                v-text="$t('global.messages.validate.email.required')"
-              >
-                Your email is required.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.resetAccount.email.email"
-                v-text="$t('global.messages.validate.email.invalid')"
-              >
-                Your email is invalid.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.resetAccount.email.minLength"
-                v-text="$t('global.messages.validate.email.minlength')"
-              >
-                Your email is required to be at least 5 characters.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.resetAccount.email.maxLength"
-                v-text="$t('global.messages.validate.email.maxlength')"
-              >
-                Your email cannot be longer than 100 characters.
-              </small>
-            </div>
+            >
+            </v-text-field>
           </div>
-          <button
-            type="submit"
-            :disabled="$v.resetAccount.$invalid"
-            class="btn btn-primary"
-            v-text="$t('reset.request.form.button')"
-            data-cy="submit"
-          >
-            Reset
-          </button>
-        </form>
+          <div class="text-right">
+            <v-btn :disabled="!isValid" @click="requestReset()" color="primary">Réinitialiser mon mot de passe</v-btn>
+          </div>
+        </v-form>
       </div>
     </div>
   </div>

@@ -1,8 +1,13 @@
 package com.configme.web.rest;
 
+import com.configme.domain.*;
 import com.configme.domain.ComputerCase;
+import com.configme.repository.*;
 import com.configme.repository.ComputerCaseRepository;
+import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -12,14 +17,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -34,15 +42,32 @@ public class ComputerCaseResource {
     private final Logger log = LoggerFactory.getLogger(ComputerCaseResource.class);
 
     private static final String ENTITY_NAME = "computerCase";
+    private final MbeRepository mbeRepository;
+    private final GpuRepository gpuRepository;
+    private final VentiradRepository ventiradRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final ComputerCaseRepository computerCaseRepository;
 
-    public ComputerCaseResource(ComputerCaseRepository computerCaseRepository) {
+    public ComputerCaseResource(
+        ComputerCaseRepository computerCaseRepository,
+        MbeRepository mbeRepository,
+        GpuRepository gpuRepository,
+        VentiradRepository ventiradRepository,
+        UserService userService
+    ) {
+        this.userService = userService;
         this.computerCaseRepository = computerCaseRepository;
+        this.mbeRepository = mbeRepository;
+        this.gpuRepository = gpuRepository;
+        this.ventiradRepository = ventiradRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /computer-cases} : Create a new computerCase.
@@ -205,6 +230,10 @@ public class ComputerCaseResource {
     /**
      * {@code GET  /computer-cases} : get all the computerCases.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of computerCases in body.
      */
     @GetMapping("/computer-cases")
@@ -212,10 +241,32 @@ public class ComputerCaseResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "mbeId", required = false) Long mbeId,
+        @RequestParam(name = "ventiradId", required = false) Long ventiradId,
+        @RequestParam(name = "gpuId", required = false) Long gpuId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
+        Mbe mbe = null;
+        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
+
+        Ventirad ventirad = null;
+        if (ventiradId != null && this.ventiradRepository.existsById(ventiradId)) ventirad =
+            this.ventiradRepository.findById(ventiradId).get();
+
+        Gpu gpu = null;
+        if (gpuId != null && this.gpuRepository.existsById(gpuId)) gpu = this.gpuRepository.findById(gpuId).get();
+
         log.debug("REST request to get all Mbes");
-        return computerCaseRepository.findAll(
+        return computerCaseRepository.findByCompatibility(
+            user,
+            mbe,
+            gpu,
+            ventirad,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

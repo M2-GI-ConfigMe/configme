@@ -1,17 +1,20 @@
 package com.configme.web.rest;
 
 import com.configme.domain.HardDrive;
+import com.configme.domain.User;
 import com.configme.repository.HardDriveRepository;
+import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,15 +37,20 @@ public class HardDriveResource {
     private final Logger log = LoggerFactory.getLogger(HardDriveResource.class);
 
     private static final String ENTITY_NAME = "hardDrive";
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final HardDriveRepository hardDriveRepository;
 
-    public HardDriveResource(HardDriveRepository hardDriveRepository) {
+    public HardDriveResource(HardDriveRepository hardDriveRepository, UserService userService) {
+        this.userService = userService;
         this.hardDriveRepository = hardDriveRepository;
     }
+
+    @Autowired
+    ImageService imageService;
 
     /**
      * {@code POST  /hard-drives} : Create a new hardDrive.
@@ -184,6 +192,10 @@ public class HardDriveResource {
     /**
      * {@code GET  /hard-drives} : get all the hardDrives.
      *
+     * @param page number of the page to get
+     * @param size number of n-uplets per page
+     * @param sortBy column to sort by
+     * @param sortDesc direction of sort
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of hardDrives in body.
      */
     @GetMapping("/hard-drives")
@@ -191,10 +203,16 @@ public class HardDriveResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
+        User user = null;
+        if (userService.getUserWithAuthorities().isPresent()) user = userService.getUserWithAuthorities().get();
+
         log.debug("REST request to get all Mbes");
-        return hardDriveRepository.findAll(
+        return hardDriveRepository.findByCompatibility(
+            user,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }
