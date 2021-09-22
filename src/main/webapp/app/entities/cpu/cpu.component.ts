@@ -1,6 +1,6 @@
 import { mixins } from 'vue-class-component';
 
-import { Component, Vue, Inject } from 'vue-property-decorator';
+import { Component, Vue, Inject, Watch } from 'vue-property-decorator';
 import Vue2Filters from 'vue2-filters';
 import { ICpu } from '@/shared/model/cpu.model';
 
@@ -50,14 +50,23 @@ export default class Cpu extends Vue {
     this.retrieveAllCpus();
   }
 
+  public pageCount = 1;
+  public page = 1;
+
+  @Watch('page')
+  onPageUpdate() {
+    this.retrieveAllCpus();
+  }
+
   public retrieveAllCpus(): void {
     this.isFetching = true;
     this.cpuService()
-      .retrieve()
+      .retrieve(this.page)
       .then(
         res => {
           this.cpus = res.data.content;
           this.isFetching = false;
+          this.pageCount = res.data.totalPages;
         },
         err => {
           this.isFetching = false;
