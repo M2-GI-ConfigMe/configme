@@ -431,35 +431,36 @@ export default class ComponentPicker extends Vue {
 
   private retrieveComponents() {
     this.loading = true;
-    axios
-      .get(
-        baseApiUrl + this.currentEndpoint,
-        this.options
-          ? {
-              params: {
-                ...{
-                  page: this.page,
-                  itemsPerPage: this.options.itemsPerPage,
-                  sortBy: this.options.sortBy[0],
-                  sortDesc: this.options.sortDesc[0],
+    if (this.currentEndpoint)
+      axios
+        .get(
+          baseApiUrl + this.currentEndpoint,
+          this.options
+            ? {
+                params: {
+                  ...{
+                    page: this.page,
+                    itemsPerPage: this.options.itemsPerPage,
+                    sortBy: this.options.sortBy[0],
+                    sortDesc: this.options.sortDesc[0],
+                  },
+                  ...this.query,
+                  name: this._nameFilter,
                 },
-                ...this.query,
-                name: this._nameFilter,
-              },
-            }
-          : null
-      )
-      .then(res => {
-        this.data.objects = res.data.content;
-        this.pageCount = res.data.totalPages;
-        if (!this.firstRetrive) this.firstRetrive = true;
-      })
-      .catch(err => {
-        console.log('Erreur lors du fetch des données');
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+              }
+            : null
+        )
+        .then(res => {
+          this.data.objects = res.data.content;
+          this.pageCount = res.data.totalPages;
+          if (!this.firstRetrive) this.firstRetrive = true;
+        })
+        .catch(err => {
+          console.log('Erreur lors du fetch des données');
+        })
+        .finally(() => {
+          this.loading = false;
+        });
   }
 
   public get show(): boolean {

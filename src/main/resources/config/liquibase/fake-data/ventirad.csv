@@ -1,11 +1,11 @@
 id;range_fan_speed;noise;has_thermal_paste;height;width;length;name;price;discount;stock;img;jhi_desc;brand;is_active
-61;connect Coordinateur;50224;true;12;13;17;Steel71;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-62;defect Berkshire Concrete;73390;true;12;13;17;Steel72;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-63;copying Gorgeous Rubber;66748;true;12;13;17;Steel73;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-64;leverage Incredible Handmade;60733;true;12;13;17;Steel74;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-65;channels;65367;true;12;13;17;Steel75;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-66;invoice Havre purple;10408;true;12;13;17;Steel76;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-67;deliver connecting system;43039;true;12;13;17;Steel77;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-68;THX dynamic;91031;true;12;13;17;Steel78;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-69;alarm Delesseux Account;42568;true;12;13;17;Steel79;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
-70;Books SDD;86220;true;12;13;17;Steel80;31485;1;82284;de support navigate;Chilean reboot b;Saussaies actuating deposit;true
+61;800-1800;26.5;true;135;73;97;CT407;29;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/61_CT407.jpg;Ventirad AMD AM4+ Intel 2066;Abkoncore;true
+62;600-2500;14.8;true;25;92;92;NH_L9I;49;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/62_NH_L9I.jpg;Ventirad Intel 1200/1150;Noctua;true
+63;450-1850;16.8;false;146;128;70;NH_L12S;39;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/63_NH_L12S.jpg;Ventirad Intel 2066/1200/1151 + AMD AM2/AM4;Noctua;true
+64;300-1500;19.2;false;25;150;140;NH_D15S;49;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/64_NH_D15S.jpg;Ventirad Intel 2066/1150/1151 + AMD AM4/AM3;Noctua;true
+65;800-2000;6.5;true;25;120;120;HYPER_212;39;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/65_HYPER.jpg;Ventirad Intel 2066/1200/1150 + AMD AM4/AM2;Cooler Master;true
+66;800-1800;26.5;true;135;73;97;CT407_B;29;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/61_CT407.jpg;Ventirad AMD AM4+ Intel 2066;Abkoncore;true
+67;600-2500;14.8;true;25;92;92;NH_L9I_B;49;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/62_NH_L9I.jpg;Ventirad Intel 1200/1150;Noctua;true
+68;450-1850;16.8;false;146;128;70;NH_L12S_B;39;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/63_NH_L12S.jpg;Ventirad Intel 2066/1200/1151 + AMD AM2/AM4;Noctua;true
+69;300-1500;19.2;false;25;150;140;NH_D15S_B;49;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/64_NH_D15S.jpg;Ventirad Intel 2066/1150/1151 + AMD AM4/AM3;Noctua;true
+70;800-2000;6.5;true;25;120;120;HYPER_212_B;39;1;100;https://monmegabucketconfigme.s3.eu-central-1.amazonaws.com/65_HYPER.jpg;Ventirad Intel 2066/1200/1150 + AMD AM4/AM2;Cooler Master;true
