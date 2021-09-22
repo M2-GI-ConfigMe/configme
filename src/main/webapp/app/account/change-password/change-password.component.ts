@@ -11,8 +11,6 @@ const validations = {
     },
     newPassword: {
       required,
-      minLength: minLength(4),
-      maxLength: maxLength(254),
     },
     confirmPassword: {
       // prettier-ignore
@@ -32,6 +30,22 @@ const validations = {
 export default class ChangePassword extends Vue {
   success: string = null;
   error: string = null;
+
+  public showPass = false;
+  public showPass2 = false;
+  public showPass3 = false;
+
+  public rules = {
+    requiredField: [v => !!v || 'Champ obligatoire'],
+    passwordRules: [
+      v => !v || v.length >= 8 || 'Le nouveau mot de passe doit faire au moins 8 caractères',
+      v => !v || /\d/.test(v) || 'Le nouveau mot de passe doit contenir au moins un chiffre',
+    ],
+    confirmPasswordRules: [v => !v || v === this.resetPassword.newPassword || 'Les nouveaux mots de passe ne correspondent pas'],
+  };
+
+  public isValid = false;
+
   doNotMatch: string = null;
   resetPassword: any = {
     currentPassword: null,
