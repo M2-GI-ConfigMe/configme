@@ -239,7 +239,8 @@ public class MbeResource {
         @RequestParam(name = "cpuId", required = false) Long cpuId,
         @RequestParam(name = "ram1Id", required = false) Long ramId,
         @RequestParam(name = "ventiradId", required = false) Long ventiradId,
-        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId
+        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
         log.debug("REST request to get all Mbes");
 
@@ -266,6 +267,7 @@ public class MbeResource {
             ram,
             ventirad,
             computerCase,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

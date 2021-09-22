@@ -15,8 +15,9 @@ import org.springframework.stereotype.Repository;
 public interface VentiradRepository extends JpaRepository<Ventirad, Long> {
     @Query(
         value = "SELECT v FROM Ventirad v WHERE " +
-        ":mbe is null or :#{ #mbe == null ? null : #mbe.socketCpu } member of v.sockets " +
-        "AND (v.isActive = true  or true = :#{ #user == null ? false : #user.isAdmin })"
+        "(:mbe is null or :#{ #mbe == null ? null : #mbe.socketCpu } member of v.sockets) " +
+        "AND (v.isActive = true  or true = :#{ #user == null ? false : #user.isAdmin }) " +
+        "AND (lower(v.name) LIKE lower(concat('%',:name,'%')))"
     )
-    Page<Ventirad> findByCompatibility(@Param("user") User user, @Param("mbe") Mbe mbe, Pageable pageable);
+    Page<Ventirad> findByCompatibility(@Param("user") User user, @Param("mbe") Mbe mbe, @Param("name") String name, Pageable pageable);
 }

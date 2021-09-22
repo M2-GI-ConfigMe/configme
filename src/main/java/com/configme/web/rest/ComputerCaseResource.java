@@ -244,7 +244,8 @@ public class ComputerCaseResource {
         @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
         @RequestParam(name = "mbeId", required = false) Long mbeId,
         @RequestParam(name = "ventiradId", required = false) Long ventiradId,
-        @RequestParam(name = "gpuId", required = false) Long gpuId
+        @RequestParam(name = "gpuId", required = false) Long gpuId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
         User user = null;
         if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
@@ -265,6 +266,7 @@ public class ComputerCaseResource {
             mbe,
             gpu,
             ventirad,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

@@ -18,13 +18,15 @@ public interface ComputerCaseRepository extends JpaRepository<ComputerCase, Long
         "(:ventirad is null or (c.sizeMaxVentirad > :#{ #ventirad == null ? 0 : (#ventirad.dimension.height)})) " +
         "AND (:gpu is null or  c.sizeMaxGpu > (:#{ #gpu == null ? 0 : #gpu.dimension.length})) " +
         "AND (:mbe is null or (:#{ #mbe == null ? null : #mbe.format} MEMBER OF c.formats)) " +
-        "AND (c.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })"
+        "AND (c.isActive = true or true = :#{ #user == null ? false : #user.isAdmin }) " +
+        "AND (lower(c.name) LIKE lower(concat('%',:name,'%')))"
     )
     Page<ComputerCase> findByCompatibility(
         @Param("user") User user,
         @Param("mbe") Mbe mbe,
         @Param("gpu") Gpu gpu,
         @Param("ventirad") Ventirad ventirad,
+        @Param("name") String name,
         Pageable pageable
     );
 }

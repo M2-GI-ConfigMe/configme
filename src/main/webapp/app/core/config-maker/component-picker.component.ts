@@ -312,6 +312,21 @@ export default class ComponentPicker extends Vue {
   public pageCount = 1;
   private firstRetrive = false;
 
+  private _nameFilter = '';
+  private timeout = null;
+
+  public get nameFilter() {
+    return this._nameFilter;
+  }
+
+  public set nameFilter(val) {
+    if (this.timeout) clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this._nameFilter = val;
+      this.retrieveComponents();
+    }, 500);
+  }
+
   public data = {
     objects: [],
     priceMax: 1000,
@@ -429,6 +444,7 @@ export default class ComponentPicker extends Vue {
                   sortDesc: this.options.sortDesc[0],
                 },
                 ...this.query,
+                name: this._nameFilter,
               },
             }
           : null
@@ -479,5 +495,6 @@ export default class ComponentPicker extends Vue {
 
   private close() {
     this.show = false;
+    this.nameFilter = '';
   }
 }

@@ -20,7 +20,8 @@ public interface MbeRepository extends JpaRepository<Mbe, Long> {
         "AND (:ram is null or m.ramSizeMax >= :#{ #ram == null ? 0: #ram.unitSize * #ram.quantity }) " +
         "AND (:ram is null or m.ramType = :#{ #ram == null ? null : #ram.type }) " +
         "AND (:computerCase is null or m.format in :#{ #computerCase == null ? null : #computerCase.formats }) " +
-        "AND (m.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })"
+        "AND (m.isActive = true or true = :#{ #user == null ? false : #user.isAdmin }) " +
+        "AND (lower(m.name) LIKE lower(concat('%',:name,'%')))"
     )
     Page<Mbe> findByCompatibility(
         @Param("user") User user,
@@ -28,6 +29,7 @@ public interface MbeRepository extends JpaRepository<Mbe, Long> {
         @Param("ram") Ram ram,
         @Param("ventirad") Ventirad ventirad,
         @Param("computerCase") ComputerCase computerCase,
+        @Param("name") String name,
         Pageable pageable
     );
 }

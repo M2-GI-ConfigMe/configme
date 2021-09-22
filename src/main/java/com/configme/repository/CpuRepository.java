@@ -18,7 +18,8 @@ import org.springframework.stereotype.Repository;
 public interface CpuRepository extends JpaRepository<Cpu, Long> {
     @Query(
         value = "SELECT c FROM Cpu c WHERE (:mbe is null or ( c.socketType = :#{ #mbe == null ? null : (#mbe.socketCpu)})) " +
-        "AND (c.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })"
+        "AND (c.isActive = true or true = :#{ #user == null ? false : #user.isAdmin }) " +
+        "AND (lower(c.name) LIKE lower(concat('%',:name,'%')))"
     )
-    Page<Cpu> findByCompatibility(@Param("user") User user, @Param("mbe") Mbe mbe, Pageable pageable);
+    Page<Cpu> findByCompatibility(@Param("user") User user, @Param("mbe") Mbe mbe, @Param("name") String name, Pageable pageable);
 }

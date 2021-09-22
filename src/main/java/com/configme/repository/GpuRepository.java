@@ -16,7 +16,13 @@ public interface GpuRepository extends JpaRepository<Gpu, Long> {
     @Query(
         value = "SELECT g FROM Gpu g WHERE " +
         "(:computerCase is null or ( g.dimension.length <= :#{ #computerCase == null ? 0 : #computerCase.sizeMaxGpu})) " +
-        "AND (g.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })"
+        "AND (g.isActive = true or true = :#{ #user == null ? false : #user.isAdmin }) " +
+        "AND (lower(g.name) LIKE lower(concat('%',:name,'%')))"
     )
-    Page<Gpu> findByCompatibility(@Param("user") User user, @Param("computerCase") ComputerCase computerCase, Pageable pageable);
+    Page<Gpu> findByCompatibility(
+        @Param("user") User user,
+        @Param("computerCase") ComputerCase computerCase,
+        @Param("name") String name,
+        Pageable pageable
+    );
 }

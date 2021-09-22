@@ -228,7 +228,8 @@ public class GpuResource {
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
         @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
-        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId
+        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId,
+        @RequestParam(name = "name", required = false, defaultValue = "") String name
     ) {
         log.debug("REST request to get all Mbes");
 
@@ -242,6 +243,7 @@ public class GpuResource {
         return gpuRepository.findByCompatibility(
             user,
             computerCase,
+            name,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

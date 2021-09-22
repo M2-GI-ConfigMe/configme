@@ -17,7 +17,8 @@ public interface RamRepository extends JpaRepository<Ram, Long> {
         value = "SELECT r FROM Ram r WHERE " +
         "(:mbe is null or (r.unitSize * r.quantity) < :#{ #mbe == null ? 0 : #mbe.ramSizeMax } ) " +
         "AND (:mbe is null or r.type = :#{ #mbe == null ? null : #mbe.ramType } ) " +
-        "AND (r.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })"
+        "AND (r.isActive = true or true = :#{ #user == null ? false : #user.isAdmin }) " +
+        "AND (lower(r.name) LIKE lower(concat('%',:name,'%')))"
     )
-    Page<Ram> findByCompatibility(@Param("user") User user, @Param("mbe") Mbe mbe, Pageable pageable);
+    Page<Ram> findByCompatibility(@Param("user") User user, @Param("mbe") Mbe mbe, @Param("name") String name, Pageable pageable);
 }
