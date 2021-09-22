@@ -3,6 +3,7 @@ import axios from 'axios';
 import { EMAIL_ALREADY_USED_TYPE } from '@/constants';
 import { Vue, Inject, Component } from 'vue-property-decorator';
 import AccountService from '@/account/account.service';
+import ChangePassword from '@/account/change-password/change-password.vue';
 
 const validations = {
   settingsAccount: {
@@ -39,6 +40,9 @@ const validations = {
 
 @Component({
   validations,
+  components: {
+    'change-password': ChangePassword,
+  },
 })
 export default class Settings extends Vue {
   @Inject('accountService') private accountService: () => AccountService;

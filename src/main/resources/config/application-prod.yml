@@ -45,8 +45,8 @@ spring:
     contexts: dev, faker
   mail:
     host: email-smtp.eu-central-1.amazonaws.com
-    username: $(AWS_MAIL_USER)
-    password: $(AWS_MAIL_PASSWORD)
+    username: ${AWS_MAIL_USER}
+    password: ${AWS_MAIL_PASSWORD}
     properties:
       mail:
         transport:
