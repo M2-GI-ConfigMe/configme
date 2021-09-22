@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -204,7 +205,7 @@ public class OrderHandlerImpl implements OrderHandler {
         return orderLine;
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void validateOrder(Order order) throws Exception {
         order.setStatus(OrderStatus.PAYED);
         order.setValidatedAt(LocalDate.now());
