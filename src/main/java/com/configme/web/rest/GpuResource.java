@@ -3,10 +3,12 @@ package com.configme.web.rest;
 import com.configme.domain.ComputerCase;
 import com.configme.domain.Gpu;
 import com.configme.domain.Mbe;
+import com.configme.domain.User;
 import com.configme.repository.ComputerCaseRepository;
 import com.configme.repository.GpuRepository;
 import com.configme.repository.MbeRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,13 +43,20 @@ public class GpuResource {
     private static final String ENTITY_NAME = "gpu";
     private final ComputerCaseRepository computerCaseRepository;
     private final MbeRepository mbeRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final GpuRepository gpuRepository;
 
-    public GpuResource(GpuRepository gpuRepository, MbeRepository mbeRepository, ComputerCaseRepository computerCaseRepository) {
+    public GpuResource(
+        GpuRepository gpuRepository,
+        MbeRepository mbeRepository,
+        ComputerCaseRepository computerCaseRepository,
+        UserService userService
+    ) {
+        this.userService = userService;
         this.gpuRepository = gpuRepository;
         this.computerCaseRepository = computerCaseRepository;
         this.mbeRepository = mbeRepository;
@@ -223,14 +232,15 @@ public class GpuResource {
     ) {
         log.debug("REST request to get all Mbes");
 
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
         ComputerCase computerCase = null;
         if (computerCaseId != null && this.computerCaseRepository.existsById(computerCaseId)) computerCase =
             this.computerCaseRepository.getOne(computerCaseId);
 
-        //        Mbe mbe = null;
-        //        if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.getOne(mbeId);
-
         return gpuRepository.findByCompatibility(
+            user,
             computerCase,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );

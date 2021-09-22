@@ -8,12 +8,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -65,7 +60,7 @@ public class OrderHandlerImpl implements OrderHandler {
         this.userRepository = userRepository;
     }
 
-    public Order createOrderFromCart(CartDTO[] cart, User user) {
+    public Order createOrderFromCart(CartDTO[] cart, User user) throws Exception {
         if (userRepository.haveOrderProcessing(user)) throw new ResponseStatusException(
             HttpStatus.BAD_REQUEST,
             "Un panier est déjà en cours de traintement"
@@ -98,7 +93,7 @@ public class OrderHandlerImpl implements OrderHandler {
         return order;
     }
 
-    private OrderLine createOrderLineFromCartLine(CartDTO cartLine) {
+    private OrderLine createOrderLineFromCartLine(CartDTO cartLine) throws Exception {
         OrderLine orderLine = new OrderLine();
         ClientConfig config = new ClientConfig();
         if (cartLine.getCpuId() != null) {
@@ -106,6 +101,8 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<Cpu> optionalCpu = cpuRepository.findById(cpuId);
             if (optionalCpu.isPresent()) {
                 Cpu cpu = optionalCpu.get();
+                if (!cpu.getIsActive()) throw new Exception("Article not active " + Cpu.class.toString());
+
                 config.setCpu(cpu);
                 config.setCpuPrice(cpu.getPrice());
             }
@@ -115,6 +112,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<Gpu> optionalGpu = gpuRepository.findById(gpuId);
             if (optionalGpu.isPresent()) {
                 Gpu gpu = optionalGpu.get();
+                if (!gpu.getIsActive()) throw new Exception("Article not active " + Gpu.class.toString());
                 config.setGpu(gpu);
                 config.setGpuPrice(gpu.getPrice());
             }
@@ -124,6 +122,8 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<ComputerCase> optionalComputerCase = computerCaseRepository.findById(computerCaseId);
             if (optionalComputerCase.isPresent()) {
                 ComputerCase computerCase = optionalComputerCase.get();
+                if (!computerCase.getIsActive()) throw new Exception("Article not active " + ComputerCase.class.toString());
+
                 config.setComputerCase(computerCase);
                 config.setComputerCasePrice(computerCase.getPrice());
             }
@@ -133,6 +133,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<HardDrive> optionalHd1 = hardDriveRepository.findById(hd1Id);
             if (optionalHd1.isPresent()) {
                 HardDrive hd1 = optionalHd1.get();
+                if (!hd1.getIsActive()) throw new Exception("Article not active " + HardDrive.class.toString());
                 config.setHd1(hd1);
                 config.setHd1Price(hd1.getPrice());
             }
@@ -142,6 +143,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<HardDrive> optionalHd2 = hardDriveRepository.findById(hd2Id);
             if (optionalHd2.isPresent()) {
                 HardDrive hd2 = optionalHd2.get();
+                if (!hd2.getIsActive()) throw new Exception("Article not active " + HardDrive.class.toString());
                 config.setHd2(hd2);
                 config.setHd2Price(hd2.getPrice());
             }
@@ -151,6 +153,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<Ram> optionalRam1 = ramRepository.findById(ram1Id);
             if (optionalRam1.isPresent()) {
                 Ram ram1 = optionalRam1.get();
+                if (!ram1.getIsActive()) throw new Exception("Article not active " + Ram.class.toString());
                 config.setRam1(ram1);
                 config.setRam1Price(ram1.getPrice());
             }
@@ -160,6 +163,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<Ram> optionalRam2 = ramRepository.findById(ram2Id);
             if (optionalRam2.isPresent()) {
                 Ram ram2 = optionalRam2.get();
+                if (!ram2.getIsActive()) throw new Exception("Article not active " + Ram.class.toString());
                 config.setRam2(ram2);
                 config.setRam2Price(ram2.getPrice());
             }
@@ -169,6 +173,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<Ventirad> optionalVentirad = ventiradRepository.findById(ventiradId);
             if (optionalVentirad.isPresent()) {
                 Ventirad ventirad = optionalVentirad.get();
+                if (!ventirad.getIsActive()) throw new Exception("Article not active " + Ventirad.class.toString());
                 config.setVentirad(ventirad);
                 config.setVentiradPrice(ventirad.getPrice());
             }
@@ -178,6 +183,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<Psu> optionalPsu = psuRepository.findById(psuId);
             if (optionalPsu.isPresent()) {
                 Psu psu = optionalPsu.get();
+                if (!psu.getIsActive()) throw new Exception("Article not active " + Psu.class.toString());
                 config.setPsu(psu);
                 config.setPsuPrice(psu.getPrice());
             }
@@ -187,6 +193,7 @@ public class OrderHandlerImpl implements OrderHandler {
             Optional<Mbe> optionalMbe = mbeRepository.findById(mbeId);
             if (optionalMbe.isPresent()) {
                 Mbe mbe = optionalMbe.get();
+                if (!mbe.getIsActive()) throw new Exception("Article not active " + Mbe.class.toString());
                 config.setMbe(mbe);
                 config.setMbePrice(mbe.getPrice());
             }
@@ -198,20 +205,60 @@ public class OrderHandlerImpl implements OrderHandler {
     }
 
     @Transactional
-    public void validateOrder(Order order) {
+    public void validateOrder(Order order) throws Exception {
         order.setStatus(OrderStatus.PAYED);
+        order.setValidatedAt(LocalDate.now());
         for (OrderLine line : order.getLines()) {
             ClientConfig config = line.getConfig();
-            if (config.getCpu() != null) config.getCpu().setStock(config.getCpu().getStock() - 1);
-            if (config.getGpu() != null) config.getGpu().setStock(config.getGpu().getStock() - 1);
-            if (config.getComputerCase() != null) config.getComputerCase().setStock(config.getComputerCase().getStock() - 1);
-            if (config.getMbe() != null) config.getMbe().setStock(config.getMbe().getStock() - 1);
-            if (config.getHd1() != null) config.getHd1().setStock(config.getHd1().getStock() - 1);
-            if (config.getHd2() != null) config.getHd2().setStock(config.getHd2().getStock() - 1);
-            if (config.getRam1() != null) config.getRam1().setStock(config.getRam1().getStock() - 1);
-            if (config.getRam2() != null) config.getRam2().setStock(config.getRam2().getStock() - 1);
-            if (config.getVentirad() != null) config.getVentirad().setStock(config.getVentirad().getStock() - 1);
-            if (config.getPsu() != null) config.getPsu().setStock(config.getPsu().getStock() - 1);
+            if (config.getCpu() != null) {
+                if (!config.getCpu().getIsActive()) throw new Exception("Article not active" + Cpu.class.toString());
+                config.getCpu().setStock(config.getCpu().getStock() - 1);
+            }
+
+            if (config.getGpu() != null) {
+                if (!config.getGpu().getIsActive()) throw new Exception("Article not active" + Gpu.class.toString());
+                config.getGpu().setStock(config.getGpu().getStock() - 1);
+            }
+
+            if (config.getComputerCase() != null) {
+                if (!config.getComputerCase().getIsActive()) throw new Exception("Article not active" + ComputerCase.class.toString());
+                config.getComputerCase().setStock(config.getComputerCase().getStock() - 1);
+            }
+
+            if (config.getMbe() != null) {
+                if (!config.getMbe().getIsActive()) throw new Exception("Article not active" + Mbe.class.toString());
+                config.getMbe().setStock(config.getMbe().getStock() - 1);
+            }
+
+            if (config.getHd1() != null) {
+                if (!config.getHd1().getIsActive()) throw new Exception("Article not active" + HardDrive.class.toString());
+                config.getHd1().setStock(config.getHd1().getStock() - 1);
+            }
+
+            if (config.getHd2() != null) {
+                if (!config.getHd2().getIsActive()) throw new Exception("Article not active" + HardDrive.class.toString());
+                config.getHd2().setStock(config.getHd2().getStock() - 1);
+            }
+
+            if (config.getRam1() != null) {
+                if (!config.getRam1().getIsActive()) throw new Exception("Article not active" + Ram.class.toString());
+                config.getRam1().setStock(config.getRam1().getStock() - 1);
+            }
+
+            if (config.getRam2() != null) {
+                if (!config.getRam2().getIsActive()) throw new Exception("Article not active" + Ram.class.toString());
+                config.getRam2().setStock(config.getRam2().getStock() - 1);
+            }
+
+            if (config.getVentirad() != null) {
+                if (!config.getVentirad().getIsActive()) throw new Exception("Article not active" + Ventirad.class.toString());
+                config.getVentirad().setStock(config.getVentirad().getStock() - 1);
+            }
+
+            if (config.getPsu() != null) {
+                if (!config.getPsu().getIsActive()) throw new Exception("Article not active" + Psu.class.toString());
+                config.getPsu().setStock(config.getPsu().getStock() - 1);
+            }
         }
 
         this.orderRepository.saveAndFlush(order);

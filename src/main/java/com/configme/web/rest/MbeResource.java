@@ -5,6 +5,7 @@ import com.configme.domain.Mbe;
 import com.configme.repository.*;
 import com.configme.repository.MbeRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,6 +43,7 @@ public class MbeResource {
     private final CpuRepository cpuRepository;
     private final RamRepository ramRepository;
     private final MbeRepository mbeRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -51,8 +53,10 @@ public class MbeResource {
         MbeRepository mbeRepository,
         CpuRepository cpuRepository,
         VentiradRepository ventiradRepository,
-        RamRepository ramRepository
+        RamRepository ramRepository,
+        UserService userService
     ) {
+        this.userService = userService;
         this.computerCaseRepository = computerCaseRepository;
         this.mbeRepository = mbeRepository;
         this.cpuRepository = cpuRepository;
@@ -239,6 +243,9 @@ public class MbeResource {
     ) {
         log.debug("REST request to get all Mbes");
 
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
         Cpu cpu = null;
         if (cpuId != null && this.cpuRepository.existsById(cpuId)) cpu = this.cpuRepository.findById(cpuId).get();
 
@@ -253,17 +260,14 @@ public class MbeResource {
         if (computerCaseId != null && this.computerCaseRepository.existsById(computerCaseId)) computerCase =
             this.computerCaseRepository.findById(computerCaseId).get();
 
-        System.out.println(ram);
-        System.out.println(ramId);
-
         return mbeRepository.findByCompatibility(
+            user,
             cpu,
             ram,
             ventirad,
             computerCase,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
-        //        return mbeRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
     }
 
     /**

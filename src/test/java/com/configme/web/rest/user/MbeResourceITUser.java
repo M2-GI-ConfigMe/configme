@@ -168,7 +168,7 @@ class MbeResourceITUser implements ProductResourceIT {
             .andExpect(jsonPath("$.content.[*].socketCpu").value(hasItem(DEFAULT_SOCKET_CPU.toString())))
             .andExpect(jsonPath("$.content.[*].ramType").value(hasItem(DEFAULT_RAM_TYPE.toString())))
             .andExpect(jsonPath("$.content.[*].ramFrequencyMax").value(hasItem(DEFAULT_RAM_FREQUENCY_MAX.doubleValue())))
-            .andExpect(jsonPath("$.content.[*].ramSizeMax").value(hasItem(DEFAULT_RAM_SIZE_MAX.doubleValue())))
+            .andExpect(jsonPath("$.content.[*].ramSizeMax").value(hasItem(DEFAULT_RAM_SIZE_MAX)))
             .andExpect(jsonPath("$.content.[*].pciOutputs").value(hasItem(DEFAULT_PCI_OUTPUTS)))
             .andExpect(jsonPath("$.content.[*].displayOutput").value(hasItem(DEFAULT_DISPLAY_OUTPUT)))
             .andExpect(jsonPath("$.content.[*].storageOutput").value(hasItem(DEFAULT_STORAGE_OUTPUT)))

@@ -1,9 +1,6 @@
 package com.configme.repository;
 
-import com.configme.domain.ComputerCase;
-import com.configme.domain.Cpu;
-import com.configme.domain.Gpu;
-import com.configme.domain.Mbe;
+import com.configme.domain.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -18,7 +15,8 @@ import org.springframework.stereotype.Repository;
 public interface GpuRepository extends JpaRepository<Gpu, Long> {
     @Query(
         value = "SELECT g FROM Gpu g WHERE " +
-        "(:computerCase is null or ( g.dimension.height <= :#{ #computerCase == null ? 0 : #computerCase.sizeMaxGpu})) "
+        "(:computerCase is null or ( g.dimension.length <= :#{ #computerCase == null ? 0 : #computerCase.sizeMaxGpu})) " +
+        "AND (g.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })"
     )
-    Page<Gpu> findByCompatibility(@Param("computerCase") ComputerCase computerCase, Pageable pageable);
+    Page<Gpu> findByCompatibility(@Param("user") User user, @Param("computerCase") ComputerCase computerCase, Pageable pageable);
 }

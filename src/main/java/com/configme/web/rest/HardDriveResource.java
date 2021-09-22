@@ -1,8 +1,10 @@
 package com.configme.web.rest;
 
 import com.configme.domain.HardDrive;
+import com.configme.domain.User;
 import com.configme.repository.HardDriveRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,13 +37,15 @@ public class HardDriveResource {
     private final Logger log = LoggerFactory.getLogger(HardDriveResource.class);
 
     private static final String ENTITY_NAME = "hardDrive";
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final HardDriveRepository hardDriveRepository;
 
-    public HardDriveResource(HardDriveRepository hardDriveRepository) {
+    public HardDriveResource(HardDriveRepository hardDriveRepository, UserService userService) {
+        this.userService = userService;
         this.hardDriveRepository = hardDriveRepository;
     }
 
@@ -201,8 +205,12 @@ public class HardDriveResource {
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
         @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
     ) {
+        User user = null;
+        if (userService.getUserWithAuthorities().isPresent()) user = userService.getUserWithAuthorities().get();
+
         log.debug("REST request to get all Mbes");
-        return hardDriveRepository.findAll(
+        return hardDriveRepository.findByCompatibility(
+            user,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
     }

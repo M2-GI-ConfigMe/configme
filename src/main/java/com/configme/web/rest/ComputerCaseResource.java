@@ -5,6 +5,7 @@ import com.configme.domain.ComputerCase;
 import com.configme.repository.*;
 import com.configme.repository.ComputerCaseRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.io.IOException;
 import java.net.URI;
@@ -44,6 +45,7 @@ public class ComputerCaseResource {
     private final MbeRepository mbeRepository;
     private final GpuRepository gpuRepository;
     private final VentiradRepository ventiradRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -54,8 +56,10 @@ public class ComputerCaseResource {
         ComputerCaseRepository computerCaseRepository,
         MbeRepository mbeRepository,
         GpuRepository gpuRepository,
-        VentiradRepository ventiradRepository
+        VentiradRepository ventiradRepository,
+        UserService userService
     ) {
+        this.userService = userService;
         this.computerCaseRepository = computerCaseRepository;
         this.mbeRepository = mbeRepository;
         this.gpuRepository = gpuRepository;
@@ -242,6 +246,9 @@ public class ComputerCaseResource {
         @RequestParam(name = "ventiradId", required = false) Long ventiradId,
         @RequestParam(name = "gpuId", required = false) Long gpuId
     ) {
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
         Mbe mbe = null;
         if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.findById(mbeId).get();
 
@@ -254,15 +261,12 @@ public class ComputerCaseResource {
 
         log.debug("REST request to get all Mbes");
         return computerCaseRepository.findByCompatibility(
+            user,
             mbe,
             gpu,
             ventirad,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );
-        //
-        //        return computerCaseRepository.findAll(
-        //            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
-        //        );
     }
 
     /**

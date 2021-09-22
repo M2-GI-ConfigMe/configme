@@ -1,8 +1,12 @@
 package com.configme.web.rest;
 
+import com.configme.domain.ComputerCase;
 import com.configme.domain.Psu;
+import com.configme.domain.User;
+import com.configme.repository.ComputerCaseRepository;
 import com.configme.repository.PsuRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +21,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,14 +41,18 @@ public class PsuResource {
     private final Logger log = LoggerFactory.getLogger(PsuResource.class);
 
     private static final String ENTITY_NAME = "psu";
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final PsuRepository psuRepository;
+    private ComputerCaseRepository computerCaseRepository;
 
-    public PsuResource(PsuRepository psuRepository) {
+    public PsuResource(PsuRepository psuRepository, ComputerCaseRepository computerCaseRepository, UserService userService) {
+        this.userService = userService;
         this.psuRepository = psuRepository;
+        this.computerCaseRepository = computerCaseRepository;
     }
 
     @Autowired
@@ -201,10 +211,23 @@ public class PsuResource {
         @RequestParam(name = "page", defaultValue = "1") int page,
         @RequestParam(name = "itemsPerPage", defaultValue = "15") int size,
         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc
+        @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
+        @RequestParam(name = "computerCaseId", required = false) Long computerCaseId
     ) {
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
         log.debug("REST request to get all Mbes");
-        return psuRepository.findAll(PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+
+        ComputerCase computerCase = null;
+        if (computerCaseId != null && this.computerCaseRepository.existsById(computerCaseId)) computerCase =
+            this.computerCaseRepository.getOne(computerCaseId);
+
+        return psuRepository.findByCompatibility(
+            user,
+            computerCase,
+            PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
+        );
     }
 
     /**

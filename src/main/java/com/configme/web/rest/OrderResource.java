@@ -63,7 +63,7 @@ public class OrderResource {
      */
     @PostMapping("/orders")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> createOrder(@Valid @RequestBody CartDTO[] cart) throws URISyntaxException {
+    public ResponseEntity<String> createOrder(@Valid @RequestBody CartDTO[] cart) throws Exception {
         Optional<User> optionalUser = userService.getUserWithAuthorities();
 
         if (!optionalUser.isPresent()) {

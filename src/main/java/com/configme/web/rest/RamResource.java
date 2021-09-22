@@ -2,9 +2,11 @@ package com.configme.web.rest;
 
 import com.configme.domain.Mbe;
 import com.configme.domain.Ram;
+import com.configme.domain.User;
 import com.configme.repository.MbeRepository;
 import com.configme.repository.RamRepository;
 import com.configme.service.ImageService;
+import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -38,13 +40,15 @@ public class RamResource {
 
     private static final String ENTITY_NAME = "ram";
     private final MbeRepository mbeRepository;
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final RamRepository ramRepository;
 
-    public RamResource(RamRepository ramRepository, MbeRepository mbeRepository) {
+    public RamResource(RamRepository ramRepository, MbeRepository mbeRepository, UserService userService) {
+        this.userService = userService;
         this.mbeRepository = mbeRepository;
         this.ramRepository = ramRepository;
     }
@@ -205,12 +209,16 @@ public class RamResource {
         @RequestParam(name = "sortDesc", defaultValue = "true") boolean sortDesc,
         @RequestParam(name = "mbeId", required = false) Long mbeId
     ) {
+        User user = null;
+        if (this.userService.getUserWithAuthorities().isPresent()) user = this.userService.getUserWithAuthorities().get();
+
         Mbe mbe = null;
         if (mbeId != null && this.mbeRepository.existsById(mbeId)) mbe = this.mbeRepository.getOne(mbeId);
 
         log.debug("REST request to get all Mbes");
 
         return ramRepository.findByCompatibility(
+            user,
             mbe,
             PageRequest.of(page - 1, size, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy))
         );

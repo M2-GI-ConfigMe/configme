@@ -15,7 +15,9 @@ import org.springframework.stereotype.Repository;
 public interface RamRepository extends JpaRepository<Ram, Long> {
     @Query(
         value = "SELECT r FROM Ram r WHERE " +
-        "(:mbe is null or (r.unitSize * r.quantity) < :#{ #mbe == null ? 0 : floor(#mbe.ramSizeMax) } ) "
+        "(:mbe is null or (r.unitSize * r.quantity) < :#{ #mbe == null ? 0 : #mbe.ramSizeMax } ) " +
+        "AND (:mbe is null or r.type = :#{ #mbe == null ? null : #mbe.ramType } ) " +
+        "AND (r.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })"
     )
-    Page<Ram> findByCompatibility(@Param("mbe") Mbe mbe, Pageable pageable);
+    Page<Ram> findByCompatibility(@Param("user") User user, @Param("mbe") Mbe mbe, Pageable pageable);
 }

@@ -34,7 +34,7 @@ public interface ProductResourceIT {
     String DEFAULT_BRAND = "AAAAAAAAAA";
     String UPDATED_BRAND = "BBBBBBBBBB";
 
-    Boolean DEFAULT_IS_ACTIVE = false;
+    Boolean DEFAULT_IS_ACTIVE = true;
     Boolean UPDATED_IS_ACTIVE = true;
 
     static Product createProductField(Product product) {
