@@ -11,7 +11,10 @@ export default class OrderCartRecap extends Vue {
   @Prop() private cart: any;
 
   public get globalPrice() {
-    if (this.cart) return this.cart.lines.reduce((oldValue, newValue) => oldValue + this.configPrice(newValue.config), 0);
+    if (this.cart)
+      return this.cart.lines.reduce((oldValue, newValue) => {
+        return oldValue + this.configPrice(newValue.config);
+      }, 0);
     else return 0;
   }
 
@@ -23,10 +26,9 @@ export default class OrderCartRecap extends Vue {
     if (config.computerCase) price += config.computerCasePrice;
     if (config.ventirad) price += config.ventiradPrice;
     if (config.ram1) price += config.ram1Price;
-    if (config.ram2) price += config.ram2Price;
     if (config.hd1) price += config.hd1Price;
     if (config.hd2) price += config.hd2Price;
-    if (config.mbe) price += config.cpuPrice;
+    if (config.mbe) price += config.mbePrice;
     if (config.psu) price += config.psuPrice;
 
     return price;
