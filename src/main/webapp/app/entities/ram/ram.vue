@@ -73,47 +73,12 @@
                     <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>
                 </router-link>
-                <b-button
-                  v-on:click="prepareRemove(ram)"
-                  variant="danger"
-                  class="btn btn-sm"
-                  data-cy="entityDeleteButton"
-                  v-b-modal.removeEntity
-                >
-                  <font-awesome-icon icon="times"></font-awesome-icon>
-                  <span class="d-none d-md-inline" v-text="$t('entity.action.delete')">Delete</span>
-                </b-button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <b-modal ref="removeEntity" id="removeEntity">
-      <span slot="modal-title"
-        ><span id="configmeApp.ram.delete.question" data-cy="ramDeleteDialogHeading" v-text="$t('entity.delete.title')"
-          >Confirm delete operation</span
-        ></span
-      >
-      <div class="modal-body">
-        <p id="jhi-delete-ram-heading" v-text="$t('configmeApp.ram.delete.question', { id: removeId })">
-          Are you sure you want to delete this Ram?
-        </p>
-      </div>
-      <div slot="modal-footer">
-        <button type="button" class="btn btn-secondary" v-text="$t('entity.action.cancel')" v-on:click="closeDialog()">Cancel</button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="jhi-confirm-delete-ram"
-          data-cy="entityConfirmDeleteButton"
-          v-text="$t('entity.action.delete')"
-          v-on:click="removeRam()"
-        >
-          Delete
-        </button>
-      </div>
-    </b-modal>
     <v-pagination v-model="page" :length="pageCount"></v-pagination>
   </div>
 </template>

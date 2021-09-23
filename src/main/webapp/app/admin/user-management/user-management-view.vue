@@ -3,13 +3,13 @@
     <div class="col-8">
       <div v-if="user">
         <h2 class="jh-entity-heading">
-          <span v-text="$t('userManagement.detail.title')">User</span> [<strong>{{ user.login }}</strong
+          <span v-text="$t('userManagement.detail.title')">User</span> [<strong>{{ user.email }}</strong
           >]
         </h2>
         <dl class="row jh-entity-details">
-          <dt><span v-text="$t('userManagement.login')">Login</span></dt>
+          <dt><span v-text="$t('userManagement.email')">Email</span></dt>
           <dd>
-            <span>{{ user.login }}</span>
+            <span>{{ user.email }}</span>
             <b-badge variant="success" v-if="user.activated" v-text="$t('userManagement.activated')">Activated</b-badge>
             <b-badge variant="danger" v-if="!user.activated" v-text="$t('userManagement.deactivated')">Deactivated</b-badge>
           </dd>
@@ -17,8 +17,8 @@
           <dd>{{ user.firstName }}</dd>
           <dt><span v-text="$t('userManagement.lastName')">Last Name</span></dt>
           <dd>{{ user.lastName }}</dd>
-          <dt><span v-text="$t('userManagement.email')">Email</span></dt>
-          <dd>{{ user.email }}</dd>
+          <!-- <dt><span v-text="$t('userManagement.email')">Email</span></dt>
+          <dd>{{ user.email }}</dd> -->
           <dt><span v-text="$t('userManagement.langKey')">Lang Key</span></dt>
           <dd>{{ user.langKey }}</dd>
           <dt><span v-text="$t('userManagement.createdBy')">Created By</span></dt>
