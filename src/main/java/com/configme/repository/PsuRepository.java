@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface PsuRepository extends JpaRepository<Psu, Long> {
     @Query(
         value = "SELECT p FROM Psu p WHERE " +
-        "(:computerCase is null or (p.dimension.height < :#{ #computerCase == null ? 0 : (#computerCase.maxSizeGpu)})) " +
+        "(:computerCase is null or (p.dimension.width < :#{ #computerCase == null ? 0 : (#computerCase.sizeMaxPsu)})) " +
         "AND (p.isActive = true or true = :#{ #user == null ? false : #user.isAdmin })" +
         "AND (lower(p.name) LIKE lower(concat('%',:name,'%')))"
     )

@@ -99,6 +99,8 @@ public class ClientConfigResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody ClientConfig clientConfig
     ) throws URISyntaxException {
+        System.out.println("teste");
+
         log.debug("REST request to update ClientConfig : {}, {}", id, clientConfig);
         if (clientConfig.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -122,15 +124,30 @@ public class ClientConfigResource {
 
         ClientConfig c = optionalClientConfig.get();
 
-        AdminUserDTO user = userService
-            .getUserWithAuthorities()
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
+        //        AdminUserDTO user = userService
+        //            .getUserWithAuthorities()
+        //            .map(AdminUserDTO::new)
+        //            .orElseThrow(() -> new ClientConfigResourceException("User could not be found"));
+
+        boolean isAdmin = false;
+
         User owner = c.getUser();
-        boolean isAdmin = user.getAuthorities().stream().anyMatch(a -> a.equals("ROLE_ADMIN"));
-        if (!isAdmin && (owner == null || !user.getId().equals(owner.getId()))) {
-            throw new AccessDeniedException("User is not authorized");
+
+        User user = null;
+        if (userService.getUserWithAuthorities().isPresent()) {
+            user = userService.getUserWithAuthorities().get();
+            isAdmin = user.isAdmin();
+        } else {
+            System.out.println("User null");
         }
+
+        if (
+            !isAdmin &&
+            (
+                user == null ||
+                ((owner != null && !user.getId().equals(owner.getId())) && !clientConfigRepository.isBuyer(user, clientConfig))
+            )
+        ) throw new AccessDeniedException("User is not authorized");
 
         ClientConfig result = clientConfigRepository.save(clientConfig);
         return ResponseEntity

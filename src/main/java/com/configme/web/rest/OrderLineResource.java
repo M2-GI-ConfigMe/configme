@@ -6,6 +6,7 @@ import com.configme.repository.OrderLineRepository;
 import com.configme.repository.OrderRepository;
 import com.configme.service.UserService;
 import com.configme.web.rest.errors.BadRequestAlertException;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
