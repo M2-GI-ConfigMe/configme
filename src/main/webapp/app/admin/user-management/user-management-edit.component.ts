@@ -12,11 +12,6 @@ const loginValidator = (value: string) => {
 
 const validations: any = {
   userAccount: {
-    login: {
-      required,
-      maxLength: maxLength(254),
-      pattern: loginValidator,
-    },
     firstName: {
       maxLength: maxLength(50),
     },

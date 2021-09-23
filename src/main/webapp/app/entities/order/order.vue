@@ -67,47 +67,12 @@
                     <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>
                 </router-link>
-                <b-button
-                  v-on:click="prepareRemove(order)"
-                  variant="danger"
-                  class="btn btn-sm"
-                  data-cy="entityDeleteButton"
-                  v-b-modal.removeEntity
-                >
-                  <font-awesome-icon icon="times"></font-awesome-icon>
-                  <span class="d-none d-md-inline" v-text="$t('entity.action.delete')">Delete</span>
-                </b-button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <b-modal ref="removeEntity" id="removeEntity">
-      <span slot="modal-title"
-        ><span id="configmeApp.order.delete.question" data-cy="orderDeleteDialogHeading" v-text="$t('entity.delete.title')"
-          >Confirm delete operation</span
-        ></span
-      >
-      <div class="modal-body">
-        <p id="jhi-delete-order-heading" v-text="$t('configmeApp.order.delete.question', { id: removeId })">
-          Are you sure you want to delete this Order?
-        </p>
-      </div>
-      <div slot="modal-footer">
-        <button type="button" class="btn btn-secondary" v-text="$t('entity.action.cancel')" v-on:click="closeDialog()">Cancel</button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="jhi-confirm-delete-order"
-          data-cy="entityConfirmDeleteButton"
-          v-text="$t('entity.action.delete')"
-          v-on:click="removeOrder()"
-        >
-          Delete
-        </button>
-      </div>
-    </b-modal>
   </div>
 </template>
 
