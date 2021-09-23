@@ -117,7 +117,7 @@ export default class ConfigMaker extends Vue {
       });
   }
 
-  public saveConfig(config) {
+  public saveConfig(config: IClientConfig) {
     if (config.id) {
       this.clientConfigService()
         .update(config)
@@ -138,6 +138,7 @@ export default class ConfigMaker extends Vue {
           });
         });
     } else {
+      config.user = this.$store.getters.account;
       this.clientConfigService()
         .create(config)
         .then(res => {

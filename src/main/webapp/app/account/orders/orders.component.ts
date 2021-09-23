@@ -48,6 +48,7 @@ export default class Orders extends Vue {
       config.ram1Price +
       config.ram2Price +
       config.psuPrice +
+      config.ventiradPrice +
       config.computerCasePrice +
       config.hd1Price +
       config.hd2Price +

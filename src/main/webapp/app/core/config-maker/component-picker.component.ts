@@ -407,11 +407,6 @@ export default class ComponentPicker extends Vue {
     if (this.firstRetrive) this.retrieveComponents();
   }
 
-  @Watch('pageCount')
-  onPageCountChange() {
-    console.log(this.pageCount);
-  }
-
   @Watch('options')
   onOptionsUpdate(v) {
     if (this.firstRetrive) this.retrieveComponents();

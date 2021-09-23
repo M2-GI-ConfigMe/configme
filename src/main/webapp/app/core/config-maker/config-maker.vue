@@ -46,7 +46,7 @@
                     <v-icon dark>mdi-share-variant</v-icon>
                   </v-btn>
                 </template>
-                <span>Partager</span>
+                <span>Coming Soon :)</span>
               </v-tooltip>
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
