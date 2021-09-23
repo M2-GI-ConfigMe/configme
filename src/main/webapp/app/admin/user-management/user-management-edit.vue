@@ -8,8 +8,47 @@
             <label v-text="$t('global.field.id')">ID</label>
             <input type="text" class="form-control" name="id" v-model="userAccount.id" readonly />
           </div>
-
           <div class="form-group">
+            <label class="form-control-label" for="email" v-text="$t('userManagement.email')">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              v-bind:placeholder="$t('global.form[\'email.placeholder\']')"
+              :class="{ valid: !$v.userAccount.email.$invalid, invalid: $v.userAccount.email.$invalid }"
+              v-model="$v.userAccount.email.$model"
+              email
+              required
+            />
+            <div v-if="$v.userAccount.email.$anyDirty && $v.userAccount.email.$invalid">
+              <small
+                class="form-text text-danger"
+                v-if="!$v.userAccount.email.required"
+                v-text="$t('global.messages.validate.email.required')"
+              >
+                Your email is required.
+              </small>
+              <small class="form-text text-danger" v-if="!$v.userAccount.email.email" v-text="$t('global.messages.validate.email.invalid')">
+                Your email is invalid.
+              </small>
+              <small
+                class="form-text text-danger"
+                v-if="!$v.userAccount.email.minLength"
+                v-text="$t('global.messages.validate.email.minlength')"
+              >
+                Your email is required to be at least 5 characters.
+              </small>
+              <small
+                class="form-text text-danger"
+                v-if="!$v.userAccount.email.maxLength"
+                v-text="$t('global.messages.validate.email.maxlength')"
+              >
+                Your email cannot be longer than 50 characters.
+              </small>
+            </div>
+          </div>
+          <!-- <div class="form-group">
             <label class="form-control-label" v-text="$t('userManagement.login')">Login</label>
             <input
               type="text"
@@ -36,7 +75,7 @@
                 This field can only contain letters, digits and e-mail addresses.
               </small>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <label class="form-control-label" for="firstName" v-text="$t('userManagement.firstName')">First Name</label>
             <input
@@ -79,46 +118,7 @@
               </small>
             </div>
           </div>
-          <div class="form-group">
-            <label class="form-control-label" for="email" v-text="$t('userManagement.email')">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-              v-bind:placeholder="$t('global.form[\'email.placeholder\']')"
-              :class="{ valid: !$v.userAccount.email.$invalid, invalid: $v.userAccount.email.$invalid }"
-              v-model="$v.userAccount.email.$model"
-              email
-              required
-            />
-            <div v-if="$v.userAccount.email.$anyDirty && $v.userAccount.email.$invalid">
-              <small
-                class="form-text text-danger"
-                v-if="!$v.userAccount.email.required"
-                v-text="$t('global.messages.validate.email.required')"
-              >
-                Your email is required.
-              </small>
-              <small class="form-text text-danger" v-if="!$v.userAccount.email.email" v-text="$t('global.messages.validate.email.invalid')">
-                Your email is invalid.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.userAccount.email.minLength"
-                v-text="$t('global.messages.validate.email.minlength')"
-              >
-                Your email is required to be at least 5 characters.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.userAccount.email.maxLength"
-                v-text="$t('global.messages.validate.email.maxlength')"
-              >
-                Your email cannot be longer than 50 characters.
-              </small>
-            </div>
-          </div>
+
           <div class="form-check">
             <label class="form-check-label" for="activated">
               <input

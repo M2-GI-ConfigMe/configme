@@ -28,7 +28,8 @@
             </v-text-field>
           </div>
           <div class="text-right">
-            <v-btn :disabled="!isValid" @click="requestReset()" color="primary">Réinitialiser mon mot de passe</v-btn>
+            <!-- !isValid -->
+            <v-btn :disabled="true" @click="requestReset()" color="primary">Comming soon...</v-btn>
           </div>
         </v-form>
       </div>

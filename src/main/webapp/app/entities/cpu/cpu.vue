@@ -87,47 +87,12 @@
                     <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>
                 </router-link>
-                <b-button
-                  v-on:click="prepareRemove(cpu)"
-                  variant="danger"
-                  class="btn btn-sm"
-                  data-cy="entityDeleteButton"
-                  v-b-modal.removeEntity
-                >
-                  <font-awesome-icon icon="times"></font-awesome-icon>
-                  <span class="d-none d-md-inline" v-text="$t('entity.action.delete')">Delete</span>
-                </b-button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <b-modal ref="removeEntity" id="removeEntity">
-      <span slot="modal-title"
-        ><span id="configmeApp.cpu.delete.question" data-cy="cpuDeleteDialogHeading" v-text="$t('entity.delete.title')"
-          >Confirm delete operation</span
-        ></span
-      >
-      <div class="modal-body">
-        <p id="jhi-delete-cpu-heading" v-text="$t('configmeApp.cpu.delete.question', { id: removeId })">
-          Are you sure you want to delete this Cpu?
-        </p>
-      </div>
-      <div slot="modal-footer">
-        <button type="button" class="btn btn-secondary" v-text="$t('entity.action.cancel')" v-on:click="closeDialog()">Cancel</button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="jhi-confirm-delete-cpu"
-          data-cy="entityConfirmDeleteButton"
-          v-text="$t('entity.action.delete')"
-          v-on:click="removeCpu()"
-        >
-          Delete
-        </button>
-      </div>
-    </b-modal>
     <v-pagination v-model="page" :length="pageCount"></v-pagination>
   </div>
 </template>
