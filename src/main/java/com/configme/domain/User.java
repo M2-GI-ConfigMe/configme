@@ -104,7 +104,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
-    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "buyer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     private Set<Order> orders;
 
     public Long getId() {
